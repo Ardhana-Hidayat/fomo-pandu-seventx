@@ -32,6 +32,13 @@ export type IconName =
   | 'Trash'
   | 'Question'
   | 'Check'
+  | 'Microphone'
+  | 'Stop'
+  | 'UploadSimple'
+  | 'Sparkle'
+  | 'Info'
+  | 'Plus'
+  | 'TextT'
   | 'X';
 
 export interface IconProps {

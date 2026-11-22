@@ -19,11 +19,11 @@
 | S1-08 | Mode presentasi dan TV | Guru #6 | TC-12 | sprint/1-core-flow | Selesai | 2026-11-22 |
 | S1-09 | Rekap hasil sederhana | Guru #10 | TC-06 | sprint/1-core-flow | Selesai | 2026-11-22 |
 | S1-10 | Materi demo dan tombol Masuk sebagai guru demo | Berkas 09 | skenario demo | sprint/1-core-flow | Selesai | 2026-11-22 |
-| S2-01 | Piktogram dan unggah gambar | Guru #3 | TC-08 | | Belum | - |
-| S2-02 | Audio: TTS server dan rekaman guru | Guru #5 | TC-03 | | Belum | - |
-| S2-03 | Cetak kartu fisik | Guru #9 | TC-05 | | Belum | - |
-| S2-04 | Pengaturan latihan lengkap | Guru #7 | TC-04 | | Belum | - |
-| S2-05 | Uji lintas perangkat | | TC-03, TC-05 | | Belum | - |
+| S2-01 | Piktogram dan unggah gambar | Guru #3 | TC-08 | sprint/2-enrichment | Selesai | 2026-11-22 |
+| S2-02 | Audio: TTS server dan rekaman guru | Guru #5 | TC-03 | sprint/2-enrichment | Selesai | 2026-11-22 |
+| S2-03 | Cetak kartu fisik | Guru #9 | TC-05 | sprint/2-enrichment | Selesai | 2026-11-22 |
+| S2-04 | Pengaturan latihan lengkap | Guru #7 | TC-04 | sprint/2-enrichment | Selesai | 2026-11-22 |
+| S2-05 | Uji lintas perangkat | | TC-03, TC-05 | sprint/2-enrichment | Selesai | 2026-11-22 |
 | S3-01 | Empat saluran dan preset kebutuhan | Berkas 01 | TC-12 | | Belum | - |
 | S3-02 | Mesin sinkronisasi dan sorotan kata | Berkas 04 | TC-11 | | Belum | - |
 | S3-03 | Kartu isyarat dan pustaka isyarat | Berkas 08 | TC-10 | | Belum | - |

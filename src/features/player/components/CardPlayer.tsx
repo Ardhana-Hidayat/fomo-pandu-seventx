@@ -1,13 +1,19 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
 import type { LessonCard } from "@/server/db/schema";
 
+type PlayerCard = LessonCard & {
+  imageUrl?: string | null;
+  audioRef?: string | null;
+  audioUrl?: string | null;
+};
+
 interface CardPlayerProps {
   title?: string;
-  cards: LessonCard[];
+  cards: PlayerCard[];
   quizHref?: string;
   backHref: string;
 }
@@ -27,28 +33,36 @@ export function CardPlayer({
   const isLastCard = currentIndex === totalCards - 1;
 
   // Split text into words for synced highlighting
-  const words = currentCard ? currentCard.text.split(/\s+/) : [];
+  const words = currentCard ? currentCard.text.split(/\s+/).filter(Boolean) : [];
 
-  // Web Speech API Synthesis
+  // Audio elements
+  const audioElementRef = useRef<HTMLAudioElement | null>(null);
   const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
 
-  function resetSpeech() {
-    setActiveWordIndex(-1);
+  const stopAllAudio = useCallback(() => {
+    // Stop HTMLAudioElement
+    if (audioElementRef.current) {
+      audioElementRef.current.pause();
+      audioElementRef.current.currentTime = 0;
+    }
+    // Stop Web Speech
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
-      setIsPlaying(false);
     }
-  }
+    setIsPlaying(false);
+    setActiveWordIndex(-1);
+  }, []);
 
-  function speakCardText() {
+  // Cleanup on unmount or card switch
+  useEffect(() => {
+    return () => {
+      stopAllAudio();
+    };
+  }, [currentIndex, stopAllAudio]);
+
+  function speakCardWebSpeech() {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-      return;
-    }
-
-    if (isPlaying) {
-      window.speechSynthesis.cancel();
       setIsPlaying(false);
-      setActiveWordIndex(-1);
       return;
     }
 
@@ -79,16 +93,65 @@ export function CardPlayer({
     window.speechSynthesis.speak(utterance);
   }
 
+  function handleToggleAudio() {
+    if (isPlaying) {
+      stopAllAudio();
+      return;
+    }
+
+    // 1. Primary: If card has audioRef, use HTMLAudioElement
+    if (currentCard?.audioRef) {
+      if (!audioElementRef.current) {
+        audioElementRef.current = new Audio();
+      }
+      const audio = audioElementRef.current;
+      audio.src = currentCard.audioRef;
+
+      audio.ontimeupdate = () => {
+        if (!audio.duration || words.length === 0) return;
+        const progress = audio.currentTime / audio.duration;
+        const calculatedIdx = Math.min(
+          words.length - 1,
+          Math.floor(progress * words.length)
+        );
+        setActiveWordIndex(calculatedIdx);
+      };
+
+      audio.onended = () => {
+        setIsPlaying(false);
+        setActiveWordIndex(words.length);
+      };
+
+      audio.onerror = () => {
+        // Fallback to Web Speech if audio file fails to load
+        speakCardWebSpeech();
+      };
+
+      audio
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch(() => {
+          speakCardWebSpeech();
+        });
+      return;
+    }
+
+    // 2. Fallback: Web Speech API
+    speakCardWebSpeech();
+  }
+
   function handleNext() {
     if (currentIndex < totalCards - 1) {
-      resetSpeech();
+      stopAllAudio();
       setCurrentIndex((prev) => prev + 1);
     }
   }
 
   function handlePrev() {
     if (currentIndex > 0) {
-      resetSpeech();
+      stopAllAudio();
       setCurrentIndex((prev) => prev - 1);
     }
   }
@@ -136,15 +199,24 @@ export function CardPlayer({
         className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-between p-4 sm:p-6 pb-28 md:pb-8"
       >
         <Card className="flex flex-col items-center justify-center text-center p-6 sm:p-10 my-auto min-h-[360px] gap-6">
-          {/* Gambar Peraga */}
-          {currentCard.imageAlt && (
+          {/* Gambar Peraga (Piktogram atau Foto Unggahan) */}
+          {currentCard.imageUrl ? (
+            <div className="w-full max-w-md aspect-[4/3] rounded-2xl border-2 border-[var(--border)] overflow-hidden flex items-center justify-center bg-[var(--surface-2)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={currentCard.imageUrl}
+                alt={currentCard.imageAlt ?? currentCard.text}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          ) : currentCard.imageAlt ? (
             <div className="w-full max-w-md aspect-[4/3] rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-4">
               <Icon name="Image" size={48} className="text-[var(--muted)] mb-2" />
               <span className="text-sm font-bold text-[var(--ink)]">
                 {currentCard.imageAlt}
               </span>
             </div>
-          )}
+          ) : null}
 
           {/* Teks Kartu dengan Sorotan Berjalan */}
           <div className="max-w-xl text-left sm:text-center">
@@ -227,7 +299,7 @@ export function CardPlayer({
           <Button
             variant="secondary"
             size="large"
-            onClick={speakCardText}
+            onClick={handleToggleAudio}
             icon={<Icon name={isPlaying ? "Pause" : "SpeakerHigh"} size={24} />}
             className="flex-1"
             aria-label={isPlaying ? "Jeda suara" : "Putar suara materi"}

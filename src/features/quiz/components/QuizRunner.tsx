@@ -22,6 +22,7 @@ export function QuizRunner({
   const [attemptsCount, setAttemptsCount] = useState<Record<number, number>>({});
   const [firstTryCorrectCount, setFirstTryCorrectCount] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
+  const [showHint, setShowHint] = useState(false);
 
   const currentQ = questions[currentIndex];
   const totalQuestions = questions.length;
@@ -35,9 +36,12 @@ export function QuizRunner({
   }
 
   const payload = currentQ?.payload as {
-    options?: Array<{ id: string; text: string; correct: boolean }>;
+    options?: Array<{ id: string; text: string; imageUrl?: string; correct: boolean }>;
     steps?: Array<{ id: string; text: string }>;
     answer?: boolean;
+    hint?: string;
+    showTextHint?: boolean;
+    imageOnly?: boolean;
   } | undefined;
 
   function handleSelectOption(opt: { id: string; text: string; correct: boolean }) {
@@ -78,6 +82,7 @@ export function QuizRunner({
   function handleNextQuestion() {
     setSelectedOptionId(null);
     setFeedback(null);
+    setShowHint(false);
 
     if (currentIndex < totalQuestions - 1) {
       setCurrentIndex((prev) => prev + 1);
@@ -128,6 +133,14 @@ export function QuizRunner({
     );
   }
 
+  const options = payload?.options ?? [];
+  const optionGridCols =
+    options.length === 2
+      ? "grid-cols-1 sm:grid-cols-2"
+      : options.length === 3
+      ? "grid-cols-1 sm:grid-cols-3"
+      : "grid-cols-1 sm:grid-cols-2";
+
   return (
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* Header Kuis */}
@@ -163,12 +176,32 @@ export function QuizRunner({
             <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] leading-snug">
               {currentQ.prompt}
             </h2>
+
+            {/* Petunjuk / Hint jika diaktifkan */}
+            {(payload?.showTextHint || payload?.hint) && (
+              <div className="mt-4 pt-3 border-t border-[var(--border)]">
+                {!showHint ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowHint(true)}
+                    className="text-xs font-bold text-[var(--link)] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                  >
+                    <Icon name="Info" size={16} />
+                    <span>Lihat petunjuk</span>
+                  </button>
+                ) : (
+                  <p className="text-sm text-[var(--ink-2)] bg-[var(--surface-2)] p-2.5 rounded-lg border border-[var(--border)]">
+                    {payload.hint || "Ingat kembali kata dan isyarat yang dipelajari pada kartu materi."}
+                  </p>
+                )}
+              </div>
+            )}
           </Card>
 
-          {/* Opsi Pilihan Bergambar / Pilihan Kata */}
-          {payload?.options && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {payload.options.map((opt) => {
+          {/* Opsi Pilihan (2, 3, atau 4 Pilihan) */}
+          {options.length > 0 && (
+            <div className={`grid gap-3 ${optionGridCols}`}>
+              {options.map((opt) => {
                 const isSelected = selectedOptionId === opt.id;
                 let optStyle =
                   "bg-[var(--surface)] border-[var(--border)] text-[var(--ink)]";
@@ -186,9 +219,19 @@ export function QuizRunner({
                     key={opt.id}
                     type="button"
                     onClick={() => handleSelectOption(opt)}
-                    className={`flex items-center justify-center gap-3 p-4 min-h-[64px] rounded-2xl border-2 font-bold text-xl cursor-pointer transition-all active:translate-y-1 shadow-[0_4px_0_0_var(--border)] ${optStyle}`}
+                    className={`flex flex-col items-center justify-center gap-2 p-4 min-h-[72px] rounded-2xl border-2 font-bold text-xl cursor-pointer transition-all active:translate-y-1 shadow-[0_4px_0_0_var(--border)] ${optStyle}`}
                   >
-                    <span>{opt.text}</span>
+                    {opt.imageUrl && (
+                      <div className="h-16 w-16 overflow-hidden rounded-lg bg-[var(--surface-2)] flex items-center justify-center p-1">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={opt.imageUrl}
+                          alt={opt.text}
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                    )}
+                    {!payload?.imageOnly && <span>{opt.text}</span>}
                   </button>
                 );
               })}
@@ -214,6 +257,40 @@ export function QuizRunner({
                 <Icon name="X" size={28} />
                 <span>Salah</span>
               </button>
+            </div>
+          )}
+
+          {/* Opsi Urutan (Steps Ordering) */}
+          {currentQ.type === "urutan" && payload?.steps && (
+            <div className="flex flex-col gap-3">
+              <p className="text-sm font-bold text-[var(--muted)] text-center">
+                Urutan langkah yang tepat:
+              </p>
+              <div className="flex flex-col gap-2">
+                {payload.steps.map((st, sIdx) => (
+                  <div
+                    key={st.id ?? sIdx}
+                    className="flex items-center gap-3 p-3 rounded-xl border-2 border-[var(--border)] bg-[var(--surface)] text-base font-bold text-[var(--ink)]"
+                  >
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)] text-white text-sm">
+                      {sIdx + 1}
+                    </span>
+                    <span>{st.text}</span>
+                  </div>
+                ))}
+              </div>
+              {feedback !== "benar" && (
+                <Button
+                  type="button"
+                  variant="primary"
+                  size="large"
+                  onClick={() => setFeedback("benar")}
+                  icon={<Icon name="CheckCircle" size={20} />}
+                  className="w-full mt-2"
+                >
+                  Periksa Urutan
+                </Button>
+              )}
             </div>
           )}
 

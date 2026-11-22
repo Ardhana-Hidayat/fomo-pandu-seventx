@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button, Card, Field, Icon, DisplayPreferencesTrigger } from '@/shared/ui';
 
@@ -114,6 +115,11 @@ export default function HomePage() {
       {/* Footer Minimalis Aksesibel */}
       <footer className="w-full border-t-2 border-[var(--border)] bg-[var(--surface)] px-4 py-4 text-center text-sm text-[var(--muted)]">
         <p>InkluDidik &bull; Dirancang untuk aksesibilitas dan kemandirian belajar SLB</p>
+        <div className="mt-2 flex items-center justify-center gap-4 text-xs font-bold">
+          <Link href="/kredit" className="text-[var(--link)] hover:underline inline-flex items-center gap-1">
+            <span>Kredit &amp; Atribusi Aset Terbuka</span>
+          </Link>
+        </div>
       </footer>
     </div>
   );

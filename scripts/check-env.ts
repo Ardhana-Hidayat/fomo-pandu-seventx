@@ -2,6 +2,7 @@
  * Validasi variabel lingkungan tanpa mencetak nilai rahasia.
  * Jalankan: npx tsx scripts/check-env.ts
  */
+import "./load-env";
 import { z } from "zod";
 
 const schema = z
@@ -17,6 +18,9 @@ const schema = z
     GENERATE_LIMIT_PER_HOUR: z.coerce.number().int().positive().default(5),
     ALLOW_DRAFT_SIGNS: z.enum(["true", "false"]).default("false").transform((v) => v === "true"),
     NEXT_PUBLIC_APP_URL: z.string().url("NEXT_PUBLIC_APP_URL harus URL valid"),
+    NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional(),
+    SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
   })
   .superRefine((v, ctx) => {
     if (v.DATA_DRIVER === "postgres" && !v.DATABASE_URL) {
@@ -24,6 +28,13 @@ const schema = z
         code: "custom",
         path: ["DATABASE_URL"],
         message: "DATABASE_URL wajib saat DATA_DRIVER=postgres",
+      });
+    }
+    if (v.STORAGE_DRIVER === "supabase" && !v.SUPABASE_SERVICE_ROLE_KEY) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["SUPABASE_SERVICE_ROLE_KEY"],
+        message: "SUPABASE_SERVICE_ROLE_KEY diperlukan saat STORAGE_DRIVER=supabase",
       });
     }
   });

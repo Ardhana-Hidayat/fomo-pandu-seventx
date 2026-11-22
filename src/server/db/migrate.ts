@@ -5,7 +5,7 @@ import { db } from "./client";
 import { env } from "@/server/config/env";
 
 export async function runMigrations(): Promise<void> {
-  if (env.DATA_DRIVER === "postgres") {
+  if (env.DATA_DRIVER === "postgres" || process.env.TEST_DATABASE_URL) {
     await migratePostgres(db as unknown as Parameters<typeof migratePostgres>[0], {
       migrationsFolder: "./drizzle",
     });

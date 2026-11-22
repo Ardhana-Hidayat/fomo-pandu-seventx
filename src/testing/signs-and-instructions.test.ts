@@ -68,6 +68,18 @@ describe("Sign Resolver & Quick Instructions (S3-02, S3-03, TC-10)", () => {
       const resolved = await resolveSign("SIBI", "J", { allowDraft: false });
       expect(resolved).not.toBeNull();
       expect(resolved?.status).toBe("verified");
+
+      // Kembalikan ke draft agar tes idempoten
+      const manifestPath = path.resolve(process.cwd(), "public/signs/manifest.json");
+      const content = await fs.promises.readFile(manifestPath, "utf8");
+      const manifest = JSON.parse(content);
+      const item = manifest.items.find((i: { system: string; key: string }) => i.system === "SIBI" && i.key === "J");
+      if (item) {
+        item.status = "draft";
+        item.verifiedBy = null;
+        item.verifiedAt = null;
+        await fs.promises.writeFile(manifestPath, JSON.stringify(manifest, null, 2), "utf8");
+      }
     });
   });
 

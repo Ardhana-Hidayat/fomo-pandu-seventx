@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
+import { SignCard } from "./SignCard";
 import type { LessonCard } from "@/server/db/schema";
 
 type PlayerCard = LessonCard & {
@@ -227,7 +228,9 @@ export function CardPlayer({
                 return (
                   <span
                     key={idx}
-                    className={`inline-block mx-1 px-1.5 py-0.5 rounded transition-colors ${
+                    data-state={isCurrent ? "sedang" : isPassed ? "sudah" : "belum"}
+                    style={{ "--progres": isCurrent ? 1 : 0 } as React.CSSProperties}
+                    className={`kata inline-block mx-1 px-1.5 py-0.5 rounded transition-colors ${
                       isCurrent
                         ? "bg-[var(--sorot)] text-[var(--on-sorot)] underline decoration-2 underline-offset-4"
                         : isPassed
@@ -242,21 +245,13 @@ export function CardPlayer({
             </p>
           </div>
 
-          {/* Kartu Isyarat Huruf */}
+          {/* Kartu Isyarat Huruf & Pita Huruf */}
           {Array.isArray(currentCard.keyTerms) && currentCard.keyTerms.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-4 border-t-2 border-[var(--border)] w-full">
-              <span className="text-xs font-bold text-[var(--muted)] mr-2 uppercase">
-                Kata Isyarat:
+            <div className="pt-4 border-t-2 border-[var(--border)] w-full flex flex-col items-center">
+              <span className="text-xs font-bold text-[var(--muted)] mb-3 uppercase">
+                Isyarat Kata Kunci:
               </span>
-              {currentCard.keyTerms.map((term: string, idx: number) => (
-                <span
-                  key={idx}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border-2 border-[var(--border)] bg-[var(--surface-2)] font-mono font-bold text-sm"
-                >
-                  <Icon name="Hand" size={18} />
-                  <span>{term.toUpperCase()}</span>
-                </span>
-              ))}
+              <SignCard term={currentCard.keyTerms[0]} system="SIBI" />
             </div>
           )}
         </Card>

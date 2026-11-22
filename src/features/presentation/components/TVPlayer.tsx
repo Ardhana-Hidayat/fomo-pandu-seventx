@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button, Icon } from "@/shared/ui";
+import { SignCard } from "@/features/player";
 import type { LessonWithContent } from "@/server/repos/lessons";
 
 interface TVPlayerProps {
@@ -99,23 +100,24 @@ export function TVPlayer({ lesson, backHref }: TVPlayerProps) {
         )}
 
         <p className="font-extrabold leading-tight text-[var(--ink)] text-4xl sm:text-6xl md:text-7xl lg:text-8xl">
-          {currentCard.text}
+          {currentCard.text.split(/\s+/).filter(Boolean).map((word, wIdx) => (
+            <span
+              key={wIdx}
+              className="kata inline-block mx-2"
+              data-state="belum"
+            >
+              {word}
+            </span>
+          ))}
         </p>
 
         {Array.isArray(currentCard.keyTerms) && currentCard.keyTerms.length > 0 && (
-          <div className="mt-10 flex items-center justify-center gap-4">
-            {currentCard.keyTerms.map((term: string, idx: number) => (
-              <div
-                key={idx}
-                className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl border-4 border-[var(--border-strong)] bg-[var(--surface)] font-mono font-extrabold text-2xl sm:text-3xl shadow-[0_6px_0_0_var(--border-strong)]"
-              >
-                <Icon name="Hand" size={32} />
-                <span>{term.toUpperCase()}</span>
-                <span className="text-xs px-2 py-1 rounded bg-[var(--surface-2)] border">
-                  SIBI
-                </span>
-              </div>
-            ))}
+          <div className="mt-8 flex items-center justify-center">
+            <SignCard
+              term={currentCard.keyTerms[0]}
+              system="SIBI"
+              size="tv"
+            />
           </div>
         )}
       </main>

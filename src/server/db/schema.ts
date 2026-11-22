@@ -31,6 +31,7 @@ export interface ChannelSettings {
   audio: boolean;
   image: boolean;
   sign: boolean;
+  [key: string]: boolean;
 }
 
 export interface LessonSettings {

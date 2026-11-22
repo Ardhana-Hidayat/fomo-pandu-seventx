@@ -59,25 +59,25 @@ function applyPreferencesToDOM(prefs: DisplayPreferences) {
   }
 }
 
-function getInitialPreferences(): DisplayPreferences {
-  if (typeof window === 'undefined') {
-    return DEFAULT_PREFERENCES;
-  }
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved) as Partial<DisplayPreferences>;
-      return { ...DEFAULT_PREFERENCES, ...parsed };
-    }
-  } catch {
-    // fallback to defaults
-  }
-  return DEFAULT_PREFERENCES;
-}
-
 export function PreferencesProvider({ children }: { children: ReactNode }) {
-  const [preferences, setPreferences] = useState<DisplayPreferences>(getInitialPreferences);
+  const [preferences, setPreferences] = useState<DisplayPreferences>(DEFAULT_PREFERENCES);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as Partial<DisplayPreferences>;
+        setPreferences((prev) => {
+          const merged = { ...prev, ...parsed };
+          applyPreferencesToDOM(merged);
+          return merged;
+        });
+      }
+    } catch {
+      // fallback to defaults
+    }
+  }, []);
 
   useEffect(() => {
     applyPreferencesToDOM(preferences);

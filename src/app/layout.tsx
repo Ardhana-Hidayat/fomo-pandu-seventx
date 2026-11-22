@@ -75,7 +75,10 @@ export default function RootLayout({
           } catch (e) {}`}
         </script>
       </head>
-      <body className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)] font-sans antialiased">
+      <body
+        className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)] font-sans antialiased"
+        suppressHydrationWarning
+      >
         <SkipLink targetId="main-content" label="Lewati ke isi utama" />
         <UIProviders>
           {children}

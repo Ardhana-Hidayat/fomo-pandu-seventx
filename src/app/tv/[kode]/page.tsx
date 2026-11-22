@@ -38,7 +38,10 @@ export default async function TVClassroomMenuPage({
         </div>
       </header>
 
-      <main className="my-auto max-w-5xl mx-auto w-full flex flex-col gap-6">
+      <main
+        id="main-content"
+        className="my-auto max-w-5xl mx-auto w-full flex flex-col gap-6"
+      >
         <h2 className="text-2xl font-bold text-[var(--muted)]">
           Pilih Materi Pembelajaran Bersama
         </h2>

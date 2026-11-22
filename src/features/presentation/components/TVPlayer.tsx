@@ -90,7 +90,10 @@ export function TVPlayer({ lesson, backHref }: TVPlayerProps) {
       </header>
 
       {/* Konten TV: Teks Raksasa + Isyarat */}
-      <main className="my-auto flex flex-col items-center justify-center text-center max-w-5xl mx-auto">
+      <main
+        id="main-content"
+        className="my-auto flex flex-col items-center justify-center text-center max-w-5xl mx-auto"
+      >
         {currentCard.imageAlt && (
           <div className="mb-6 p-4 rounded-3xl border-4 border-[var(--border)] bg-[var(--surface-2)]">
             <span className="text-2xl font-bold text-[var(--muted)]">

@@ -49,7 +49,10 @@ export function TVQuiz({ lessonTitle, questions, backHref }: TVQuizProps) {
         </div>
       </header>
 
-      <main className="my-auto max-w-5xl mx-auto w-full text-center flex flex-col gap-8">
+      <main
+        id="main-content"
+        className="my-auto max-w-5xl mx-auto w-full text-center flex flex-col gap-8"
+      >
         <Card className="p-8 border-4">
           <h2 className="text-4xl sm:text-6xl font-extrabold text-[var(--ink)] leading-snug">
             {currentQ.prompt}

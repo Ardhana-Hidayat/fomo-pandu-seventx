@@ -13,8 +13,7 @@
     "scripts/**/*.{ts,js,mjs}"
   ],
   "ignoreDependencies": [
-    "qrcode.react",
-    "sharp",
+    "@supabase/supabase-js",
     "tailwindcss",
     "@tailwindcss/turbopack",
     "@types/qrcode.react"

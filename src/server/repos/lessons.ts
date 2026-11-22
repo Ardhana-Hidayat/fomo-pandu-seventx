@@ -10,14 +10,22 @@ import {
   type Lesson,
   type LessonCard,
   type QuizQuestion,
+  type Publication,
   type LessonSettings,
   type QuizQuestionPayload,
 } from "../db/schema";
 import { ok, err, type Result, makeAppError } from "@/shared/lib/result";
 
+export type LessonCardWithMedia = LessonCard & {
+  imageUrl?: string | null;
+  audioUrl?: string | null;
+  audioRef?: string | null;
+};
+
 export interface LessonWithContent extends Lesson {
-  cards: LessonCard[];
+  cards: LessonCardWithMedia[];
   questions: QuizQuestion[];
+  publications?: Publication[];
 }
 
 export interface CreateCardInput {
@@ -190,10 +198,16 @@ export async function getLessonWithContent(
       .where(eq(quizQuestions.lessonId, lesson.id))
       .orderBy(asc(quizQuestions.position));
 
+    const pubList = await db
+      .select()
+      .from(publications)
+      .where(eq(publications.lessonId, lesson.id));
+
     return ok({
       ...lesson,
       cards,
       questions,
+      publications: pubList,
     });
   } catch (error) {
     return err(
@@ -263,10 +277,16 @@ export async function getLessonForStudent(
       .where(eq(quizQuestions.lessonId, lesson.id))
       .orderBy(asc(quizQuestions.position));
 
+    const pubList = await db
+      .select()
+      .from(publications)
+      .where(eq(publications.lessonId, lesson.id));
+
     return ok({
       ...lesson,
       cards,
       questions,
+      publications: pubList,
     });
   } catch (error) {
     return err(
@@ -339,3 +359,35 @@ export async function deleteLesson(
     );
   }
 }
+
+export interface UpdateCardMediaInput {
+  imageAssetId?: string | null;
+  imageAlt?: string | null;
+  imageSource?: "upload" | "pictogram" | "ai" | string;
+  audioAssetId?: string | null;
+  audioSource?: "tts" | "recording" | "none" | string;
+}
+
+export async function updateCardMedia(
+  cardId: string,
+  input: UpdateCardMediaInput
+): Promise<Result<LessonCard>> {
+  try {
+    const updated = await db
+      .update(lessonCards)
+      .set(input)
+      .where(eq(lessonCards.id, cardId))
+      .returning();
+
+    const record = updated[0];
+    if (!record) {
+      return err(makeAppError("NOT_FOUND", "Kartu materi tidak ditemukan"));
+    }
+    return ok(record);
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal memperbarui media kartu", error)
+    );
+  }
+}
+

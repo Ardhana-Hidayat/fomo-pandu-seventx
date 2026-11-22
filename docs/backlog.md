@@ -24,12 +24,12 @@
 | S2-03 | Cetak kartu fisik | Guru #9 | TC-05 | sprint/2-enrichment | Selesai | 2026-11-22 |
 | S2-04 | Pengaturan latihan lengkap | Guru #7 | TC-04 | sprint/2-enrichment | Selesai | 2026-11-22 |
 | S2-05 | Uji lintas perangkat | | TC-03, TC-05 | sprint/2-enrichment | Selesai | 2026-11-22 |
-| S3-01 | Empat saluran dan preset kebutuhan | Berkas 01 | TC-12 | | Belum | - |
-| S3-02 | Mesin sinkronisasi dan sorotan kata | Berkas 04 | TC-11 | | Belum | - |
-| S3-03 | Kartu isyarat dan pustaka isyarat | Berkas 08 | TC-10 | | Belum | - |
-| S3-04 | Tema warna dan pengaturan lengkap | Berkas 03 | TC-14 | | Belum | - |
-| S3-05 | Peta penguasaan dan saran sederhana | Berkas 06 | uji aturan | | Belum | - |
-| S3-06 | Kuis bersama di TV dan Instruksi cepat | Berkas 04, 05 | TC-12 | | Belum | - |
+| S3-01 | Empat saluran dan preset kebutuhan | Berkas 01 | TC-12 | sprint/3-team-value | Selesai | 2026-11-22 |
+| S3-02 | Mesin sinkronisasi dan sorotan kata | Berkas 04 | TC-11 | sprint/3-team-value | Selesai | 2026-11-22 |
+| S3-03 | Kartu isyarat dan pustaka isyarat | Berkas 08 | TC-10 | sprint/3-team-value | Selesai | 2026-11-22 |
+| S3-04 | Tema warna dan pengaturan lengkap | Berkas 03 | TC-14 | sprint/3-team-value | Selesai | 2026-11-22 |
+| S3-05 | Peta penguasaan dan saran sederhana | Berkas 06 | uji aturan | sprint/3-team-value | Selesai | 2026-11-22 |
+| S3-06 | Kuis bersama di TV dan Instruksi cepat | Berkas 04, 05 | TC-12 | sprint/3-team-value | Selesai | 2026-11-22 |
 | S4-01 | Audit aksesibilitas dan kinerja | Berkas 12 §7 | Lighthouse, TC-12 | | Belum | - |
 | S4-02 | README, ADR, dokumentasi deploy | Berkas 12 §10 | tinjauan | | Belum | - |
 | S4-03 | Daftar periksa deploy dan rilis | Berkas 10 §6 | TC-13 | | Belum | - |

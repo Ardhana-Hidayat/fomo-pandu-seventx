@@ -3,7 +3,7 @@ process.env.SESSION_SECRET = process.env.SESSION_SECRET || "test-secret-must-be-
 process.env.GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-1.5-flash";
 process.env.NEXT_PUBLIC_APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 process.env.DATA_DRIVER = process.env.DATA_DRIVER || "local";
-(process.env as Record<string, string | undefined>).NODE_ENV = "test";
+Object.assign(process.env, { NODE_ENV: "test" });
 
 // Mock window.matchMedia for JSDOM
 if (typeof window !== 'undefined') {

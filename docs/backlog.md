@@ -4,11 +4,11 @@
 |---|---|---|---|---|---|---|
 | S0-01 | Hapus kode lama dan pasang gerbang kualitas | Berkas 12 §9 | nol temuan knip | chore/s0-01-sanitize-repo | Selesai | 2026-11-22 |
 | S0-02 | Konfigurasi lingkungan tervalidasi dan `.env.example` | Berkas 12 §4 | TC-13 | chore/s0-02-env-validation | Selesai | 2026-11-22 |
-| S0-03 | Database lokal (Drizzle + PGlite), skema, migrasi | Berkas 07 | uji repositori | feat/s0-03-db-foundation | Belum | - |
-| S0-04 | Sesi dan login guru demo, `proxy.ts` | Guru #1 | TC-01 (dasar) | feat/s0-04-auth-session | Belum | - |
-| S0-05 | Token desain dan komponen dasar | Berkas 03 | uji komponen | feat/s0-05-design-tokens-ui | Belum | - |
-| S0-06 | Lembar Tampilan, batas galat, tautan lompat | Berkas 03 | axe | feat/s0-06-layout-preferences | Belum | - |
-| S0-07 | Seed kelas dan materi demo | Berkas 09 | `db:reset` | feat/s0-07-seed-demo | Belum | - |
+| S0-03 | Database lokal (Drizzle + PGlite), skema, migrasi | Berkas 07 | uji repositori | feat/s0-03-db-foundation | Selesai | 2026-11-22 |
+| S0-04 | Sesi dan login guru demo, `proxy.ts` | Guru #1 | TC-01 (dasar) | feat/s0-04-auth-session | Selesai | 2026-11-22 |
+| S0-05 | Token desain dan komponen dasar | Berkas 03 | uji komponen | feat/s0-05-design-tokens-ui | Selesai | 2026-11-22 |
+| S0-06 | Lembar Tampilan, batas galat, tautan lompat | Berkas 03 | axe | feat/s0-06-layout-preferences | Selesai | 2026-11-22 |
+| S0-07 | Seed kelas dan materi demo | Berkas 09 | `db:reset` | feat/s0-07-seed-demo | Selesai | 2026-11-22 |
 | S1-01 | Isolasi data per guru | Guru #1 | TC-01 | | Belum | - |
 | S1-02 | Ruang kelas, kode kelas, daftar siswa | Berkas 05 | uji repositori | | Belum | - |
 | S1-03 | Wizard Buat materi (topik, teks, PDF, foto) dan pembuatan otomatis | Guru #2 | TC-02, TC-09 | | Belum | - |

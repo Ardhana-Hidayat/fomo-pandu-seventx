@@ -30,6 +30,6 @@
 | S3-04 | Tema warna dan pengaturan lengkap | Berkas 03 | TC-14 | sprint/3-team-value | Selesai | 2026-11-22 |
 | S3-05 | Peta penguasaan dan saran sederhana | Berkas 06 | uji aturan | sprint/3-team-value | Selesai | 2026-11-22 |
 | S3-06 | Kuis bersama di TV dan Instruksi cepat | Berkas 04, 05 | TC-12 | sprint/3-team-value | Selesai | 2026-11-22 |
-| S4-01 | Audit aksesibilitas dan kinerja | Berkas 12 §7 | Lighthouse, TC-12 | | Belum | - |
-| S4-02 | README, ADR, dokumentasi deploy | Berkas 12 §10 | tinjauan | | Belum | - |
-| S4-03 | Daftar periksa deploy dan rilis | Berkas 10 §6 | TC-13 | | Belum | - |
+| S4-01 | Audit aksesibilitas dan kinerja | Berkas 12 §7 | Lighthouse, TC-12 | sprint/4-release-audit | Selesai | 2026-11-22 |
+| S4-02 | README, ADR, dokumentasi deploy | Berkas 12 §10 | tinjauan | sprint/4-release-audit | Selesai | 2026-11-22 |
+| S4-03 | Daftar periksa deploy dan rilis | Berkas 10 §6 | TC-13 | sprint/4-release-audit | Selesai | 2026-11-22 |

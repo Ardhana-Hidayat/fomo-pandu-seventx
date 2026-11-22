@@ -4,6 +4,7 @@
     "src/app/**/{page,layout,loading,error,global-error,not-found,route,template,default}.{ts,tsx}",
     "src/server/**/*.ts",
     "src/shared/**/*.{ts,tsx}",
+    "src/features/**/index.ts",
     "src/lib/**/*.{ts,tsx}",
     "scripts/**/*.{ts,js,mjs}"
   ],
@@ -14,7 +15,6 @@
   "ignoreDependencies": [
     "qrcode.react",
     "sharp",
-    "unpdf",
     "tailwindcss",
     "@tailwindcss/turbopack",
     "@types/qrcode.react"

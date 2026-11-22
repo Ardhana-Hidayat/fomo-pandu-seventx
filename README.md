@@ -1,86 +1,211 @@
-# InkluDidik — Web Pendidikan Inklusif Adaptif
+# InkluDidik — Platform Pembelajaran Adaptif Terintegrasi SLB
 
-Aplikasi web pendidikan inklusif untuk siswa berkebutuhan khusus (tunarungu-wicara dan tunagrahita) serta guru di **SLBN Manisrejo Kota Madiun**, dikembangkan oleh **Tim Fomo** untuk kompetisi nasional **SEVENT X (Kategori Website)**.
+[![Quality Gate](https://img.shields.io/badge/Quality%20Gate-Passing-success)](docs/backlog.md)
+[![Next.js](https://img.shields.io/badge/Next.js-16.4.6-black)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict%205.x-blue)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38bdf8)](https://tailwindcss.com)
+[![Database](https://img.shields.io/badge/Database-PGlite%20%2F%20PostgreSQL-336791)](https://orm.drizzle.team)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
----
-
-## 🌟 Fitur & Empat Modul Utama
-
-1. **Modul 1: Generator Kartu Peraga Digital AI (`/guru/buat-kartu`)**
-   - Guru senior cukup mengetik topik (atau unggah foto buku paket), sistem menghasilkan kartu peraga digital terstruktur dalam hitungan detik.
-   - Dilengkapi pemetaan ejaan isyarat tangan **SIBI** dan **Bisindo** secara deterministik.
-   - Pratinjau langsung dan penerbitan ke kelas dengan 1 klik.
-
-2. **Modul 2: Jembatan Komunikasi Cepat Guru–Siswa (`/guru/jembatan-komunikasi`)**
-   - Mode layar penuh (*Smart TV Mode*) dengan tipografi raksasa dan kontras tinggi.
-   - Input teks atau mikrofon lisan (*Web Speech API*) bahasa Indonesia (`id-ID`).
-   - Pemecah instruksi lisan menjadi urutan aksi visual konkret dengan slider pengatur kecepatan isyarat (`0.5x`, `0.75x`, `1x`, `1.25x`) dan dukungan navigasi remote TV / keyboard.
-
-3. **Modul 3: Modul Belajar Bertahap (`/siswa/belajar/[modulId]` & `/siswa/latihan/[modulId]`)**
-   - **Tahap Demonstrasi**: 1 kartu per layar (*single task screen*), pelafalan suara Text-to-Speech bahasa Indonesia (`window.speechSynthesis`), ejaan huruf isyarat interaktif, navigasi tombol besar.
-   - **Tahap Praktik Mandiri & Peer Tutor**: Kuis visual *Tap-to-Match* tanpa penalti waktu stres. Umpan balik positif dengan warna amber hangat untuk mencoba lagi (tanpa merah agresif).
-
-4. **Modul 4: Aksesibilitas Global & Kode Kelas 6-Digit (`/`)**
-   - Akses siswa langsung via kode 6-digit tanpa login rumit.
-   - Toolbar Aksesibilitas Global: Mode Kontras Tinggi (*WCAG AAA* `>= 7:1`), pengatur ukuran font (`Normal`, `Besar`, `Ekstra Besar`), dan sakelar sistem isyarat (`SIBI` / `Bisindo`).
-   - Dashboard progres belajar siswa dan rekap skor latihan untuk evaluasi guru.
+Platform web pendidikan inklusif adaptif yang dirancang khusus untuk siswa berkebutuhan khusus (tunarungu-wicara, tunanetra, *low vision*, dan tunagrahita) serta guru di Sekolah Luar Biasa (**SLBN Manisrejo Kota Madiun**). Dikembangkan oleh **Tim Fomo** untuk kompetisi nasional **SEVENT X (Kategori Website)**.
 
 ---
 
-## 🛠️ Tumpukan Teknologi (Tech Stack)
+## 🌟 Fitur Utama
 
-- **Framework**: Next.js 16 (App Router + Turbopack + Cache Components)
-- **Bahasa**: TypeScript (100% strict type check, bebas `any`)
-- **Styling**: Tailwind CSS v4 dengan Design Tokens Semantik
-- **AI**: Google Gemini API (`gemini-2.5-flash` via `@google/genai`) dengan *Structured JSON Output*
-- **Basis Data & Auth**: Supabase (`@supabase/ssr` & `@supabase/supabase-js`)
-- **Desain & Aksesibilitas**: Prinsip ramah anak SLB (aturan ketat `STOP-SLOP.md` & `DESIGN.md`)
+### 1. Empat Saluran Belajar Multimodal (*Four Modality Channels*)
+Setiap kartu peraga pembelajaran dapat disajikan melalui 4 saluran yang dapat diaktifkan/dinonaktifkan secara fleksibel sesuai kebutuhan individual siswa:
+- **Teks**: Tipografi ramah disleksia (*Atkinson Hyperlegible Next* & *Lexend*), ukuran huruf adaptif, dan kata kunci berpenanda.
+- **Audio Konsisten**: Audio pelafalan kalimat tersintesis di server (WAV 24kHz) atau rekaman suara guru langsung, tersinkronisasi dengan efek sorotan kata (*karaoke wipe* `--progres`).
+- **Bahasa Isyarat**: Ejaan jari terverifikasi untuk sistem **SIBI** dan **BISINDO** tanpa gambar buatan AI. Dilengkapi pita huruf interaktif (*letter ribbon*).
+- **Piktogram Konkret**: Piktogram simbol standar **ARASAAC** (*Creative Commons CC BY-NC-SA 4.0*) dengan *caching* lokal dan *fallback* otomatis tanpa internet.
+
+### 2. Ruang Kerja Guru (*Teacher Workspace*)
+- **Wizard Pembuatan Materi Otomatis**: Buat draf materi dari topik, teks panjang, berkas PDF buku ajar, atau foto dokumen buku. Ditenagai Google Gemini API dengan *fallback* kurikulum deterministik saat offline.
+- **Editor & Gerbang Persetujuan Ketat (*Approval Gate*)**: Guru memiliki kendali penuh menyunting kartu, memilih media piktogram/foto, merekam audio mikrofon, dan wajib menyetujui (*approve*) sebelum materi terbit ke siswa.
+- **Mode Presentasi Kelas & Smart TV (`/guru/materi/[id]/presentasi` & `/tv/[kode]`)**: Tampilan layar penuh dengan tipografi raksasa (`--t-tv`), kontrol ramah remote TV (tombol angka 1-4, spasi, panah), dan kuis bersama di depan kelas.
+- **Ekspor Kartu Fisik Siap Cetak (`/guru/materi/[id]/cetak`)**: Lembar cetak format A4 dengan tata letak kisi 2x2, panduan garis potong putus-putus (*dashed line*), kontras tinggi, dan QR code akses mandiri.
+- **Manajemen Kelas & Buku Nilai**: Kode gabung 6-digit instan, pengelolaan profil kebutuhan khusus siswa, rekap skor, akurasi percobaan pertama (*first-try accuracy*), dan waktu pengerjaan.
+
+### 3. Jembatan Komunikasi Cepat (*Quick Instructions*) (`/guru/instruksi-cepat`)
+- Mengubah instruksi verbal atau ketikan guru menjadi 1–4 langkah visual konkret dengan ejaan isyarat dan piktogram untuk diproyeksikan langsung di layar Smart TV kelas.
+
+### 4. Mesin Rekomendasi Pedagogis Transparan (`/guru/kelas/[id]/hasil/[sid]`)
+- Mengevaluasi pola belajar siswa berdasarkan aturan pedagogis teruji (R1–R4, R7) dari Berkas 06:
+  - **R1 (Pengulangan Konsep)**: Deteksi kesulitan berulang pada kartu tertentu untuk pendampingan benda konkret.
+  - **R2 (Ketergantungan Petunjuk / Akselerasi)**: Rekomendasi penyesuaian jumlah opsi pilihan (2, 3, atau 4).
+  - **R3 (Pola Tebak / Kontras Font)**: Deteksi jawaban cepat berturut-turut atau kebutuhan kontras tinggi untuk siswa *low vision*.
+  - **R4 (Kanal Bahasa Isyarat)**: Rekomendasi pengaktifan kanal isyarat & teks bagi siswa tunarungu.
+  - **R7 (Peringatan Kartu Menantang)**: Analisis kartu paling menantang di tingkat kelas.
+- Setiap rekomendasi dilengkapi bukti nyata ("Dasar data") dan status tindak lanjut (*baru*, *dilakukan*, *diabaikan*).
+
+### 5. Akses Siswa Tanpa Hambatan (*Zero-Friction Student Access*) (`/masuk`)
+- Siswa masuk hanya dengan memasukkan **Kode Kelas 6-Digit** dan nama panggilan tanpa perlu mengingat kata sandi atau email.
+- Pemutar kartu peraga interaktif dengan navigasi sentuh minimal 48px dan umpan balik hangat non-punitif (tanpa timer hitung mundur pemicu stres).
+
+### 6. Aksesibilitas Teruji (Kepatuhan WCAG AAA)
+- **3 Tema Visual**: Terang (*Warm Off-White*), Gelap (*Deep Slate*), dan Kuning-Hitam (*High Contrast* 18:1).
+- **Fokus Ganda (*Dual Focus Ring*)**: Indikator fokus keyboard kontras tinggi putih-hitam yang jelas di semua peramban.
+- **Anti-Slop & Anti-Distraksi**: Bebas gradien neon, bebas animasi berlebihan, bebas emoji liar, dan semantik HTML penuh (`<main id="main-content">`, `<nav>`, `<aside aria-live="polite">`).
 
 ---
 
-## 🚀 Panduan Memulai (Getting Started)
+## 🛠️ Tumpukan Teknologi (*Tech Stack*)
 
-### 1. Instalasi Dependensi
+| Komponen | Teknologi | Keterangan |
+|---|---|---|
+| **Framework** | **Next.js 16.4.6** | App Router, Server Actions, Partial Prerendering (PPR), Turbopack |
+| **Bahasa** | **TypeScript 5.x** | *Strict mode*, 0 `any`, arsitektur fungsional `Result<T, AppError>` |
+| **Gaya & Token** | **Tailwind CSS v4** | CSS variables semantik, utilitas fluid typography & high-contrast |
+| **Basis Data** | **Drizzle ORM** | Skema tipe aman, migrasi terkelola otomatis |
+| **Driver DB Lokal** | **@electric-sql/pglite** | PostgreSQL WASM *in-memory/embedded* (jalan lokal tanpa docker/cloud) |
+| **Driver DB Produksi** | **PostgreSQL / Supabase** | Sakelar 1-baris via env `DATA_DRIVER=postgres` |
+| **Penyimpanan Media** | **StorageProvider** | Driver lokal `.data/storage/` dan driver Supabase Storage |
+| **Manipulasi Citra** | **Sharp** | Sanitasi EXIF, *resize* rasio 4:3 max 1200x900, konversi WebP |
+| **AI & LLM** | **Google Gemini API** | Model `gemini-2.5-flash` dengan *fallback* kurikulum offline |
+| **Pustaka Simbol** | **ARASAAC API** | Piktogram simbol lisensi CC BY-NC-SA 4.0 |
+| **Ikonografi** | **Phosphor Icons** | `@phosphor-icons/react` berbobot tebal ramah sensori |
+
+---
+
+## 🚀 Panduan Memulai Cepat (*Local Quickstart*)
+
+Aplikasi ini dirancang dengan prinsip **Zero-Cloud Dependency**: dapat dijalankan 100% secara lokal untuk evaluasi juri tanpa memerlukan akun cloud, kartu kredit, atau instalasi PostgreSQL eksternal.
+
+### 1. Prasyarat
+- Node.js versi 20.x atau 22.x LTS (uji verifikasi menggunakan Node.js v22/v24).
+- NPM versi 10.x+.
+
+### 2. Pemasangan Dependensi
 ```bash
 npm install
 ```
 
-### 2. Konfigurasi Lingkungan (`.env.local`)
-Salin file `.env.example` menjadi `.env.local`:
+### 3. Pengaturan Lingkungan
+Salin berkas konfigurasi contoh:
 ```bash
 cp .env.example .env.local
 ```
-Lalu isi kredensial Supabase dan Google Gemini API:
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-GEMINI_API_KEY=your-gemini-api-key
+*Catatan: Nilai bawaan di `.env.example` sudah siap pakai untuk mode lokal (`DATA_DRIVER=local`, `STORAGE_DRIVER=local`, `AUTH_MODE=demo`). API key Gemini bersifat opsional karena sistem memiliki fallback offline cerdas.*
+
+### 4. Inisialisasi & Seed Basis Data Lokal
+Jalankan migrasi Drizzle dan buat data demo lengkap (guru demo, kelas demo, siswa, materi contoh, dan hasil latihan):
+```bash
+npm run db:reset
 ```
-*(Catatan: Aplikasi memiliki fallback offline/cache cerdas sehingga tetap dapat diuji secara penuh meskipun kredensial API belum diisi).*
 
-### 3. Setup Basis Data (Supabase)
-Jalankan skrip SQL di file `supabase/schema.sql` pada menu **SQL Editor** di dashboard Supabase Anda.
-
-### 4. Menjalankan Server Pengembangan
+### 5. Jalankan Server Pengembangan
 ```bash
 npm run dev
 ```
-Buka browser pada tautan [http://localhost:3000](http://localhost:3000).
+Buka browser pada alamat [http://localhost:3000](http://localhost:3000).
 
-### 5. Membangun untuk Produksi
+---
+
+## 👥 Akses Akun & Skenario Demo
+
+| Peran | URL Masuk | Cara Akses / Kredensial |
+|---|---|---|
+| **Guru Demo** | `/guru/masuk` | Klik tombol **"Masuk sebagai Guru Demo"** (langsung masuk ke dashboard `/guru`) |
+| **Siswa Demo** | `/masuk` | Masukkan Kode Kelas: **`123456`**, Nama Siswa: **`Budi`** (atau `Sari`, `Dina`, `Raka`) |
+| **Mode Smart TV** | `/tv/123456` | Tampilan layar besar kelas untuk materi cuci tangan |
+| **Instruksi Cepat** | `/guru/instruksi-cepat` | Jembatan instruksi visual kelas untuk guru |
+| **Pustaka Isyarat** | `/guru/pengaturan/isyarat` | Verifikasi kamus abjad SIBI dan BISINDO |
+| **Halaman Kredit** | `/kredit` | Atribusi lisensi ARASAAC, font, dan kamus isyarat |
+
+---
+
+## 🔄 Beralih ke Supabase (Mode Produksi)
+
+Untuk menyambungkan aplikasi ke infrastruktur Supabase di server produksi:
+
+1. Buat proyek baru di [Supabase Dashboard](https://supabase.com).
+2. Salin URL Pooler PostgreSQL dari menu **Settings > Database**.
+3. Perbarui variabel lingkungan di `.env.local`:
+   ```env
+   DATA_DRIVER=postgres
+   DATABASE_URL=postgresql://postgres.[project-ref]:[password]@aws-0-[region].pooler.supabase.com:6543/postgres?pgbouncer=true
+   STORAGE_DRIVER=supabase
+   NEXT_PUBLIC_SUPABASE_URL=https://[project-ref].supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
+   SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOi...
+   AUTH_MODE=google
+   ```
+4. Jalankan migrasi dan seeding ke database Supabase:
+   ```bash
+   npm run db:migrate
+   npm run db:seed
+   ```
+5. Lihat panduan lengkap di [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
+---
+
+## 🛡️ Gerbang Kualitas & Pengujian (*Quality Gates*)
+
+Setiap baris kode diuji melalui rangkaian uji otomatis sebelum disetujui:
+
 ```bash
+# Jalankan seluruh rangkaian gerbang mutu (lint, typecheck, deps, unused, unit test)
+npm run check
+
+# Uji unit & integrasi lengkap (Vitest)
+npm run test
+
+# Pengecekan arsitektur & impor lintas modul (Dependency Cruiser)
+npm run deps
+
+# Pengecekan kode mati & ekspor tak terpakai (Knip)
+npm run unused
+
+# Pengecekan keamanan berkas git (Git Guard)
+node scripts/git-guard.mjs tracked
+
+# Kompilasi build produksi (Turbopack)
 npm run build
-npm run start
 ```
 
 ---
 
-## ♿ Standar Aksesibilitas & Kepatuhan Stop-Slop
+## 📁 Struktur Direktori Proyek
 
-Proyek ini menerapkan standar mutu tinggi sesuai dokumen `STOP-SLOP.md` dan `DESIGN.md`:
-- **Target Sentuh**: Minimal `48x48px` hingga `64x64px` untuk kemudahan motorik anak dan remote Smart TV.
-- **Rasio Kontras**: Minimal WCAG AA (`4.5:1`) dan mendukung WCAG AAA (`>= 7:1`) pada mode Kontras Tinggi.
-- **Ketenangan Visual**: Bebas gradien neon agresif, bebas animasi distraksi (`animate-bounce`), dan tanpa timer hitung mundur yang memicu kecemasan siswa.
-- **Microcopy Ramah**: Kalimat instruksi pendek (maksimal 5–7 kata), bahasa Indonesia lugas dan aktif.
-- **Efisiensi Alur**: Seluruh aksi utama guru dapat diselesaikan dalam maksimal 3 klik dari beranda.
+```text
+InkluDidik/
+├── src/
+│   ├── app/                      # Rute Next.js 16 App Router (Guru, Siswa, TV, API)
+│   │   ├── (auth)/               # Rute autentikasi
+│   │   ├── guru/                 # Ruang kerja guru (materi, kelas, pengaturan, hasil)
+│   │   ├── kelas/                # Portal siswa berbasis kode kelas
+│   │   ├── tv/                   # Mode layar penuh Smart TV kelas
+│   │   ├── api/                  # Route handler API (AI, media, TTS, signs)
+│   │   └── kredit/               # Halaman atribusi lisensi terbuka
+│   ├── features/                 # Modul fitur mandiri (cohesive feature vertical slices)
+│   │   ├── accessibility/        # Konteks tema, kontras tinggi, font picker
+│   │   ├── authoring/            # Editor materi, wizard AI, uploader gambar & audio
+│   │   ├── player/               # Pemutar kartu peraga & kartu isyarat
+│   │   ├── presentation/         # Komponen TV player layar penuh
+│   │   ├── print-cards/          # Tata letak cetak fisik A4
+│   │   ├── quick-instructions/   # Jembatan instruksi cepat visual
+│   │   ├── quiz/                 # Runner kuis adaptif
+│   │   └── signs/                # Pustaka isyarat SIBI/BISINDO
+│   ├── server/                   # Server-only logic (DB, Repos, Services, Config)
+│   │   ├── config/               # Validasi env Zod (env.ts)
+│   │   ├── db/                   # Skema Drizzle (schema.ts), client, seed
+│   │   ├── repos/                # Akses data (lessons, classrooms, assets, recommendations)
+│   │   ├── security/             # Sesi, token, rate-limit
+│   │   └── services/             # AI (Gemini), media (Sharp), TTS, signs, storage
+│   └── shared/                   # Komponen UI dasar & utilitas bersama
+│       ├── components/           # Button, Card, Field, Chip, Modal (aksesibel)
+│       └── lib/                  # Result pattern, sync engine
+├── public/                       # Aset statis publik (signs, media, favicon)
+├── docs/                         # Dokumentasi arsitektur, ADR, deployment, backlog
+└── scripts/                      # Skrip git-guard, import isyarat, env check
+```
+
+---
+
+## 📜 Lisensi & Atribusi
+
+- **Perangkat Lunak**: Berlisensi [MIT](LICENSE) © 2026 Tim Fomo.
+- **Piktogram**: [ARASAAC](https://arasaac.org) (Pemerintah Aragon, penulis Sergio Palao), berlisensi [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+- **Bahasa Isyarat**: Rujukan resmi Kamus SIBI Kemendikbud dan Lembar Abjad BISINDO Kemendikdasmen.
+- **Tipografi**: *Atkinson Hyperlegible Next* (Braille Institute, OFL) & *Lexend* (Google Fonts, OFL).

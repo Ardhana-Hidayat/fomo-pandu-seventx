@@ -199,3 +199,129 @@ export async function mergeStudent(
     );
   }
 }
+
+export async function bulkAddStudents(
+  teacherId: string,
+  classroomId: string,
+  namesInput: string | string[],
+  defaultPreset?: string
+): Promise<Result<{ added: Student[]; existing: Student[] }>> {
+  try {
+    // 1. Verifikasi kepemilikan kelas oleh guru
+    const owned = await db
+      .select({ id: classrooms.id })
+      .from(classrooms)
+      .where(
+        and(eq(classrooms.id, classroomId), eq(classrooms.teacherId, teacherId))
+      )
+      .limit(1);
+
+    if (owned.length === 0) {
+      return err(
+        makeAppError("FORBIDDEN", "Anda tidak memiliki akses ke kelas ini")
+      );
+    }
+
+    // 2. Pisahkan nama per baris / koma
+    const rawList = Array.isArray(namesInput)
+      ? namesInput
+      : namesInput.split(/\r?\n|,/);
+
+    const cleanNames: string[] = [];
+    const seenLower = new Set<string>();
+
+    for (const raw of rawList) {
+      const trimmed = raw.trim();
+      if (!trimmed) continue;
+      const lower = trimmed.toLowerCase();
+      if (!seenLower.has(lower)) {
+        seenLower.add(lower);
+        cleanNames.push(trimmed);
+      }
+    }
+
+    const added: Student[] = [];
+    const existing: Student[] = [];
+
+    // 3. Tambahkan satu per satu atau temukan yang sudah ada
+    for (const name of cleanNames) {
+      const found = await db
+        .select()
+        .from(students)
+        .where(
+          and(
+            eq(students.classroomId, classroomId),
+            sql`lower(${students.displayName}) = lower(${name})`
+          )
+        )
+        .limit(1)
+        .then((rows) => rows[0]);
+
+      if (found) {
+        existing.push(found);
+      } else {
+        const inserted = await db
+          .insert(students)
+          .values({
+            classroomId,
+            displayName: name,
+            needsPreset: defaultPreset ?? "campuran",
+          })
+          .returning();
+        if (inserted[0]) {
+          added.push(inserted[0]);
+        }
+      }
+    }
+
+    return ok({ added, existing });
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal menambahkan daftar siswa", error)
+    );
+  }
+}
+
+export async function getRosterByJoinCode(
+  joinCode: string
+): Promise<Result<Array<{ id: string; displayName: string }>>> {
+  try {
+    const classRow = await db
+      .select({ id: classrooms.id })
+      .from(classrooms)
+      .where(
+        and(
+          eq(classrooms.joinCode, joinCode.trim()),
+          sql`${classrooms.archivedAt} IS NULL`
+        )
+      )
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (!classRow) {
+      return err(
+        makeAppError("INVALID_CODE", "Kode kelas salah atau kelas tidak aktif")
+      );
+    }
+
+    const rows = await db
+      .select({
+        id: students.id,
+        displayName: students.displayName,
+      })
+      .from(students)
+      .where(
+        and(
+          eq(students.classroomId, classRow.id),
+          sql`${students.mergedInto} IS NULL`
+        )
+      )
+      .orderBy(sql`lower(${students.displayName}) ASC`);
+
+    return ok(rows);
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal memuat daftar nama siswa", error)
+    );
+  }
+}

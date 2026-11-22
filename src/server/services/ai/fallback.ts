@@ -184,7 +184,7 @@ export function generateFallbackFromText(
     .filter((s) => s.length > 5 && s.length < 120)
     .slice(0, 6);
 
-  const cards = sentences.map((sent, idx) => {
+  const cards = sentences.map((sent) => {
     const words = sent.split(/\s+/).filter(Boolean);
     const key = words.find((w) => w.length >= 3)?.toLowerCase() || "belajar";
     return {

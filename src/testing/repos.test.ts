@@ -8,6 +8,8 @@ import {
   getClassroomByJoinCode,
   regenerateJoinCode,
   archiveClassroom,
+  isEasyPattern,
+  generateJoinCode,
 } from "@/server/repos/classrooms";
 import {
   joinClassroom,
@@ -15,6 +17,8 @@ import {
   getStudentById,
   setStudentPreset,
   mergeStudent,
+  bulkAddStudents,
+  getRosterByJoinCode,
 } from "@/server/repos/students";
 import {
   createLesson,
@@ -28,6 +32,7 @@ import {
   publishLesson,
   getPublicationByShareCode,
   listPublicationsForClassroom,
+  listPublishedLessonsByJoinCode,
   setPublicationVisibility,
 } from "@/server/repos/publications";
 import {
@@ -36,7 +41,17 @@ import {
   recordAttempt,
   finishSession,
   listSessionsByLesson,
+  joinStudentSession,
 } from "@/server/repos/sessions";
+import {
+  recordAttempt as recordAttemptDirect,
+  recordBatchAttempts,
+  listAttemptsBySession,
+} from "@/server/repos/attempts";
+import {
+  resultsByLesson,
+  resultsByClassroom,
+} from "@/server/repos/insights";
 import {
   signInDemoTeacher,
   getTeacherBySessionToken,
@@ -461,6 +476,233 @@ describe("Database Repositories & Data Layer (S0-03, S0-04, S0-07)", () => {
         expect(item).toBeDefined();
         expect(item?.studentName).toBe("Bintang");
         expect(item?.correctAttempts).toBe(1);
+      }
+    });
+  });
+
+  describe("Gelombang 1: Core Flow Repositories (S1-01, S1-02, S1-05, S1-06, S1-07, S1-09)", () => {
+    it("S1-01 & S1-02: Join code mencegah pola mudah, bulk add siswa memisahkan baris & idempoten", async () => {
+      // 1. Verifikasi pencegahan pola mudah pada join code
+      expect(isEasyPattern("000000")).toBe(true);
+      expect(isEasyPattern("111111")).toBe(true);
+      expect(isEasyPattern("123456")).toBe(true);
+      expect(isEasyPattern("654321")).toBe(true);
+      expect(isEasyPattern("121212")).toBe(true);
+      expect(isEasyPattern("123123")).toBe(true);
+
+      const generated = generateJoinCode();
+      expect(generated).toHaveLength(6);
+      expect(isEasyPattern(generated)).toBe(false);
+
+      // 2. Bulk add siswa
+      const auth = await signInDemoTeacher();
+      const teacherId = auth.teacher.id;
+      const classRes = await createClassroom(teacherId, {
+        name: "Kelas Bulk Siswa",
+      });
+      expect(classRes.ok).toBe(true);
+      if (!classRes.ok) return;
+      const classId = classRes.data.id;
+
+      const rawInput = "Budi\nSiti Nur\n  budi  \nAndi, Rina\n\n";
+      const bulkRes = await bulkAddStudents(teacherId, classId, rawInput, "tunarungu");
+      expect(bulkRes.ok).toBe(true);
+      if (!bulkRes.ok) return;
+
+      // "Budi" dan "  budi  " digabung/didupduplikasi
+      expect(bulkRes.data.added.length).toBe(4); // Budi, Siti Nur, Andi, Rina
+      expect(bulkRes.data.added.some((s) => s.displayName === "Budi")).toBe(true);
+
+      // Jalankan bulk add lagi dengan nama sama -> semua masuk existing
+      const bulkAgain = await bulkAddStudents(teacherId, classId, "budi\nRINA");
+      expect(bulkAgain.ok).toBe(true);
+      if (bulkAgain.ok) {
+        expect(bulkAgain.data.added.length).toBe(0);
+        expect(bulkAgain.data.existing.length).toBe(2);
+      }
+
+      // Ambil daftar nama untuk siswa (roster publik)
+      const rosterRes = await getRosterByJoinCode(classRes.data.joinCode);
+      expect(rosterRes.ok).toBe(true);
+      if (rosterRes.ok) {
+        expect(rosterRes.data.length).toBe(4);
+        expect(rosterRes.data[0]).toHaveProperty("id");
+        expect(rosterRes.data[0]).toHaveProperty("displayName");
+        // Tidak membocorkan needsPreset
+        expect(rosterRes.data[0]).not.toHaveProperty("needsPreset");
+      }
+    });
+
+    it("S1-05 & S1-06: Siswa masuk anonim dengan kode 6-digit & membaca materi terbit", async () => {
+      const auth = await signInDemoTeacher();
+      const teacherId = auth.teacher.id;
+
+      const classRes = await createClassroom(teacherId, {
+        name: "Kelas Masuk Anonim",
+      });
+      if (!classRes.ok) return;
+      const joinCode = classRes.data.joinCode;
+
+      const lessonRes = await createLesson(teacherId, {
+        title: "Pelajaran Kebersihan",
+        topic: "Kesehatan",
+        status: "published",
+        cards: [{ position: 1, text: "Gigi bersih" }],
+        questions: [{ position: 1, type: "match", prompt: "Sikat?", payload: {} }],
+      });
+      if (!lessonRes.ok) return;
+
+      // Terbitkan ke kelas
+      await publishLesson(teacherId, lessonRes.data.id, [classRes.data.id]);
+
+      // 1. Siswa masuk via 6-digit code dan nickname
+      const entryRes = await joinStudentSession(joinCode, "Bimo", "low_vision");
+      expect(entryRes.ok).toBe(true);
+      if (!entryRes.ok) return;
+      expect(entryRes.data.student.displayName).toBe("Bimo");
+      expect(entryRes.data.classroom.id).toBe(classRes.data.id);
+      expect(entryRes.data.token).toHaveLength(64);
+
+      // 2. Cari materi terbit berdasarkan kode kelas
+      const publishedList = await listPublishedLessonsByJoinCode(joinCode);
+      expect(publishedList.ok).toBe(true);
+      if (publishedList.ok) {
+        expect(publishedList.data.length).toBeGreaterThanOrEqual(1);
+        expect(publishedList.data[0]?.lesson.id).toBe(lessonRes.data.id);
+      }
+    });
+
+    it("S1-07: Attempts repository mencatat percobaan dan kelompok percobaan secara idempoten", async () => {
+      const auth = await signInDemoTeacher();
+      const teacherId = auth.teacher.id;
+
+      const classRes = await createClassroom(teacherId, { name: "Kelas Attempts" });
+      if (!classRes.ok) return;
+
+      const studentRes = await joinClassroom(classRes.data.id, "Doni");
+      if (!studentRes.ok) return;
+
+      const lessonRes = await createLesson(teacherId, {
+        title: "Latihan Attempts",
+        topic: "Latihan",
+        questions: [{ position: 1, type: "match", prompt: "Soal 1", payload: {} }],
+      });
+      if (!lessonRes.ok) return;
+      const qId = lessonRes.data.questions[0]?.id;
+      if (!qId) return;
+
+      const sessionRes = await startSession(studentRes.data.id, {
+        lessonId: lessonRes.data.id,
+      });
+      if (!sessionRes.ok) return;
+      const sId = sessionRes.data.id;
+
+      // Catat percobaan via attempts.ts
+      const attemptRes = await recordAttemptDirect(studentRes.data.id, sId, {
+        questionId: qId,
+        isCorrect: true,
+        msToAnswer: 3000,
+      });
+      expect(attemptRes.ok).toBe(true);
+
+      const batchRes = await recordBatchAttempts(studentRes.data.id, sId, [
+        { questionId: qId, attemptNo: 2, isCorrect: true, msToAnswer: 2000 },
+      ]);
+      expect(batchRes.ok).toBe(true);
+
+      const listRes = await listAttemptsBySession(studentRes.data.id, sId);
+      expect(listRes.ok).toBe(true);
+      if (listRes.ok) {
+        expect(listRes.data.length).toBe(2);
+      }
+    });
+
+    it("S1-09: Rekap hasil materi dan kelas menghitung skor, percobaan, dan durasi", async () => {
+      const auth = await signInDemoTeacher();
+      const teacherId = auth.teacher.id;
+
+      const classRes = await createClassroom(teacherId, { name: "Kelas Rekap Hasil" });
+      if (!classRes.ok) return;
+      const classId = classRes.data.id;
+
+      const s1 = await joinClassroom(classId, "Citra");
+      const s2 = await joinClassroom(classId, "Dewi");
+      if (!s1.ok || !s2.ok) return;
+
+      const lessonRes = await createLesson(teacherId, {
+        title: "Materi Rekap Hasil",
+        topic: "Evaluasi",
+        status: "published",
+        cards: [{ position: 1, text: "Kartu Rekap" }],
+        questions: [
+          { position: 1, type: "match", prompt: "Soal 1", payload: {} },
+          { position: 2, type: "order", prompt: "Soal 2", payload: {} },
+        ],
+      });
+      if (!lessonRes.ok) return;
+      const lesson = lessonRes.data;
+      const q1 = lesson.questions[0]?.id;
+      const q2 = lesson.questions[1]?.id;
+      if (!q1 || !q2) return;
+
+      await publishLesson(teacherId, lesson.id, [classId]);
+
+      // Sesi Citra (selesai, 2/2 benar)
+      const sesCitra = await startSession(s1.data.id, { lessonId: lesson.id });
+      if (sesCitra.ok) {
+        await recordAttempt(s1.data.id, sesCitra.data.id, {
+          questionId: q1,
+          attemptNo: 1,
+          isCorrect: true,
+        });
+        await recordAttempt(s1.data.id, sesCitra.data.id, {
+          questionId: q2,
+          attemptNo: 1,
+          isCorrect: true,
+        });
+        await finishSession(s1.data.id, sesCitra.data.id);
+      }
+
+      // Sesi Dewi (selesai, 1/2 benar)
+      const sesDewi = await startSession(s2.data.id, { lessonId: lesson.id });
+      if (sesDewi.ok) {
+        await recordAttempt(s2.data.id, sesDewi.data.id, {
+          questionId: q1,
+          attemptNo: 1,
+          isCorrect: true,
+        });
+        await recordAttempt(s2.data.id, sesDewi.data.id, {
+          questionId: q2,
+          attemptNo: 1,
+          isCorrect: false,
+        });
+        await finishSession(s2.data.id, sesDewi.data.id);
+      }
+
+      // 1. Rekap hasil materi (/guru/materi/[id]/hasil)
+      const lessonRecap = await resultsByLesson(teacherId, lesson.id);
+      expect(lessonRecap.ok).toBe(true);
+      if (lessonRecap.ok) {
+        expect(lessonRecap.data.totalFinished).toBe(2);
+        expect(lessonRecap.data.results.length).toBe(2);
+        const citraResult = lessonRecap.data.results.find((r) => r.studentName === "Citra");
+        expect(citraResult?.scoreText).toBe("2 / 2");
+        expect(citraResult?.scorePercentage).toBe(100);
+      }
+
+      // Guru B tidak boleh membaca rekap materi Guru A (IDOR check)
+      const fakeTeacherB = "00000000-0000-0000-0000-000000000077";
+      const badRecap = await resultsByLesson(fakeTeacherB, lesson.id);
+      expect(badRecap.ok).toBe(false);
+
+      // 2. Rekap hasil kelas (/guru/kelas/[id]/hasil)
+      const classRecap = await resultsByClassroom(teacherId, classId);
+      expect(classRecap.ok).toBe(true);
+      if (classRecap.ok) {
+        expect(classRecap.data.totalStudents).toBe(2);
+        expect(classRecap.data.activeStudents).toBe(2);
+        expect(classRecap.data.publishedLessonsCount).toBe(1);
+        expect(classRecap.data.recentResults.length).toBeGreaterThanOrEqual(2);
       }
     });
   });

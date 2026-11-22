@@ -16,9 +16,31 @@ export interface CreateClassroomInput {
   rosterOnly?: boolean;
 }
 
-function generateJoinCode(): string {
-  // 6 digit angka
-  return Math.floor(100000 + Math.random() * 900000).toString();
+export function isEasyPattern(code: string): boolean {
+  // Digit berulang sama semua: e.g. 000000, 111111, ..., 999999
+  if (/^(\d)\1{5}$/.test(code)) return true;
+  // Urutan berurutan naik atau turun: e.g. 123456, 654321, 012345
+  const ascending = "0123456789012345";
+  const descending = "9876543210987654";
+  if (ascending.includes(code) || descending.includes(code)) return true;
+  // Pola berulang 2 atau 3 digit: e.g. 121212, 123123
+  if (/^(\d{2})\1{2}$/.test(code)) return true;
+  if (/^(\d{3})\1$/.test(code)) return true;
+  return false;
+}
+
+export function generateJoinCode(): string {
+  let code = "";
+  let valid = false;
+  let attempts = 0;
+  while (!valid && attempts < 100) {
+    code = Math.floor(100000 + Math.random() * 900000).toString();
+    if (!isEasyPattern(code)) {
+      valid = true;
+    }
+    attempts++;
+  }
+  return code || Math.floor(100000 + Math.random() * 900000).toString();
 }
 
 export async function createClassroom(

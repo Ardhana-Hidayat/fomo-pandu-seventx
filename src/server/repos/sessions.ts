@@ -1,5 +1,5 @@
 import "server-only";
-import { eq, and } from "drizzle-orm";
+import { eq, and, isNull } from "drizzle-orm";
 import { db } from "../db/client";
 import {
   sessions,
@@ -7,11 +7,16 @@ import {
   questionAttempts,
   lessons,
   students,
+  classrooms,
   type Session,
   type CardEvent,
   type QuestionAttempt,
+  type Classroom,
+  type Student,
 } from "../db/schema";
 import { ok, err, type Result, makeAppError } from "@/shared/lib/result";
+import { createStudentSession } from "../security/session";
+import { joinClassroom } from "./students";
 
 export interface StartSessionInput {
   lessonId: string;
@@ -289,6 +294,59 @@ export async function listSessionsByLesson(
   } catch (error) {
     return err(
       makeAppError("DB_ERROR", "Gagal memuat rekap hasil sesi", error)
+    );
+  }
+}
+
+export async function joinStudentSession(
+  joinCode: string,
+  nickname: string,
+  needsPreset?: string
+): Promise<Result<{ student: Student; classroom: Classroom; token: string }>> {
+  const cleanCode = joinCode.trim();
+  const cleanName = nickname.trim();
+
+  if (!cleanCode || cleanCode.length !== 6) {
+    return err(makeAppError("INVALID_CODE", "Kode kelas harus 6 digit angka"));
+  }
+  if (!cleanName) {
+    return err(makeAppError("INVALID_NAME", "Nama panggilan tidak boleh kosong"));
+  }
+
+  try {
+    const classRow = await db
+      .select()
+      .from(classrooms)
+      .where(
+        and(
+          eq(classrooms.joinCode, cleanCode),
+          isNull(classrooms.archivedAt)
+        )
+      )
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (!classRow) {
+      return err(
+        makeAppError("INVALID_CODE", "Kode kelas salah atau kelas tidak aktif")
+      );
+    }
+
+    const studentRes = await joinClassroom(classRow.id, cleanName, needsPreset);
+    if (!studentRes.ok) {
+      return studentRes;
+    }
+
+    const { token } = await createStudentSession(studentRes.data.id, classRow.id);
+
+    return ok({
+      student: studentRes.data,
+      classroom: classRow,
+      token,
+    });
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal memproses sesi siswa", error)
     );
   }
 }

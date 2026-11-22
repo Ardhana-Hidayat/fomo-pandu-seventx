@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { ok, err, type Result, makeAppError } from "@/shared/lib/result";
+import { err, type Result, makeAppError } from "@/shared/lib/result";
 import { TEACHER_COOKIE_NAME, STUDENT_COOKIE_NAME, validateSession } from "../security/session";
 import { getTeacherBySessionToken } from "../services/auth/demo";
 import { generateLessonContent } from "../services/ai";

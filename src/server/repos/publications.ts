@@ -1,5 +1,5 @@
 import "server-only";
-import { eq, and, inArray } from "drizzle-orm";
+import { eq, and, inArray, sql } from "drizzle-orm";
 import { db } from "../db/client";
 import {
   publications,
@@ -226,6 +226,36 @@ export async function getPublicationByShareCode(
   } catch (error) {
     return err(
       makeAppError("DB_ERROR", "Gagal mencari materi dari kode", error)
+    );
+  }
+}
+
+export async function listPublishedLessonsByJoinCode(
+  joinCode: string
+): Promise<Result<PublicationWithLesson[]>> {
+  try {
+    const classroom = await db
+      .select({ id: classrooms.id })
+      .from(classrooms)
+      .where(
+        and(
+          eq(classrooms.joinCode, joinCode.trim()),
+          sql`${classrooms.archivedAt} IS NULL`
+        )
+      )
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (!classroom) {
+      return err(
+        makeAppError("INVALID_CODE", "Kode kelas salah atau kelas tidak aktif")
+      );
+    }
+
+    return listPublicationsForClassroom(classroom.id);
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal memuat materi dari kode kelas", error)
     );
   }
 }

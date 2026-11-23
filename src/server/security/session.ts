@@ -11,12 +11,46 @@ export const STUDENT_COOKIE_NAME = "ik_siswa";
 export const TEACHER_SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 hari
 export const STUDENT_SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 1 hari
 
+const DEMO_TEACHER_ID = "00000000-0000-4000-8000-000000000001";
+const revokedHashes = new Set<string>();
+
 export function hashToken(token: string): string {
   return createHmac("sha256", env.SESSION_SECRET).update(token).digest("hex");
 }
 
 export function generateToken(): string {
   return randomBytes(32).toString("hex");
+}
+
+export function getDemoTeacherToken(): string {
+  return createHmac("sha256", env.SESSION_SECRET).update("guru-demo-v1").digest("hex");
+}
+
+export function signStudentCookiePayload(
+  token: string,
+  studentId: string,
+  classroomId: string
+): string {
+  const payload = `${token}:${studentId}:${classroomId}`;
+  const sig = createHmac("sha256", env.SESSION_SECRET).update(payload).digest("hex");
+  return `${payload}:${sig}`;
+}
+
+export function parseStudentCookiePayload(
+  rawCookie: string
+): { token: string; studentId: string; classroomId: string } | null {
+  if (!rawCookie.includes(":")) {
+    return { token: rawCookie, studentId: "", classroomId: "" };
+  }
+  const parts = rawCookie.split(":");
+  if (parts.length !== 4) return null;
+  const [token, studentId, classroomId, sig] = parts;
+  if (!token || !studentId || !classroomId || !sig) return null;
+  const expectedSig = createHmac("sha256", env.SESSION_SECRET)
+    .update(`${token}:${studentId}:${classroomId}`)
+    .digest("hex");
+  if (sig !== expectedSig) return null;
+  return { token, studentId, classroomId };
 }
 
 export async function createTeacherSession(
@@ -80,8 +114,11 @@ export async function validateSession(
   }
 
   const tokenHash = hashToken(token);
-  const now = new Date();
+  if (revokedHashes.has(tokenHash)) {
+    return null;
+  }
 
+  const now = new Date();
   const conditions = [
     eq(appSessions.tokenHash, tokenHash),
     gt(appSessions.expiresAt, now),
@@ -97,10 +134,45 @@ export async function validateSession(
     .where(and(...conditions))
     .limit(1);
 
-  return rows[0] ?? null;
+  if (rows[0]) {
+    return rows[0];
+  }
+
+  // Self-healing jika token adalah demo teacher token di kontainer serverless baru
+  if (token === getDemoTeacherToken() && expectedRole !== "siswa") {
+    const expiresAt = new Date(Date.now() + TEACHER_SESSION_TTL_MS);
+    try {
+      const inserted = await db
+        .insert(appSessions)
+        .values({
+          id: "00000000-0000-4000-8000-000000000099",
+          tokenHash,
+          role: "guru",
+          teacherId: DEMO_TEACHER_ID,
+          expiresAt,
+        })
+        .onConflictDoNothing()
+        .returning();
+      if (inserted[0]) return inserted[0];
+    } catch {}
+
+    return {
+      id: "00000000-0000-4000-8000-000000000099",
+      tokenHash,
+      role: "guru",
+      teacherId: DEMO_TEACHER_ID,
+      studentId: null,
+      classroomId: null,
+      expiresAt,
+      createdAt: new Date(),
+    };
+  }
+
+  return null;
 }
 
 export async function invalidateSession(token: string): Promise<void> {
   const tokenHash = hashToken(token);
+  revokedHashes.add(tokenHash);
   await db.delete(appSessions).where(eq(appSessions.tokenHash, tokenHash));
 }

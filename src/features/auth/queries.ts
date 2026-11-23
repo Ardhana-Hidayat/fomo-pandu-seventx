@@ -6,6 +6,8 @@ import {
   TEACHER_COOKIE_NAME,
   STUDENT_COOKIE_NAME,
   validateSession,
+  parseStudentCookiePayload,
+  createStudentSession,
 } from "@/server/security/session";
 import { db } from "@/server/db/client";
 import { teachers, students, classrooms, lessons, type Teacher, type Student, type Classroom } from "@/server/db/schema";
@@ -80,13 +82,23 @@ export async function getCurrentStudent(): Promise<CurrentStudentSession | null>
   await connection();
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get(STUDENT_COOKIE_NAME)?.value;
+    const rawCookie = cookieStore.get(STUDENT_COOKIE_NAME)?.value;
 
-    if (!token) {
+    if (!rawCookie) {
       return null;
     }
 
-    const session = await validateSession(token, "siswa");
+    const parsed = parseStudentCookiePayload(rawCookie);
+    const token = parsed ? parsed.token : rawCookie;
+
+    let session = await validateSession(token, "siswa");
+    if (!session && parsed && parsed.studentId && parsed.classroomId) {
+      try {
+        const restored = await createStudentSession(parsed.studentId, parsed.classroomId);
+        session = restored.session;
+      } catch {}
+    }
+
     if (!session || session.role !== "siswa" || !session.studentId || !session.classroomId) {
       return null;
     }

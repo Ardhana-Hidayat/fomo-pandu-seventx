@@ -10,6 +10,8 @@ import {
   STUDENT_SESSION_TTL_MS,
   createStudentSession,
   invalidateSession,
+  getDemoTeacherToken,
+  signStudentCookiePayload,
 } from "@/server/security/session";
 import { db } from "@/server/db/client";
 import { classrooms, students } from "@/server/db/schema";
@@ -18,13 +20,8 @@ import type { Result } from "@/shared/lib/result";
 import { ok, err, makeAppError } from "@/shared/lib/result";
 
 export async function signInDemoAction(): Promise<void> {
-  try {
-    const { seedDatabase } = await import("@/server/db/seed");
-    await seedDatabase();
-  } catch (e) {
-    console.error("Gagal auto-seed di signInDemoAction:", e);
-  }
-  const { token } = await signInDemoTeacher();
+  await signInDemoTeacher();
+  const token = getDemoTeacherToken();
   const cookieStore = await cookies();
 
   cookieStore.set(TEACHER_COOKIE_NAME, token, {
@@ -121,11 +118,12 @@ export async function joinClassroomAction(
     studentId = created.id;
   }
 
-  // 3. Buat sesi siswa dan simpan di cookie
+  // 3. Buat sesi siswa dan simpan di cookie (dengan signature payload tahan serverless)
   const { token } = await createStudentSession(studentId, classroom.id);
   const cookieStore = await cookies();
+  const signedCookie = signStudentCookiePayload(token, studentId, classroom.id);
 
-  cookieStore.set(STUDENT_COOKIE_NAME, token, {
+  cookieStore.set(STUDENT_COOKIE_NAME, signedCookie, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",

@@ -1,4 +1,6 @@
 import "server-only";
+import fs from "node:fs";
+import path from "node:path";
 import { eq, and, asc, sql, inArray } from "drizzle-orm";
 import { db } from "../db/client";
 import {
@@ -210,6 +212,28 @@ const DEMO_QUESTION_PICTO_MAP: Record<string, string> = {
   rinse: "/media/pictograms/bilas.webp",
 };
 
+function loadPictoMap(): Record<string, string> {
+  const map: Record<string, string> = { ...DEMO_QUESTION_PICTO_MAP };
+  try {
+    const manifestPath = path.resolve(process.cwd(), "public/media/pictograms/manifest.json");
+    if (fs.existsSync(manifestPath)) {
+      const data = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+      if (data && data.items) {
+        for (const [key, item] of Object.entries(data.items as Record<string, { id: number; name?: string }>)) {
+          const file = `/media/pictograms/${key}.webp`;
+          map[key.toLowerCase()] = file;
+          if (item.name) {
+            map[item.name.toLowerCase()] = file;
+          }
+        }
+      }
+    }
+  } catch {}
+  return map;
+}
+
+const EXTENDED_PICTO_MAP = loadPictoMap();
+
 async function enrichCardsWithMedia(cards: LessonCard[]): Promise<LessonCardWithMedia[]> {
   const assetIds = cards
     .flatMap((c) => [c.imageAssetId, c.audioAssetId])
@@ -237,6 +261,19 @@ async function enrichCardsWithMedia(cards: LessonCard[]): Promise<LessonCardWith
           : `/api/media/card-images/${a.storageKey}`;
     } else if (c.imageSource === "pictogram" && DEMO_PICTO_MAP[c.position]) {
       imageUrl = DEMO_PICTO_MAP[c.position]!;
+    } else {
+      // Periksa kecocokan kata kunci kartu dengan pustaka piktogram lokal yang tersedia
+      const terms = [
+        ...(c.keyTerms || []),
+        ...c.text.toLowerCase().replace(/[^a-z0-9\s-]/g, "").split(/\s+/),
+      ];
+      for (const t of terms) {
+        const clean = t.trim();
+        if (clean && EXTENDED_PICTO_MAP[clean]) {
+          imageUrl = EXTENDED_PICTO_MAP[clean];
+          break;
+        }
+      }
     }
 
     if (c.audioAssetId && assetMap.has(c.audioAssetId)) {
@@ -264,7 +301,10 @@ function enrichQuestionsWithMedia(questions: QuizQuestion[]): QuizQuestion[] {
         const textKey = opt.text?.toLowerCase().trim() || "";
         const enKey = opt.image?.keyword_en?.toLowerCase().trim() || "";
         const picUrl =
-          DEMO_QUESTION_PICTO_MAP[textKey] || DEMO_QUESTION_PICTO_MAP[enKey];
+          EXTENDED_PICTO_MAP[textKey] ||
+          EXTENDED_PICTO_MAP[enKey] ||
+          DEMO_QUESTION_PICTO_MAP[textKey] ||
+          DEMO_QUESTION_PICTO_MAP[enKey];
         if (picUrl) {
           return {
             ...opt,
@@ -283,7 +323,10 @@ function enrichQuestionsWithMedia(questions: QuizQuestion[]): QuizQuestion[] {
         const textKey = st.text?.toLowerCase().trim() || "";
         const enKey = st.image?.keyword_en?.toLowerCase().trim() || "";
         const picUrl =
-          DEMO_QUESTION_PICTO_MAP[textKey] || DEMO_QUESTION_PICTO_MAP[enKey];
+          EXTENDED_PICTO_MAP[textKey] ||
+          EXTENDED_PICTO_MAP[enKey] ||
+          DEMO_QUESTION_PICTO_MAP[textKey] ||
+          DEMO_QUESTION_PICTO_MAP[enKey];
         if (picUrl) {
           return {
             ...st,

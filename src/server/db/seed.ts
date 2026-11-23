@@ -1,5 +1,7 @@
 import "server-only";
-import { eq, and, sql } from "drizzle-orm";
+import fs from "node:fs";
+import path from "node:path";
+import { eq, and, or, sql } from "drizzle-orm";
 import { db } from "./client";
 import {
   teachers,
@@ -29,7 +31,12 @@ export async function seedDatabase(): Promise<{
   let teacher = await db
     .select()
     .from(teachers)
-    .where(eq(teachers.email, "guru.demo@pandu.id"))
+    .where(
+      or(
+        eq(teachers.email, "guru.demo@pandu.id"),
+        eq(teachers.email, "guru@inkludidik.id")
+      )
+    )
     .limit(1)
     .then((rows) => rows[0]);
 
@@ -52,6 +59,11 @@ export async function seedDatabase(): Promise<{
       })
       .returning();
     teacher = inserted[0];
+  } else if (teacher.email !== "guru.demo@pandu.id") {
+    await db
+      .update(teachers)
+      .set({ email: "guru.demo@pandu.id" })
+      .where(eq(teachers.id, teacher.id));
   }
 
   if (!teacher) {
@@ -62,12 +74,7 @@ export async function seedDatabase(): Promise<{
   let classroom = await db
     .select()
     .from(classrooms)
-    .where(
-      and(
-        eq(classrooms.teacherId, teacher.id),
-        eq(classrooms.joinCode, demoLessonData.classroom.join_code)
-      )
-    )
+    .where(eq(classrooms.joinCode, demoLessonData.classroom.join_code))
     .limit(1)
     .then((rows) => rows[0]);
 
@@ -85,6 +92,11 @@ export async function seedDatabase(): Promise<{
       })
       .returning();
     classroom = inserted[0];
+  } else if (classroom.teacherId !== teacher.id) {
+    await db
+      .update(classrooms)
+      .set({ teacherId: teacher.id })
+      .where(eq(classrooms.id, classroom.id));
   }
 
   if (!classroom) {
@@ -160,23 +172,25 @@ export async function seedDatabase(): Promise<{
     throw new Error("Gagal membuat materi demo");
   }
 
-  // 4b. Piktogram Materi Demo ARASAAC
-  const demoPictos = [
-    { pos: 1, key: "air", file: "/media/pictograms/air.webp", alt: "Air mengalir dari keran" },
-    { pos: 2, key: "cuci tangan", file: "/media/pictograms/cuci-tangan.webp", alt: "Dua tangan dibasahi air" },
-    { pos: 3, key: "sabun", file: "/media/pictograms/sabun.webp", alt: "Sabun batang" },
-    { pos: 4, key: "gosok tangan", file: "/media/pictograms/gosok-tangan.webp", alt: "Tangan digosok dengan sabun" },
-    { pos: 5, key: "bilas", file: "/media/pictograms/bilas.webp", alt: "Tangan dibilas air mengalir" },
-    { pos: 6, key: "handuk", file: "/media/pictograms/handuk.webp", alt: "Handuk bersih" },
-    { pos: 7, key: "tangan bersih", file: "/media/pictograms/tangan-bersih.webp", alt: "Dua tangan yang bersih" },
-  ];
+  // 4b. Pustaka Piktogram ARASAAC (85 Konsep Umum SLB)
+  const manifestPath = path.resolve(process.cwd(), "public/media/pictograms/manifest.json");
+  let manifestItems: Record<string, { id: number; name: string; alt: string }> = {};
+  if (fs.existsSync(manifestPath)) {
+    try {
+      const parsed = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+      manifestItems = parsed.items || {};
+    } catch {}
+  }
 
   const pictoAssetIdMap = new Map<number, string>();
-  for (const p of demoPictos) {
+
+  // Seed semua piktogram yang ada di manifest ke tabel assets
+  for (const [key, item] of Object.entries(manifestItems)) {
+    const file = `/media/pictograms/${key}.webp`;
     let asset = await db
       .select()
       .from(assets)
-      .where(eq(assets.storageKey, p.file))
+      .where(eq(assets.storageKey, file))
       .limit(1)
       .then((rows) => rows[0]);
 
@@ -185,11 +199,11 @@ export async function seedDatabase(): Promise<{
         .insert(assets)
         .values({
           kind: "piktogram",
-          storageKey: p.file,
+          storageKey: file,
           mime: "image/webp",
           bytes: 20000,
-          keyword: p.key,
-          alt: p.alt,
+          keyword: key,
+          alt: item.alt || key,
           source: "arasaac",
           license: "CC BY-NC-SA 4.0",
           attribution: "ARASAAC (https://arasaac.org), Pemerintah Aragon, Sergio Palao",
@@ -198,8 +212,27 @@ export async function seedDatabase(): Promise<{
         .returning();
       asset = inserted[0];
     }
+  }
+
+  // Petakan aset gambar untuk materi demo (posisi 1-7)
+  const demoPosMap: Record<number, string> = {
+    1: "/media/pictograms/air.webp",
+    2: "/media/pictograms/cuci-tangan.webp",
+    3: "/media/pictograms/sabun.webp",
+    4: "/media/pictograms/gosok-tangan.webp",
+    5: "/media/pictograms/bilas.webp",
+    6: "/media/pictograms/handuk.webp",
+    7: "/media/pictograms/tangan-bersih.webp",
+  };
+  for (const [pos, file] of Object.entries(demoPosMap)) {
+    const asset = await db
+      .select()
+      .from(assets)
+      .where(eq(assets.storageKey, file))
+      .limit(1)
+      .then((rows) => rows[0]);
     if (asset) {
-      pictoAssetIdMap.set(p.pos, asset.id);
+      pictoAssetIdMap.set(Number(pos), asset.id);
     }
   }
 

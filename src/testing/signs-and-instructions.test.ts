@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
@@ -13,6 +13,30 @@ import { importSignsFromCsv } from "../../scripts/import-signs";
 
 describe("Sign Resolver & Quick Instructions (S3-02, S3-03, TC-10)", () => {
   describe("1. Sign Resolver & Manifest Loading (TC-10)", () => {
+    const manifestPath = path.resolve(process.cwd(), "public/signs/manifest.json");
+    let originalManifestContent = "";
+
+    beforeAll(async () => {
+      originalManifestContent = await fs.promises.readFile(manifestPath, "utf8");
+      const manifest = JSON.parse(originalManifestContent);
+      const sibiB = manifest.items.find((i: { system: string; key: string }) => i.system === "SIBI" && i.key === "B");
+      if (sibiB) {
+        sibiB.status = "draft";
+        sibiB.verifiedBy = null;
+        sibiB.verifiedAt = null;
+      }
+      const bisindoZ = manifest.items.find((i: { system: string; key: string }) => i.system === "BISINDO" && i.key === "Z");
+      if (bisindoZ) {
+        bisindoZ.status = "missing";
+      }
+      await fs.promises.writeFile(manifestPath, JSON.stringify(manifest, null, 2), "utf8");
+    });
+
+    afterAll(async () => {
+      if (originalManifestContent) {
+        await fs.promises.writeFile(manifestPath, originalManifestContent, "utf8");
+      }
+    });
     it("memuat manifest isyarat dan memverifikasi daftar 26 huruf per sistem", async () => {
       const manifest = await loadSignsManifest();
       expect(manifest.version).toBeGreaterThanOrEqual(1);

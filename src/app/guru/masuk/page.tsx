@@ -1,9 +1,7 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
 import { signInDemoAction, getCurrentTeacher } from "@/features/auth";
-import { TEACHER_COOKIE_NAME } from "@/server/security/session";
 
 export const instant = false;
 
@@ -11,12 +9,6 @@ export default async function TeacherLoginPage() {
   const session = await getCurrentTeacher();
   if (session) {
     redirect("/guru");
-  } else {
-    // Bersihkan cookie usang jika ada token yang tidak lagi valid di DB
-    const cookieStore = await cookies();
-    if (cookieStore.has(TEACHER_COOKIE_NAME)) {
-      cookieStore.delete(TEACHER_COOKIE_NAME);
-    }
   }
   return (
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">

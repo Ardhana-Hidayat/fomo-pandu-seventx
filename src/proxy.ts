@@ -16,6 +16,17 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
+  // Jika membuka /guru/masuk langsung dengan cookie yang usang, hapus cookie tersebut
+  if (isGuruLoginRoute && teacherCookie) {
+    const response = NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+    response.cookies.delete("ik_guru");
+    return response;
+  }
+
   return NextResponse.next({
     request: {
       headers: requestHeaders,

@@ -1,7 +1,5 @@
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import { getCurrentTeacher } from "@/features/auth";
-import { TEACHER_COOKIE_NAME } from "@/server/security/session";
 import { TeacherSidebar, TeacherBottomNav } from "@/features/classrooms";
 import { Button, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
 
@@ -14,10 +12,8 @@ export default async function TeacherLayout({
 }) {
   const session = await getCurrentTeacher();
 
-  // Jika belum ada sesi guru, bersihkan cookie usang dan arahkan ke halaman masuk guru
+  // Jika belum ada sesi guru, arahkan ke halaman masuk guru
   if (!session) {
-    const cookieStore = await cookies();
-    cookieStore.delete(TEACHER_COOKIE_NAME);
     redirect("/guru/masuk");
   }
 

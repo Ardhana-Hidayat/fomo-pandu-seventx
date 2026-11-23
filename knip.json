@@ -16,7 +16,8 @@
     "tailwindcss",
     "@tailwindcss/turbopack",
     "@types/qrcode.react",
-    "@types/canvas-confetti"
+    "@types/canvas-confetti",
+    "@supabase/supabase-js"
   ],
   "ignoreBinaries": [
     "playwright"

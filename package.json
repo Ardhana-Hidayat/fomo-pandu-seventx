@@ -24,7 +24,8 @@
     "signs:analyze": "tsx scripts/signs/analyze.ts",
     "signs:build": "tsx scripts/signs/build-library.ts",
     "signs:review": "tsx scripts/signs/contact-sheet.ts",
-    "media:pictos": "tsx scripts/media/fetch-pictograms.ts"
+    "media:pictos": "tsx scripts/media/fetch-pictograms.ts",
+    "storage:upload": "tsx scripts/storage/upload-assets-supabase.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.2.14",

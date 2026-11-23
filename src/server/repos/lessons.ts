@@ -18,6 +18,7 @@ import {
   type QuizQuestionPayload,
 } from "../db/schema";
 import { ok, err, type Result, makeAppError } from "@/shared/lib/result";
+import { storage } from "../services/storage";
 
 export type LessonCardWithMedia = LessonCard & {
   imageUrl?: string | null;
@@ -186,30 +187,38 @@ export async function createLesson(
   }
 }
 
+function getPictoUrl(slug: string): string {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  if (supabaseUrl && (process.env.STORAGE_DRIVER === "supabase" || process.env.NODE_ENV === "production")) {
+    return `${supabaseUrl}/storage/v1/object/public/card-images/${slug}.webp`;
+  }
+  return `/media/pictograms/${slug}.webp`;
+}
+
 const DEMO_PICTO_MAP: Record<number, string> = {
-  1: "/media/pictograms/air.webp",
-  2: "/media/pictograms/cuci-tangan.webp",
-  3: "/media/pictograms/sabun.webp",
-  4: "/media/pictograms/gosok-tangan.webp",
-  5: "/media/pictograms/bilas.webp",
-  6: "/media/pictograms/handuk.webp",
-  7: "/media/pictograms/tangan-bersih.webp",
+  1: getPictoUrl("air"),
+  2: getPictoUrl("cuci-tangan"),
+  3: getPictoUrl("sabun"),
+  4: getPictoUrl("gosok-tangan"),
+  5: getPictoUrl("bilas"),
+  6: getPictoUrl("handuk"),
+  7: getPictoUrl("tangan-bersih"),
 };
 
 const DEMO_QUESTION_PICTO_MAP: Record<string, string> = {
-  sabun: "/media/pictograms/sabun.webp",
-  soap: "/media/pictograms/sabun.webp",
-  handuk: "/media/pictograms/handuk.webp",
-  towel: "/media/pictograms/handuk.webp",
-  "sikat gigi": "/media/pictograms/sikat-gigi.webp",
-  toothbrush: "/media/pictograms/sikat-gigi.webp",
-  "cuci tangan": "/media/pictograms/cuci-tangan.webp",
-  "wash hands": "/media/pictograms/cuci-tangan.webp",
-  "basahi tangan": "/media/pictograms/cuci-tangan.webp",
-  air: "/media/pictograms/air.webp",
-  water: "/media/pictograms/air.webp",
-  bilas: "/media/pictograms/bilas.webp",
-  rinse: "/media/pictograms/bilas.webp",
+  sabun: getPictoUrl("sabun"),
+  soap: getPictoUrl("sabun"),
+  handuk: getPictoUrl("handuk"),
+  towel: getPictoUrl("handuk"),
+  "sikat gigi": getPictoUrl("sikat-gigi"),
+  toothbrush: getPictoUrl("sikat-gigi"),
+  "cuci tangan": getPictoUrl("cuci-tangan"),
+  "wash hands": getPictoUrl("cuci-tangan"),
+  "basahi tangan": getPictoUrl("cuci-tangan"),
+  air: getPictoUrl("air"),
+  water: getPictoUrl("air"),
+  bilas: getPictoUrl("bilas"),
+  rinse: getPictoUrl("bilas"),
 };
 
 function loadPictoMap(): Record<string, string> {
@@ -220,7 +229,7 @@ function loadPictoMap(): Record<string, string> {
       const data = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
       if (data && data.items) {
         for (const [key, item] of Object.entries(data.items as Record<string, { id: number; name?: string }>)) {
-          const file = `/media/pictograms/${key}.webp`;
+          const file = getPictoUrl(key);
           map[key.toLowerCase()] = file;
           if (item.name) {
             map[item.name.toLowerCase()] = file;
@@ -258,7 +267,7 @@ async function enrichCardsWithMedia(cards: LessonCard[]): Promise<LessonCardWith
       imageUrl =
         a.storageKey.startsWith("/") || a.storageKey.startsWith("http")
           ? a.storageKey
-          : `/api/media/card-images/${a.storageKey}`;
+          : storage.url(a.storageKey, "card-images");
     } else if (c.imageSource === "pictogram" && DEMO_PICTO_MAP[c.position]) {
       imageUrl = DEMO_PICTO_MAP[c.position]!;
     } else {
@@ -282,7 +291,7 @@ async function enrichCardsWithMedia(cards: LessonCard[]): Promise<LessonCardWith
       audioUrl =
         a.storageKey.startsWith("/") || a.storageKey.startsWith("http")
           ? a.storageKey
-          : `/api/media/card-audio/${safeAudioKey}`;
+          : storage.url(safeAudioKey, "card-audio");
     }
 
     return {

@@ -34,11 +34,22 @@ export function SignCard({
   const isLarge = size === "large";
   const isTv = size === "tv";
 
-  const imageSrc = `/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`;
   const isMoving = motion || currentLetter === "J" || currentLetter === "Z";
 
-  const [failedSrc, setFailedSrc] = useState<string | null>(null);
-  const imgError = failedSrc === imageSrc;
+  // Prioritas: Supabase Storage CDN jika dikonfigurasi, dengan fallback mulus ke lokal /signs/
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const remoteSrc = supabaseUrl
+    ? `${supabaseUrl.replace(/\/+$/, "")}/storage/v1/object/public/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`
+    : null;
+  const localSrc = `/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`;
+
+  const [failedUrls, setFailedUrls] = useState<Record<string, boolean>>({});
+
+  const activeSrc = remoteSrc && !failedUrls[remoteSrc]
+    ? remoteSrc
+    : !failedUrls[localSrc]
+    ? localSrc
+    : null;
 
   return (
     <div className={`flex flex-col items-center justify-center ${className}`}>
@@ -64,12 +75,14 @@ export function SignCard({
         </span>
 
         {/* Gambar Isyarat Nyata dari Dataset Terbuka */}
-        {!imgError ? (
+        {activeSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={imageSrc}
+            src={activeSrc}
             alt={`Isyarat huruf ${currentLetter} dalam ${system}`}
-            onError={() => setFailedSrc(imageSrc)}
+            onError={() => {
+              setFailedUrls((prev) => ({ ...prev, [activeSrc]: true }));
+            }}
             className="w-full h-full object-contain p-1"
           />
         ) : (

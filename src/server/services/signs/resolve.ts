@@ -57,7 +57,18 @@ export function resolveSign(
   );
 
   const status = dbOverride?.status ?? manifestItem?.status ?? "missing";
-  const src = dbOverride?.assetUrl ?? manifestItem?.src ?? `/signs/${system.toLowerCase()}/${key.toLowerCase()}.webp`;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const isSupabase =
+    Boolean(supabaseUrl) &&
+    (process.env.STORAGE_DRIVER === "supabase" || process.env.NODE_ENV === "production");
+
+  const defaultLocalSrc = `/signs/${system.toLowerCase()}/${key.toLowerCase()}.webp`;
+  let src = dbOverride?.assetUrl ?? manifestItem?.src ?? defaultLocalSrc;
+
+  if (isSupabase && src.startsWith("/signs/")) {
+    src = `${supabaseUrl!.replace(/\/+$/, "")}/storage/v1/object/public${src}`;
+  }
+
   const motion = manifestItem?.motion ?? defaultMotion;
   const verifiedBy = dbOverride?.verifiedBy ?? manifestItem?.verifiedBy ?? null;
   const verifiedAt =

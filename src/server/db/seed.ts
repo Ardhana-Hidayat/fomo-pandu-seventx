@@ -19,7 +19,13 @@ import {
 import { clipHash } from "../services/tts/hash";
 import { generateSensoryFriendlyTone } from "../services/media/tts";
 import { storage } from "../services/storage";
-import { demoLessonData } from "./demo-lesson-data";
+import {
+  demoLessonData,
+  DEMO_TEACHER_ID,
+  DEMO_CLASSROOM_ID,
+  DEMO_LESSON_ID,
+  DEMO_PUBLICATION_ID,
+} from "./demo-lesson-data";
 
 export async function seedDatabase(): Promise<{
   teacherId: string;
@@ -44,6 +50,7 @@ export async function seedDatabase(): Promise<{
     const inserted = await db
       .insert(teachers)
       .values({
+        id: DEMO_TEACHER_ID,
         email: "guru.demo@pandu.id",
         displayName: "Guru Demo",
         schoolName: "SLB Negeri Manisrejo",
@@ -82,6 +89,7 @@ export async function seedDatabase(): Promise<{
     const inserted = await db
       .insert(classrooms)
       .values({
+        id: DEMO_CLASSROOM_ID,
         teacherId: teacher.id,
         name: demoLessonData.classroom.name,
         level: demoLessonData.classroom.level,
@@ -151,6 +159,7 @@ export async function seedDatabase(): Promise<{
     const inserted = await db
       .insert(lessons)
       .values({
+        id: DEMO_LESSON_ID,
         teacherId: teacher.id,
         slug: demoLessonData.lesson.slug,
         title: demoLessonData.lesson.title,
@@ -184,33 +193,35 @@ export async function seedDatabase(): Promise<{
 
   const pictoAssetIdMap = new Map<number, string>();
 
-  // Seed semua piktogram yang ada di manifest ke tabel assets
+  // Ambil aset piktogram yang sudah ada sekaligus (1 query alih-alih ratusan query)
+  const existingAssets = await db
+    .select({ id: assets.id, storageKey: assets.storageKey })
+    .from(assets);
+  const existingMap = new Map(existingAssets.map((a) => [a.storageKey, a.id]));
+
+  const toInsert: Array<typeof assets.$inferInsert> = [];
   for (const [key, item] of Object.entries(manifestItems)) {
     const file = `/media/pictograms/${key}.webp`;
-    let asset = await db
-      .select()
-      .from(assets)
-      .where(eq(assets.storageKey, file))
-      .limit(1)
-      .then((rows) => rows[0]);
+    if (!existingMap.has(file)) {
+      toInsert.push({
+        kind: "piktogram",
+        storageKey: file,
+        mime: "image/webp",
+        bytes: 20000,
+        keyword: key,
+        alt: item.alt || key,
+        source: "arasaac",
+        license: "CC BY-NC-SA 4.0",
+        attribution: "ARASAAC (https://arasaac.org), Pemerintah Aragon, Sergio Palao",
+        verified: true,
+      });
+    }
+  }
 
-    if (!asset) {
-      const inserted = await db
-        .insert(assets)
-        .values({
-          kind: "piktogram",
-          storageKey: file,
-          mime: "image/webp",
-          bytes: 20000,
-          keyword: key,
-          alt: item.alt || key,
-          source: "arasaac",
-          license: "CC BY-NC-SA 4.0",
-          attribution: "ARASAAC (https://arasaac.org), Pemerintah Aragon, Sergio Palao",
-          verified: true,
-        })
-        .returning();
-      asset = inserted[0];
+  if (toInsert.length > 0) {
+    const insertedAssets = await db.insert(assets).values(toInsert).returning();
+    for (const a of insertedAssets) {
+      existingMap.set(a.storageKey, a.id);
     }
   }
 
@@ -225,14 +236,9 @@ export async function seedDatabase(): Promise<{
     7: "/media/pictograms/tangan-bersih.webp",
   };
   for (const [pos, file] of Object.entries(demoPosMap)) {
-    const asset = await db
-      .select()
-      .from(assets)
-      .where(eq(assets.storageKey, file))
-      .limit(1)
-      .then((rows) => rows[0]);
-    if (asset) {
-      pictoAssetIdMap.set(Number(pos), asset.id);
+    const assetId = existingMap.get(file);
+    if (assetId) {
+      pictoAssetIdMap.set(Number(pos), assetId);
     }
   }
 
@@ -400,6 +406,7 @@ export async function seedDatabase(): Promise<{
     const inserted = await db
       .insert(publications)
       .values({
+        id: DEMO_PUBLICATION_ID,
         lessonId: lesson.id,
         classroomId: classroom.id,
         shareCode: "DEMO1234",

@@ -1,5 +1,5 @@
 import "server-only";
-import { eq } from "drizzle-orm";
+import { eq, or } from "drizzle-orm";
 import { db } from "../../db/client";
 import { teachers, type Teacher } from "../../db/schema";
 import {
@@ -7,6 +7,25 @@ import {
   validateSession,
   invalidateSession,
 } from "../../security/session";
+import {
+  DEMO_TEACHER_ID,
+  DEMO_CLASSROOM_ID,
+  DEMO_LESSON_ID,
+  DEMO_PUBLICATION_ID,
+  DEMO_STUDENT_BUDI_ID,
+  DEMO_STUDENT_SITI_ID,
+  DEMO_STUDENT_DONI_ID,
+} from "../../db/demo-lesson-data";
+
+export {
+  DEMO_TEACHER_ID,
+  DEMO_CLASSROOM_ID,
+  DEMO_LESSON_ID,
+  DEMO_PUBLICATION_ID,
+  DEMO_STUDENT_BUDI_ID,
+  DEMO_STUDENT_SITI_ID,
+  DEMO_STUDENT_DONI_ID,
+};
 
 export const DEMO_TEACHER_EMAIL = "guru.demo@pandu.id";
 export const DEMO_TEACHER_NAME = "Guru Demo";
@@ -15,7 +34,7 @@ export async function getOrCreateDemoTeacher(): Promise<Teacher> {
   const existing = await db
     .select()
     .from(teachers)
-    .where(eq(teachers.email, DEMO_TEACHER_EMAIL))
+    .where(or(eq(teachers.id, DEMO_TEACHER_ID), eq(teachers.email, DEMO_TEACHER_EMAIL)))
     .limit(1)
     .then((rows) => rows[0]);
 
@@ -26,6 +45,7 @@ export async function getOrCreateDemoTeacher(): Promise<Teacher> {
   const inserted = await db
     .insert(teachers)
     .values({
+      id: DEMO_TEACHER_ID,
       email: DEMO_TEACHER_EMAIL,
       displayName: DEMO_TEACHER_NAME,
       schoolName: "SLB Negeri Manisrejo",

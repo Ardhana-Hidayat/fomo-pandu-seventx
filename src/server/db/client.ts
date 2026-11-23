@@ -6,6 +6,7 @@ import postgres from "postgres";
 import { drizzle as drizzlePostgres } from "drizzle-orm/postgres-js";
 import * as schema from "./schema";
 import { env } from "@/server/config/env";
+import { SCHEMA_STATEMENTS } from "./auto-init";
 
 export type DbClient = ReturnType<typeof drizzlePglite<typeof schema>>;
 
@@ -13,7 +14,72 @@ const globalForDb = globalThis as unknown as {
   dbInstance?: DbClient;
   pglite?: PGlite;
   sqlClient?: ReturnType<typeof postgres>;
+  dbInitPromise?: Promise<void>;
+  isInitializing?: boolean;
 };
+
+export async function ensureDatabaseInitialized(): Promise<void> {
+  if (
+    globalForDb.isInitializing ||
+    process.env.NODE_ENV === "test" ||
+    env.DATA_DRIVER === "postgres"
+  ) {
+    return;
+  }
+  if (globalForDb.dbInitPromise) {
+    return globalForDb.dbInitPromise;
+  }
+
+  globalForDb.isInitializing = true;
+  globalForDb.dbInitPromise = (async () => {
+    const pglite = globalForDb.pglite;
+    if (!pglite) return;
+    try {
+      const check = await pglite.query<{ count: string }>(
+        "SELECT count(*)::text as count FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'teachers'"
+      );
+      if (check.rows[0]?.count === "0") {
+        for (const statement of SCHEMA_STATEMENTS) {
+          if (statement && statement.trim()) {
+            await pglite.exec(statement);
+          }
+        }
+      }
+    } catch (e) {
+      console.error("Gagal auto-init database pglite:", e);
+    }
+  })().finally(() => {
+    globalForDb.isInitializing = false;
+  });
+
+  return globalForDb.dbInitPromise;
+}
+
+function wrapWithInit<T extends object>(target: T): T {
+  return new Proxy(target, {
+    get(t, prop, receiver) {
+      const val = Reflect.get(t, prop, receiver);
+      if (prop === "then" && typeof val === "function") {
+        return async (onFulfilled: unknown, onRejected: unknown) => {
+          await ensureDatabaseInitialized();
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          return (val as any).call(t, onFulfilled, onRejected);
+        };
+      }
+      if (typeof val === "function") {
+        return function (...args: unknown[]) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const res = (val as any).apply(t, args);
+          if (res && (typeof res === "object" || typeof res === "function")) {
+            return wrapWithInit(res);
+          }
+          return res;
+        };
+      }
+      return val;
+    },
+  });
+}
 
 function createDb(): DbClient {
   const testDbUrl = process.env.TEST_DATABASE_URL;
@@ -61,9 +127,13 @@ function createDb(): DbClient {
     }
     globalForDb.pglite = pglite;
   }
-  return drizzlePglite(pglite, { schema });
+
+  const rawDb = drizzlePglite(pglite, { schema });
+  if (process.env.NODE_ENV === "test") {
+    return rawDb;
+  }
+  return wrapWithInit(rawDb);
 }
 
 export const db: DbClient = globalForDb.dbInstance ?? createDb();
 globalForDb.dbInstance = db;
-

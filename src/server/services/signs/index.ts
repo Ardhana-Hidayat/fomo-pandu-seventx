@@ -120,8 +120,8 @@ export async function resolveSign(
     return null;
   }
 
-  // Aturan 1: Item verified selalu dipakai
-  if (match.status === "verified") {
+  // Aturan 1: Item verified dan source selalu dipakai (Pack 2)
+  if (match.status === "verified" || match.status === "source") {
     return match;
   }
 
@@ -131,7 +131,7 @@ export async function resolveSign(
     return match;
   }
 
-  // Aturan 3: Selain itu kembalikan null
+  // Aturan 3: Selain itu (draft tanpa izin atau missing) kembalikan null
   return null;
 }
 

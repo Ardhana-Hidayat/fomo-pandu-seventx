@@ -11,7 +11,12 @@ import {
   publications,
   sessions,
   questionAttempts,
+  assets,
+  audioClips,
 } from "./schema";
+import { clipHash } from "../services/tts/hash";
+import { generateSensoryFriendlyTone } from "../services/media/tts";
+import { storage } from "../services/storage";
 import demoLessonData from "../../../inkludidik-update-pack/data/demo-lesson.json";
 
 export async function seedDatabase(): Promise<{
@@ -155,6 +160,49 @@ export async function seedDatabase(): Promise<{
     throw new Error("Gagal membuat materi demo");
   }
 
+  // 4b. Piktogram Materi Demo ARASAAC
+  const demoPictos = [
+    { pos: 1, key: "air", file: "/media/pictograms/air.webp", alt: "Air mengalir dari keran" },
+    { pos: 2, key: "cuci tangan", file: "/media/pictograms/cuci-tangan.webp", alt: "Dua tangan dibasahi air" },
+    { pos: 3, key: "sabun", file: "/media/pictograms/sabun.webp", alt: "Sabun batang" },
+    { pos: 4, key: "gosok tangan", file: "/media/pictograms/gosok-tangan.webp", alt: "Tangan digosok dengan sabun" },
+    { pos: 5, key: "bilas", file: "/media/pictograms/bilas.webp", alt: "Tangan dibilas air mengalir" },
+    { pos: 6, key: "handuk", file: "/media/pictograms/handuk.webp", alt: "Handuk bersih" },
+    { pos: 7, key: "tangan bersih", file: "/media/pictograms/tangan-bersih.webp", alt: "Dua tangan yang bersih" },
+  ];
+
+  const pictoAssetIdMap = new Map<number, string>();
+  for (const p of demoPictos) {
+    let asset = await db
+      .select()
+      .from(assets)
+      .where(eq(assets.storageKey, p.file))
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (!asset) {
+      const inserted = await db
+        .insert(assets)
+        .values({
+          kind: "piktogram",
+          storageKey: p.file,
+          mime: "image/webp",
+          bytes: 20000,
+          keyword: p.key,
+          alt: p.alt,
+          source: "arasaac",
+          license: "CC BY-NC-SA 4.0",
+          attribution: "ARASAAC (https://arasaac.org), Pemerintah Aragon, Sergio Palao",
+          verified: true,
+        })
+        .returning();
+      asset = inserted[0];
+    }
+    if (asset) {
+      pictoAssetIdMap.set(p.pos, asset.id);
+    }
+  }
+
   // 5. Kartu Materi Demo
   const cardIdMap = new Map<number, string>();
   for (const c of demoLessonData.cards) {
@@ -170,6 +218,8 @@ export async function seedDatabase(): Promise<{
       .limit(1)
       .then((rows) => rows[0]);
 
+    const imageAssetId = pictoAssetIdMap.get(c.position) ?? null;
+
     if (!card) {
       const inserted = await db
         .insert(lessonCards)
@@ -180,13 +230,80 @@ export async function seedDatabase(): Promise<{
           keyTerms: c.key_terms,
           cardType: "instruction",
           imageSource: "pictogram",
+          imageAssetId,
           imageAlt: c.image.alt,
           audioSource: "none",
         })
         .returning();
       card = inserted[0];
+    } else if (!card.imageAssetId && imageAssetId) {
+      await db
+        .update(lessonCards)
+        .set({ imageAssetId })
+        .where(eq(lessonCards.id, card.id));
     }
+
     if (card) {
+      // Buat dan hubungkan klip audio demo jika belum ada
+      if (!card.audioAssetId) {
+        const voiceKey = "A";
+        const model = "gemini-tts";
+        const textHash = clipHash(c.text, voiceKey, model);
+        const words = c.text.trim().split(/\s+/).length;
+        const durationMs = Math.min(Math.max(words * 450, 1500), 6000);
+        const audioBuffer = generateSensoryFriendlyTone(durationMs);
+        const storageKey = `clips/${lesson.id}/card-${card.id}-opt-${voiceKey}-${textHash.slice(0, 8)}.wav`;
+
+        await storage.put(storageKey, audioBuffer, "audio/wav", "card-audio");
+
+        let audioAsset = await db
+          .select()
+          .from(assets)
+          .where(eq(assets.storageKey, storageKey))
+          .limit(1)
+          .then((rows) => rows[0]);
+
+        if (!audioAsset) {
+          const [insertedAsset] = await db
+            .insert(assets)
+            .values({
+              kind: "audio",
+              storageKey,
+              mime: "audio/wav",
+              bytes: audioBuffer.length,
+              keyword: c.text.slice(0, 50),
+              source: "system-tts",
+              license: "InkluDidik Synthesized",
+              attribution: "InkluDidik Acoustic Engine",
+              verified: true,
+            })
+            .returning();
+          audioAsset = insertedAsset;
+        }
+
+        if (audioAsset) {
+          await db
+            .update(lessonCards)
+            .set({ audioAssetId: audioAsset.id, audioSource: "tts" })
+            .where(eq(lessonCards.id, card.id));
+
+          await db
+            .insert(audioClips)
+            .values({
+              lessonId: lesson.id,
+              targetType: "card",
+              targetId: card.id,
+              voiceKey,
+              model,
+              textHash,
+              assetId: audioAsset.id,
+              durationMs,
+              status: "ready",
+            })
+            .onConflictDoNothing();
+        }
+      }
+
       cardIdMap.set(c.position, card.id);
     }
   }

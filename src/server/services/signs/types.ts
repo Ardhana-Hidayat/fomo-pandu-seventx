@@ -1,5 +1,5 @@
 export type SignSystem = "SIBI" | "BISINDO";
-export type SignStatus = "verified" | "draft" | "missing";
+export type SignStatus = "verified" | "source" | "draft" | "missing";
 export type SignType = "image" | "video" | "svg";
 export type SignKind = "letter" | "word";
 
@@ -10,10 +10,12 @@ export interface SignItem {
   type: SignType;
   src: string;
   alt: string;
-  source: string;
-  license: string;
+  source?: string;
+  license?: string;
   reference: string;
   status: SignStatus;
+  motion?: boolean;
+  origin?: unknown;
   verifiedBy: string | null;
   verifiedAt: string | null;
 }

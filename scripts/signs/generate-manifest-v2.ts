@@ -3,14 +3,16 @@ import path from "node:path";
 import { SignsManifestV2Schema, type SignItem, type SignsManifestV2 } from "../../src/server/services/signs/schema";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-const DEMO_VERIFIED_SIBI = new Set(["A", "B", "D", "E", "G", "H", "I", "K", "L", "N", "O", "R", "S", "T", "U"]);
+const DEMO_VERIFIED_SIBI = new Set(["A", "D", "E", "G", "H", "I", "K", "L", "N", "O", "R", "S", "T", "U"]);
 
 const items: SignItem[] = [];
 
 // SIBI
 for (const letter of ALPHABET) {
   const isMotion = letter === "J" || letter === "Z";
-  const isVerified = DEMO_VERIFIED_SIBI.has(letter);
+  const isDraft = letter === "B";
+  const isVerified = !isDraft && DEMO_VERIFIED_SIBI.has(letter);
+  const status = isDraft ? "draft" : isVerified ? "verified" : "source";
   items.push({
     system: "SIBI",
     kind: "letter",
@@ -19,7 +21,7 @@ for (const letter of ALPHABET) {
     src: `/signs/sibi/${letter.toLowerCase()}.webp`,
     alt: `Isyarat huruf ${letter} dalam SIBI${isMotion ? " (isyarat ini bergerak)" : ""}`,
     motion: isMotion,
-    status: isVerified ? "verified" : "source",
+    status,
     origin: {
       sourceId: "sibi-azizah-2026",
       doi: "10.17632/xdn2gj38xf.1",
@@ -36,6 +38,8 @@ for (const letter of ALPHABET) {
 // BISINDO
 for (const letter of ALPHABET) {
   const isMotion = letter === "J" || letter === "Z";
+  const isMissing = letter === "Z";
+  const status = isMissing ? "missing" : "source";
   items.push({
     system: "BISINDO",
     kind: "letter",
@@ -44,7 +48,7 @@ for (const letter of ALPHABET) {
     src: `/signs/bisindo/${letter.toLowerCase()}.webp`,
     alt: `Isyarat huruf ${letter} dalam BISINDO${isMotion ? " (isyarat ini bergerak)" : ""}`,
     motion: isMotion,
-    status: "source",
+    status,
     origin: {
       sourceId: "bisindo-asshafi-2026",
       doi: "10.17632/4xnkvr88tk.1",

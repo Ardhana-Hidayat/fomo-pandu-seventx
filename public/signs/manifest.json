@@ -1025,7 +1025,7 @@
       "src": "/signs/bisindo/z.webp",
       "alt": "Isyarat huruf Z dalam BISINDO (isyarat ini bergerak)",
       "motion": true,
-      "status": "source",
+      "status": "missing",
       "origin": {
         "sourceId": "bisindo-asshafi-2026",
         "doi": "10.17632/4xnkvr88tk.1",

@@ -1,5 +1,5 @@
 import "server-only";
-import { eq, and, asc, sql } from "drizzle-orm";
+import { eq, and, asc, sql, inArray } from "drizzle-orm";
 import { db } from "../db/client";
 import {
   lessons,
@@ -7,6 +7,7 @@ import {
   quizQuestions,
   publications,
   students,
+  assets,
   type Lesson,
   type LessonCard,
   type QuizQuestion,
@@ -183,6 +184,126 @@ export async function createLesson(
   }
 }
 
+const DEMO_PICTO_MAP: Record<number, string> = {
+  1: "/media/pictograms/air.webp",
+  2: "/media/pictograms/cuci-tangan.webp",
+  3: "/media/pictograms/sabun.webp",
+  4: "/media/pictograms/gosok-tangan.webp",
+  5: "/media/pictograms/bilas.webp",
+  6: "/media/pictograms/handuk.webp",
+  7: "/media/pictograms/tangan-bersih.webp",
+};
+
+const DEMO_QUESTION_PICTO_MAP: Record<string, string> = {
+  sabun: "/media/pictograms/sabun.webp",
+  soap: "/media/pictograms/sabun.webp",
+  handuk: "/media/pictograms/handuk.webp",
+  towel: "/media/pictograms/handuk.webp",
+  "sikat gigi": "/media/pictograms/sikat-gigi.webp",
+  toothbrush: "/media/pictograms/sikat-gigi.webp",
+  "cuci tangan": "/media/pictograms/cuci-tangan.webp",
+  "wash hands": "/media/pictograms/cuci-tangan.webp",
+  "basahi tangan": "/media/pictograms/cuci-tangan.webp",
+  air: "/media/pictograms/air.webp",
+  water: "/media/pictograms/air.webp",
+  bilas: "/media/pictograms/bilas.webp",
+  rinse: "/media/pictograms/bilas.webp",
+};
+
+async function enrichCardsWithMedia(cards: LessonCard[]): Promise<LessonCardWithMedia[]> {
+  const assetIds = cards
+    .flatMap((c) => [c.imageAssetId, c.audioAssetId])
+    .filter((id): id is string => Boolean(id));
+
+  const assetList =
+    assetIds.length > 0
+      ? await db
+          .select()
+          .from(assets)
+          .where(inArray(assets.id, assetIds))
+      : [];
+
+  const assetMap = new Map(assetList.map((a) => [a.id, a]));
+
+  return cards.map((c) => {
+    let imageUrl: string | null = null;
+    let audioUrl: string | null = null;
+
+    if (c.imageAssetId && assetMap.has(c.imageAssetId)) {
+      const a = assetMap.get(c.imageAssetId)!;
+      imageUrl =
+        a.storageKey.startsWith("/") || a.storageKey.startsWith("http")
+          ? a.storageKey
+          : `/api/media/card-images/${a.storageKey}`;
+    } else if (c.imageSource === "pictogram" && DEMO_PICTO_MAP[c.position]) {
+      imageUrl = DEMO_PICTO_MAP[c.position]!;
+    }
+
+    if (c.audioAssetId && assetMap.has(c.audioAssetId)) {
+      const a = assetMap.get(c.audioAssetId)!;
+      audioUrl =
+        a.storageKey.startsWith("/") || a.storageKey.startsWith("http")
+          ? a.storageKey
+          : `/api/media/card-audio/${a.storageKey}`;
+    }
+
+    return {
+      ...c,
+      imageUrl,
+      audioUrl,
+      audioRef: audioUrl,
+    };
+  });
+}
+
+function enrichQuestionsWithMedia(questions: QuizQuestion[]): QuizQuestion[] {
+  return questions.map((q) => {
+    const payload = { ...q.payload };
+    if (payload.options && Array.isArray(payload.options)) {
+      payload.options = payload.options.map((opt) => {
+        const textKey = opt.text?.toLowerCase().trim() || "";
+        const enKey = opt.image?.keyword_en?.toLowerCase().trim() || "";
+        const picUrl =
+          DEMO_QUESTION_PICTO_MAP[textKey] || DEMO_QUESTION_PICTO_MAP[enKey];
+        if (picUrl) {
+          return {
+            ...opt,
+            image: {
+              ...opt.image,
+              url: picUrl,
+            },
+          };
+        }
+        return opt;
+      });
+    }
+
+    if (payload.steps && Array.isArray(payload.steps)) {
+      payload.steps = payload.steps.map((st) => {
+        const textKey = st.text?.toLowerCase().trim() || "";
+        const enKey = st.image?.keyword_en?.toLowerCase().trim() || "";
+        const picUrl =
+          DEMO_QUESTION_PICTO_MAP[textKey] || DEMO_QUESTION_PICTO_MAP[enKey];
+        if (picUrl) {
+          return {
+            ...st,
+            image: {
+              ...st.image,
+              url: picUrl,
+            },
+          };
+        }
+        return st;
+      });
+    }
+
+    return {
+      ...q,
+      payload,
+    };
+  });
+}
+
 export async function getLessonWithContent(
   teacherId: string,
   lessonId: string
@@ -201,13 +322,13 @@ export async function getLessonWithContent(
       return err(makeAppError("NOT_FOUND", "Materi tidak ditemukan"));
     }
 
-    const cards = await db
+    const rawCards = await db
       .select()
       .from(lessonCards)
       .where(eq(lessonCards.lessonId, lesson.id))
       .orderBy(asc(lessonCards.position));
 
-    const questions = await db
+    const rawQuestions = await db
       .select()
       .from(quizQuestions)
       .where(eq(quizQuestions.lessonId, lesson.id))
@@ -217,6 +338,9 @@ export async function getLessonWithContent(
       .select()
       .from(publications)
       .where(eq(publications.lessonId, lesson.id));
+
+    const cards = await enrichCardsWithMedia(rawCards);
+    const questions = enrichQuestionsWithMedia(rawQuestions);
 
     return ok({
       ...lesson,
@@ -280,13 +404,13 @@ export async function getLessonForStudent(
       return err(makeAppError("NOT_FOUND", "Materi tidak ditemukan"));
     }
 
-    const cards = await db
+    const rawCards = await db
       .select()
       .from(lessonCards)
       .where(eq(lessonCards.lessonId, lesson.id))
       .orderBy(asc(lessonCards.position));
 
-    const questions = await db
+    const rawQuestions = await db
       .select()
       .from(quizQuestions)
       .where(eq(quizQuestions.lessonId, lesson.id))
@@ -296,6 +420,9 @@ export async function getLessonForStudent(
       .select()
       .from(publications)
       .where(eq(publications.lessonId, lesson.id));
+
+    const cards = await enrichCardsWithMedia(rawCards);
+    const questions = enrichQuestionsWithMedia(rawQuestions);
 
     return ok({
       ...lesson,

@@ -96,4 +96,44 @@ describe("QuizRunner Component", () => {
       screen.getByText("Benda yang memiliki halaman untuk dibaca.")
     ).toBeDefined();
   });
+
+  it("mendukung opsi jawaban dalam bentuk array string (seperti demo data) tanpa kosong", () => {
+    const stringOptionQuestions = [
+      {
+        id: "q-demo-1",
+        lessonId: "l-demo",
+        position: 1,
+        type: "choice_word",
+        prompt: "Benda apa yang digunakan untuk membersihkan kuman di tangan?",
+        payload: {
+          options: ["Sabun", "Minyak", "Pasir"],
+          answer: "Sabun",
+        },
+        linkedCardId: null,
+        explanation: null,
+        keyTerms: [] as string[],
+        signOverride: null,
+        createdAt: new Date(),
+      },
+    ];
+
+    render(
+      <PreferencesProvider>
+        <QuizRunner
+          lessonTitle="Mencuci Tangan"
+          questions={stringOptionQuestions}
+          classroomHref="/kelas/123456"
+        />
+      </PreferencesProvider>
+    );
+
+    // Pastikan teks opsi TIDAK KOSONG dan terlihat jelas
+    expect(screen.getByText("Sabun")).toBeDefined();
+    expect(screen.getByText("Minyak")).toBeDefined();
+    expect(screen.getByText("Pasir")).toBeDefined();
+
+    // Klik opsi yang benar ("Sabun")
+    fireEvent.click(screen.getByText("Sabun"));
+    expect(screen.getByText(/Tepat! Jawabanmu benar/i)).toBeDefined();
+  });
 });

@@ -59,8 +59,17 @@ export function CardPlayer({
   const cardText = currentCard?.text ?? "";
   const tokens = useMemo(() => tokenize(cardText, keyTerms), [cardText, keyTerms]);
 
-  // Base Timeline
-  const baseTimeline = useMemo(() => {
+  // Speech-only timeline for natural karaoke highlighting (word durations match spoken syllables)
+  const speechTimeline = useMemo(() => {
+    return buildTimeline(tokens, {
+      speechRate: playbackRate,
+      signSpeed: 1.0,
+      signEnabled: false,
+    });
+  }, [tokens, playbackRate]);
+
+  // Full timeline with sign timing for SignCard scheduling
+  const signBaseTimeline = useMemo(() => {
     return buildTimeline(tokens, {
       speechRate: playbackRate,
       signSpeed: 1.0,
@@ -71,16 +80,16 @@ export function CardPlayer({
   // Scaled Timeline and Sign Schedule
   const [audioDurationMs, setAudioDurationMs] = useState<number | null>(null);
 
-  const scaledTimeline = useMemo(() => {
+  const scaledSpeechTimeline = useMemo(() => {
     if (audioDurationMs && audioDurationMs > 0) {
-      return scaleTimeline(baseTimeline, audioDurationMs);
+      return scaleTimeline(speechTimeline, audioDurationMs);
     }
-    return baseTimeline;
-  }, [baseTimeline, audioDurationMs]);
+    return speechTimeline;
+  }, [speechTimeline, audioDurationMs]);
 
   const signSchedule = useMemo(() => {
-    return buildSignSchedule(scaledTimeline, 450);
-  }, [scaledTimeline]);
+    return buildSignSchedule(signBaseTimeline, 450);
+  }, [signBaseTimeline]);
 
   // Playback references
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
@@ -115,21 +124,19 @@ export function CardPlayer({
 
   // Update real-time sync state at time `t` (ms)
   const updateSyncAtTime = useCallback(
-    (tMs: number, schedule: { slots: SignSlot[]; signEnd: number }, tl: Timeline) => {
-      const totalWords = tl.words.length;
+    (tMs: number, schedule: { slots: SignSlot[]; signEnd: number }, speechTl: Timeline) => {
+      const totalWords = speechTl.words.length;
       if (totalWords === 0) return;
 
       const lastWordIdx = totalWords - 1;
-      const lastWord = tl.words[lastWordIdx];
+      const lastWord = speechTl.words[lastWordIdx];
 
-      let wIdx = wordIndexAt(tl, tMs);
-      let prog = progressInWord(tl, tMs);
+      let wIdx = wordIndexAt(speechTl, tMs);
+      let prog = progressInWord(speechTl, tMs);
 
-      // Presisi highlight kata terakhir:
-      // Bila audio berada di kata terakhir atau dalam free clock untuk ejaan isyarat kata terakhir,
-      // kata terakhir tetap aktif (wIdx = lastWordIdx).
+      // Presisi highlight kata terakhir
       if (lastWord && tMs >= lastWord.start) {
-        if (tMs < schedule.signEnd || tMs <= tl.total + 300) {
+        if (tMs <= speechTl.total + 300) {
           wIdx = lastWordIdx;
           prog = Math.min(1, Math.max(0, (tMs - lastWord.start) / Math.max(1, lastWord.end - lastWord.start)));
           if (tMs >= lastWord.end) {
@@ -151,7 +158,7 @@ export function CardPlayer({
 
   // Start Animation Frame Loop
   const runPlaybackLoop = useCallback(
-    (audio: HTMLAudioElement | null, schedule: { slots: SignSlot[]; signEnd: number }, tl: Timeline) => {
+    (audio: HTMLAudioElement | null, schedule: { slots: SignSlot[]; signEnd: number }, speechTl: Timeline) => {
       const loop = () => {
         let currentTimeMs = 0;
 
@@ -166,17 +173,16 @@ export function CardPlayer({
           return;
         }
 
-        updateSyncAtTime(currentTimeMs, schedule, tl);
+        updateSyncAtTime(currentTimeMs, schedule, speechTl);
 
         // Check if finished past schedule.signEnd
-        if (currentTimeMs >= schedule.signEnd) {
-          const lastWordIdx = tl.words.length - 1;
-          setActiveWordIdx(lastWordIdx);
+        const endThreshold = Math.max(speechTl.total, schedule.signEnd);
+        if (currentTimeMs >= endThreshold) {
+          setActiveWordIdx(speechTl.words.length);
           setActiveWordProgress(1);
           setTimeout(() => {
             stopPlayback();
-            setActiveWordIdx(tl.words.length);
-          }, 400);
+          }, 300);
           return;
         }
 
@@ -209,15 +215,15 @@ export function CardPlayer({
       const handleLoadedMetadata = () => {
         const durMs = (audio.duration || 2.5) * 1000;
         setAudioDurationMs(durMs);
-        const scaled = scaleTimeline(baseTimeline, durMs);
-        const sched = buildSignSchedule(scaled, 450);
+        const scaledSpeech = scaleTimeline(speechTimeline, durMs);
+        const sched = buildSignSchedule(signBaseTimeline, 450);
 
         audio
           .play()
           .then(() => {
             setIsPlaying(true);
             freeClockStartRef.current = null;
-            runPlaybackLoop(audio, sched, scaled);
+            runPlaybackLoop(audio, sched, scaledSpeech);
           })
           .catch(() => {
             runSpeechOrSilentFallback();
@@ -232,14 +238,13 @@ export function CardPlayer({
             startPerf: performance.now(),
             startAudioMs: currentMs,
           };
-          runPlaybackLoop(null, signSchedule, scaledTimeline);
+          runPlaybackLoop(null, signSchedule, scaledSpeechTimeline);
         } else {
-          setActiveWordIdx(scaledTimeline.words.length - 1);
+          setActiveWordIdx(scaledSpeechTimeline.words.length);
           setActiveWordProgress(1);
           setTimeout(() => {
             stopPlayback();
-            setActiveWordIdx(scaledTimeline.words.length);
-          }, 400);
+          }, 300);
         }
       };
 
@@ -263,7 +268,8 @@ export function CardPlayer({
   function runSpeechOrSilentFallback() {
     setIsPlaying(true);
     const startTime = performance.now();
-    const duration = signSchedule.signEnd || baseTimeline.total || 3000;
+    const speechTotal = speechTimeline.total || 2500;
+    const maxDur = Math.max(speechTotal, signSchedule.signEnd || 0);
 
     // Mode B: Web Speech synthesis if available in browser
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
@@ -272,18 +278,29 @@ export function CardPlayer({
       utt.lang = "id-ID";
       utt.rate = playbackRate;
 
+      utt.onboundary = (e) => {
+        if (e.name === "word" || !e.name) {
+          const charIndex = e.charIndex;
+          const idx = tokens.findIndex(
+            (t) => charIndex >= t.charStart && charIndex < t.charEnd
+          );
+          if (idx !== -1) {
+            setActiveWordIdx(idx);
+            setActiveWordProgress(0.2);
+          }
+        }
+      };
+
       utt.onend = () => {
-        // Speech ended: wait for sign schedule if needed
         const elapsed = performance.now() - startTime;
-        if (elapsed < duration) {
+        if (elapsed < maxDur && signSchedule.signEnd > elapsed) {
           // Free clock until signEnd
         } else {
-          setActiveWordIdx(scaledTimeline.words.length - 1);
+          setActiveWordIdx(tokens.length);
           setActiveWordProgress(1);
           setTimeout(() => {
             stopPlayback();
-            setActiveWordIdx(scaledTimeline.words.length);
-          }, 400);
+          }, 300);
         }
       };
 
@@ -296,15 +313,14 @@ export function CardPlayer({
 
     const timerLoop = () => {
       const elapsed = performance.now() - startTime;
-      updateSyncAtTime(elapsed, signSchedule, scaledTimeline);
+      updateSyncAtTime(elapsed, signSchedule, speechTimeline);
 
-      if (elapsed >= duration) {
-        setActiveWordIdx(scaledTimeline.words.length - 1);
+      if (elapsed >= maxDur) {
+        setActiveWordIdx(tokens.length);
         setActiveWordProgress(1);
         setTimeout(() => {
           stopPlayback();
-          setActiveWordIdx(scaledTimeline.words.length);
-        }, 400);
+        }, 300);
         return;
       }
       animFrameRef.current = requestAnimationFrame(timerLoop);

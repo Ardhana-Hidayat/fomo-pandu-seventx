@@ -45,18 +45,26 @@ export interface LessonSettings {
 }
 
 export interface QuizQuestionPayload {
-  options?: Array<{
-    id: string;
-    text: string;
-    image?: { keyword_en?: string; alt?: string };
-    correct: boolean;
-  }>;
-  steps?: Array<{
-    id: string;
-    text: string;
-    image?: { keyword_en?: string; alt?: string };
-  }>;
-  answer?: boolean;
+  options?: Array<
+    | {
+        id: string;
+        text: string;
+        imageUrl?: string;
+        image?: { keyword_en?: string; alt?: string; url?: string };
+        correct: boolean;
+      }
+    | string
+  >;
+  steps?: Array<
+    | {
+        id: string;
+        text: string;
+        imageUrl?: string;
+        image?: { keyword_en?: string; alt?: string; url?: string };
+      }
+    | string
+  >;
+  answer?: boolean | string;
   sign_word?: string;
   prompt_image?: { keyword_en?: string; alt?: string };
   [key: string]: unknown;

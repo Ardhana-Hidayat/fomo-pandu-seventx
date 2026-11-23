@@ -137,8 +137,6 @@ export function LessonWizard({
       voiceSpeed,
     });
 
-    setIsSubmitting(false);
-
     if (result.ok) {
       if (publishNow && selectedClassrooms.length > 0) {
         const targetClass = selectedClassrooms[0];
@@ -147,6 +145,7 @@ export function LessonWizard({
         router.push(`/guru/materi/${result.data.id}/edit`);
       }
     } else {
+      setIsSubmitting(false);
       alert(result.error.message);
     }
   }

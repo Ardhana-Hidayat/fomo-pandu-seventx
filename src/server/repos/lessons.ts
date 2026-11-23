@@ -278,10 +278,11 @@ async function enrichCardsWithMedia(cards: LessonCard[]): Promise<LessonCardWith
 
     if (c.audioAssetId && assetMap.has(c.audioAssetId)) {
       const a = assetMap.get(c.audioAssetId)!;
+      const safeAudioKey = path.basename(a.storageKey);
       audioUrl =
         a.storageKey.startsWith("/") || a.storageKey.startsWith("http")
           ? a.storageKey
-          : `/api/media/card-audio/${a.storageKey}`;
+          : `/api/media/card-audio/${safeAudioKey}`;
     }
 
     return {
@@ -297,46 +298,77 @@ function enrichQuestionsWithMedia(questions: QuizQuestion[]): QuizQuestion[] {
   return questions.map((q) => {
     const payload = { ...q.payload };
     if (payload.options && Array.isArray(payload.options)) {
-      payload.options = payload.options.map((opt) => {
-        const textKey = opt.text?.toLowerCase().trim() || "";
+      payload.options = payload.options.map((rawOpt: unknown, idx: number) => {
+        const isString = typeof rawOpt === "string";
+        const opt = (isString ? { text: rawOpt } : (rawOpt as Record<string, unknown>)) as {
+          id?: string;
+          text?: string;
+          label?: string;
+          imageUrl?: string;
+          image?: { url?: string; keyword_en?: string };
+          correct?: boolean;
+        };
+
+        const text = opt.text ?? opt.label ?? (isString ? rawOpt : "");
+        const textKey = text.toLowerCase().trim();
         const enKey = opt.image?.keyword_en?.toLowerCase().trim() || "";
         const picUrl =
           EXTENDED_PICTO_MAP[textKey] ||
           EXTENDED_PICTO_MAP[enKey] ||
           DEMO_QUESTION_PICTO_MAP[textKey] ||
           DEMO_QUESTION_PICTO_MAP[enKey];
-        if (picUrl) {
-          return {
-            ...opt,
-            image: {
-              ...opt.image,
-              url: picUrl,
-            },
-          };
-        }
-        return opt;
+
+        const id = opt.id ?? `opt-${idx}`;
+        const isCorrect =
+          typeof opt.correct === "boolean"
+            ? opt.correct
+            : payload.answer !== undefined
+            ? String(payload.answer).trim().toLowerCase() === textKey ||
+              String(payload.answer).trim().toLowerCase() === id.toLowerCase()
+            : idx === 0;
+
+        const imageUrl = picUrl || opt.imageUrl || opt.image?.url;
+
+        return {
+          ...opt,
+          id,
+          text,
+          imageUrl,
+          correct: isCorrect,
+          ...(picUrl ? { image: { ...(opt.image ?? {}), url: picUrl } } : {}),
+        };
       });
     }
 
     if (payload.steps && Array.isArray(payload.steps)) {
-      payload.steps = payload.steps.map((st) => {
-        const textKey = st.text?.toLowerCase().trim() || "";
+      payload.steps = payload.steps.map((rawSt: unknown, sIdx: number) => {
+        const isString = typeof rawSt === "string";
+        const st = (isString ? { text: rawSt } : (rawSt as Record<string, unknown>)) as {
+          id?: string;
+          text?: string;
+          imageUrl?: string;
+          image?: { url?: string; keyword_en?: string };
+        };
+
+        const text = st.text ?? (isString ? rawSt : "");
+        const textKey = text.toLowerCase().trim();
         const enKey = st.image?.keyword_en?.toLowerCase().trim() || "";
         const picUrl =
           EXTENDED_PICTO_MAP[textKey] ||
           EXTENDED_PICTO_MAP[enKey] ||
           DEMO_QUESTION_PICTO_MAP[textKey] ||
           DEMO_QUESTION_PICTO_MAP[enKey];
-        if (picUrl) {
-          return {
-            ...st,
-            image: {
-              ...st.image,
-              url: picUrl,
-            },
-          };
-        }
-        return st;
+
+        const id = st.id ?? `step-${sIdx}`;
+        const imageUrl = picUrl || st.imageUrl || st.image?.url;
+
+        return {
+          ...st,
+          id,
+          text,
+          imageUrl,
+          ...(picUrl ? { image: { ...(st.image ?? {}), url: picUrl } } : {}),
+        };
       });
     }
 

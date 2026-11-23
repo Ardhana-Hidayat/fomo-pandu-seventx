@@ -6,6 +6,19 @@ import { Button, Card, Icon, StatusMessage, DisplayPreferencesTrigger } from "@/
 import { SignCard } from "@/features/player";
 import type { QuizQuestion } from "@/server/db/schema";
 
+interface QuizOption {
+  id: string;
+  text: string;
+  imageUrl?: string;
+  correct: boolean;
+}
+
+interface QuizStep {
+  id: string;
+  text: string;
+  imageUrl?: string;
+}
+
 interface QuizRunnerProps {
   lessonTitle: string;
   questions: QuizQuestion[];
@@ -31,6 +44,78 @@ export function QuizRunner({
   const currentQ = questions[currentIndex];
   const totalQuestions = questions.length;
 
+  const payload = currentQ?.payload as {
+    options?: unknown[];
+    steps?: unknown[];
+    answer?: boolean | string;
+    hint?: string;
+    showTextHint?: boolean;
+    imageOnly?: boolean;
+    signWord?: string;
+  } | undefined;
+
+  const rawOptions = payload?.options;
+  const options: QuizOption[] = (Array.isArray(rawOptions) ? rawOptions : []).map(
+    (rawOpt: unknown, idx: number) => {
+      if (typeof rawOpt === "string") {
+        const isCorrect =
+          payload?.answer !== undefined
+            ? String(payload.answer).trim().toLowerCase() === rawOpt.trim().toLowerCase()
+            : idx === 0;
+        return {
+          id: `opt-${idx}`,
+          text: rawOpt,
+          correct: isCorrect,
+        };
+      }
+      const opt = rawOpt as {
+        id?: string;
+        text?: string;
+        label?: string;
+        imageUrl?: string;
+        image?: { url?: string };
+        correct?: boolean;
+      };
+      const text = opt.text ?? opt.label ?? `Pilihan ${idx + 1}`;
+      const id = opt.id ?? `opt-${idx}`;
+      const imageUrl = opt.imageUrl ?? opt.image?.url;
+      const isCorrect =
+        typeof opt.correct === "boolean"
+          ? opt.correct
+          : payload?.answer !== undefined
+          ? String(payload.answer).trim().toLowerCase() === text.trim().toLowerCase() ||
+            String(payload.answer).trim().toLowerCase() === id.toLowerCase()
+          : idx === 0;
+
+      return {
+        id,
+        text,
+        imageUrl,
+        correct: isCorrect,
+      };
+    }
+  );
+
+  const rawSteps = payload?.steps;
+  const steps: QuizStep[] = (Array.isArray(rawSteps) ? rawSteps : []).map(
+    (rawSt: unknown, sIdx: number) => {
+      if (typeof rawSt === "string") {
+        return { id: `step-${sIdx}`, text: rawSt };
+      }
+      const st = rawSt as {
+        id?: string;
+        text?: string;
+        imageUrl?: string;
+        image?: { url?: string };
+      };
+      return {
+        id: st.id ?? `step-${sIdx}`,
+        text: st.text ?? `Langkah ${sIdx + 1}`,
+        imageUrl: st.imageUrl ?? st.image?.url,
+      };
+    }
+  );
+
   if (totalQuestions === 0) {
     return (
       <div className="flex min-h-[100dvh] items-center justify-center p-8 text-center text-sm font-bold text-[var(--muted)]">
@@ -39,17 +124,7 @@ export function QuizRunner({
     );
   }
 
-  const payload = currentQ?.payload as {
-    options?: Array<{ id: string; text: string; imageUrl?: string; correct: boolean }>;
-    steps?: Array<{ id: string; text: string }>;
-    answer?: boolean;
-    hint?: string;
-    showTextHint?: boolean;
-    imageOnly?: boolean;
-    signWord?: string;
-  } | undefined;
-
-  function handleSelectOption(opt: { id: string; text: string; correct: boolean }) {
+  function handleSelectOption(opt: QuizOption) {
     if (feedback === "benar") return;
 
     setSelectedOptionId(opt.id);
@@ -146,9 +221,14 @@ export function QuizRunner({
     );
   }
 
-  const options = payload?.options ?? [];
-  const isSignMatch = currentQ.type === "cocokkan_isyarat";
-  const signTargetWord = payload?.signWord ?? currentQ.keyTerms?.[0] ?? "";
+  const isSignMatch = currentQ.type === "cocokkan_isyarat" || currentQ.type === "choice_sign";
+  const isOrder = currentQ.type === "urutan" || currentQ.type === "arrange_steps";
+  const isTrueFalse = currentQ.type === "benar_salah";
+  const signTargetWord =
+    payload?.signWord ??
+    (payload as Record<string, unknown> | undefined)?.sign_word as string ??
+    currentQ.keyTerms?.[0] ??
+    "";
 
   return (
     <div className="flex h-[100dvh] max-h-[100dvh] flex-col justify-between overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
@@ -245,7 +325,7 @@ export function QuizRunner({
           )}
 
           {/* Pilihan Jawaban Biasa (2, 3, atau 4 Pilihan) */}
-          {options.length > 0 && (
+          {options.length > 0 && !isTrueFalse && !isOrder && (
             <div className="flex-1 min-h-0 flex flex-col justify-center my-2">
               <div
                 className={`grid gap-2 sm:gap-3 ${
@@ -288,7 +368,7 @@ export function QuizRunner({
           )}
 
           {/* Opsi Benar / Salah */}
-          {currentQ.type === "benar_salah" && (
+          {isTrueFalse && (
             <div className="flex-1 min-h-0 flex items-center justify-center gap-3 my-2">
               <button
                 type="button"
@@ -310,10 +390,10 @@ export function QuizRunner({
           )}
 
           {/* Opsi Urutan (Steps Ordering) */}
-          {currentQ.type === "urutan" && payload?.steps && (
+          {isOrder && steps.length > 0 && (
             <div className="flex-1 min-h-0 flex flex-col justify-center gap-1.5 my-1 overflow-y-auto">
               <p className="text-xs font-bold text-[var(--muted)] text-center">Urutan langkah yang tepat:</p>
-              {payload.steps.map((st, sIdx) => (
+              {steps.map((st, sIdx) => (
                 <div
                   key={st.id ?? sIdx}
                   className="flex items-center gap-2 p-2 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] text-xs sm:text-sm font-bold text-[var(--ink)]"

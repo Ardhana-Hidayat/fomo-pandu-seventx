@@ -39,14 +39,10 @@ function createDb(): DbClient {
     fs.mkdirSync(pglitePath, { recursive: true });
   }
   const pglite = globalForDb.pglite ?? new PGlite(pglitePath);
-  if (process.env.NODE_ENV !== "production") {
-    globalForDb.pglite = pglite;
-  }
+  globalForDb.pglite = pglite;
   return drizzlePglite(pglite, { schema });
 }
 
 export const db: DbClient = globalForDb.dbInstance ?? createDb();
+globalForDb.dbInstance = db;
 
-if (process.env.NODE_ENV !== "production") {
-  globalForDb.dbInstance = db;
-}

@@ -1,4 +1,6 @@
 import "server-only";
+import fs from "node:fs";
+import path from "node:path";
 import sharp from "sharp";
 import { storage } from "../storage";
 import {
@@ -95,25 +97,46 @@ export async function downloadAndCacheArasaacPictogram(
   keywordEn?: string
 ): Promise<Result<Asset>> {
   try {
-    const imgUrl = `${ARASAAC_STATIC_BASE}/${pictogramId}/${pictogramId}_500.png`;
-    const res = await fetchWithTimeout(imgUrl, 10000);
-    if (!res.ok) {
-      return err(
-        makeAppError("NOT_FOUND", `Gagal mengunduh piktogram ID ${pictogramId}`)
-      );
+    const localSlug = keywordId.toLowerCase().trim().replace(/\s+/g, "-");
+    const localCandidates = [
+      path.resolve(process.cwd(), `public/media/pictograms/${localSlug}.webp`),
+      keywordEn
+        ? path.resolve(
+            process.cwd(),
+            `public/media/pictograms/${keywordEn.toLowerCase().trim().replace(/\s+/g, "-")}.webp`
+          )
+        : null,
+    ].filter((p): p is string => Boolean(p));
+
+    let webpBuffer: Buffer | null = null;
+    for (const cand of localCandidates) {
+      if (fs.existsSync(cand)) {
+        webpBuffer = fs.readFileSync(cand);
+        break;
+      }
     }
 
-    const arrayBuffer = await res.arrayBuffer();
-    const pngBuffer = Buffer.from(arrayBuffer);
+    if (!webpBuffer) {
+      const imgUrl = `${ARASAAC_STATIC_BASE}/${pictogramId}/${pictogramId}_500.png`;
+      const res = await fetchWithTimeout(imgUrl, 4000);
+      if (!res.ok) {
+        return err(
+          makeAppError("NOT_FOUND", `Gagal mengunduh piktogram ID ${pictogramId}`)
+        );
+      }
 
-    // Ubah ukuran ke 500x500 WebP berkualitas tinggi dengan latar belakang transparan/bersih
-    const webpBuffer = await sharp(pngBuffer)
-      .resize(500, 500, {
-        fit: "contain",
-        background: { r: 255, g: 255, b: 255, alpha: 0 },
-      })
-      .webp({ quality: 90 })
-      .toBuffer();
+      const arrayBuffer = await res.arrayBuffer();
+      const pngBuffer = Buffer.from(arrayBuffer);
+
+      // Ubah ukuran ke 500x500 WebP berkualitas tinggi dengan latar belakang transparan/bersih
+      webpBuffer = await sharp(pngBuffer)
+        .resize(500, 500, {
+          fit: "contain",
+          background: { r: 255, g: 255, b: 255, alpha: 0 },
+        })
+        .webp({ quality: 90 })
+        .toBuffer();
+    }
 
     const storageKey = `arasaac-${pictogramId}.webp`;
     await storage.put(storageKey, webpBuffer, "image/webp", "card-images");

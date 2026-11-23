@@ -36,15 +36,19 @@ export default function StudentLoginPage() {
     setErrorMsg(null);
     setIsSubmitting(true);
 
-    const result = await joinClassroomAction(joinCode, cleanName);
-    setIsSubmitting(false);
+    try {
+      const result = await joinClassroomAction(joinCode, cleanName);
+      if (!result.ok) {
+        setErrorMsg(result.error.message);
+        setIsSubmitting(false);
+        return;
+      }
 
-    if (!result.ok) {
-      setErrorMsg(result.error.message);
-      return;
+      router.push(`/kelas/${joinCode}`);
+    } catch {
+      setErrorMsg("Gagal menyambungkan ke kelas. Coba lagi.");
+      setIsSubmitting(false);
     }
-
-    router.push(`/kelas/${joinCode}`);
   }
 
   return (

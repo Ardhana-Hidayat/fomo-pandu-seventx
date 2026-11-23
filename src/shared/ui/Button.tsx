@@ -97,7 +97,7 @@ export function Button({
       );
     }
     return (
-      <Link href={href} className={baseClass} {...anchorProps}>
+      <Link href={href} prefetch={true} className={baseClass} {...anchorProps}>
         {content}
       </Link>
     );

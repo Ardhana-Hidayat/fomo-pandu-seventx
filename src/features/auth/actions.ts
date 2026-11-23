@@ -18,6 +18,12 @@ import type { Result } from "@/shared/lib/result";
 import { ok, err, makeAppError } from "@/shared/lib/result";
 
 export async function signInDemoAction(): Promise<void> {
+  try {
+    const { seedDatabase } = await import("@/server/db/seed");
+    await seedDatabase();
+  } catch (e) {
+    console.error("Gagal auto-seed di signInDemoAction:", e);
+  }
   const { token } = await signInDemoTeacher();
   const cookieStore = await cookies();
 
@@ -59,7 +65,8 @@ export async function joinClassroomAction(
     .limit(1)
     .then((rows) => rows[0]);
 
-  if (!classroom && (cleanCode === "123456" || cleanCode === "888999")) {
+  const DEMO_CODES = ["123456", "888999", "111222", "222333", "333444", "444555"];
+  if (!classroom && DEMO_CODES.includes(cleanCode)) {
     const { seedDatabase } = await import("@/server/db/seed");
     await seedDatabase();
     classroom = await db

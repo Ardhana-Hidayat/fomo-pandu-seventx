@@ -81,6 +81,10 @@ export async function findPictogram(
           )
         )
       )
+      .orderBy(
+        sql`CASE WHEN lower(${assets.keyword}) = ${cleanKeyword} THEN 0 WHEN lower(${assets.keyword}) LIKE ${`%${cleanKeyword}%`} THEN 1 ELSE 2 END`,
+        assets.createdAt
+      )
       .limit(1);
 
     return ok(rows[0] ?? null);
@@ -117,6 +121,10 @@ export async function findAssetByKeyword(
       .select()
       .from(assets)
       .where(and(...conditions))
+      .orderBy(
+        sql`CASE WHEN lower(${assets.keyword}) = ${cleanKeyword} THEN 0 WHEN lower(${assets.keyword}) LIKE ${`%${cleanKeyword}%`} THEN 1 ELSE 2 END`,
+        assets.createdAt
+      )
       .limit(1);
 
     return ok(rows[0] ?? null);

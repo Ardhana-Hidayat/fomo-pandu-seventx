@@ -212,7 +212,35 @@ export async function getPublicationByShareCode(
       )
       .limit(1);
 
-    const found = rows[0];
+    let found = rows[0];
+    if (!found && process.env.NODE_ENV !== "test") {
+      const DEMO_SHARE_CODES = ["DEMO1234", "GIGI1234", "HEWN1234", "BUAH1234", "AMAN1234"];
+      if (DEMO_SHARE_CODES.includes(shareCode.trim().toUpperCase())) {
+        try {
+          const { seedDatabase } = await import("../db/seed");
+          await seedDatabase();
+          const retryRows = await db
+            .select({
+              publication: publications,
+              lesson: lessons,
+            })
+            .from(publications)
+            .innerJoin(lessons, eq(publications.lessonId, lessons.id))
+            .where(
+              and(
+                eq(publications.shareCode, shareCode.trim().toUpperCase()),
+                eq(publications.visible, true),
+                eq(lessons.status, "published")
+              )
+            )
+            .limit(1);
+          found = retryRows[0];
+        } catch (e) {
+          console.error("Gagal auto-seed di getPublicationByShareCode:", e);
+        }
+      }
+    }
+
     if (!found) {
       return err(
         makeAppError("NOT_FOUND", "Materi atau tautan tidak ditemukan")

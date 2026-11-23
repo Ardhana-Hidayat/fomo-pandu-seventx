@@ -12,6 +12,7 @@ import {
   type Publication,
 } from "@/server/db/schema";
 import { eq, and, isNull, sql } from "drizzle-orm";
+import { DEMO_TEACHER_ID } from "@/server/db/demo-lesson-data";
 
 export interface ClassroomSummary extends Classroom {
   studentCount: number;
@@ -27,11 +28,29 @@ export interface ClassroomDetailData {
 export async function listClassroomsWithStats(
   teacherId: string
 ): Promise<ClassroomSummary[]> {
-  const teacherClassrooms = await db
+  let teacherClassrooms = await db
     .select()
     .from(classrooms)
     .where(and(eq(classrooms.teacherId, teacherId), isNull(classrooms.archivedAt)))
     .orderBy(classrooms.createdAt);
+
+  if (
+    teacherClassrooms.length === 0 &&
+    teacherId === DEMO_TEACHER_ID &&
+    process.env.NODE_ENV !== "test"
+  ) {
+    try {
+      const { seedDatabase } = await import("@/server/db/seed");
+      await seedDatabase();
+      teacherClassrooms = await db
+        .select()
+        .from(classrooms)
+        .where(and(eq(classrooms.teacherId, teacherId), isNull(classrooms.archivedAt)))
+        .orderBy(classrooms.createdAt);
+    } catch (e) {
+      console.error("Gagal auto-seed di listClassroomsWithStats:", e);
+    }
+  }
 
   if (teacherClassrooms.length === 0) {
     return [];
@@ -66,7 +85,7 @@ export async function getClassroomDetail(
   classroomId: string,
   teacherId: string
 ): Promise<ClassroomDetailData | null> {
-  const classroom = await db
+  let classroom = await db
     .select()
     .from(classrooms)
     .where(
@@ -78,6 +97,31 @@ export async function getClassroomDetail(
     )
     .limit(1)
     .then((rows) => rows[0]);
+
+  if (
+    !classroom &&
+    teacherId === DEMO_TEACHER_ID &&
+    process.env.NODE_ENV !== "test"
+  ) {
+    try {
+      const { seedDatabase } = await import("@/server/db/seed");
+      await seedDatabase();
+      classroom = await db
+        .select()
+        .from(classrooms)
+        .where(
+          and(
+            eq(classrooms.id, classroomId),
+            eq(classrooms.teacherId, teacherId),
+            isNull(classrooms.archivedAt)
+          )
+        )
+        .limit(1)
+        .then((rows) => rows[0]);
+    } catch (e) {
+      console.error("Gagal auto-seed di getClassroomDetail:", e);
+    }
+  }
 
   if (!classroom) {
     return null;

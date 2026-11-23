@@ -8,8 +8,8 @@ import {
   validateSession,
 } from "@/server/security/session";
 import { db } from "@/server/db/client";
-import { teachers, students, classrooms, type Teacher, type Student, type Classroom } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
+import { teachers, students, classrooms, lessons, type Teacher, type Student, type Classroom } from "@/server/db/schema";
+import { eq, sql } from "drizzle-orm";
 import { getOrCreateDemoTeacher } from "@/server/services/auth/demo";
 import { DEMO_TEACHER_ID, DEMO_CLASSROOM_ID } from "@/server/db/demo-lesson-data";
 
@@ -52,6 +52,22 @@ export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null>
 
     if (!teacher) {
       return null;
+    }
+
+    if (teacher.id === DEMO_TEACHER_ID && process.env.NODE_ENV !== "test") {
+      try {
+        const hasLessons = await db
+          .select({ count: sql<number>`count(*)::int` })
+          .from(lessons)
+          .where(eq(lessons.teacherId, teacher.id))
+          .then((rows) => rows[0]?.count ?? 0);
+        if (hasLessons === 0) {
+          const { seedDatabase } = await import("@/server/db/seed");
+          await seedDatabase();
+        }
+      } catch (e) {
+        console.error("Gagal auto-seed di getCurrentTeacher:", e);
+      }
     }
 
     return { teacher, sessionId: session.id };

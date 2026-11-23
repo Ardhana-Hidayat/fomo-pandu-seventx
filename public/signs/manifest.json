@@ -1,0 +1,1047 @@
+{
+  "version": 2,
+  "generated_by": "scripts/signs/generate-manifest-v2.ts",
+  "note": "Manifest pustaka isyarat InkluDidik v2 berlisensi CC BY 4.0",
+  "items": [
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "A",
+      "type": "image",
+      "src": "/signs/sibi/a.webp",
+      "alt": "Isyarat huruf A dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "A/IMG_A.jpg",
+        "sha256": "sha256-sibi-a",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "B",
+      "type": "image",
+      "src": "/signs/sibi/b.webp",
+      "alt": "Isyarat huruf B dalam SIBI",
+      "source": "Koleksi Guru SLB",
+      "license": "Hak Cipta Tim",
+      "reference": "Kamus SIBI Kemdikbud",
+      "status": "draft",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "C",
+      "type": "image",
+      "src": "/signs/sibi/c.webp",
+      "alt": "Isyarat huruf C dalam SIBI",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "C/IMG_C.jpg",
+        "sha256": "sha256-sibi-c",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "D",
+      "type": "image",
+      "src": "/signs/sibi/d.webp",
+      "alt": "Isyarat huruf D dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "D/IMG_D.jpg",
+        "sha256": "sha256-sibi-d",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "E",
+      "type": "image",
+      "src": "/signs/sibi/e.webp",
+      "alt": "Isyarat huruf E dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "E/IMG_E.jpg",
+        "sha256": "sha256-sibi-e",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "F",
+      "type": "image",
+      "src": "/signs/sibi/f.webp",
+      "alt": "Isyarat huruf F dalam SIBI",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "F/IMG_F.jpg",
+        "sha256": "sha256-sibi-f",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "G",
+      "type": "image",
+      "src": "/signs/sibi/g.webp",
+      "alt": "Isyarat huruf G dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "G/IMG_G.jpg",
+        "sha256": "sha256-sibi-g",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "H",
+      "type": "image",
+      "src": "/signs/sibi/h.webp",
+      "alt": "Isyarat huruf H dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "H/IMG_H.jpg",
+        "sha256": "sha256-sibi-h",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "I",
+      "type": "image",
+      "src": "/signs/sibi/i.webp",
+      "alt": "Isyarat huruf I dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "I/IMG_I.jpg",
+        "sha256": "sha256-sibi-i",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "J",
+      "type": "image",
+      "src": "/signs/sibi/j.webp",
+      "alt": "Isyarat huruf J dalam SIBI (isyarat ini bergerak)",
+      "motion": true,
+      "status": "draft",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "J/IMG_J.jpg",
+        "sha256": "sha256-sibi-j",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "K",
+      "type": "image",
+      "src": "/signs/sibi/k.webp",
+      "alt": "Isyarat huruf K dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "K/IMG_K.jpg",
+        "sha256": "sha256-sibi-k",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "L",
+      "type": "image",
+      "src": "/signs/sibi/l.webp",
+      "alt": "Isyarat huruf L dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "L/IMG_L.jpg",
+        "sha256": "sha256-sibi-l",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "M",
+      "type": "image",
+      "src": "/signs/sibi/m.webp",
+      "alt": "Isyarat huruf M dalam SIBI",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "M/IMG_M.jpg",
+        "sha256": "sha256-sibi-m",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "N",
+      "type": "image",
+      "src": "/signs/sibi/n.webp",
+      "alt": "Isyarat huruf N dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "N/IMG_N.jpg",
+        "sha256": "sha256-sibi-n",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "O",
+      "type": "image",
+      "src": "/signs/sibi/o.webp",
+      "alt": "Isyarat huruf O dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "O/IMG_O.jpg",
+        "sha256": "sha256-sibi-o",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "P",
+      "type": "image",
+      "src": "/signs/sibi/p.webp",
+      "alt": "Isyarat huruf P dalam SIBI",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "P/IMG_P.jpg",
+        "sha256": "sha256-sibi-p",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "Q",
+      "type": "image",
+      "src": "/signs/sibi/q.webp",
+      "alt": "Isyarat huruf Q dalam SIBI",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "Q/IMG_Q.jpg",
+        "sha256": "sha256-sibi-q",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "R",
+      "type": "image",
+      "src": "/signs/sibi/r.webp",
+      "alt": "Isyarat huruf R dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "R/IMG_R.jpg",
+        "sha256": "sha256-sibi-r",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "S",
+      "type": "image",
+      "src": "/signs/sibi/s.webp",
+      "alt": "Isyarat huruf S dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "S/IMG_S.jpg",
+        "sha256": "sha256-sibi-s",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "T",
+      "type": "image",
+      "src": "/signs/sibi/t.webp",
+      "alt": "Isyarat huruf T dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "T/IMG_T.jpg",
+        "sha256": "sha256-sibi-t",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "U",
+      "type": "image",
+      "src": "/signs/sibi/u.webp",
+      "alt": "Isyarat huruf U dalam SIBI",
+      "motion": false,
+      "status": "verified",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "U/IMG_U.jpg",
+        "sha256": "sha256-sibi-u",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": "Guru SLBN Manisrejo",
+      "verifiedAt": "2026-11-22"
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "V",
+      "type": "image",
+      "src": "/signs/sibi/v.webp",
+      "alt": "Isyarat huruf V dalam SIBI",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "V/IMG_V.jpg",
+        "sha256": "sha256-sibi-v",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "W",
+      "type": "image",
+      "src": "/signs/sibi/w.webp",
+      "alt": "Isyarat huruf W dalam SIBI",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "W/IMG_W.jpg",
+        "sha256": "sha256-sibi-w",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "X",
+      "type": "image",
+      "src": "/signs/sibi/x.webp",
+      "alt": "Isyarat huruf X dalam SIBI",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "X/IMG_X.jpg",
+        "sha256": "sha256-sibi-x",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "Y",
+      "type": "image",
+      "src": "/signs/sibi/y.webp",
+      "alt": "Isyarat huruf Y dalam SIBI",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "Y/IMG_Y.jpg",
+        "sha256": "sha256-sibi-y",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "SIBI",
+      "kind": "letter",
+      "key": "Z",
+      "type": "image",
+      "src": "/signs/sibi/z.webp",
+      "alt": "Isyarat huruf Z dalam SIBI (isyarat ini bergerak)",
+      "motion": true,
+      "status": "source",
+      "origin": {
+        "sourceId": "sibi-azizah-2026",
+        "doi": "10.17632/xdn2gj38xf.1",
+        "originalFile": "Z/IMG_Z.jpg",
+        "sha256": "sha256-sibi-z",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Kamus SIBI Kemdikbud",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "A",
+      "type": "image",
+      "src": "/signs/bisindo/a.webp",
+      "alt": "Isyarat huruf A dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "A/0001.jpg",
+        "sha256": "sha256-bisindo-a",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "B",
+      "type": "image",
+      "src": "/signs/bisindo/b.webp",
+      "alt": "Isyarat huruf B dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "B/0001.jpg",
+        "sha256": "sha256-bisindo-b",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "C",
+      "type": "image",
+      "src": "/signs/bisindo/c.webp",
+      "alt": "Isyarat huruf C dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "C/0001.jpg",
+        "sha256": "sha256-bisindo-c",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "D",
+      "type": "image",
+      "src": "/signs/bisindo/d.webp",
+      "alt": "Isyarat huruf D dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "D/0001.jpg",
+        "sha256": "sha256-bisindo-d",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "E",
+      "type": "image",
+      "src": "/signs/bisindo/e.webp",
+      "alt": "Isyarat huruf E dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "E/0001.jpg",
+        "sha256": "sha256-bisindo-e",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "F",
+      "type": "image",
+      "src": "/signs/bisindo/f.webp",
+      "alt": "Isyarat huruf F dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "F/0001.jpg",
+        "sha256": "sha256-bisindo-f",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "G",
+      "type": "image",
+      "src": "/signs/bisindo/g.webp",
+      "alt": "Isyarat huruf G dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "G/0001.jpg",
+        "sha256": "sha256-bisindo-g",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "H",
+      "type": "image",
+      "src": "/signs/bisindo/h.webp",
+      "alt": "Isyarat huruf H dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "H/0001.jpg",
+        "sha256": "sha256-bisindo-h",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "I",
+      "type": "image",
+      "src": "/signs/bisindo/i.webp",
+      "alt": "Isyarat huruf I dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "I/0001.jpg",
+        "sha256": "sha256-bisindo-i",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "J",
+      "type": "image",
+      "src": "/signs/bisindo/j.webp",
+      "alt": "Isyarat huruf J dalam BISINDO (isyarat ini bergerak)",
+      "motion": true,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "J/0001.jpg",
+        "sha256": "sha256-bisindo-j",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "K",
+      "type": "image",
+      "src": "/signs/bisindo/k.webp",
+      "alt": "Isyarat huruf K dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "K/0001.jpg",
+        "sha256": "sha256-bisindo-k",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "L",
+      "type": "image",
+      "src": "/signs/bisindo/l.webp",
+      "alt": "Isyarat huruf L dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "L/0001.jpg",
+        "sha256": "sha256-bisindo-l",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "M",
+      "type": "image",
+      "src": "/signs/bisindo/m.webp",
+      "alt": "Isyarat huruf M dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "M/0001.jpg",
+        "sha256": "sha256-bisindo-m",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "N",
+      "type": "image",
+      "src": "/signs/bisindo/n.webp",
+      "alt": "Isyarat huruf N dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "N/0001.jpg",
+        "sha256": "sha256-bisindo-n",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "O",
+      "type": "image",
+      "src": "/signs/bisindo/o.webp",
+      "alt": "Isyarat huruf O dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "O/0001.jpg",
+        "sha256": "sha256-bisindo-o",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "P",
+      "type": "image",
+      "src": "/signs/bisindo/p.webp",
+      "alt": "Isyarat huruf P dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "P/0001.jpg",
+        "sha256": "sha256-bisindo-p",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "Q",
+      "type": "image",
+      "src": "/signs/bisindo/q.webp",
+      "alt": "Isyarat huruf Q dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "Q/0001.jpg",
+        "sha256": "sha256-bisindo-q",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "R",
+      "type": "image",
+      "src": "/signs/bisindo/r.webp",
+      "alt": "Isyarat huruf R dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "R/0001.jpg",
+        "sha256": "sha256-bisindo-r",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "S",
+      "type": "image",
+      "src": "/signs/bisindo/s.webp",
+      "alt": "Isyarat huruf S dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "S/0001.jpg",
+        "sha256": "sha256-bisindo-s",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "T",
+      "type": "image",
+      "src": "/signs/bisindo/t.webp",
+      "alt": "Isyarat huruf T dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "T/0001.jpg",
+        "sha256": "sha256-bisindo-t",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "U",
+      "type": "image",
+      "src": "/signs/bisindo/u.webp",
+      "alt": "Isyarat huruf U dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "U/0001.jpg",
+        "sha256": "sha256-bisindo-u",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "V",
+      "type": "image",
+      "src": "/signs/bisindo/v.webp",
+      "alt": "Isyarat huruf V dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "V/0001.jpg",
+        "sha256": "sha256-bisindo-v",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "W",
+      "type": "image",
+      "src": "/signs/bisindo/w.webp",
+      "alt": "Isyarat huruf W dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "W/0001.jpg",
+        "sha256": "sha256-bisindo-w",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "X",
+      "type": "image",
+      "src": "/signs/bisindo/x.webp",
+      "alt": "Isyarat huruf X dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "X/0001.jpg",
+        "sha256": "sha256-bisindo-x",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "Y",
+      "type": "image",
+      "src": "/signs/bisindo/y.webp",
+      "alt": "Isyarat huruf Y dalam BISINDO",
+      "motion": false,
+      "status": "source",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "Y/0001.jpg",
+        "sha256": "sha256-bisindo-y",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    },
+    {
+      "system": "BISINDO",
+      "kind": "letter",
+      "key": "Z",
+      "type": "image",
+      "src": "/signs/bisindo/z.webp",
+      "alt": "Isyarat huruf Z dalam BISINDO (isyarat ini bergerak)",
+      "motion": true,
+      "status": "missing",
+      "origin": {
+        "sourceId": "bisindo-asshafi-2026",
+        "doi": "10.17632/4xnkvr88tk.1",
+        "originalFile": "Z/0001.jpg",
+        "sha256": "sha256-bisindo-z",
+        "transform": "crop-hands,resize-512,flatten-white,webp-q80"
+      },
+      "reference": "Lembar abjad BISINDO resmi Kemendikdasmen",
+      "verifiedBy": null,
+      "verifiedAt": null
+    }
+  ],
+  "status_meaning": {
+    "verified": "Diperiksa guru atau penerjemah. Tampil ke siswa.",
+    "source": "Dari dataset terbuka berlisensi, dipilih otomatis dan ditinjau sekilas. Tampil ke siswa dengan label sumber di tampilan guru.",
+    "draft": "Tidak tampil ke siswa (kecuali ALLOW_DRAFT_SIGNS=true).",
+    "missing": "Belum ada. Tampil kotak huruf dengan teks 'Isyarat belum tersedia'."
+  }
+}

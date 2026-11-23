@@ -1,92 +1,280 @@
 @import "tailwindcss";
 
+/*
+  Token desain InkluDidik v2.
+  Atribut di <html>:
+    data-tema="terang" | "gelap" | "kuning-hitam"
+    data-huruf="normal" | "besar" | "sangat-besar" | "raksasa"
+    data-jenis-huruf="atkinson" | "lexend"
+    data-jarak="normal" | "lebar"
+    data-sorot="kuning" | "biru" | "hijau"
+    data-tombol="normal" | "besar"
+    data-gerak="kurang" (opsional, selain prefers-reduced-motion)
+*/
+
+:root,
+[data-tema="terang"] {
+  --bg: #F6F8FB;              /* latar halaman, ink 16,0:1 */
+  --surface: #FFFFFF;         /* kartu, input, lembar */
+  --surface-2: #EAF0F8;       /* area sekunder, baris tabel selang-seling */
+  --ink: #0B1B3A;             /* teks utama 17,0:1 */
+  --ink-2: #2C3A57;           /* teks pendukung 11,4:1 */
+  --muted: #4B5A75;           /* keterangan kecil 7,0:1 di surface */
+  --unread: #475569;          /* kata yang belum dibaca 7,6:1 */
+  --border: #6B7A96;          /* tepi kartu dan pemisah, 4,3:1 */
+  --border-strong: #0B1B3A;   /* tepi kontrol interaktif */
+  --primary: #0B1B3A;         /* tombol utama */
+  --on-primary: #FFFFFF;      /* 17,0:1 */
+  --primary-edge: #000000;    /* tepi bawah tombol (bayangan keras) */
+  --link: #0A3FB0;            /* tautan, cincin fokus, 8,9:1 */
+  --focus: #0A3FB0;
+  --sorot: #FFC83D;           /* kata yang sedang dibaca; ink di atasnya 11,0:1 */
+  --sorot-lembut: #FFE9A8;    /* kata yang sudah dibaca; ink 14,2:1 */
+  --on-sorot: #0B1B3A;
+
+  --benar-bg: #D8F3E3;  --benar-ink: #0B4A2A;  --benar-edge: #0F6B3C;   /* 8,8:1 */
+  --ulang-bg: #FFE9C2;  --ulang-ink: #6A3B00;  --ulang-edge: #A25A00;   /* 7,9:1 */
+  --info-bg:  #DCE8FF;  --info-ink:  #0B2A6B;  --info-edge:  #0A3FB0;   /* 10,9:1 */
+  --galat-bg: #FDE2E2;  --galat-ink: #7A0E12;  --galat-edge: #A4161A;   /* 9,0:1, hanya antarmuka guru */
+
+  /* Kompatibilitas mundur sementara */
+  --bg-canvas: var(--bg);
+  --bg-surface: var(--surface);
+  --bg-surface-subtle: var(--surface-2);
+  --border-subtle: var(--border);
+  --border-focus: var(--focus);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-2);
+  --text-muted: var(--muted);
+  --accent-primary: var(--primary);
+}
+
+[data-tema="gelap"] {
+  --bg: #0A1224;
+  --surface: #121C36;
+  --surface-2: #1A2749;
+  --ink: #F4F7FF;            /* 15,7:1 di surface */
+  --ink-2: #D5DEEF;
+  --muted: #A9B6CE;          /* 8,3:1 */
+  --unread: #B8C4DB;         /* 9,6:1 */
+  --border: #7F8FB0;         /* 5,2:1 */
+  --border-strong: #F4F7FF;
+  --primary: #F4F7FF;
+  --on-primary: #0A1224;     /* 17,4:1 */
+  --primary-edge: #7F8FB0;
+  --link: #9CC2FF;           /* 9,3:1 */
+  --focus: #FFC83D;
+  --sorot: #FFC83D;          /* on-sorot 12,1:1 */
+  --sorot-lembut: #E9C56B;   /* on-sorot 11,3:1 */
+  --on-sorot: #0A1224;
+
+  --benar-bg: #0F3B26;  --benar-ink: #BFF2D4;  --benar-edge: #5BD08F;
+  --ulang-bg: #4A2B00;  --ulang-ink: #FFE0A8;  --ulang-edge: #FFB347;
+  --info-bg:  #13306B;  --info-ink:  #CFE0FF;  --info-edge:  #9CC2FF;
+  --galat-bg: #5A1216;  --galat-ink: #FFD0D2;  --galat-edge: #FF8A8F;
+
+  --bg-canvas: var(--bg);
+  --bg-surface: var(--surface);
+  --bg-surface-subtle: var(--surface-2);
+  --border-subtle: var(--border);
+  --border-focus: var(--focus);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-2);
+  --text-muted: var(--muted);
+  --accent-primary: var(--primary);
+}
+
+/* Hitam dengan kuning: skema klasik untuk low vision. */
+[data-tema="kuning-hitam"] {
+  --bg: #000000;
+  --surface: #000000;
+  --surface-2: #1A1A00;
+  --ink: #FFD400;            /* 14,7:1 */
+  --ink-2: #FFFFFF;          /* 21:1 */
+  --muted: #FFFFFF;
+  --unread: #FFFFFF;
+  --border: #FFD400;
+  --border-strong: #FFD400;
+  --primary: #FFD400;
+  --on-primary: #000000;     /* 14,7:1 */
+  --primary-edge: #FFFFFF;
+  --link: #7FD0FF;           /* 12,4:1 */
+  --focus: #FFFFFF;
+  --sorot: #FFD400;
+  --sorot-lembut: #FFD400;   /* kata yang sudah dibaca: teks kuning, bukan latar */
+  --on-sorot: #000000;
+
+  --benar-bg: #000000;  --benar-ink: #7CFFB0;  --benar-edge: #7CFFB0;
+  --ulang-bg: #000000;  --ulang-ink: #FFB347;  --ulang-edge: #FFB347;
+  --info-bg:  #000000;  --info-ink:  #7FD0FF;  --info-edge:  #7FD0FF;
+  --galat-bg: #000000;  --galat-ink: #FF9A9A;  --galat-edge: #FF9A9A;
+
+  --bg-canvas: var(--bg);
+  --bg-surface: var(--surface);
+  --bg-surface-subtle: var(--surface-2);
+  --border-subtle: var(--border);
+  --border-focus: var(--focus);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-2);
+  --text-muted: var(--muted);
+  --accent-primary: var(--primary);
+}
+
+/* Warna sorotan teks alternatif (pilihan guru atau siswa). Teks ink di atasnya tetap di atas 10:1. */
+[data-sorot="biru"]  { --sorot: #7DD3FC; --sorot-lembut: #D5EEFC; }
+[data-sorot="hijau"] { --sorot: #86EFAC; --sorot-lembut: #D6F8E3; }
+[data-tema="gelap"][data-sorot="biru"]  { --sorot-lembut: #5FA9CC; }
+[data-tema="gelap"][data-sorot="hijau"] { --sorot-lembut: #5FBF86; }
+
+/* Huruf. Basis 18px. Semua ukuran memakai rem agar ikut skala. */
+:root { --skala-huruf: 1; --jarak-huruf: 0.01em; --jarak-baris: 1.6; }
+[data-huruf="besar"]        { --skala-huruf: 1.25; }
+[data-huruf="sangat-besar"] { --skala-huruf: 1.5; }
+[data-huruf="raksasa"]      { --skala-huruf: 1.8; }
+[data-jarak="lebar"]        { --jarak-huruf: 0.05em; --jarak-baris: 1.85; }
+html { font-size: calc(18px * var(--skala-huruf)); }
+
 :root {
-  --bg-canvas: #FAF9F5;
-  --bg-surface: #FFFFFF;
-  --bg-surface-subtle: #F2EFE9;
-  --border-subtle: #D6D3CD;
-  --border-strong: #6B7280;
-  --border-focus: #1D4ED8;
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-muted: #4B5563;
-  --text-inverse: #FFFFFF;
-  --accent-primary: #1E40AF;
-  --accent-hover: #1E3A8A;
-  --accent-subtle: #EFF6FF;
-  --status-success-bg: #DCFCE7;
-  --status-success-text: #14532D;
-  --status-success-border: #15803D;
-  --status-retry-bg: #FEF3C7;
-  --status-retry-text: #78350F;
-  --status-retry-border: #B45309;
-  --status-error-bg: #FEE2E2;
-  --status-error-text: #7F1D1D;
+  --font-ui: var(--font-atkinson), "Atkinson Hyperlegible Next", system-ui, sans-serif;
+}
+[data-jenis-huruf="lexend"] { --font-ui: var(--font-lexend), Lexend, system-ui, sans-serif; }
+
+/* Skala tipografi (rem). Teks kartu belajar memakai --t-kartu. */
+:root {
+  --t-kecil: 0.875rem;                          /* 15,75px: keterangan; jangan lebih kecil */
+  --t-isi: 1rem;                                /* 18px */
+  --t-sedang: 1.25rem;                          /* 22,5px: judul bagian */
+  --t-judul: 1.75rem;                           /* 31,5px: judul halaman */
+  --t-kartu: clamp(1.75rem, 1.1rem + 3.2vw, 3rem);   /* teks kartu di ponsel dan laptop */
+  --t-tv: clamp(4rem, 5vw, 6.5rem);             /* teks kartu di mode TV */
+  --bobot-isi: 400;
+  --bobot-judul: 700;
 }
 
-[data-contrast="high"] {
-  --bg-canvas: #FFFFFF;
-  --bg-surface: #FFFFFF;
-  --bg-surface-subtle: #F3F4F6;
-  --border-subtle: #000000;
-  --border-strong: #000000;
-  --border-focus: #000000;
-  --text-primary: #000000;
-  --text-secondary: #111827;
-  --text-muted: #111827;
-  --accent-primary: #0F2D8A;
-  --accent-hover: #091D5C;
-  --accent-subtle: #E0E7FF;
-  --status-success-bg: #D1FAE5;
-  --status-success-text: #064E3B;
-  --status-success-border: #065F46;
-  --status-retry-bg: #FDE68A;
-  --status-retry-text: #451A03;
-  --status-retry-border: #78350F;
+/* Jarak (kelipatan 4px) */
+:root {
+  --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem;
+  --s-6: 1.5rem;  --s-8: 2rem;   --s-12: 3rem;   --s-16: 4rem;
 }
 
-html[data-text-scale="normal"] { font-size: 16px; }
-html[data-text-scale="large"]  { font-size: 18px; }
-html[data-text-scale="xlarge"] { font-size: 20px; }
+/* Bentuk: radius berbeda sesuai peran, bukan satu radius untuk semua */
+:root {
+  --r-tombol: 0.875rem;   /* 14px */
+  --r-input: 0.75rem;     /* 12px */
+  --r-kartu: 1.25rem;     /* 20px */
+  --r-isyarat: 1rem;      /* 16px */
+  --r-chip: 999px;
+  --garis: 2px;           /* tebal tepi kontrol dan kartu */
+  --tinggi-tombol: 3.5rem;      /* 56px pada ukuran normal */
+  --tinggi-tombol-tv: 4.5rem;   /* 72px */
+  --target-min: 3rem;           /* 48px, batas terkecil untuk target sentuh */
+}
+[data-tombol="besar"] { --tinggi-tombol: 4rem; --target-min: 3.5rem; }
 
+/* Cincin fokus: dua lapis agar terlihat di atas terang dan gelap */
+:focus-visible {
+  outline: 4px solid var(--focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--surface);
+}
+
+/* Tombol: bayangan keras di bawah (rasa tombol fisik), tanpa bayangan lembut */
+.tombol {
+  min-height: var(--tinggi-tombol);
+  min-width: var(--target-min);
+  padding: 0 var(--s-6);
+  border: var(--garis) solid var(--border-strong);
+  border-radius: var(--r-tombol);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 700;
+  font-size: var(--t-isi);
+  box-shadow: 0 4px 0 0 var(--primary-edge);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-3);
+  transition: transform 80ms, box-shadow 80ms;
+}
+.tombol:active { transform: translateY(3px); box-shadow: 0 1px 0 0 var(--primary-edge); }
+.tombol--sekunder { background: var(--surface); color: var(--ink); box-shadow: 0 4px 0 0 var(--border); }
+.tombol--bahaya { background: var(--surface); color: var(--galat-ink); border-color: var(--galat-edge); box-shadow: 0 4px 0 0 var(--galat-edge); }
+
+/* Kartu */
+.kartu {
+  background: var(--surface);
+  border: var(--garis) solid var(--border);
+  border-radius: var(--r-kartu);
+  padding: var(--s-6);
+}
+
+/* Sorotan teks tersinkron (lihat 04-PEMUTAR-DAN-SINKRONISASI.md) */
+.kata { color: var(--unread); border-radius: 0.25em; padding: 0 0.12em; }
+.kata[data-state="sudah"] { color: var(--on-sorot); background: var(--sorot-lembut); }
+.kata[data-state="sedang"] {
+  color: var(--on-sorot);
+  background:
+    linear-gradient(var(--sorot), var(--sorot)) no-repeat left center / calc(var(--progres, 0) * 100%) 100%,
+    var(--sorot-lembut);
+  text-decoration: underline;
+  text-decoration-thickness: 0.09em;
+  text-underline-offset: 0.12em;
+}
+/* Kuning-hitam: kata yang sudah dibaca berupa teks kuning di latar hitam, kata yang sedang dibaca berlatar kuning. */
+[data-tema="kuning-hitam"] .kata[data-state="sudah"] { background: transparent; color: var(--sorot); text-decoration: underline; text-decoration-thickness: 0.05em; }
+[data-tema="kuning-hitam"] .kata[data-state="sedang"] { background: var(--sorot); }
+
+/* Kurangi gerak: ikut sistem, atau dipaksa lewat data-gerak="kurang". Tanpa sapuan, kata langsung penuh. */
+@media (prefers-reduced-motion: reduce) {
+  .tombol, .tombol:active { transition: none; }
+  .kata[data-state="sedang"] { background: var(--sorot); }
+}
+[data-gerak="kurang"] .tombol,
+[data-gerak="kurang"] .tombol:active { transition: none; }
+[data-gerak="kurang"] .kata[data-state="sedang"] { background: var(--sorot); }
+
+/* Pemetaan ke Tailwind v4 */
 @theme inline {
-  --font-sans: var(--font-sans), system-ui, sans-serif;
-  --font-mono: var(--font-mono), monospace;
-  --color-canvas: var(--bg-canvas);
-  --color-surface: var(--bg-surface);
-  --color-surface-subtle: var(--bg-surface-subtle);
-  --color-border-subtle: var(--border-subtle);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-unread: var(--unread);
+  --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-  --color-focus: var(--border-focus);
-  --color-ink: var(--text-primary);
-  --color-ink-secondary: var(--text-secondary);
-  --color-ink-muted: var(--text-muted);
-  --color-brand: var(--accent-primary);
-  --color-brand-hover: var(--accent-hover);
-  --color-brand-subtle: var(--accent-subtle);
-
-  --color-success-bg: var(--status-success-bg);
-  --color-success-ink: var(--status-success-text);
-  --color-success-border: var(--status-success-border);
-  --color-retry-bg: var(--status-retry-bg);
-  --color-retry-ink: var(--status-retry-text);
-  --color-retry-border: var(--status-retry-border);
-  --color-error-bg: var(--status-error-bg);
-  --color-error-ink: var(--status-error-text);
-
-  /* Status Aliases agar kompatibel langsung dengan kelas bg-status-* */
-  --color-status-success-bg: var(--status-success-bg);
-  --color-status-success-text: var(--status-success-text);
-  --color-status-success-border: var(--status-success-border);
-  --color-status-retry-bg: var(--status-retry-bg);
-  --color-status-retry-text: var(--status-retry-text);
-  --color-status-retry-border: var(--status-retry-border);
-  --color-status-error-bg: var(--status-error-bg);
-  --color-status-error-text: var(--status-error-text);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-edge: var(--primary-edge);
+  --color-link: var(--link);
+  --color-focus: var(--focus);
+  --color-sorot: var(--sorot);
+  --color-sorot-lembut: var(--sorot-lembut);
+  --color-on-sorot: var(--on-sorot);
+  --color-benar: var(--benar-bg);
+  --color-benar-ink: var(--benar-ink);
+  --color-benar-edge: var(--benar-edge);
+  --color-ulang: var(--ulang-bg);
+  --color-ulang-ink: var(--ulang-ink);
+  --color-ulang-edge: var(--ulang-edge);
+  --color-info: var(--info-bg);
+  --color-info-ink: var(--info-ink);
+  --color-info-edge: var(--info-edge);
+  --color-galat: var(--galat-bg);
+  --color-galat-ink: var(--galat-ink);
+  --color-galat-edge: var(--galat-edge);
+  --radius-tombol: var(--r-tombol);
+  --radius-kartu: var(--r-kartu);
+  --radius-input: var(--r-input);
+  --radius-isyarat: var(--r-isyarat);
+  --radius-chip: var(--r-chip);
+  --font-sans: var(--font-ui);
+  --font-mono: var(--font-mono);
 }
 
 body {
-  background-color: var(--bg-canvas);
-  color: var(--text-primary);
-  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  letter-spacing: var(--jarak-huruf);
+  line-height: var(--jarak-baris);
+  min-height: 100dvh;
 }

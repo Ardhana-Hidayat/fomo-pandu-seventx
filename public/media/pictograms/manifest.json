@@ -993,6 +993,16 @@
       "id": 2724,
       "name": "pink",
       "alt": "Warna merah muda / merah jambu"
+    },
+    "odol": {
+      "id": 2858,
+      "name": "toothpaste",
+      "alt": "Pasta gigi atau odol"
+    },
+    "pasta-gigi": {
+      "id": 2858,
+      "name": "toothpaste",
+      "alt": "Pasta gigi atau odol"
     }
   }
 }

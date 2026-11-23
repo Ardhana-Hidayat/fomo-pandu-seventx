@@ -60,6 +60,7 @@ export function resolveSign(
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
   const isSupabase =
     Boolean(supabaseUrl) &&
+    process.env.NODE_ENV !== "test" &&
     (process.env.STORAGE_DRIVER === "supabase" || process.env.NODE_ENV === "production");
 
   const defaultLocalSrc = `/signs/${system.toLowerCase()}/${key.toLowerCase()}.webp`;

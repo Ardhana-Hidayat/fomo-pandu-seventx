@@ -1,4 +1,4 @@
-name: InkluDidik CI/CD Pipeline
+name: PANDU CI/CD Pipeline
 
 on:
   push:

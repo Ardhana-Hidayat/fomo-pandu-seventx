@@ -1,6 +1,6 @@
-# Changelog
+﻿# Changelog
 
-Semua perubahan penting pada proyek InkluDidik dicatat di berkas ini.
+Semua perubahan penting pada proyek PANDU dicatat di berkas ini.
 Format ini mengikuti panduan [Keep a Changelog](https://keepachangelog.com/id-ID/1.0.0/).
 
 ## [Unreleased]
@@ -12,3 +12,4 @@ Format ini mengikuti panduan [Keep a Changelog](https://keepachangelog.com/id-ID
 
 ### Dihapus
 - Berkas legacy v1 prototype: `src/lib/modules-store.ts`, `supabase/schema.sql`, `src/types/database.ts` (S0-01).
+

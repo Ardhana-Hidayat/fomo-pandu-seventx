@@ -1,8 +1,16 @@
 import type { Metadata, Viewport } from 'next';
-import { Atkinson_Hyperlegible_Next, Lexend, JetBrains_Mono } from 'next/font/google';
+import { Plus_Jakarta_Sans, Atkinson_Hyperlegible_Next, Lexend, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { SkipLink } from '@/shared/ui/SkipLink';
 import { UIProviders } from '@/shared/ui/UIProviders';
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-plus-jakarta',
+  display: 'swap',
+  fallback: ['system-ui', '-apple-system', 'sans-serif'],
+});
 
 const atkinson = Atkinson_Hyperlegible_Next({
   subsets: ['latin'],
@@ -22,20 +30,25 @@ const lexend = Lexend({
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['400', '500', '700'],
   variable: '--font-mono',
   display: 'swap',
-  fallback: ['monospace'],
+  fallback: ['ui-monospace', 'monospace'],
 });
 
 export const metadata: Metadata = {
-  title: 'InkluDidik - Web Pendidikan Inklusif SLB',
+  title: 'PANDU — Panduan Dukungan Inklusif',
   description:
     'Alat belajar adaptif untuk siswa dan guru SLB: teks bersinkron, audio, piktogram, dan kartu isyarat huruf.',
+  openGraph: {
+    title: 'PANDU — Panduan Dukungan Inklusif',
+    description: 'Platform kartu belajar adaptif dan latihan interaktif untuk SLB dan kelas inklusif.',
+    type: 'website',
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0B1B3A',
+  themeColor: '#0F766E',
   width: 'device-width',
   initialScale: 1,
 };
@@ -50,17 +63,17 @@ export default function RootLayout({
       lang="id"
       data-tema="terang"
       data-huruf="normal"
-      data-jenis-huruf="atkinson"
+      data-jenis-huruf="plus-jakarta"
       data-jarak="normal"
       data-sorot="kuning"
       data-tombol="normal"
-      className={`${atkinson.variable} ${lexend.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${plusJakarta.variable} ${atkinson.variable} ${lexend.variable} ${jetbrainsMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
         <script id="theme-init">
           {`try {
-            var s = localStorage.getItem('inkludidik_tampilan');
+            var s = localStorage.getItem('pandu_tampilan');
             if (s) {
               var p = JSON.parse(s);
               var d = document.documentElement;

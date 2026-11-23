@@ -42,7 +42,7 @@ describe("Recommendations Engine & Student Overrides (S3-01, S3-05)", () => {
       .insert(teachers)
       .values({
         displayName: "Guru Inklusif A",
-        email: "guru.a@inkludidik.test",
+        email: "guru.a@pandu.test",
         authProvider: "demo",
       })
       .returning();
@@ -52,7 +52,7 @@ describe("Recommendations Engine & Student Overrides (S3-01, S3-05)", () => {
       .insert(teachers)
       .values({
         displayName: "Guru Inklusif B",
-        email: "guru.b@inkludidik.test",
+        email: "guru.b@pandu.test",
         authProvider: "demo",
       })
       .returning();

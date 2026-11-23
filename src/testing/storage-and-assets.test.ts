@@ -35,7 +35,7 @@ describe("Gelombang 2: Storage Provider & Asset Repo (S2-01, S2-02)", () => {
   describe("StorageProvider (Local File Storage)", () => {
     it("dapat menyimpan, membaca, dan menghapus berkas di storage", async () => {
       const testKey = "test-image.txt";
-      const content = Buffer.from("Halo InkluDidik Media Storage!");
+      const content = Buffer.from("Halo PANDU Media Storage!");
 
       // 1. Put/upload berkas
       const putRes = await storage.put(testKey, content, "text/plain", "card-images");
@@ -50,7 +50,7 @@ describe("Gelombang 2: Storage Provider & Asset Repo (S2-01, S2-02)", () => {
       expect(readBytes).not.toBeNull();
       if (readBytes) {
         const text = Buffer.from(readBytes).toString("utf-8");
-        expect(text).toBe("Halo InkluDidik Media Storage!");
+        expect(text).toBe("Halo PANDU Media Storage!");
       }
 
       // 3. Hapus berkas

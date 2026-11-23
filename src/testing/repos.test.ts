@@ -77,7 +77,7 @@ describe("Database Repositories & Data Layer (S0-03, S0-04, S0-07)", () => {
     it("masuk sebagai guru demo membuat guru dan sesi nyata", async () => {
       const { teacher, token } = await signInDemoTeacher();
       expect(teacher).toBeDefined();
-      expect(teacher.email).toBe("guru.demo@inkludidik.id");
+      expect(teacher.email).toBe("guru.demo@pandu.id");
       expect(teacher.displayName).toBe("Guru Demo");
       expect(token).toBeDefined();
       expect(token.length).toBeGreaterThanOrEqual(32);

@@ -1,5 +1,5 @@
 /**
- * Mesin sinkronisasi InkluDidik.
+ * Mesin sinkronisasi PANDU.
  * Fungsi murni: tanpa DOM, tanpa speechSynthesis.
  * Aman dijalankan di server, worker, maupun browser.
  */

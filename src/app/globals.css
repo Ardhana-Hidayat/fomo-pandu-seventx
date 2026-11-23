@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 /*
-  Token desain InkluDidik v2.
+  Token desain PANDU — Panduan Dukungan Inklusif.
   Atribut di <html>:
     data-tema="terang" | "gelap" | "kuning-hitam"
     data-huruf="normal" | "besar" | "sangat-besar" | "raksasa"
-    data-jenis-huruf="atkinson" | "lexend"
+    data-jenis-huruf="atkinson" | "lexend" | "plus-jakarta"
     data-jarak="normal" | "lebar"
     data-sorot="kuning" | "biru" | "hijau"
     data-tombol="normal" | "besar"
@@ -14,35 +14,49 @@
 
 :root,
 [data-tema="terang"] {
-  --bg: #F6F8FB;              /* latar halaman, ink 16,0:1 */
-  --surface: #FFFFFF;         /* kartu, input, lembar */
-  --surface-2: #EAF0F8;       /* area sekunder, baris tabel selang-seling */
-  --ink: #0B1B3A;             /* teks utama 17,0:1 */
-  --ink-2: #2C3A57;           /* teks pendukung 11,4:1 */
-  --muted: #4B5A75;           /* keterangan kecil 7,0:1 di surface */
-  --unread: #475569;          /* kata yang belum dibaca 7,6:1 */
-  --border: #6B7A96;          /* tepi kartu dan pemisah, 4,3:1 */
-  --border-strong: #0B1B3A;   /* tepi kontrol interaktif */
-  --primary: #0B1B3A;         /* tombol utama */
-  --on-primary: #FFFFFF;      /* 17,0:1 */
-  --primary-edge: #000000;    /* tepi bawah tombol (bayangan keras) */
-  --link: #0A3FB0;            /* tautan, cincin fokus, 8,9:1 */
-  --focus: #0A3FB0;
-  --sorot: #FFC83D;           /* kata yang sedang dibaca; ink di atasnya 11,0:1 */
-  --sorot-lembut: #FFE9A8;    /* kata yang sudah dibaca; ink 14,2:1 */
-  --on-sorot: #0B1B3A;
+  /* Surfaces — Slate/Teal canvas (DESIGN.md §2) */
+  --bg: #F8FAFC;              /* bg-canvas: latar halaman utama */
+  --surface: #FFFFFF;         /* bg-surface: kartu, form, modal */
+  --surface-2: #F1F5F9;       /* bg-surface-subtle: panel sekunder, header tabel, pill tidak aktif */
+  --elevated: #FFFFFF;        /* bg-elevated: dropdown, popover, toast */
 
-  --benar-bg: #D8F3E3;  --benar-ink: #0B4A2A;  --benar-edge: #0F6B3C;   /* 8,8:1 */
-  --ulang-bg: #FFE9C2;  --ulang-ink: #6A3B00;  --ulang-edge: #A25A00;   /* 7,9:1 */
-  --info-bg:  #DCE8FF;  --info-ink:  #0B2A6B;  --info-edge:  #0A3FB0;   /* 10,9:1 */
-  --galat-bg: #FDE2E2;  --galat-ink: #7A0E12;  --galat-edge: #A4161A;   /* 9,0:1, hanya antarmuka guru */
+  /* Borders */
+  --border: #E2E8F0;          /* border-subtle: 1px default kartu dan tabel */
+  --border-strong: #CBD5E1;   /* border-strong: input, tombol sekunder, hover border */
+  --border-focus: #0F766E;    /* focus ring: 2px solid, 2px offset */
 
-  /* Kompatibilitas mundur sementara */
+  /* Text */
+  --ink: #0F172A;             /* text-primary: heading, body (16.9:1 on white) */
+  --ink-2: #475569;           /* text-secondary: deskripsi, metadata (7.6:1) */
+  --muted: #64748B;           /* text-muted: placeholder, timestamp, disabled (4.7:1) */
+  --unread: #475569;          /* kata yang belum dibaca */
+
+  /* Accent — Deep Teal */
+  --primary: #0F766E;         /* accent-primary: tombol CTA, tab aktif (5.4:1 on white) */
+  --on-primary: #FFFFFF;      /* text/icon on primary */
+  --primary-hover: #115E59;   /* accent-hover: hover state tombol */
+  --accent-subtle: #F0FDFA;   /* selected card tint, sidebar aktif */
+
+  /* Status */
+  --benar-bg: #DCFCE7;  --benar-ink: #15803D;  --benar-edge: #15803D;
+  --ulang-bg: #FEF3C7;  --ulang-ink: #B45309;  --ulang-edge: #B45309;
+  --info-bg:  #EFF6FF;  --info-ink:  #1D4ED8;  --info-edge:  #3B82F6;
+  --galat-bg: #FEE2E2;  --galat-ink: #B91C1C;  --galat-edge: #B91C1C;
+
+  /* Legacy compat aliases */
+  --border-strong-compat: var(--border-strong);
+  --primary-edge: var(--primary-hover);
+  --link: #0F766E;
+  --focus: var(--border-focus);
+  --sorot: #FFC83D;
+  --sorot-lembut: #FFE9A8;
+  --on-sorot: #0F172A;
+
+  /* Tailwind compat */
   --bg-canvas: var(--bg);
   --bg-surface: var(--surface);
   --bg-surface-subtle: var(--surface-2);
   --border-subtle: var(--border);
-  --border-focus: var(--focus);
   --text-primary: var(--ink);
   --text-secondary: var(--ink-2);
   --text-muted: var(--muted);
@@ -50,34 +64,41 @@
 }
 
 [data-tema="gelap"] {
-  --bg: #0A1224;
-  --surface: #121C36;
-  --surface-2: #1A2749;
-  --ink: #F4F7FF;            /* 15,7:1 di surface */
-  --ink-2: #D5DEEF;
-  --muted: #A9B6CE;          /* 8,3:1 */
-  --unread: #B8C4DB;         /* 9,6:1 */
-  --border: #7F8FB0;         /* 5,2:1 */
-  --border-strong: #F4F7FF;
-  --primary: #F4F7FF;
-  --on-primary: #0A1224;     /* 17,4:1 */
-  --primary-edge: #7F8FB0;
-  --link: #9CC2FF;           /* 9,3:1 */
-  --focus: #FFC83D;
-  --sorot: #FFC83D;          /* on-sorot 12,1:1 */
-  --sorot-lembut: #E9C56B;   /* on-sorot 11,3:1 */
-  --on-sorot: #0A1224;
+  --bg: #0F172A;
+  --surface: #1E293B;
+  --surface-2: #334155;
+  --elevated: #1E293B;
 
-  --benar-bg: #0F3B26;  --benar-ink: #BFF2D4;  --benar-edge: #5BD08F;
-  --ulang-bg: #4A2B00;  --ulang-ink: #FFE0A8;  --ulang-edge: #FFB347;
-  --info-bg:  #13306B;  --info-ink:  #CFE0FF;  --info-edge:  #9CC2FF;
-  --galat-bg: #5A1216;  --galat-ink: #FFD0D2;  --galat-edge: #FF8A8F;
+  --border: #334155;
+  --border-strong: #475569;
+  --border-focus: #2DD4BF;
+
+  --ink: #F8FAFC;
+  --ink-2: #CBD5E1;
+  --muted: #94A3B8;
+  --unread: #CBD5E1;
+
+  --primary: #14B8A6;
+  --on-primary: #0F172A;
+  --primary-hover: #0D9488;
+  --accent-subtle: #042F2E;
+
+  --benar-bg: #14532D;  --benar-ink: #86EFAC;  --benar-edge: #4ADE80;
+  --ulang-bg: #451A03;  --ulang-ink: #FDE68A;  --ulang-edge: #FCD34D;
+  --info-bg:  #1E3A5F;  --info-ink:  #BAE6FD;  --info-edge:  #38BDF8;
+  --galat-bg: #450A0A;  --galat-ink: #FCA5A5;  --galat-edge: #F87171;
+
+  --primary-edge: var(--primary-hover);
+  --link: #2DD4BF;
+  --focus: var(--border-focus);
+  --sorot: #FFC83D;
+  --sorot-lembut: #E9C56B;
+  --on-sorot: #0F172A;
 
   --bg-canvas: var(--bg);
   --bg-surface: var(--surface);
   --bg-surface-subtle: var(--surface-2);
   --border-subtle: var(--border);
-  --border-focus: var(--focus);
   --text-primary: var(--ink);
   --text-secondary: var(--ink-2);
   --text-muted: var(--muted);
@@ -109,35 +130,43 @@
   --info-bg:  #000000;  --info-ink:  #7FD0FF;  --info-edge:  #7FD0FF;
   --galat-bg: #000000;  --galat-ink: #FF9A9A;  --galat-edge: #FF9A9A;
 
+  --primary-edge: #FFFFFF;
+  --link: #7FD0FF;
+  --focus: #FFFFFF;
+  --sorot: #FFD400;
+  --sorot-lembut: #FFD400;
+  --on-sorot: #000000;
+
   --bg-canvas: var(--bg);
   --bg-surface: var(--surface);
   --bg-surface-subtle: var(--surface-2);
   --border-subtle: var(--border);
-  --border-focus: var(--focus);
   --text-primary: var(--ink);
   --text-secondary: var(--ink-2);
   --text-muted: var(--muted);
   --accent-primary: var(--primary);
 }
 
-/* Warna sorotan teks alternatif (pilihan guru atau siswa). Teks ink di atasnya tetap di atas 10:1. */
+/* Warna sorotan teks alternatif. */
 [data-sorot="biru"]  { --sorot: #7DD3FC; --sorot-lembut: #D5EEFC; }
 [data-sorot="hijau"] { --sorot: #86EFAC; --sorot-lembut: #D6F8E3; }
 [data-tema="gelap"][data-sorot="biru"]  { --sorot-lembut: #5FA9CC; }
 [data-tema="gelap"][data-sorot="hijau"] { --sorot-lembut: #5FBF86; }
 
-/* Huruf. Basis 18px. Semua ukuran memakai rem agar ikut skala. */
-:root { --skala-huruf: 1; --jarak-huruf: 0.01em; --jarak-baris: 1.6; }
+/* Huruf. Basis 16px (DESIGN.md §3: Plus Jakarta Sans sebagai font UI default). */
+:root { --skala-huruf: 1; --jarak-huruf: 0em; --jarak-baris: 1.5; }
 [data-huruf="besar"]        { --skala-huruf: 1.25; }
 [data-huruf="sangat-besar"] { --skala-huruf: 1.5; }
 [data-huruf="raksasa"]      { --skala-huruf: 1.8; }
-[data-jarak="lebar"]        { --jarak-huruf: 0.05em; --jarak-baris: 1.85; }
-html { font-size: calc(18px * var(--skala-huruf)); }
+[data-jarak="lebar"]        { --jarak-huruf: 0.02em; --jarak-baris: 1.75; }
+html { font-size: calc(16px * var(--skala-huruf)); }
 
 :root {
-  --font-ui: var(--font-atkinson), "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  /* Plus Jakarta Sans sebagai font UI utama (DESIGN.md §3) */
+  --font-ui: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
 }
-[data-jenis-huruf="lexend"] { --font-ui: var(--font-lexend), Lexend, system-ui, sans-serif; }
+[data-jenis-huruf="atkinson"] { --font-ui: var(--font-atkinson), "Atkinson Hyperlegible Next", system-ui, sans-serif; }
+[data-jenis-huruf="lexend"]   { --font-ui: var(--font-lexend), Lexend, system-ui, sans-serif; }
 
 /* Skala tipografi (rem). Teks kartu belajar memakai --t-kartu. */
 :root {
@@ -157,52 +186,87 @@ html { font-size: calc(18px * var(--skala-huruf)); }
   --s-6: 1.5rem;  --s-8: 2rem;   --s-12: 3rem;   --s-16: 4rem;
 }
 
-/* Bentuk: radius berbeda sesuai peran, bukan satu radius untuk semua */
+/* Bentuk: radius sesuai peran (DESIGN.md §4) */
 :root {
-  --r-tombol: 0.875rem;   /* 14px */
-  --r-input: 0.75rem;     /* 12px */
-  --r-kartu: 1.25rem;     /* 20px */
-  --r-isyarat: 1rem;      /* 16px */
-  --r-chip: 999px;
-  --garis: 2px;           /* tebal tepi kontrol dan kartu */
-  --tinggi-tombol: 3.5rem;      /* 56px pada ukuran normal */
-  --tinggi-tombol-tv: 4.5rem;   /* 72px */
-  --target-min: 3rem;           /* 48px, batas terkecil untuk target sentuh */
+  --r-tombol: 0.5rem;    /* 8px — inputs, buttons, small badges */
+  --r-input: 0.5rem;     /* 8px */
+  --r-kartu: 0.75rem;    /* 12px — material cards, flashcards */
+  --r-modal: 1rem;       /* 16px — modals, QR dialogs */
+  --r-isyarat: 0.75rem;  /* 12px */
+  --r-chip: 999px;       /* pill — status badges, audio buttons */
+  --garis: 1px;          /* tebal tepi default (1px hairline) */
+  --tinggi-tombol: 2.5rem;      /* 40px standard studio */
+  --tinggi-tombol-besar: 3rem;  /* 48px primary teacher / student */
+  --tinggi-tombol-tv: 3rem;     /* 48px Smart TV */
+  --target-min: 3rem;           /* 48px minimum touch target */
 }
-[data-tombol="besar"] { --tinggi-tombol: 4rem; --target-min: 3.5rem; }
+[data-tombol="besar"] { --tinggi-tombol: 3rem; --target-min: 3.5rem; }
 
-/* Cincin fokus: dua lapis agar terlihat di atas terang dan gelap */
+/* Cincin fokus: 2px solid teal, 2px offset (DESIGN.md §6) */
 :focus-visible {
-  outline: 4px solid var(--focus);
-  outline-offset: 3px;
-  box-shadow: 0 0 0 3px var(--surface);
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.15);
+}
+[data-tema="gelap"]:focus-visible,
+[data-tema="gelap"] :focus-visible {
+  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.2);
 }
 
-/* Tombol: bayangan keras di bawah (rasa tombol fisik), tanpa bayangan lembut */
+/* Tombol — flat modern, hover bg shift, active scale(0.98) (DESIGN.md §6) */
 .tombol {
   min-height: var(--tinggi-tombol);
   min-width: var(--target-min);
   padding: 0 var(--s-6);
-  border: var(--garis) solid var(--border-strong);
+  border: 1px solid var(--border-strong);
   border-radius: var(--r-tombol);
   background: var(--primary);
   color: var(--on-primary);
   font-weight: 700;
   font-size: var(--t-isi);
-  box-shadow: 0 4px 0 0 var(--primary-edge);
   display: inline-flex; align-items: center; justify-content: center; gap: var(--s-3);
-  transition: transform 80ms, box-shadow 80ms;
+  transition: background-color 120ms cubic-bezier(0.2,0,0,1),
+              border-color 120ms cubic-bezier(0.2,0,0,1),
+              transform 160ms cubic-bezier(0.2,0,0,1);
+  cursor: pointer;
 }
-.tombol:active { transform: translateY(3px); box-shadow: 0 1px 0 0 var(--primary-edge); }
-.tombol--sekunder { background: var(--surface); color: var(--ink); box-shadow: 0 4px 0 0 var(--border); }
-.tombol--bahaya { background: var(--surface); color: var(--galat-ink); border-color: var(--galat-edge); box-shadow: 0 4px 0 0 var(--galat-edge); }
+.tombol:hover { background: var(--primary-hover); }
+.tombol:active { transform: scale(0.98); }
+.tombol:disabled { opacity: 0.5; cursor: not-allowed; }
+.tombol--sekunder {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--border-strong);
+}
+.tombol--sekunder:hover { background: var(--surface-2); }
+.tombol--ghost {
+  background: transparent;
+  color: var(--ink-2);
+  border-color: transparent;
+}
+.tombol--ghost:hover { background: var(--surface-2); color: var(--ink); }
+.tombol--bahaya {
+  background: var(--galat-bg);
+  color: var(--galat-ink);
+  border-color: var(--galat-edge);
+}
+.tombol--bahaya:hover { filter: brightness(0.92); }
 
-/* Kartu */
+/* Kartu — 1px hairline border, no shadow on static (DESIGN.md §4) */
 .kartu {
   background: var(--surface);
-  border: var(--garis) solid var(--border);
+  border: 1px solid var(--border);
   border-radius: var(--r-kartu);
   padding: var(--s-6);
+}
+.kartu--interaktif {
+  transition: border-color 120ms cubic-bezier(0.2,0,0,1),
+              box-shadow 120ms cubic-bezier(0.2,0,0,1);
+  cursor: pointer;
+}
+.kartu--interaktif:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
 }
 
 /* Sorotan teks tersinkron (lihat 04-PEMUTAR-DAN-SINKRONISASI.md) */

@@ -92,8 +92,8 @@ export async function generateClip(
       bytes: audioBuffer.length,
       keyword: input.text.slice(0, 60),
       source: "system-tts",
-      license: "InkluDidik Synthesized",
-      attribution: "InkluDidik Acoustic Engine",
+      license: "PANDU Synthesized",
+      attribution: "PANDU Acoustic Engine",
       ownerTeacherId: input.teacherId,
       verified: true,
     });

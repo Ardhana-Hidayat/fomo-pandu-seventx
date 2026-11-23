@@ -172,8 +172,8 @@ export async function generateAudioForText(
       keyword: cleanText.slice(0, 60),
       alt: `Audio kartu: ${cleanText.slice(0, 40)}`,
       source: isGeminiAvailable ? "gemini-tts" : "synthesis-fallback",
-      license: "InkluDidik",
-      attribution: "InkluDidik Pelafalan Teks Konsisten",
+      license: "PANDU",
+      attribution: "PANDU Pelafalan Teks Konsisten",
       verified: true,
       ownerTeacherId: input.teacherId || undefined,
     });

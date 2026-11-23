@@ -1,6 +1,6 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
- * Penjaga Git InkluDidik (acuan). Tanpa dependensi. Salin ke scripts/git-guard.mjs.
+ * Penjaga Git PANDU (acuan). Tanpa dependensi. Salin ke scripts/git-guard.mjs.
  *
  * Pemakaian:
  *   node scripts/git-guard.mjs staged            # untuk pre-commit: berkas yang di-stage
@@ -115,3 +115,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     process.exit(1);
   }
 }
+

@@ -49,7 +49,7 @@ describe("Story S4-01: Accessibility & Visual Audit", () => {
 
         expect(ratioSurface).toBeGreaterThanOrEqual(7.0);
         expect(ratioBg).toBeGreaterThanOrEqual(7.0);
-        // Desain sistem InkluDidik mencapai ~17:1 untuk teks utama
+        // Desain sistem PANDU mencapai ~17:1 untuk teks utama
         expect(ratioSurface).toBeGreaterThanOrEqual(16.0);
       });
 

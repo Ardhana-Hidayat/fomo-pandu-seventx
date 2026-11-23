@@ -41,7 +41,7 @@ export async function saveAsset(
       alt: input.alt,
       source: input.source ?? "system",
       license: input.license ?? "CC-BY-SA",
-      attribution: input.attribution ?? "ARASAAC / InkluDidik",
+      attribution: input.attribution ?? "ARASAAC / PANDU",
       verified: input.verified ?? false,
       ownerTeacherId: input.ownerTeacherId ?? null,
     };

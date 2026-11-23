@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generated_by": "scripts/signs/generate-manifest-v2.ts",
-  "note": "Manifest pustaka isyarat InkluDidik v2 berlisensi CC BY 4.0",
+  "note": "Manifest pustaka isyarat PANDU v2 berlisensi CC BY 4.0",
   "items": [
     {
       "system": "SIBI",

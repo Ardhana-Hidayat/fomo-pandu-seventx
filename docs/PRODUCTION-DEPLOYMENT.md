@@ -1,4 +1,4 @@
-# Panduan Production Deployment & CI/CD InkluDidik
+﻿# Panduan Production Deployment & CI/CD PANDU
 
 Dokumen ini memandu langkah demi langkah konfigurasi pipeline **CI/CD (GitHub Actions)**, deployment ke **Vercel**, basis data **Supabase**, dan **Gemini API**.
 
@@ -6,7 +6,7 @@ Dokumen ini memandu langkah demi langkah konfigurasi pipeline **CI/CD (GitHub Ac
 
 ## 1. Arsitektur CI/CD Pipeline
 
-Pipeline otomatis didefinisikan pada [.github/workflows/ci-cd.yml](file:///d:/Projects/fomo-inkludidik-seventx/.github/workflows/ci-cd.yml):
+Pipeline otomatis didefinisikan pada [.github/workflows/ci-cd.yml](file:///d:/Projects/fomo-PANDU-seventx/.github/workflows/ci-cd.yml):
 
 ```mermaid
 flowchart LR
@@ -22,7 +22,7 @@ flowchart LR
 
 ## 2. Variabel Lingkungan (*Environment Variables*)
 
-Aplikasi InkluDidik membutuhkan 4 variabel lingkungan utama:
+Aplikasi PANDU membutuhkan 4 variabel lingkungan utama:
 
 | Nama Variabel | Lokasi Digunakan | Deskripsi |
 | :--- | :--- | :--- |
@@ -58,7 +58,7 @@ Untuk mengaktifkan deployment otomatis via GitHub Actions:
 
 Selain pada GitHub Actions, variabel lingkungan wajib dimasukkan pada Dashboard Vercel:
 
-1. Buka [Vercel Dashboard](https://vercel.com/) dan pilih project **fomo-inkludidik-seventx**.
+1. Buka [Vercel Dashboard](https://vercel.com/) dan pilih project **fomo-PANDU-seventx**.
 2. Masuk ke tab **Settings** > **Environment Variables**.
 3. Tambahkan 4 variabel:
    * `NEXT_PUBLIC_SUPABASE_URL` (Pilih: Production, Preview, Development)
@@ -83,6 +83,7 @@ npm run test:watch
 
 Cakupan unit test yang diverifikasi:
 * **`modules-store.test.ts`**: Validasi kode kelas 6 digit, CRUD modul, sinkronisasi Supabase & LocalStorage, serta pencatatan progres latihan siswa.
-* **`gemini.test.ts`**: Fallback aman kartu peraga SLB dan konversi instruksi Smart TV multi-kata (2–3 kata).
+* **`gemini.test.ts`**: Fallback aman kartu peraga SLB dan konversi instruksi Smart TV multi-kata (2â€“3 kata).
 * **`SignBox.test.tsx`**: Render isyarat tangan anatomis SIBI & BISINDO, target sentuh aksesibilitas, dan status aktif.
 * **`supabase.test.ts`**: Inisialisasi koneksi basis data Supabase (browser & server client).
+

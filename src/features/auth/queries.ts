@@ -1,5 +1,6 @@
 import "server-only";
 
+import { connection } from "next/server";
 import { cookies } from "next/headers";
 import {
   TEACHER_COOKIE_NAME,
@@ -22,6 +23,7 @@ export interface CurrentStudentSession {
 }
 
 export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null> {
+  await connection();
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get(TEACHER_COOKIE_NAME)?.value;
@@ -53,6 +55,7 @@ export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null>
 }
 
 export async function getCurrentStudent(): Promise<CurrentStudentSession | null> {
+  await connection();
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get(STUDENT_COOKIE_NAME)?.value;

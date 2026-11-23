@@ -1,4 +1,4 @@
-import fs from "node:fs";
+﻿import fs from "node:fs";
 import path from "node:path";
 import { SignsManifestV2Schema, type SignItem, type SignsManifestV2 } from "../../src/server/services/signs/schema";
 
@@ -65,7 +65,7 @@ for (const letter of ALPHABET) {
 const manifest: SignsManifestV2 = {
   version: 2,
   generated_by: "scripts/signs/generate-manifest-v2.ts",
-  note: "Manifest pustaka isyarat InkluDidik v2 berlisensi CC BY 4.0",
+  note: "Manifest pustaka isyarat PANDU v2 berlisensi CC BY 4.0",
   items,
   status_meaning: {
     verified: "Diperiksa guru atau penerjemah. Tampil ke siswa.",
@@ -81,3 +81,4 @@ SignsManifestV2Schema.parse(manifest);
 const outPath = path.resolve(process.cwd(), "public/signs/manifest.json");
 fs.writeFileSync(outPath, JSON.stringify(manifest, null, 2), "utf-8");
 console.log("Manifest v2 successfully written to", outPath);
+

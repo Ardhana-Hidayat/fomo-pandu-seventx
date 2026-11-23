@@ -1,6 +1,6 @@
-# Architecture Decision Records (ADR) — InkluDidik
+﻿# Architecture Decision Records (ADR) â€” PANDU
 
-Dokumen ini mencatat keputusan arsitektural penting (*Architecture Decision Records*) yang diambil selama perancangan dan implementasi platform **InkluDidik**.
+Dokumen ini mencatat keputusan arsitektural penting (*Architecture Decision Records*) yang diambil selama perancangan dan implementasi platform **PANDU**.
 
 ---
 
@@ -114,3 +114,4 @@ Bahasa isyarat (**SIBI** dan **BISINDO**) memiliki struktur gestur, orientasi te
 ### Konsekuensi
 - **Positif**: Integritas pedagogis terjaga 100%, dipercaya penuh oleh guru SLB dan komunitas Tuli.
 - **Perhatian**: Memerlukan keterlibatan guru untuk menandai verifikasi melalui halaman Pustaka Isyarat (`/guru/pengaturan/isyarat`).
+

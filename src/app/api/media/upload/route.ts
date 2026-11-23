@@ -84,7 +84,7 @@ export async function POST(request: Request) {
         alt: alt || "Rekaman suara guru",
         source: "recording",
         license: "Hak cipta guru",
-        attribution: "Rekaman guru InkluDidik",
+        attribution: "Rekaman guru PANDU",
         verified: true,
         ownerTeacherId: teacherId,
       });

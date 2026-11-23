@@ -12,10 +12,10 @@ export default async function TeacherLoginPage() {
   }
   return (
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
-      <header className="w-full border-b-2 border-[var(--border)] bg-[var(--surface)] px-4 py-3 sm:px-6">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <Link href="/" className="text-xl font-bold tracking-tight text-[var(--ink)]">
-            InkluDidik
+      <header className="h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
+        <div className="mx-auto flex h-full max-w-5xl items-center justify-between">
+          <Link href="/" className="text-base font-bold tracking-tight text-[var(--ink)] hover:text-[var(--primary)] transition-colors duration-[120ms]">
+            PANDU
           </Link>
           <DisplayPreferencesTrigger />
         </div>
@@ -23,7 +23,7 @@ export default async function TeacherLoginPage() {
 
       <main
         id="main-content"
-        className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center p-4 sm:p-6"
+        className="mx-auto flex w-full max-w-sm flex-1 flex-col items-center justify-center px-4 py-8 sm:px-6"
       >
         <Card as="section" className="w-full flex flex-col gap-6">
           <div>

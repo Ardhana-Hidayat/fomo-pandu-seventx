@@ -8,7 +8,7 @@ import {
   invalidateSession,
 } from "../../security/session";
 
-export const DEMO_TEACHER_EMAIL = "guru.demo@inkludidik.id";
+export const DEMO_TEACHER_EMAIL = "guru.demo@pandu.id";
 export const DEMO_TEACHER_NAME = "Guru Demo";
 
 export async function getOrCreateDemoTeacher(): Promise<Teacher> {
@@ -28,7 +28,7 @@ export async function getOrCreateDemoTeacher(): Promise<Teacher> {
     .values({
       email: DEMO_TEACHER_EMAIL,
       displayName: DEMO_TEACHER_NAME,
-      schoolName: "SLB Negeri 1 Nusantara",
+      schoolName: "SLB Negeri Manisrejo",
       authProvider: "demo",
       settings: {
         theme: "light",

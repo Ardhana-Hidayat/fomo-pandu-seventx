@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from 'react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger';
-export type ButtonSize = 'normal' | 'large' | 'tv';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
+export type ButtonSize = 'compact' | 'normal' | 'large' | 'tv';
 
 interface BaseButtonProps {
   variant?: ButtonVariant;
@@ -10,6 +10,7 @@ interface BaseButtonProps {
   iconPosition?: 'left' | 'right';
   className?: string;
   children?: ReactNode;
+  loading?: boolean;
 }
 
 export type ButtonAsButton = BaseButtonProps &
@@ -31,28 +32,36 @@ export function Button({
   iconPosition = 'left',
   className = '',
   children,
+  loading = false,
   ...props
 }: ButtonProps) {
+  // Variant styles — DESIGN.md §6
   const variantClass =
     variant === 'primary'
-      ? 'bg-[var(--primary)] text-[var(--on-primary)] border-[var(--border-strong)] shadow-[0_4px_0_0_var(--primary-edge)]'
+      ? 'bg-[var(--primary)] text-[var(--on-primary)] border-[var(--primary)] hover:bg-[var(--primary-hover)] hover:border-[var(--primary-hover)]'
       : variant === 'secondary'
-        ? 'bg-[var(--surface)] text-[var(--ink)] border-[var(--border)] shadow-[0_4px_0_0_var(--border)]'
-        : 'bg-[var(--surface)] text-[var(--galat-ink)] border-[var(--galat-edge)] shadow-[0_4px_0_0_var(--galat-edge)]';
+        ? 'bg-[var(--surface)] text-[var(--ink)] border-[var(--border-strong)] hover:bg-[var(--surface-2)]'
+        : variant === 'ghost'
+          ? 'bg-transparent text-[var(--ink-2)] border-transparent hover:bg-[var(--surface-2)] hover:text-[var(--ink)]'
+          : 'bg-[var(--galat-bg)] text-[var(--galat-ink)] border-[var(--galat-edge)] hover:brightness-90';
 
+  // Size styles — 36px compact, 40px normal, 48px large, 48px tv (DESIGN.md §6)
   const sizeClass =
     size === 'tv'
-      ? 'min-h-[4.5rem] px-8 text-2xl'
+      ? 'h-12 px-8 text-xl min-w-12'
       : size === 'large'
-        ? 'min-h-[4rem] px-6 text-lg'
-        : 'min-h-[3.5rem] px-6 text-base';
+        ? 'h-12 px-6 text-base min-w-12'
+        : size === 'compact'
+          ? 'h-9 px-3 text-sm min-w-9'
+          : 'h-10 px-4 text-sm min-w-10';
 
   const baseClass = [
-    'inline-flex items-center justify-center gap-3 font-bold',
-    'rounded-[var(--r-tombol)] border-2 cursor-pointer',
-    'min-w-[var(--target-min)] transition-all duration-75',
-    'active:translate-y-[3px] active:shadow-[0_1px_0_0_var(--primary-edge)]',
-    'disabled:opacity-75 disabled:cursor-not-allowed disabled:border-dashed disabled:active:translate-y-0 disabled:active:shadow-[0_4px_0_0_var(--primary-edge)]',
+    'inline-flex items-center justify-center gap-2 font-semibold',
+    'rounded-[var(--r-tombol)] border cursor-pointer select-none',
+    'transition-all duration-[120ms] ease-[cubic-bezier(0.2,0,0,1)]',
+    'active:scale-[0.98] active:duration-[160ms]',
+    'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
+    loading ? 'cursor-wait pointer-events-none' : '',
     variantClass,
     sizeClass,
     className,
@@ -60,9 +69,19 @@ export function Button({
 
   const content = (
     <>
-      {icon && iconPosition === 'left' && <span className="shrink-0">{icon}</span>}
+      {loading && (
+        <svg
+          className="animate-spin shrink-0"
+          width="16" height="16" viewBox="0 0 16 16" fill="none"
+          aria-hidden="true"
+        >
+          <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="2" strokeOpacity="0.3" />
+          <path d="M14 8a6 6 0 0 0-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      )}
+      {!loading && icon && iconPosition === 'left' && <span className="shrink-0">{icon}</span>}
       {children && <span>{children}</span>}
-      {icon && iconPosition === 'right' && <span className="shrink-0">{icon}</span>}
+      {!loading && icon && iconPosition === 'right' && <span className="shrink-0">{icon}</span>}
     </>
   );
 
@@ -80,8 +99,9 @@ export function Button({
     <button
       type={buttonProps.type ?? 'button'}
       className={baseClass}
-      disabled={buttonProps.disabled}
-      aria-disabled={buttonProps.disabled}
+      disabled={buttonProps.disabled || loading}
+      aria-disabled={buttonProps.disabled || loading}
+      aria-busy={loading}
       {...buttonProps}
     >
       {content}

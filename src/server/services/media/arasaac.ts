@@ -171,8 +171,8 @@ export async function createPlaceholderPictogram(
       keyword: clean,
       alt: `Piktogram ${clean}`,
       source: "system-placeholder",
-      license: "InkluDidik",
-      attribution: "InkluDidik Pustaka Piktogram",
+      license: "PANDU",
+      attribution: "PANDU Pustaka Piktogram",
       verified: true,
     });
 

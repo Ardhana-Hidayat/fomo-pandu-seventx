@@ -1,10 +1,10 @@
----
+﻿---
 name: stop-slop
-description: Mencegah hasil pengembangan AI terkesan AI slop pada proyek web pendidikan inklusif InkluDidik (Next.js App Router, TypeScript, Tailwind CSS, Supabase) untuk SLBN Manisrejo. Gunakan saat membuat atau merefaktor komponen UI, Server/Client Components, query Supabase, microcopy siswa dan guru SLB, serta saat mengaudit kode sebelum commit atau pull request.
+description: Mencegah hasil pengembangan AI terkesan AI slop pada proyek web pendidikan inklusif PANDU (Next.js App Router, TypeScript, Tailwind CSS, Supabase) untuk SLBN Manisrejo. Gunakan saat membuat atau merefaktor komponen UI, Server/Client Components, query Supabase, microcopy siswa dan guru SLB, serta saat mengaudit kode sebelum commit atau pull request.
 ---
-# Stop Slop - InkluDidik
+# Stop Slop - PANDU
 
-Tegakkan standar kode, antarmuka, bahasa, dan aksesibilitas bebas AI slop untuk aplikasi web pendidikan inklusif **InkluDidik** (Next.js App Router + TypeScript + Tailwind CSS + Supabase).
+Tegakkan standar kode, antarmuka, bahasa, dan aksesibilitas bebas AI slop untuk aplikasi web pendidikan inklusif **PANDU** (Next.js App Router + TypeScript + Tailwind CSS + Supabase).
 
 ## Konteks Proyek
 
@@ -18,7 +18,7 @@ Tegakkan standar kode, antarmuka, bahasa, dan aksesibilitas bebas AI slop untuk 
 
 ## Kapan Skill Ini Dipakai
 
-- Membuat halaman, komponen React, atau layout Tailwind CSS pada keempat modul InkluDidik
+- Membuat halaman, komponen React, atau layout Tailwind CSS pada keempat modul PANDU
 - Menulis Server Actions, Route Handlers, dan query Supabase dengan TypeScript
 - Menyusun teks antarmuka, label tombol, pesan error, dan instruksi belajar siswa
 - Mereview diff atau merefaktor kode hasil AI sebelum commit atau merge
@@ -33,7 +33,7 @@ Siswa tunagrahita dan tunarungu-wicara membutuhkan fokus visual tinggi tanpa gan
 - Larang bayangan tebal (`shadow-xl`, `shadow-2xl`, glow berwarna). Gunakan border tipis tegas (`border border-slate-300`) untuk memisahkan kartu.
 - Larang animasi berulang yang mengalihkan perhatian siswa (`animate-bounce`, `animate-pulse` permanen, `animate-ping`, hover melompat). Izinkan hanya transisi tenang `150ms` pada `opacity` atau `background-color`, serta hormati `motion-reduce:transition-none`.
 - Larang kartu dekoratif kosong, grid 3 kolom fitur ala landing page SaaS, serta statistik pemasaran palsu.
-- Larang ikon dekoratif atau emoji berlebih (`✨`, `🚀`, `🎉`) pada judul halaman dan tombol aksi. Gunakan satu ikon fungsional hanya bila membantu pengenalan visual siswa.
+- Larang ikon dekoratif atau emoji berlebih (`âœ¨`, `ðŸš€`, `ðŸŽ‰`) pada judul halaman dan tombol aksi. Gunakan satu ikon fungsional hanya bila membantu pengenalan visual siswa.
 
 ### 2. Anti Code Slop
 
@@ -67,11 +67,11 @@ Aksesibilitas adalah syarat fungsional utama, bukan tambahan akhir.
 
 ## Daftar Larangan (Anti-Patterns)
 
-| Kategori | Dilarang (AI Slop) | Wajib Dilakukan (InkluDidik) |
+| Kategori | Dilarang (AI Slop) | Wajib Dilakukan (PANDU) |
 | --- | --- | --- |
 | Warna & Permukaan | `bg-gradient-to-r from-violet-600 to-indigo-600`, kartu `backdrop-blur` | Latar netral terang (`bg-slate-50`, `bg-white`), 1 aksen utama kontras tinggi (`bg-blue-700 text-white`) |
 | Animasi | `animate-bounce`, `animate-pulse` permanen, `hover:scale-105` agresif | Transisi warna `transition-colors duration-150 motion-reduce:transition-none` |
-| Dekorasi | Judul `✨ Generator Kartu Pintar AI 🚀`, kartu statistik kosong | Judul polos jelas `Buat Kartu Peraga`, tampilkan hanya elemen yang dipakai |
+| Dekorasi | Judul `âœ¨ Generator Kartu Pintar AI ðŸš€`, kartu statistik kosong | Judul polos jelas `Buat Kartu Peraga`, tampilkan hanya elemen yang dipakai |
 | TypeScript | `data: any`, `catch (e: any)`, prop tanpa interface | Tipe ketat dari skema Supabase dan interface eksplisit |
 | Data UI | `const dummyCards = [...]` di komponen produksi | Query Supabase di Server Component + state kosong nyata |
 | Ukuran Sentuh | `px-2 py-1 text-xs` (`28px` tinggi), tombol rapat `gap-1` | `min-h-12 min-w-12 px-5 py-3 text-base` dengan `gap-3` atau `gap-4` |
@@ -100,7 +100,7 @@ export default function FlashcardWidget({ card, onNext }: any) {
   return (
     <div className="rounded-3xl bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-500 p-6 shadow-2xl text-white">
       <div className="mb-2 text-xs uppercase tracking-widest opacity-80 animate-pulse">
-        ✨ AI Powered Smart Card 🚀
+        âœ¨ AI Powered Smart Card ðŸš€
       </div>
       <h2 className="text-2xl font-extrabold">{item.title}</h2>
       <p className="mt-1 text-sm text-purple-100">
@@ -111,13 +111,13 @@ export default function FlashcardWidget({ card, onNext }: any) {
           onClick={() => setPlaying(true)}
           className="rounded-lg bg-white/20 backdrop-blur px-3 py-1.5 text-xs hover:scale-105 transition animate-bounce"
         >
-          🔊 Dengarkan Sekarang
+          ðŸ”Š Dengarkan Sekarang
         </button>
         <button
           onClick={onNext}
           className="rounded-lg bg-pink-500 px-3 py-1.5 text-xs"
         >
-          Lanjutkan ➡️
+          Lanjutkan âž¡ï¸
         </button>
       </div>
     </div>
@@ -125,7 +125,7 @@ export default function FlashcardWidget({ card, onNext }: any) {
 }
 ```
 
-**After (InkluDidik Standard)**
+**After (PANDU Standard)**
 
 ```tsx
 'use client';
@@ -233,7 +233,7 @@ export async function getClassData(code: any) {
 }
 ```
 
-**After (InkluDidik Standard)**
+**After (PANDU Standard)**
 
 ```tsx
 import { createServerSupabaseClient } from '@/lib/supabase/server';
@@ -275,11 +275,11 @@ export async function getClassByJoinCode(
 
 ### Contoh 3: Microcopy Siswa dan Guru SLB
 
-| Konteks | Before (AI Slop) | After (InkluDidik) |
+| Konteks | Before (AI Slop) | After (PANDU) |
 | --- | --- | --- |
 | Instruksi praktik siswa | `Sekarang saatnya kamu mempraktikkan gerakan isyarat sesuai contoh yang sudah ditampilkan sebelumnya!` | `Tiru gerakan isyarat pada video ini.` (6 kata) |
 | Instruksi peer tutor | `Bekerjasamalah bersama teman sebangkumu untuk saling membantu menyelesaikan tantangan kartu.` | `Bantu teman memilih kartu yang benar.` (6 kata) |
-| Tombol generator guru | `✨ Generate Kartu Pintar AI` | `Buat Kartu` |
+| Tombol generator guru | `âœ¨ Generate Kartu Pintar AI` | `Buat Kartu` |
 | Tombol komunikasi SIBI/Bisindo | `Eksplorasi Video Bahasa Isyarat` | `Lihat Isyarat` |
 | Empty state dashboard progres | `Belum ada aktivitas tercatat. Mulai perjalanan belajar luar biasa hari ini!` | `Belum ada data belajar siswa hari ini.` |
 | Error kode kelas | `An unexpected error occurred while validating session token.` | `Kode kelas salah. Masukkan 6 angka dari guru.` |

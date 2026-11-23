@@ -1,4 +1,4 @@
-import fs from "node:fs";
+﻿import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -54,7 +54,7 @@ async function main() {
       src: `/signs/sibi/${l}.${letter === "J" || letter === "Z" ? "webm" : "webp"}`,
       alt: `Isyarat huruf ${letter} dalam SIBI`,
       source: "Rekaman tim bersama guru SLBN Manisrejo",
-      license: "Hak cipta tim, boleh dipakai untuk InkluDidik",
+      license: "Hak cipta tim, boleh dipakai untuk PANDU",
       reference: "Kamus SIBI Kemdikbud",
       status: isSibiVerified ? "verified" : "draft",
       verifiedBy: isSibiVerified ? "Guru SLBN Manisrejo" : null,
@@ -74,7 +74,7 @@ async function main() {
       src: `/signs/bisindo/${l}.webp`,
       alt: `Isyarat huruf ${letter} dalam BISINDO`,
       source: "Rekaman tim bersama guru SLBN Manisrejo",
-      license: "Hak cipta tim, boleh dipakai untuk InkluDidik",
+      license: "Hak cipta tim, boleh dipakai untuk PANDU",
       reference: "Lembar abjad BISINDO resmi Kemendikdasmen",
       status: isVerified ? "verified" : i < 20 ? "draft" : "missing",
       verifiedBy: isVerified ? "Guru SLBN Manisrejo" : null,
@@ -91,3 +91,4 @@ async function main() {
 }
 
 main().catch(console.error);
+

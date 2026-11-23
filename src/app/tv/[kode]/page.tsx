@@ -94,7 +94,7 @@ export default async function TVClassroomMenuPage({
       </main>
 
       <footer className="text-center text-sm font-bold text-[var(--muted)] border-t-2 border-[var(--border)] pt-4">
-        InkluDidik &bull; Hubungkan layar TV kelas untuk pembelajaran bersama
+        PANDU &bull; Hubungkan layar TV kelas untuk pembelajaran bersama
       </footer>
     </div>
   );

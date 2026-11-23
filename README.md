@@ -1,4 +1,4 @@
-# InkluDidik — Platform Pembelajaran Adaptif Terintegrasi SLB
+﻿# PANDU â€” Platform Pembelajaran Adaptif Terintegrasi SLB
 
 [![Quality Gate](https://img.shields.io/badge/Quality%20Gate-Passing-success)](docs/backlog.md)
 [![Next.js](https://img.shields.io/badge/Next.js-16.4.6-black)](https://nextjs.org)
@@ -11,7 +11,7 @@ Platform web pendidikan inklusif adaptif yang dirancang khusus untuk siswa berke
 
 ---
 
-## 🌟 Fitur Utama
+## ðŸŒŸ Fitur Utama
 
 ### 1. Empat Saluran Belajar Multimodal (*Four Modality Channels*)
 Setiap kartu peraga pembelajaran dapat disajikan melalui 4 saluran yang dapat diaktifkan/dinonaktifkan secara fleksibel sesuai kebutuhan individual siswa:
@@ -28,10 +28,10 @@ Setiap kartu peraga pembelajaran dapat disajikan melalui 4 saluran yang dapat di
 - **Manajemen Kelas & Buku Nilai**: Kode gabung 6-digit instan, pengelolaan profil kebutuhan khusus siswa, rekap skor, akurasi percobaan pertama (*first-try accuracy*), dan waktu pengerjaan.
 
 ### 3. Jembatan Komunikasi Cepat (*Quick Instructions*) (`/guru/instruksi-cepat`)
-- Mengubah instruksi verbal atau ketikan guru menjadi 1–4 langkah visual konkret dengan ejaan isyarat dan piktogram untuk diproyeksikan langsung di layar Smart TV kelas.
+- Mengubah instruksi verbal atau ketikan guru menjadi 1â€“4 langkah visual konkret dengan ejaan isyarat dan piktogram untuk diproyeksikan langsung di layar Smart TV kelas.
 
 ### 4. Mesin Rekomendasi Pedagogis Transparan (`/guru/kelas/[id]/hasil/[sid]`)
-- Mengevaluasi pola belajar siswa berdasarkan aturan pedagogis teruji (R1–R4, R7) dari Berkas 06:
+- Mengevaluasi pola belajar siswa berdasarkan aturan pedagogis teruji (R1â€“R4, R7) dari Berkas 06:
   - **R1 (Pengulangan Konsep)**: Deteksi kesulitan berulang pada kartu tertentu untuk pendampingan benda konkret.
   - **R2 (Ketergantungan Petunjuk / Akselerasi)**: Rekomendasi penyesuaian jumlah opsi pilihan (2, 3, atau 4).
   - **R3 (Pola Tebak / Kontras Font)**: Deteksi jawaban cepat berturut-turut atau kebutuhan kontras tinggi untuk siswa *low vision*.
@@ -50,7 +50,7 @@ Setiap kartu peraga pembelajaran dapat disajikan melalui 4 saluran yang dapat di
 
 ---
 
-## 🛠️ Tumpukan Teknologi (*Tech Stack*)
+## ðŸ› ï¸ Tumpukan Teknologi (*Tech Stack*)
 
 | Komponen | Teknologi | Keterangan |
 |---|---|---|
@@ -68,7 +68,7 @@ Setiap kartu peraga pembelajaran dapat disajikan melalui 4 saluran yang dapat di
 
 ---
 
-## 🚀 Panduan Memulai Cepat (*Local Quickstart*)
+## ðŸš€ Panduan Memulai Cepat (*Local Quickstart*)
 
 Aplikasi ini dirancang dengan prinsip **Zero-Cloud Dependency**: dapat dijalankan 100% secara lokal untuk evaluasi juri tanpa memerlukan akun cloud, kartu kredit, atau instalasi PostgreSQL eksternal.
 
@@ -102,7 +102,7 @@ Buka browser pada alamat [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## 👥 Akses Akun & Skenario Demo
+## ðŸ‘¥ Akses Akun & Skenario Demo
 
 | Peran | URL Masuk | Cara Akses / Kredensial |
 |---|---|---|
@@ -115,7 +115,7 @@ Buka browser pada alamat [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## 🔄 Beralih ke Supabase (Mode Produksi)
+## ðŸ”„ Beralih ke Supabase (Mode Produksi)
 
 Untuk menyambungkan aplikasi ke infrastruktur Supabase di server produksi:
 
@@ -140,7 +140,7 @@ Untuk menyambungkan aplikasi ke infrastruktur Supabase di server produksi:
 
 ---
 
-## 🛡️ Gerbang Kualitas & Pengujian (*Quality Gates*)
+## ðŸ›¡ï¸ Gerbang Kualitas & Pengujian (*Quality Gates*)
 
 Setiap baris kode diuji melalui rangkaian uji otomatis sebelum disetujui:
 
@@ -166,46 +166,47 @@ npm run build
 
 ---
 
-## 📁 Struktur Direktori Proyek
+## ðŸ“ Struktur Direktori Proyek
 
 ```text
-InkluDidik/
-├── src/
-│   ├── app/                      # Rute Next.js 16 App Router (Guru, Siswa, TV, API)
-│   │   ├── (auth)/               # Rute autentikasi
-│   │   ├── guru/                 # Ruang kerja guru (materi, kelas, pengaturan, hasil)
-│   │   ├── kelas/                # Portal siswa berbasis kode kelas
-│   │   ├── tv/                   # Mode layar penuh Smart TV kelas
-│   │   ├── api/                  # Route handler API (AI, media, TTS, signs)
-│   │   └── kredit/               # Halaman atribusi lisensi terbuka
-│   ├── features/                 # Modul fitur mandiri (cohesive feature vertical slices)
-│   │   ├── accessibility/        # Konteks tema, kontras tinggi, font picker
-│   │   ├── authoring/            # Editor materi, wizard AI, uploader gambar & audio
-│   │   ├── player/               # Pemutar kartu peraga & kartu isyarat
-│   │   ├── presentation/         # Komponen TV player layar penuh
-│   │   ├── print-cards/          # Tata letak cetak fisik A4
-│   │   ├── quick-instructions/   # Jembatan instruksi cepat visual
-│   │   ├── quiz/                 # Runner kuis adaptif
-│   │   └── signs/                # Pustaka isyarat SIBI/BISINDO
-│   ├── server/                   # Server-only logic (DB, Repos, Services, Config)
-│   │   ├── config/               # Validasi env Zod (env.ts)
-│   │   ├── db/                   # Skema Drizzle (schema.ts), client, seed
-│   │   ├── repos/                # Akses data (lessons, classrooms, assets, recommendations)
-│   │   ├── security/             # Sesi, token, rate-limit
-│   │   └── services/             # AI (Gemini), media (Sharp), TTS, signs, storage
-│   └── shared/                   # Komponen UI dasar & utilitas bersama
-│       ├── components/           # Button, Card, Field, Chip, Modal (aksesibel)
-│       └── lib/                  # Result pattern, sync engine
-├── public/                       # Aset statis publik (signs, media, favicon)
-├── docs/                         # Dokumentasi arsitektur, ADR, deployment, backlog
-└── scripts/                      # Skrip git-guard, import isyarat, env check
+PANDU/
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ app/                      # Rute Next.js 16 App Router (Guru, Siswa, TV, API)
+â”‚   â”‚   â”œâ”€â”€ (auth)/               # Rute autentikasi
+â”‚   â”‚   â”œâ”€â”€ guru/                 # Ruang kerja guru (materi, kelas, pengaturan, hasil)
+â”‚   â”‚   â”œâ”€â”€ kelas/                # Portal siswa berbasis kode kelas
+â”‚   â”‚   â”œâ”€â”€ tv/                   # Mode layar penuh Smart TV kelas
+â”‚   â”‚   â”œâ”€â”€ api/                  # Route handler API (AI, media, TTS, signs)
+â”‚   â”‚   â””â”€â”€ kredit/               # Halaman atribusi lisensi terbuka
+â”‚   â”œâ”€â”€ features/                 # Modul fitur mandiri (cohesive feature vertical slices)
+â”‚   â”‚   â”œâ”€â”€ accessibility/        # Konteks tema, kontras tinggi, font picker
+â”‚   â”‚   â”œâ”€â”€ authoring/            # Editor materi, wizard AI, uploader gambar & audio
+â”‚   â”‚   â”œâ”€â”€ player/               # Pemutar kartu peraga & kartu isyarat
+â”‚   â”‚   â”œâ”€â”€ presentation/         # Komponen TV player layar penuh
+â”‚   â”‚   â”œâ”€â”€ print-cards/          # Tata letak cetak fisik A4
+â”‚   â”‚   â”œâ”€â”€ quick-instructions/   # Jembatan instruksi cepat visual
+â”‚   â”‚   â”œâ”€â”€ quiz/                 # Runner kuis adaptif
+â”‚   â”‚   â””â”€â”€ signs/                # Pustaka isyarat SIBI/BISINDO
+â”‚   â”œâ”€â”€ server/                   # Server-only logic (DB, Repos, Services, Config)
+â”‚   â”‚   â”œâ”€â”€ config/               # Validasi env Zod (env.ts)
+â”‚   â”‚   â”œâ”€â”€ db/                   # Skema Drizzle (schema.ts), client, seed
+â”‚   â”‚   â”œâ”€â”€ repos/                # Akses data (lessons, classrooms, assets, recommendations)
+â”‚   â”‚   â”œâ”€â”€ security/             # Sesi, token, rate-limit
+â”‚   â”‚   â””â”€â”€ services/             # AI (Gemini), media (Sharp), TTS, signs, storage
+â”‚   â””â”€â”€ shared/                   # Komponen UI dasar & utilitas bersama
+â”‚       â”œâ”€â”€ components/           # Button, Card, Field, Chip, Modal (aksesibel)
+â”‚       â””â”€â”€ lib/                  # Result pattern, sync engine
+â”œâ”€â”€ public/                       # Aset statis publik (signs, media, favicon)
+â”œâ”€â”€ docs/                         # Dokumentasi arsitektur, ADR, deployment, backlog
+â””â”€â”€ scripts/                      # Skrip git-guard, import isyarat, env check
 ```
 
 ---
 
-## 📜 Lisensi & Atribusi
+## ðŸ“œ Lisensi & Atribusi
 
-- **Perangkat Lunak**: Berlisensi [MIT](LICENSE) © 2026 Tim Fomo.
+- **Perangkat Lunak**: Berlisensi [MIT](LICENSE) Â© 2026 Tim Fomo.
 - **Piktogram**: [ARASAAC](https://arasaac.org) (Pemerintah Aragon, penulis Sergio Palao), berlisensi [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 - **Bahasa Isyarat**: Rujukan resmi Kamus SIBI Kemendikbud dan Lembar Abjad BISINDO Kemendikdasmen.
 - **Tipografi**: *Atkinson Hyperlegible Next* (Braille Institute, OFL) & *Lexend* (Google Fonts, OFL).
+

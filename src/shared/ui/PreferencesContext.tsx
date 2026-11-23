@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState, useCallback, typ
 
 export type ThemePreference = 'terang' | 'gelap' | 'kuning-hitam';
 export type FontSizePreference = 'normal' | 'besar' | 'sangat-besar' | 'raksasa';
-export type FontFamilyPreference = 'atkinson' | 'lexend';
+export type FontFamilyPreference = 'plus-jakarta' | 'atkinson' | 'lexend';
 export type SpacingPreference = 'normal' | 'lebar';
 export type HighlightPreference = 'kuning' | 'biru' | 'hijau';
 export type ButtonSizePreference = 'normal' | 'besar';
@@ -23,14 +23,14 @@ export interface DisplayPreferences {
 const DEFAULT_PREFERENCES: DisplayPreferences = {
   tema: 'terang',
   huruf: 'normal',
-  jenisHuruf: 'atkinson',
+  jenisHuruf: 'plus-jakarta',
   jarak: 'normal',
   sorot: 'kuning',
   tombol: 'normal',
   gerak: 'normal',
 };
 
-const STORAGE_KEY = 'inkludidik_tampilan';
+const STORAGE_KEY = 'pandu_tampilan';
 
 interface PreferencesContextValue {
   preferences: DisplayPreferences;

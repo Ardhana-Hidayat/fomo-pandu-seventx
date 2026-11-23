@@ -1,22 +1,22 @@
-# Panduan Penerapan Produksi (*Production Deployment Guide*) — InkluDidik
+﻿# Panduan Penerapan Produksi (*Production Deployment Guide*) â€” PANDU
 
-Dokumen ini memuat prosedur resmi dan daftar periksa teknis untuk men-deploy platform **InkluDidik** ke lingkungan produksi menggunakan arsitektur **Next.js (Vercel / Railway)** dan **Supabase (PostgreSQL + Storage + Auth)**.
+Dokumen ini memuat prosedur resmi dan daftar periksa teknis untuk men-deploy platform **PANDU** ke lingkungan produksi menggunakan arsitektur **Next.js (Vercel / Railway)** dan **Supabase (PostgreSQL + Storage + Auth)**.
 
 ---
 
-## 🏗️ Arsitektur Lingkungan Produksi
+## ðŸ—ï¸ Arsitektur Lingkungan Produksi
 
 ```text
 [ Klien Siswa / HP / Tablet / Smart TV ]
-                    │
-                    ▼  HTTPS (Cloudflare / Vercel Edge)
+                    â”‚
+                    â–¼  HTTPS (Cloudflare / Vercel Edge)
 [ Next.js 16 App Router (Vercel / Railway) ]
-  ├── Server Actions & API Routes (Node.js LTS)
-  ├── Sharp Image Sanitizer & PCM Audio Synthesizer
-  └── Proxy Session Guard (`src/proxy.ts`)
-                    │
-                    ├──────────────────────────┐
-                    ▼                          ▼
+  â”œâ”€â”€ Server Actions & API Routes (Node.js LTS)
+  â”œâ”€â”€ Sharp Image Sanitizer & PCM Audio Synthesizer
+  â””â”€â”€ Proxy Session Guard (`src/proxy.ts`)
+                    â”‚
+                    â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+                    â–¼                          â–¼
        [ Supabase PostgreSQL ]        [ Supabase Storage ]
        - Database Pooler (Port 6543)  - Bucket: `card-images`
        - Drizzle Migrations           - Bucket: `card-audio`
@@ -25,7 +25,7 @@ Dokumen ini memuat prosedur resmi dan daftar periksa teknis untuk men-deploy pla
 
 ---
 
-## 📋 Daftar Periksa Pra-Penerapan (*Pre-Deployment Checklist*)
+## ðŸ“‹ Daftar Periksa Pra-Penerapan (*Pre-Deployment Checklist*)
 
 Sebelum melakukan deploy ke produksi, pastikan:
 - [ ] Seluruh gerbang kualitas lulus 100%: `npm run check` (0 lint error, 0 type error, 0 depcruise violation, 0 knip dead code).
@@ -35,7 +35,7 @@ Sebelum melakukan deploy ke produksi, pastikan:
 
 ---
 
-## 🚀 Langkah-Langkah Penerapan Langkah-Demi-Langkah
+## ðŸš€ Langkah-Langkah Penerapan Langkah-Demi-Langkah
 
 ### Langkah 1: Persiapan Proyek Supabase
 1. Masuk ke [Supabase Dashboard](https://supabase.com) dan buat proyek baru (pilih region terdekat, misalnya `Singapore - ap-southeast-1`).
@@ -68,7 +68,7 @@ Atur variabel lingkungan berikut pada dashboard Vercel / Railway (pastikan varia
 | `TTS_PROVIDER` | `none` (atau `gemini`) | Penyedia pelafalan suara |
 | `GENERATE_LIMIT_PER_HOUR` | `10` | Batas kecepatan AI per guru |
 | `ALLOW_DRAFT_SIGNS` | `false` | Hanya tampilkan isyarat terverifikasi |
-| `NEXT_PUBLIC_APP_URL` | `https://inkludidik.id` | URL publik resmi aplikasi |
+| `NEXT_PUBLIC_APP_URL` | `https://PANDU.id` | URL publik resmi aplikasi |
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://[ref].supabase.co` | Endpoint Supabase publik |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGci...` | Kunci anonim publik Supabase |
 | `SUPABASE_SERVICE_ROLE_KEY` | `eyJhbGci...` | Kunci internal aman Supabase |
@@ -113,18 +113,18 @@ DATABASE_URL="postgresql://..." npm run db:seed
 ### Langkah 5: Verifikasi Pasca-Penerapan (*Smoke Testing*)
 
 Setelah deployment berhasil tayang, lakukan pengujian cepat pada rute-rute inti:
-1. **Pemeriksaan Healthcheck**: Buka `https://your-domain.com/api/health` → Pastikan status `200 OK`.
-2. **Login Guru Demo**: Masuk ke `/guru/masuk`, klik masuk demo → Pastikan dashboard `/guru` memuat kelas dan materi contoh.
-3. **Penerbitan Materi**: Buka materi contoh, klik edit → simpan & setujui (*approve*) → pastikan QR Code dan share code aktif.
-4. **Portal Siswa**: Buka `/masuk` pada ponsel/tablet, masukkan kode kelas `123456` dan nama `Budi` → Pastikan kartu peraga terbuka dengan pemutar suara dan isyarat.
-5. **Mode Smart TV**: Buka `/tv/123456` pada layar besar → Pastikan tampilan layar penuh dan pintasan keyboard (spasi, 1-4) bekerja.
-6. **Ekspor Cetak**: Buka `/guru/materi/[id]/cetak` → Tekan tombol Cetak → Pastikan pratinjau cetak A4 2x2 rapi dengan garis potong putus-putus.
+1. **Pemeriksaan Healthcheck**: Buka `https://your-domain.com/api/health` â†’ Pastikan status `200 OK`.
+2. **Login Guru Demo**: Masuk ke `/guru/masuk`, klik masuk demo â†’ Pastikan dashboard `/guru` memuat kelas dan materi contoh.
+3. **Penerbitan Materi**: Buka materi contoh, klik edit â†’ simpan & setujui (*approve*) â†’ pastikan QR Code dan share code aktif.
+4. **Portal Siswa**: Buka `/masuk` pada ponsel/tablet, masukkan kode kelas `123456` dan nama `Budi` â†’ Pastikan kartu peraga terbuka dengan pemutar suara dan isyarat.
+5. **Mode Smart TV**: Buka `/tv/123456` pada layar besar â†’ Pastikan tampilan layar penuh dan pintasan keyboard (spasi, 1-4) bekerja.
+6. **Ekspor Cetak**: Buka `/guru/materi/[id]/cetak` â†’ Tekan tombol Cetak â†’ Pastikan pratinjau cetak A4 2x2 rapi dengan garis potong putus-putus.
 
 ---
 
-## 🔒 Keamanan & Kebijakan Header
+## ðŸ”’ Keamanan & Kebijakan Header
 
-Platform InkluDidik menerapkan header keamanan ketat melalui konfigurasi server:
+Platform PANDU menerapkan header keamanan ketat melalui konfigurasi server:
 - **Content-Security-Policy (CSP)**: Membatasi sumber skrip, melarang eval tidak aman, membatasi `img-src` dan `media-src` hanya ke domain internal dan storage Supabase.
 - **X-Content-Type-Options**: `nosniff` (mencegah MIME-sniffing).
 - **Referrer-Policy**: `strict-origin-when-cross-origin`.
@@ -134,8 +134,9 @@ Platform InkluDidik menerapkan header keamanan ketat melalui konfigurasi server:
 
 ---
 
-## 🔄 Prosedur Rollback & Pemulihan
+## ðŸ”„ Prosedur Rollback & Pemulihan
 
 Jika terjadi insiden fatal pada versi rilis baru:
 1. **Rollback Instan Vercel**: Buka Vercel Dashboard > Deployments > Pilih deployment stabil sebelumnya > Klik **Promote to Production** (waktu pemulihan < 30 detik).
 2. **Pemulihan Basis Data**: Supabase menyediakan fitur *Point-in-Time Recovery (PITR)* untuk memulihkan status database jika terjadi galat data.
+

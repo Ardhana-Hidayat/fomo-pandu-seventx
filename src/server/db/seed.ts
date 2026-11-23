@@ -17,7 +17,7 @@ import {
 import { clipHash } from "../services/tts/hash";
 import { generateSensoryFriendlyTone } from "../services/media/tts";
 import { storage } from "../services/storage";
-import demoLessonData from "../../../inkludidik-update-pack/data/demo-lesson.json";
+import demoLessonData from "./demo-lesson-data";
 
 export async function seedDatabase(): Promise<{
   teacherId: string;
@@ -29,7 +29,7 @@ export async function seedDatabase(): Promise<{
   let teacher = await db
     .select()
     .from(teachers)
-    .where(eq(teachers.email, "guru.demo@inkludidik.id"))
+    .where(eq(teachers.email, "guru.demo@pandu.id"))
     .limit(1)
     .then((rows) => rows[0]);
 
@@ -37,9 +37,9 @@ export async function seedDatabase(): Promise<{
     const inserted = await db
       .insert(teachers)
       .values({
-        email: "guru.demo@inkludidik.id",
+        email: "guru.demo@pandu.id",
         displayName: "Guru Demo",
-        schoolName: "SLB Negeri 1 Nusantara",
+        schoolName: "SLB Negeri Manisrejo",
         authProvider: "demo",
         settings: {
           theme: "light",
@@ -273,8 +273,8 @@ export async function seedDatabase(): Promise<{
               bytes: audioBuffer.length,
               keyword: c.text.slice(0, 50),
               source: "system-tts",
-              license: "InkluDidik Synthesized",
-              attribution: "InkluDidik Acoustic Engine",
+              license: "PANDU Synthesized",
+              attribution: "PANDU Acoustic Engine",
               verified: true,
             })
             .returning();

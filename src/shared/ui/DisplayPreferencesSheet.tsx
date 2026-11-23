@@ -20,7 +20,7 @@ export function DisplayPreferencesSheet() {
         <div className="p-4 rounded-[var(--r-kartu)] border-2 border-[var(--border)] bg-[var(--surface-2)]">
           <span className="block text-xs font-bold text-[var(--muted)] mb-1">Pratinjau Teks</span>
           <p className="text-[var(--ink)] font-medium leading-relaxed">
-            InkluDidik membantu siswa dan guru SLB belajar dengan tenang dan jelas.
+            PANDU membantu siswa dan guru SLB belajar dengan tenang dan jelas.
           </p>
         </div>
 
@@ -75,6 +75,7 @@ export function DisplayPreferencesSheet() {
           <div className="flex flex-wrap gap-2">
             {(
               [
+                ['plus-jakarta', 'Plus Jakarta Sans'],
                 ['atkinson', 'Atkinson Hyperlegible'],
                 ['lexend', 'Lexend'],
               ] as const

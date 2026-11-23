@@ -79,11 +79,7 @@ jobs:
             echo "token_available=true" >> $GITHUB_OUTPUT
           fi
 
-<<<<<<< HEAD
       - name: Setup Node.js Runtime (v22)
-=======
-      - name: Setup Node.js Runtime (v22 LTS)
->>>>>>> 083307f (fix(ci): isolate unit test storage driver and update node runtime to v22)
         if: steps.check-token.outputs.token_available == 'true'
         uses: actions/setup-node@v4
         with:

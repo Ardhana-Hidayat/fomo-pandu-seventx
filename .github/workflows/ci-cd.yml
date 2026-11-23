@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      STORAGE_DRIVER: ${{ secrets.STORAGE_DRIVER || 'supabase' }}
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://vmailnuloaoonmqeguok.supabase.co' }}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'dummy-anon-key-for-build' }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY || 'dummy-service-key-for-build' }}

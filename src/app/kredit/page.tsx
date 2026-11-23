@@ -65,26 +65,80 @@ export default function CreditPage() {
             </div>
             <div>
               <h2 className="text-xl font-bold text-[var(--ink)]">
-                Bahasa Isyarat (SIBI &amp; BISINDO)
+                Dataset Bahasa Isyarat Terbuka (SIBI &amp; BISINDO)
               </h2>
               <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[var(--surface-2)] border border-[var(--border)] text-[var(--muted)]">
-                Rujukan Pendidikan Resmi
+                Lisensi Creative Commons Attribution 4.0 International (CC BY 4.0)
               </span>
             </div>
           </div>
           <p className="text-base text-[var(--ink-2)]">
-            Huruf isyarat dan peraga tangan mengikuti standar resmi di Indonesia:
+            Aset peraga huruf isyarat InkluDidik diolah dari dataset penelitian terbuka berlisensi resmi CC BY 4.0 dan diverifikasi bersama guru SLB terhadap rujukan kurikulum resmi:
           </p>
-          <ul className="list-disc pl-6 space-y-1 text-sm text-[var(--ink-2)]">
-            <li>
-              <strong>SIBI (Sistem Isyarat Bahasa Indonesia)</strong>: Mengacu pada Kamus Sistem Isyarat Bahasa Indonesia, Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi RI.
-            </li>
-            <li>
-              <strong>BISINDO (Bahasa Isyarat Indonesia)</strong>: Rujukan abjad isyarat komunitas Tuli Indonesia untuk kemandirian komunikasi harian.
-            </li>
-          </ul>
+
+          <div className="space-y-4 text-sm text-[var(--ink-2)]">
+            <div className="rounded-lg border-2 border-[var(--border)] bg-[var(--surface-2)] p-4 space-y-2">
+              <div className="font-bold text-[var(--ink)]">SIBI (Sistem Isyarat Bahasa Indonesia)</div>
+              <p>
+                Anik Nur Handayani, Desi Fatkhi Azizah (2026). <em>SIBI Indonesian Sign Language Alphabet Image Dataset for Hand Gesture Recognition</em>. Mendeley Data, V1.{" "}
+                <a
+                  href="https://doi.org/10.17632/xdn2gj38xf.1"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[var(--link)] underline font-mono"
+                >
+                  doi:10.17632/xdn2gj38xf.1
+                </a>
+                . Lisensi{" "}
+                <a
+                  href="https://creativecommons.org/licenses/by/4.0/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[var(--link)] underline"
+                >
+                  CC BY 4.0
+                </a>
+                .
+              </p>
+              <p className="text-xs text-[var(--muted)]">
+                Rujukan kebenaran: Kamus Sistem Isyarat Bahasa Indonesia (SIBI), Kemdikbud RI.
+              </p>
+            </div>
+
+            <div className="rounded-lg border-2 border-[var(--border)] bg-[var(--surface-2)] p-4 space-y-2">
+              <div className="font-bold text-[var(--ink)]">BISINDO (Bahasa Isyarat Indonesia)</div>
+              <p>
+                Arya Raden, Muhammad Asshafi (2026). <em>BISINDO DATASET</em>. Mendeley Data, V1.{" "}
+                <a
+                  href="https://doi.org/10.17632/4xnkvr88tk.1"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[var(--link)] underline font-mono"
+                >
+                  doi:10.17632/4xnkvr88tk.1
+                </a>
+                . Lisensi{" "}
+                <a
+                  href="https://creativecommons.org/licenses/by/4.0/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[var(--link)] underline"
+                >
+                  CC BY 4.0
+                </a>
+                .
+              </p>
+              <p className="text-xs text-[var(--muted)]">
+                Rujukan kebenaran: Lembar Abjad BISINDO Resmi Kementerian Pendidikan Dasar dan Menengah RI.
+              </p>
+            </div>
+
+            <div className="text-xs text-[var(--muted)] italic">
+              Keterangan perubahan: Citra dipotong ke area tangan (margin 8%), diubah ukurannya ke 512x512 piksel WebP, dan latar diratakan menjadi putih untuk kenyamanan visual siswa.
+            </div>
+          </div>
           <p className="text-xs text-[var(--muted)] italic">
-            *InkluDidik tidak membuat gambar tangan dengan AI generatif agar isyarat selalu akurat secara anatomis dan pedagogis.
+            *InkluDidik secara tegas <strong>tidak menggunakan gambar tangan buatan AI generatif</strong> demi menjaga ketepatan anatomis, proporsi sendi jari, dan validitas rujukan pengajaran bahasa isyarat.
           </p>
         </Card>
 

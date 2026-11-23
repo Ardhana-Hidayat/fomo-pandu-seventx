@@ -1,12 +1,24 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
 import { SignCard } from "./SignCard";
 import type { LessonCard } from "@/server/db/schema";
+import {
+  tokenize,
+  buildTimeline,
+  scaleTimeline,
+  buildSignSchedule,
+  slotAt,
+  completedSignWord,
+  wordIndexAt,
+  progressInWord,
+  type Timeline,
+  type SignSlot,
+} from "@/shared/lib/sync";
 
-type PlayerCard = LessonCard & {
+export type PlayerCard = LessonCard & {
   imageUrl?: string | null;
   audioRef?: string | null;
   audioUrl?: string | null;
@@ -17,6 +29,8 @@ interface CardPlayerProps {
   cards: PlayerCard[];
   quizHref?: string;
   backHref: string;
+  signSystem?: "SIBI" | "BISINDO";
+  playbackRate?: number;
 }
 
 export function CardPlayer({
@@ -24,282 +38,408 @@ export function CardPlayer({
   cards,
   quizHref,
   backHref,
+  signSystem = "SIBI",
+  playbackRate = 1.0,
 }: CardPlayerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [activeWordIndex, setActiveWordIndex] = useState<number>(-1);
+  const [activeWordIdx, setActiveWordIdx] = useState<number>(-1);
+  const [activeWordProgress, setActiveWordProgress] = useState<number>(0);
+  const [activeSignSlot, setActiveSignSlot] = useState<SignSlot | null>(null);
+  const [completedWordIndex, setCompletedWordIndex] = useState<number | null>(null);
 
   const currentCard = cards[currentIndex];
   const totalCards = cards.length;
   const isLastCard = currentIndex === totalCards - 1;
 
-  // Split text into words for synced highlighting
-  const words = currentCard ? currentCard.text.split(/\s+/).filter(Boolean) : [];
+  // Key terms & Tokens
+  const keyTerms = useMemo(() => {
+    return Array.isArray(currentCard?.keyTerms) ? currentCard.keyTerms : [];
+  }, [currentCard]);
+  const cardText = currentCard?.text ?? "";
+  const tokens = useMemo(() => tokenize(cardText, keyTerms), [cardText, keyTerms]);
 
-  // Audio elements
+  // Base Timeline
+  const baseTimeline = useMemo(() => {
+    return buildTimeline(tokens, {
+      speechRate: playbackRate,
+      signSpeed: 1.0,
+      signEnabled: true,
+    });
+  }, [tokens, playbackRate]);
+
+  // Scaled Timeline and Sign Schedule
+  const [audioDurationMs, setAudioDurationMs] = useState<number | null>(null);
+
+  const scaledTimeline = useMemo(() => {
+    if (audioDurationMs && audioDurationMs > 0) {
+      return scaleTimeline(baseTimeline, audioDurationMs);
+    }
+    return baseTimeline;
+  }, [baseTimeline, audioDurationMs]);
+
+  const signSchedule = useMemo(() => {
+    return buildSignSchedule(scaledTimeline, 450);
+  }, [scaledTimeline]);
+
+  // Playback references
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
-  const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const animFrameRef = useRef<number | null>(null);
+  const freeClockStartRef = useRef<{ startPerf: number; startAudioMs: number } | null>(null);
 
-  const stopAllAudio = useCallback(() => {
-    // Stop HTMLAudioElement
+  // Stop all playback
+  const stopPlayback = useCallback(() => {
+    if (animFrameRef.current !== null) {
+      cancelAnimationFrame(animFrameRef.current);
+      animFrameRef.current = null;
+    }
+    freeClockStartRef.current = null;
+
     if (audioElementRef.current) {
       audioElementRef.current.pause();
       audioElementRef.current.currentTime = 0;
     }
-    // Stop Web Speech
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
+
     setIsPlaying(false);
-    setActiveWordIndex(-1);
   }, []);
 
   // Cleanup on unmount or card switch
   useEffect(() => {
     return () => {
-      stopAllAudio();
+      stopPlayback();
     };
-  }, [currentIndex, stopAllAudio]);
+  }, [currentIndex, stopPlayback]);
 
-  function speakCardWebSpeech() {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-      setIsPlaying(false);
-      return;
-    }
+  // Update real-time sync state at time `t` (ms)
+  const updateSyncAtTime = useCallback(
+    (tMs: number, schedule: { slots: SignSlot[]; signEnd: number }, tl: Timeline) => {
+      const wIdx = wordIndexAt(tl, tMs);
+      const prog = progressInWord(tl, tMs);
+      const slot = slotAt(schedule.slots, tMs);
+      const doneWord = completedSignWord(schedule.slots, tMs);
 
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(currentCard?.text ?? "");
-    utterance.lang = "id-ID";
-    utterance.rate = 0.9;
+      setActiveWordIdx(wIdx);
+      setActiveWordProgress(prog);
+      setActiveSignSlot(slot);
+      setCompletedWordIndex(doneWord);
+    },
+    []
+  );
 
-    let wordIdx = 0;
-    utterance.onboundary = (event) => {
-      if (event.name === "word") {
-        setActiveWordIndex(wordIdx);
-        wordIdx++;
-      }
-    };
+  // Start Animation Frame Loop
+  const runPlaybackLoop = useCallback(
+    (audio: HTMLAudioElement | null, schedule: { slots: SignSlot[]; signEnd: number }, tl: Timeline) => {
+      const loop = () => {
+        let currentTimeMs = 0;
 
-    utterance.onend = () => {
-      setIsPlaying(false);
-      setActiveWordIndex(words.length);
-    };
+        if (audio && !audio.paused && !audio.ended) {
+          // Mode A: Audio element playing (audio.currentTime in media seconds)
+          currentTimeMs = audio.currentTime * 1000;
+        } else if (freeClockStartRef.current) {
+          // Free clock running past audio end
+          const elapsed = performance.now() - freeClockStartRef.current.startPerf;
+          currentTimeMs = freeClockStartRef.current.startAudioMs + elapsed * playbackRate;
+        } else {
+          return;
+        }
 
-    utterance.onerror = () => {
-      setIsPlaying(false);
-    };
+        updateSyncAtTime(currentTimeMs, schedule, tl);
 
-    synthRef.current = utterance;
-    setIsPlaying(true);
-    window.speechSynthesis.speak(utterance);
-  }
+        // Check if finished past schedule.signEnd
+        if (currentTimeMs >= schedule.signEnd) {
+          stopPlayback();
+          setActiveWordIdx(tl.words.length);
+          setActiveWordProgress(1);
+          return;
+        }
 
+        animFrameRef.current = requestAnimationFrame(loop);
+      };
+
+      animFrameRef.current = requestAnimationFrame(loop);
+    },
+    [stopPlayback, updateSyncAtTime, playbackRate]
+  );
+
+  // Handle Audio Toggle (Mode A / B / C)
   function handleToggleAudio() {
     if (isPlaying) {
-      stopAllAudio();
+      stopPlayback();
       return;
     }
 
-    // 1. Primary: If card has audioRef, use HTMLAudioElement
-    if (currentCard?.audioRef) {
+    const audioSrc = currentCard?.audioUrl || currentCard?.audioRef;
+
+    // Mode A: Audio File available
+    if (audioSrc) {
       if (!audioElementRef.current) {
         audioElementRef.current = new Audio();
       }
       const audio = audioElementRef.current;
-      audio.src = currentCard.audioRef;
+      audio.src = audioSrc;
+      audio.playbackRate = playbackRate;
 
-      audio.ontimeupdate = () => {
-        if (!audio.duration || words.length === 0) return;
-        const progress = audio.currentTime / audio.duration;
-        const calculatedIdx = Math.min(
-          words.length - 1,
-          Math.floor(progress * words.length)
-        );
-        setActiveWordIndex(calculatedIdx);
+      const handleLoadedMetadata = () => {
+        const durMs = (audio.duration || 2.5) * 1000;
+        setAudioDurationMs(durMs);
+        const scaled = scaleTimeline(baseTimeline, durMs);
+        const sched = buildSignSchedule(scaled, 450);
+
+        audio
+          .play()
+          .then(() => {
+            setIsPlaying(true);
+            freeClockStartRef.current = null;
+            runPlaybackLoop(audio, sched, scaled);
+          })
+          .catch(() => {
+            runSpeechOrSilentFallback();
+          });
       };
 
       audio.onended = () => {
-        setIsPlaying(false);
-        setActiveWordIndex(words.length);
+        // Audio finished: if sign schedule still has slots, enter free clock mode
+        const currentMs = audio.currentTime * 1000;
+        if (currentMs < signSchedule.signEnd) {
+          freeClockStartRef.current = {
+            startPerf: performance.now(),
+            startAudioMs: currentMs,
+          };
+          runPlaybackLoop(null, signSchedule, scaledTimeline);
+        } else {
+          stopPlayback();
+          setActiveWordIdx(scaledTimeline.words.length);
+        }
       };
 
       audio.onerror = () => {
-        // Fallback to Web Speech if audio file fails to load
-        speakCardWebSpeech();
+        runSpeechOrSilentFallback();
       };
 
-      audio
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-        })
-        .catch(() => {
-          speakCardWebSpeech();
-        });
+      if (audio.readyState >= 1) {
+        handleLoadedMetadata();
+      } else {
+        audio.onloadedmetadata = handleLoadedMetadata;
+        audio.load();
+      }
       return;
     }
 
-    // 2. Fallback: Web Speech API
-    speakCardWebSpeech();
+    // Mode B / C: Web Speech or Silent Fallback
+    runSpeechOrSilentFallback();
+  }
+
+  function runSpeechOrSilentFallback() {
+    setIsPlaying(true);
+    const startTime = performance.now();
+    const duration = signSchedule.signEnd || baseTimeline.total || 3000;
+
+    // Mode B: Web Speech synthesis if available in browser
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      const utt = new SpeechSynthesisUtterance(cardText);
+      utt.lang = "id-ID";
+      utt.rate = playbackRate;
+
+      utt.onend = () => {
+        // Speech ended: wait for sign schedule if needed
+        const elapsed = performance.now() - startTime;
+        if (elapsed < duration) {
+          // Free clock until signEnd
+        } else {
+          stopPlayback();
+          setActiveWordIdx(scaledTimeline.words.length);
+        }
+      };
+
+      utt.onerror = () => {
+        // Fallback to pure timer
+      };
+
+      window.speechSynthesis.speak(utt);
+    }
+
+    const timerLoop = () => {
+      const elapsed = performance.now() - startTime;
+      updateSyncAtTime(elapsed, signSchedule, scaledTimeline);
+
+      if (elapsed >= duration) {
+        stopPlayback();
+        setActiveWordIdx(scaledTimeline.words.length);
+        return;
+      }
+      animFrameRef.current = requestAnimationFrame(timerLoop);
+    };
+
+    animFrameRef.current = requestAnimationFrame(timerLoop);
   }
 
   function handleNext() {
     if (currentIndex < totalCards - 1) {
-      stopAllAudio();
+      stopPlayback();
       setCurrentIndex((prev) => prev + 1);
     }
   }
 
   function handlePrev() {
     if (currentIndex > 0) {
-      stopAllAudio();
+      stopPlayback();
       setCurrentIndex((prev) => prev - 1);
     }
   }
 
   if (!currentCard) {
     return (
-      <div className="p-8 text-center text-sm font-bold text-[var(--muted)]">
+      <div className="flex min-h-[100dvh] items-center justify-center p-8 text-center text-sm font-bold text-[var(--muted)]">
         Materi ini belum memiliki kartu belajar.
       </div>
     );
   }
 
+  // Active key term for sign card
+  const activeKeyTerm = keyTerms[0] ?? "";
+  const completedWordText =
+    completedWordIndex !== null && tokens[completedWordIndex]?.isKey
+      ? tokens[completedWordIndex]?.text
+      : null;
+
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
-      {/* Header Pemutar */}
-      <header className="sticky top-0 z-30 w-full border-b-2 border-[var(--border)] bg-[var(--surface)] px-4 py-3 sm:px-6">
-        <div className="mx-auto flex max-w-4xl items-center justify-between">
-          <Link
-            href={backHref}
-            className="inline-flex min-h-[48px] min-w-[48px] items-center justify-center rounded-[var(--r-tombol)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] font-bold text-sm px-3 hover:bg-[var(--surface-2)]"
-            aria-label="Kembali"
-          >
-            <Icon name="CaretLeft" size={20} />
-            <span className="hidden sm:inline ml-1">Kembali</span>
-          </Link>
+    <div className="flex h-[100dvh] max-h-[100dvh] flex-col justify-between overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
+      {/* 1. Header Kompak (Tetap & Presisi) */}
+      <header className="shrink-0 h-13 sm:h-14 border-b-2 border-[var(--border)] bg-[var(--surface)] px-3 sm:px-6 flex items-center justify-between z-20">
+        <Link
+          href={backHref}
+          className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-[var(--r-tombol)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] font-bold text-xs sm:text-sm px-2.5 hover:bg-[var(--surface-2)]"
+          aria-label="Kembali"
+        >
+          <Icon name="CaretLeft" size={18} />
+          <span className="hidden sm:inline ml-1">Kembali</span>
+        </Link>
 
-          <div className="text-center">
-            {title && (
-              <span className="text-xs font-bold text-[var(--muted)] block">
-                {title}
-              </span>
-            )}
-            <span className="font-bold text-base text-[var(--ink)]">
-              Kartu {currentIndex + 1} dari {totalCards}
+        <div className="text-center truncate px-2">
+          {title && (
+            <span className="text-[11px] font-bold text-[var(--muted)] block truncate">
+              {title}
             </span>
-          </div>
-
-          <DisplayPreferencesTrigger />
+          )}
+          <span className="font-extrabold text-sm sm:text-base text-[var(--ink)]">
+            Kartu {currentIndex + 1} dari {totalCards}
+          </span>
         </div>
+
+        <DisplayPreferencesTrigger />
       </header>
 
-      {/* Konten Kartu Belajar */}
+      {/* 2. Kontainer Utama Satu Layar (Fit Viewport, NO Vertical Scroll, NO Overlap) */}
       <main
         id="main-content"
-        className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-between p-4 sm:p-6 pb-28 md:pb-8"
+        className="flex-1 min-h-0 w-full max-w-4xl mx-auto p-2 sm:p-4 flex flex-col justify-between items-center overflow-hidden"
       >
-        <Card className="flex flex-col items-center justify-center text-center p-6 sm:p-10 my-auto min-h-[360px] gap-6">
-          {/* Gambar Peraga (Piktogram atau Foto Unggahan) */}
-          {currentCard.imageUrl ? (
-            <div className="w-full max-w-md aspect-[4/3] rounded-2xl border-2 border-[var(--border)] overflow-hidden flex items-center justify-center bg-[var(--surface-2)]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={currentCard.imageUrl}
-                alt={currentCard.imageAlt ?? currentCard.text}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          ) : currentCard.imageAlt ? (
-            <div className="w-full max-w-md aspect-[4/3] rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-4">
-              <Icon name="Image" size={48} className="text-[var(--muted)] mb-2" />
-              <span className="text-sm font-bold text-[var(--ink)]">
-                {currentCard.imageAlt}
-              </span>
-            </div>
-          ) : null}
+        <Card className="w-full flex-1 min-h-0 flex flex-col justify-between items-center p-2.5 sm:p-5 overflow-hidden border-2 border-[var(--border)] bg-[var(--surface)] shadow-md">
+          {/* Bagian Peraga Visual & Isyarat (Bersebelahan Horizontal Agar Rapi dan Pas di Layar) */}
+          <div className="flex-1 min-h-0 w-full flex flex-row items-center justify-center gap-3 sm:gap-6 overflow-hidden py-1">
+            {/* Kartu Gambar / Piktogram */}
+            {currentCard.imageUrl ? (
+              <div className="h-full max-h-[140px] sm:max-h-[190px] md:max-h-[220px] aspect-square rounded-2xl border-2 border-[var(--border)] overflow-hidden bg-[var(--surface-2)] flex items-center justify-center p-1.5 shadow-xs shrink-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={currentCard.imageUrl}
+                  alt={currentCard.imageAlt ?? currentCard.text}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            ) : currentCard.imageAlt ? (
+              <div className="h-full max-h-[140px] sm:max-h-[190px] md:max-h-[220px] aspect-square rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-2 text-center shrink-0">
+                <Icon name="Image" size={30} className="text-[var(--muted)] mb-1" />
+                <span className="text-[11px] sm:text-xs font-bold text-[var(--ink)] line-clamp-3">
+                  {currentCard.imageAlt}
+                </span>
+              </div>
+            ) : null}
 
-          {/* Teks Kartu dengan Sorotan Berjalan */}
-          <div className="max-w-xl text-left sm:text-center">
-            <p className="text-2xl sm:text-4xl font-bold leading-relaxed text-[var(--ink)]">
-              {words.map((word, idx) => {
-                const isCurrent = idx === activeWordIndex;
-                const isPassed = activeWordIndex > idx;
+            {/* Kartu Peraga Bahasa Isyarat (SIBI / BISINDO) */}
+            {activeKeyTerm ? (
+              <div className="h-full max-h-[140px] sm:max-h-[190px] md:max-h-[220px] flex flex-col items-center justify-center shrink-0">
+                <SignCard
+                  system={signSystem}
+                  term={activeKeyTerm}
+                  activeLetter={activeSignSlot?.ch}
+                  activeLetterIndex={activeSignSlot?.letterIndex ?? 0}
+                  completedWord={completedWordText}
+                  size="compact"
+                />
+              </div>
+            ) : null}
+          </div>
+
+          {/* Bagian Teks Materi dengan Sorotan Karaoke Berjalan Halus (--progres) */}
+          <div className="shrink-0 w-full my-1.5 sm:my-2.5 py-2 px-3 sm:py-3 sm:px-4 rounded-xl border-2 border-[var(--border)] bg-[var(--surface-2)] text-center flex items-center justify-center min-h-[50px]">
+            <p className="text-base sm:text-xl md:text-2xl font-extrabold leading-snug text-[var(--ink)]">
+              {tokens.map((tok, idx) => {
+                const isCurrent = idx === activeWordIdx;
+                const isPassed = activeWordIdx > idx;
+                const progress = isCurrent ? activeWordProgress : isPassed ? 1 : 0;
+
                 return (
                   <span
                     key={idx}
                     data-state={isCurrent ? "sedang" : isPassed ? "sudah" : "belum"}
-                    style={{ "--progres": isCurrent ? 1 : 0 } as React.CSSProperties}
-                    className={`kata inline-block mx-1 px-1.5 py-0.5 rounded transition-colors ${
-                      isCurrent
-                        ? "bg-[var(--sorot)] text-[var(--on-sorot)] underline decoration-2 underline-offset-4"
-                        : isPassed
-                        ? "bg-[var(--sorot-lembut)] text-[var(--on-sorot)]"
-                        : "text-[var(--ink)]"
-                    }`}
+                    style={{ "--progres": progress } as React.CSSProperties}
+                    className="kata inline-block mx-1 px-1 py-0.5 select-none"
                   >
-                    {word}
+                    {tok.text}
                   </span>
                 );
               })}
             </p>
           </div>
 
-          {/* Kartu Isyarat Huruf & Pita Huruf */}
-          {Array.isArray(currentCard.keyTerms) && currentCard.keyTerms.length > 0 && (
-            <div className="pt-4 border-t-2 border-[var(--border)] w-full flex flex-col items-center">
-              <span className="text-xs font-bold text-[var(--muted)] mb-3 uppercase">
-                Isyarat Kata Kunci:
+          {/* Banner Tawaran Latihan di Kartu Terakhir */}
+          {isLastCard && quizHref && (
+            <div className="shrink-0 w-full p-2 rounded-xl border border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)] flex items-center justify-between gap-2">
+              <span className="text-xs sm:text-sm font-bold truncate">
+                Materi selesai! Mau lanjut latihan kuis?
               </span>
-              <SignCard term={currentCard.keyTerms[0]} system="SIBI" />
+              <Button
+                variant="primary"
+                size="normal"
+                href={quizHref}
+                icon={<Icon name="ListChecks" size={18} />}
+                className="shrink-0 text-xs py-1 px-3"
+              >
+                Mulai Kuis
+              </Button>
             </div>
           )}
         </Card>
-
-        {/* Akhir Materi: Tawaran Kuis */}
-        {isLastCard && quizHref && (
-          <div className="my-4 p-4 rounded-2xl border-2 border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Icon name="CheckCircle" size={28} className="shrink-0" />
-              <span className="font-bold text-base">
-                Materi selesai dipelajari. Mau latihan soal sekarang?
-              </span>
-            </div>
-            <Button
-              variant="primary"
-              size="normal"
-              href={quizHref}
-              icon={<Icon name="ListChecks" size={20} />}
-            >
-              Mulai latihan kuis
-            </Button>
-          </div>
-        )}
       </main>
 
-      {/* Bar Bawah Kontrol Navigasi Pemutar */}
-      <footer className="fixed bottom-0 left-0 right-0 z-30 border-t-2 border-[var(--border)] bg-[var(--surface)] p-3 sm:p-4">
-        <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
+      {/* 3. Bar Bawah Navigasi Pemutar (In-Flow, Tidak Pernah Menutupi Konten) */}
+      <footer className="shrink-0 h-15 sm:h-17 border-t-2 border-[var(--border)] bg-[var(--surface)] px-3 sm:px-6 py-2 z-20">
+        <div className="mx-auto flex max-w-xl items-center justify-between gap-2 sm:gap-4 h-full">
           <Button
             variant="secondary"
             size="large"
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            icon={<Icon name="CaretLeft" size={24} />}
-            className="flex-1"
+            icon={<Icon name="CaretLeft" size={20} />}
+            className="flex-1 min-h-[46px]"
           >
             Kembali
           </Button>
 
           <Button
-            variant="secondary"
+            variant={isPlaying ? "secondary" : "primary"}
             size="large"
             onClick={handleToggleAudio}
-            icon={<Icon name={isPlaying ? "Pause" : "SpeakerHigh"} size={24} />}
-            className="flex-1"
-            aria-label={isPlaying ? "Jeda suara" : "Putar suara materi"}
+            icon={<Icon name={isPlaying ? "Pause" : "SpeakerHigh"} size={22} />}
+            className="flex-1 min-h-[46px] font-black"
+            aria-label={isPlaying ? "Jeda suara materi" : "Putar suara materi"}
           >
-            {isPlaying ? "Jeda" : "Suara"}
+            {isPlaying ? "Jeda" : "Putar"}
           </Button>
 
           <Button
@@ -307,9 +447,9 @@ export function CardPlayer({
             size="large"
             onClick={handleNext}
             disabled={isLastCard}
-            icon={<Icon name="CaretRight" size={24} />}
+            icon={<Icon name="CaretRight" size={20} />}
             iconPosition="right"
-            className="flex-1"
+            className="flex-1 min-h-[46px]"
           >
             Lanjut
           </Button>

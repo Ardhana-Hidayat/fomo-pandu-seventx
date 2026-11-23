@@ -64,19 +64,22 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved) as Partial<DisplayPreferences>;
-        setPreferences((prev) => {
-          const merged = { ...prev, ...parsed };
-          applyPreferencesToDOM(merged);
-          return merged;
-        });
+    const timer = setTimeout(() => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved) as Partial<DisplayPreferences>;
+          setPreferences((prev) => {
+            const merged = { ...prev, ...parsed };
+            applyPreferencesToDOM(merged);
+            return merged;
+          });
+        }
+      } catch {
+        // fallback to defaults
       }
-    } catch {
-      // fallback to defaults
-    }
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {

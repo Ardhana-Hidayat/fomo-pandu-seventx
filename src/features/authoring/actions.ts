@@ -5,8 +5,10 @@ import { getCurrentTeacher } from "@/features/auth";
 import {
   createLesson,
   updateLesson,
+  updatePresentation,
   type CreateCardInput,
   type CreateQuestionInput,
+  type UpdatePresentationPatch,
 } from "@/server/repos/lessons";
 import { publishLesson } from "@/server/repos/publications";
 import type { Result } from "@/shared/lib/result";
@@ -22,6 +24,11 @@ export interface CreateLessonPayload {
   cards: CreateCardInput[];
   questions: CreateQuestionInput[];
   classroomIdsToPublish?: string[];
+  signSystem?: "SIBI" | "BISINDO";
+  signScope?: "key_terms" | "all";
+  signSpeed?: number;
+  voiceKey?: string;
+  voiceSpeed?: number;
 }
 
 export async function createLessonAction(
@@ -32,7 +39,21 @@ export async function createLessonAction(
     return err(makeAppError("UNAUTHORIZED", "Sesi guru tidak valid."));
   }
 
-  const { title, topic, level, sourceType, generatedBy, cards, questions, classroomIdsToPublish } = payload;
+  const {
+    title,
+    topic,
+    level,
+    sourceType,
+    generatedBy,
+    cards,
+    questions,
+    classroomIdsToPublish,
+    signSystem,
+    signScope,
+    signSpeed,
+    voiceKey,
+    voiceSpeed,
+  } = payload;
 
   const res = await createLesson(teacherSession.teacher.id, {
     title,
@@ -42,6 +63,11 @@ export async function createLessonAction(
     generatedBy: generatedBy ?? "fallback",
     cards,
     questions,
+    signSystem,
+    signScope,
+    signSpeed,
+    voiceKey,
+    voiceSpeed,
   });
 
   if (!res.ok) {
@@ -113,3 +139,21 @@ export async function updateLessonAction(
   revalidatePath(`/guru/materi/${lessonId}`);
   return ok(undefined);
 }
+
+export async function updatePresentationAction(
+  lessonId: string,
+  patch: UpdatePresentationPatch
+): Promise<Result<{ id: string }>> {
+  const teacherSession = await getCurrentTeacher();
+  if (!teacherSession) {
+    return err(makeAppError("UNAUTHORIZED", "Sesi guru tidak valid."));
+  }
+
+  const res = await updatePresentation(lessonId, patch);
+  if (!res.ok) return res;
+
+  revalidatePath(`/guru/materi/${lessonId}`);
+  revalidatePath(`/guru/materi/${lessonId}/edit`);
+  return ok({ id: res.data.id });
+}
+

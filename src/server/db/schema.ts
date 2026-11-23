@@ -153,6 +153,12 @@ export const lessons = pgTable("lessons", {
   exerciseType: text("exercise_type").notNull().default("both"),
   optionCount: integer("option_count").notNull().default(3),
   showTextHint: boolean("show_text_hint").notNull().default(true),
+  signSystem: text("sign_system").notNull().default("SIBI"),
+  signScope: text("sign_scope").notNull().default("key_terms"),
+  signSpeed: real("sign_speed").notNull().default(1.0),
+  voiceKey: text("voice_key").notNull().default("A"),
+  voiceSpeed: real("voice_speed").notNull().default(1.0),
+  audioVersion: integer("audio_version").notNull().default(0),
   settings: jsonb("settings").$type<LessonSettings>(),
   options: jsonb("options").$type<Record<string, unknown>>(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
@@ -171,6 +177,8 @@ export const lessonCards = pgTable(
     cardType: text("card_type").notNull().default("instruction"),
     imageSource: text("image_source").notNull().default("pictogram"),
     audioSource: text("audio_source").notNull().default("none"),
+    signOverride: text("sign_override"),
+    voiceOverride: text("voice_override"),
     imageAssetId: uuid("image_asset_id").references(() => assets.id, {
       onDelete: "set null",
     }),
@@ -196,6 +204,8 @@ export const quizQuestions = pgTable("quiz_questions", {
   position: integer("position").notNull(),
   type: text("type").notNull(),
   prompt: text("prompt").notNull(),
+  keyTerms: text("key_terms").array().notNull().default([]),
+  signOverride: text("sign_override"),
   payload: jsonb("payload").$type<QuizQuestionPayload>().notNull(),
   linkedCardId: uuid("linked_card_id").references(() => lessonCards.id, {
     onDelete: "set null",
@@ -263,6 +273,8 @@ export const sessions = pgTable(
     signSystem: text("sign_system").default("SIBI"),
     speechRate: real("speech_rate").default(1.0),
     signSpeed: real("sign_speed").default(1.0),
+    voiceKey: text("voice_key"),
+    audioMode: text("audio_mode"),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [
@@ -387,6 +399,69 @@ export const syncEvents = pgTable("sync_events", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
+export const audioClips = pgTable(
+  "audio_clips",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    lessonId: uuid("lesson_id")
+      .notNull()
+      .references(() => lessons.id, { onDelete: "cascade" }),
+    targetType: text("target_type").notNull(), // 'card', 'question_prompt', 'question_option', 'feedback'
+    targetId: uuid("target_id"),
+    optionKey: text("option_key"),
+    voiceKey: text("voice_key").notNull(),
+    model: text("model").notNull(),
+    textHash: text("text_hash").notNull(),
+    assetId: uuid("asset_id").references(() => assets.id, {
+      onDelete: "set null",
+    }),
+    durationMs: integer("duration_ms"),
+    status: text("status").notNull(), // 'ready', 'failed'
+    errorCode: text("error_code"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("audio_clips_lesson_target_idx").on(table.lessonId, table.targetType),
+    index("audio_clips_text_hash_idx").on(table.textHash),
+    uniqueIndex("audio_clips_unique_target_idx").on(
+      table.lessonId,
+      table.targetType,
+      sql`coalesce(${table.targetId}, '00000000-0000-0000-0000-000000000000'::uuid)`,
+      sql`coalesce(${table.optionKey}, '')`,
+      table.voiceKey
+    ),
+  ]
+);
+
+export const signOverrides = pgTable(
+  "sign_overrides",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    teacherId: uuid("teacher_id")
+      .notNull()
+      .references(() => teachers.id, { onDelete: "cascade" }),
+    system: text("system").notNull(), // 'SIBI', 'BISINDO'
+    key: varchar("key", { length: 1 }).notNull(), // A-Z
+    assetId: uuid("asset_id").references(() => assets.id, {
+      onDelete: "set null",
+    }),
+    status: text("status").notNull().default("source"), // 'verified', 'source', 'draft', 'missing'
+    verifiedBy: text("verified_by"),
+    verifiedAt: timestamp("verified_at", { withTimezone: true }),
+    note: text("note"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("sign_overrides_teacher_system_idx").on(table.teacherId, table.system),
+    uniqueIndex("sign_overrides_teacher_system_key_idx").on(
+      table.teacherId,
+      table.system,
+      table.key
+    ),
+  ]
+);
+
+
 export type Teacher = typeof teachers.$inferSelect;
 export type NewTeacher = typeof teachers.$inferInsert;
 export type Classroom = typeof classrooms.$inferSelect;
@@ -421,3 +496,8 @@ export type RateLimit = typeof rateLimits.$inferSelect;
 export type NewRateLimit = typeof rateLimits.$inferInsert;
 export type SyncEvent = typeof syncEvents.$inferSelect;
 export type NewSyncEvent = typeof syncEvents.$inferInsert;
+export type AudioClip = typeof audioClips.$inferSelect;
+export type NewAudioClip = typeof audioClips.$inferInsert;
+export type SignOverride = typeof signOverrides.$inferSelect;
+export type NewSignOverride = typeof signOverrides.$inferInsert;
+

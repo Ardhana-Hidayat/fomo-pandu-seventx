@@ -7,6 +7,8 @@ import { approveAndPublishAction } from "../actions";
 import { PictogramModal } from "./PictogramModal";
 import { ImageUploader } from "./ImageUploader";
 import { AudioRecorder } from "./AudioRecorder";
+import { SignVoiceReviewPanel } from "./SignVoiceReviewPanel";
+import { updatePresentationAction } from "../actions";
 import type { LessonWithContent } from "@/server/repos/lessons";
 
 interface LessonEditorProps {
@@ -16,11 +18,18 @@ interface LessonEditorProps {
 
 export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"kartu" | "kuis" | "terbitkan">("kartu");
+  const [activeTab, setActiveTab] = useState<"kartu" | "kuis" | "isyarat_suara" | "terbitkan">("kartu");
 
   const [title] = useState(lesson.title);
   const [cards, setCards] = useState(lesson.cards);
   const [questions, setQuestions] = useState(lesson.questions);
+
+  // Pack 2: State Pengaturan Isyarat & Suara
+  const [signSystem, setSignSystem] = useState<"SIBI" | "BISINDO">((lesson.signSystem as "SIBI" | "BISINDO") ?? "SIBI");
+  const [signScope, setSignScope] = useState<"key_terms" | "all">((lesson.signScope as "key_terms" | "all") ?? "key_terms");
+  const [signSpeed, setSignSpeed] = useState<number>(lesson.signSpeed ?? 1.0);
+  const [voiceKey, setVoiceKey] = useState<string>(lesson.voiceKey ?? "A");
+  const [voiceSpeed, setVoiceSpeed] = useState<number>(lesson.voiceSpeed ?? 1.0);
   const [selectedClassrooms, setSelectedClassrooms] = useState<string[]>(
     classrooms.map((c) => c.id).slice(0, 1)
   );
@@ -113,6 +122,8 @@ export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
         audioRef: null,
         audioUrl: null,
         keyTerms: [],
+        signOverride: null,
+        voiceOverride: null,
         createdAt: new Date(),
       },
     ]);
@@ -234,6 +245,8 @@ export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
           ],
           showTextHint: true,
         },
+        keyTerms: [],
+        signOverride: null,
         linkedCardId: null,
         explanation: null,
         createdAt: new Date(),
@@ -307,11 +320,12 @@ export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
       {statusMsg && <StatusMessage type="benar">{statusMsg}</StatusMessage>}
 
       {/* Tab Navigasi */}
-      <div className="flex gap-2 border-b-2 border-[var(--border)] pb-2">
+      <div className="flex gap-2 border-b-2 border-[var(--border)] pb-2 flex-wrap">
         {(
           [
             ["kartu", `Kartu (${cards.length})`, "Cards"],
             ["kuis", `Kuis (${questions.length})`, "ListChecks"],
+            ["isyarat_suara", "Isyarat & Suara", "Hand"],
             ["terbitkan", "Tampilan & Bagikan", "DoorOpen"],
           ] as const
         ).map(([tabKey, label, ic]) => (
@@ -671,6 +685,53 @@ export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
                 </Card>
               );
             })}
+          </div>
+        </section>
+      )}
+
+      {/* TAB ISYARAT & SUARA (Pack 2 Berkas 05) */}
+      {activeTab === "isyarat_suara" && (
+        <section className="flex flex-col gap-6">
+          <SignVoiceReviewPanel
+            signSystem={signSystem}
+            onChangeSignSystem={setSignSystem}
+            signScope={signScope}
+            onChangeSignScope={setSignScope}
+            signSpeed={signSpeed}
+            onChangeSignSpeed={setSignSpeed}
+            voiceKey={voiceKey}
+            onChangeVoiceKey={setVoiceKey}
+            voiceSpeed={voiceSpeed}
+            onChangeVoiceSpeed={setVoiceSpeed}
+            sampleCard={cards[0]}
+          />
+
+          <div className="flex justify-end">
+            <Button
+              variant="primary"
+              size="large"
+              disabled={isSaving}
+              onClick={async () => {
+                setIsSaving(true);
+                const res = await updatePresentationAction(lesson.id, {
+                  signSystem,
+                  signScope,
+                  signSpeed,
+                  voiceKey,
+                  voiceSpeed,
+                });
+                setIsSaving(false);
+                if (res.ok) {
+                  setStatusMsg("Pengaturan isyarat dan suara berhasil disimpan!");
+                  router.refresh();
+                } else {
+                  alert(res.error.message);
+                }
+              }}
+              icon={<Icon name="CheckCircle" size={20} />}
+            >
+              {isSaving ? "Menyimpan..." : "Simpan Pengaturan Isyarat & Suara"}
+            </Button>
           </div>
         </section>
       )}

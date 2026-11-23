@@ -22,6 +22,8 @@ describe("QuizRunner Component", () => {
       },
       linkedCardId: null,
       explanation: null,
+      keyTerms: [],
+      signOverride: null,
       createdAt: new Date(),
     },
     {
@@ -35,6 +37,8 @@ describe("QuizRunner Component", () => {
       },
       linkedCardId: null,
       explanation: null,
+      keyTerms: [],
+      signOverride: null,
       createdAt: new Date(),
     },
   ];

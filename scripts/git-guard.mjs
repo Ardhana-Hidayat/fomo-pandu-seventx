@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Penjaga Git InkluDidik. Tanpa dependensi.
+ * Penjaga Git InkluDidik (acuan). Tanpa dependensi. Salin ke scripts/git-guard.mjs.
  *
  * Pemakaian:
  *   node scripts/git-guard.mjs staged            # untuk pre-commit: berkas yang di-stage
@@ -16,9 +16,8 @@ export const MAX_BYTES = 1_000_000;
 
 /** Berkas yang tidak boleh pernah masuk repo. `.env.example` dikecualikan secara eksplisit. */
 export const FORBIDDEN_PATHS = [
-  /^docs\/update-pack\//,
-  /^\.update-pack\//,
-  /^inkludidik-update-pack\//,
+  /^docs\/update-pack[^/]*\//,
+  /^\.update-pack[^/]*\//,
   /^CONTEXT\.md$/,
   /^docs\/update-plan\.md$/,
   /^docs\/izin\//,

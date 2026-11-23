@@ -1,5 +1,5 @@
 import "server-only";
-import { eq, and, asc } from "drizzle-orm";
+import { eq, and, asc, sql } from "drizzle-orm";
 import { db } from "../db/client";
 import {
   lessons,
@@ -62,6 +62,11 @@ export interface CreateLessonInput {
   exerciseType?: "match" | "order" | "both";
   optionCount?: number;
   showTextHint?: boolean;
+  signSystem?: "SIBI" | "BISINDO";
+  signScope?: "key_terms" | "all";
+  signSpeed?: number;
+  voiceKey?: string;
+  voiceSpeed?: number;
   settings?: LessonSettings;
   options?: Record<string, unknown>;
   cards?: CreateCardInput[];
@@ -76,6 +81,11 @@ export interface UpdateLessonInput {
   exerciseType?: "match" | "order" | "both";
   optionCount?: number;
   showTextHint?: boolean;
+  signSystem?: "SIBI" | "BISINDO";
+  signScope?: "key_terms" | "all";
+  signSpeed?: number;
+  voiceKey?: string;
+  voiceSpeed?: number;
   settings?: LessonSettings;
   options?: Record<string, unknown>;
 }
@@ -105,6 +115,11 @@ export async function createLesson(
         exerciseType: input.exerciseType ?? "both",
         optionCount: input.optionCount ?? 3,
         showTextHint: input.showTextHint ?? true,
+        signSystem: input.signSystem ?? "SIBI",
+        signScope: input.signScope ?? "key_terms",
+        signSpeed: input.signSpeed ?? 1.0,
+        voiceKey: input.voiceKey ?? "A",
+        voiceSpeed: input.voiceSpeed ?? 1.0,
         settings: input.settings,
         options: input.options,
       })
@@ -390,4 +405,72 @@ export async function updateCardMedia(
     );
   }
 }
+
+export interface EffectiveCardSettings {
+  signSystem: "SIBI" | "BISINDO" | null;
+  voiceKey: string;
+  signScope: string;
+  signSpeed: number;
+  voiceSpeed: number;
+  keyTerms: string[];
+}
+
+export function effectiveCardSettings(
+  lesson: Pick<Lesson, "signSystem" | "signScope" | "signSpeed" | "voiceKey" | "voiceSpeed">,
+  card: Pick<LessonCard, "signOverride" | "voiceOverride" | "keyTerms">
+): EffectiveCardSettings {
+  let effectiveSign: "SIBI" | "BISINDO" | null = (lesson.signSystem as "SIBI" | "BISINDO") ?? "SIBI";
+  if (card.signOverride === "NONE") {
+    effectiveSign = null;
+  } else if (card.signOverride === "SIBI" || card.signOverride === "BISINDO") {
+    effectiveSign = card.signOverride;
+  }
+
+  const voiceKey = card.voiceOverride ?? lesson.voiceKey ?? "A";
+  const signScope = lesson.signScope ?? "key_terms";
+  const signSpeed = lesson.signSpeed ?? 1.0;
+  const voiceSpeed = lesson.voiceSpeed ?? 1.0;
+  const keyTerms = card.keyTerms ?? [];
+
+  return {
+    signSystem: effectiveSign,
+    voiceKey,
+    signScope,
+    signSpeed,
+    voiceSpeed,
+    keyTerms,
+  };
+}
+
+export interface UpdatePresentationPatch {
+  signSystem?: "SIBI" | "BISINDO";
+  signScope?: "key_terms" | "all";
+  signSpeed?: number;
+  voiceKey?: string;
+  voiceSpeed?: number;
+}
+
+export async function updatePresentation(
+  lessonId: string,
+  patch: UpdatePresentationPatch
+): Promise<Result<Lesson>> {
+  try {
+    const [updated] = await db
+      .update(lessons)
+      .set({
+        ...patch,
+        audioVersion: sql`${lessons.audioVersion} + 1`,
+      })
+      .where(eq(lessons.id, lessonId))
+      .returning();
+
+    if (!updated) {
+      return err(makeAppError("NOT_FOUND", "Materi tidak ditemukan"));
+    }
+    return ok(updated);
+  } catch (error) {
+    return err(makeAppError("DB_ERROR", "Gagal memperbarui pengaturan penyajian", error));
+  }
+}
+
 

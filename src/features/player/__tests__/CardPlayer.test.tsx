@@ -19,6 +19,8 @@ describe("CardPlayer Component", () => {
       imageAssetId: null,
       imageAlt: "Budi membaca buku",
       keyTerms: ["buku"],
+      signOverride: null,
+      voiceOverride: null,
       createdAt: new Date(),
     },
     {
@@ -35,6 +37,8 @@ describe("CardPlayer Component", () => {
       imageAssetId: null,
       imageAlt: null,
       keyTerms: [],
+      signOverride: null,
+      voiceOverride: null,
       createdAt: new Date(),
     },
   ];
@@ -72,7 +76,7 @@ describe("CardPlayer Component", () => {
     );
 
     expect(screen.getByRole("button", { name: /Kembali/i })).toBeDefined();
-    expect(screen.getByRole("button", { name: /Suara/i })).toBeDefined();
+    expect(screen.getByRole("button", { name: /Putar|Suara/i })).toBeDefined();
     expect(screen.getByRole("button", { name: /Lanjut/i })).toBeDefined();
   });
 });

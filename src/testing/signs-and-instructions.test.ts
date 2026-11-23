@@ -14,7 +14,7 @@ describe("Sign Resolver & Quick Instructions (S3-02, S3-03, TC-10)", () => {
   describe("1. Sign Resolver & Manifest Loading (TC-10)", () => {
     it("memuat manifest isyarat dan memverifikasi daftar 26 huruf per sistem", async () => {
       const manifest = await loadSignsManifest();
-      expect(manifest.version).toBe(1);
+      expect([1, 2]).toContain(manifest.version);
       expect(manifest.items.length).toBeGreaterThanOrEqual(52); // 26 SIBI + 26 BISINDO
 
       const sibiSigns = await listSigns("SIBI");
@@ -36,18 +36,18 @@ describe("Sign Resolver & Quick Instructions (S3-02, S3-03, TC-10)", () => {
     });
 
     it("mengembalikan null untuk item draft bila allowDraft false", async () => {
-      // Huruf J dalam SIBI berstatus draft (bergerak)
-      const signJ = await resolveSign("SIBI", "J", { allowDraft: false });
-      expect(signJ).toBeNull();
+      // Huruf B dalam SIBI berstatus draft
+      const signDraft = await resolveSign("SIBI", "B", { allowDraft: false });
+      expect(signDraft).toBeNull();
     });
 
     it("mengembalikan aset draft dengan status draft jika allowDraft true", async () => {
-      const signJ = await resolveSign("SIBI", "J", { allowDraft: true });
-      expect(signJ).not.toBeNull();
-      if (!signJ) return;
+      const signDraft = await resolveSign("SIBI", "B", { allowDraft: true });
+      expect(signDraft).not.toBeNull();
+      if (!signDraft) return;
 
-      expect(signJ.status).toBe("draft");
-      expect(signJ.key).toBe("J");
+      expect(signDraft.status).toBe("draft");
+      expect(signDraft.key).toBe("B");
     });
 
     it("mengembalikan null untuk huruf berstatus missing", async () => {

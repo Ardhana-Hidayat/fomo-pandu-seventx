@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card, Button, Field, Chip, Icon, type IconName, StatusMessage } from "@/shared/ui";
 import { createLessonAction } from "../actions";
+import { SignVoiceReviewPanel } from "./SignVoiceReviewPanel";
 
 interface ClassroomOption {
   id: string;
@@ -48,6 +49,13 @@ export function LessonWizard({
   const [disabilityPresets, setDisabilityPresets] = useState<string[]>(["tunarungu", "hambatan_intelektual"]);
   const [cardCount, setCardCount] = useState<number>(5);
   const [quizType, setQuizType] = useState<string>("campuran");
+
+  // Step 3: Pengaturan Isyarat & Suara (Pack 2)
+  const [signSystem, setSignSystem] = useState<"SIBI" | "BISINDO">("SIBI");
+  const [signScope, setSignScope] = useState<"key_terms" | "all">("key_terms");
+  const [signSpeed, setSignSpeed] = useState<number>(1.0);
+  const [voiceKey, setVoiceKey] = useState<string>("A");
+  const [voiceSpeed, setVoiceSpeed] = useState<number>(1.0);
 
   // Step 3: Periksa (Hasil Pembuatan)
   const [cards] = useState<GeneratedCard[]>([
@@ -122,6 +130,11 @@ export function LessonWizard({
       cards: payloadCards,
       questions: payloadQuestions,
       classroomIdsToPublish: publishNow ? selectedClassrooms : undefined,
+      signSystem,
+      signScope,
+      signSpeed,
+      voiceKey,
+      voiceSpeed,
     });
 
     setIsSubmitting(false);
@@ -351,6 +364,21 @@ export function LessonWizard({
           <StatusMessage type="info">
             Materi disusun dari contoh standar kurikulum SLB. Semua kartu siap disajikan dalam suara dan bahasa isyarat.
           </StatusMessage>
+
+          {/* Panel Isyarat dan Suara (Pack 2 Berkas 05) */}
+          <SignVoiceReviewPanel
+            signSystem={signSystem}
+            onChangeSignSystem={setSignSystem}
+            signScope={signScope}
+            onChangeSignScope={setSignScope}
+            signSpeed={signSpeed}
+            onChangeSignSpeed={setSignSpeed}
+            voiceKey={voiceKey}
+            onChangeVoiceKey={setVoiceKey}
+            voiceSpeed={voiceSpeed}
+            onChangeVoiceSpeed={setVoiceSpeed}
+            sampleCard={cards[0]}
+          />
 
           {/* Daftar Kartu */}
           <div className="flex flex-col gap-3">

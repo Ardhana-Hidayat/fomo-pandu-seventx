@@ -32,8 +32,13 @@ test-results/
 
 # Berkas kerja agent dan pack pembaruan (tidak dipublikasikan)
 docs/update-pack/
+docs/update-pack*/
 .update-pack/
+.update-pack*/
 inkludidik-update-pack/
+inkludidik-pack-2-isyarat-suara/
+.data/sign-sources/
+.data/sign-review/
 docs/update-plan.md
 CONTEXT.md
 .claude/

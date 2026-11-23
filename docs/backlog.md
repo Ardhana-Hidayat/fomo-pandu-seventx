@@ -33,3 +33,12 @@
 | S4-01 | Audit aksesibilitas dan kinerja | Berkas 12 §7 | Lighthouse, TC-12 | sprint/4-release-audit | Selesai | 2026-11-22 |
 | S4-02 | README, ADR, dokumentasi deploy | Berkas 12 §10 | tinjauan | sprint/4-release-audit | Selesai | 2026-11-22 |
 | S4-03 | Daftar periksa deploy dan rilis | Berkas 10 §6 | TC-13 | sprint/4-release-audit | Selesai | 2026-11-22 |
+| S1-11 | Skema dan repositori dasar untuk sistem isyarat dan suara | Pack 2 Berkas 06, 03 | TC-13, repositori | feat/s1-11-sign-voice-schema | Selesai | 2026-11-23 |
+| S2-06 | Pustaka isyarat dari dataset terbuka (SIBI/BISINDO), manifest v2, pustaka isyarat, kredit | Pack 2 Berkas 02, 03 | TC-17, TC-19, TC-21 | feat/s2-06-sign-library-datasets | Selesai | 2026-11-23 |
+| S2-07 | Piktogram ARASAAC: skrip set demo, layanan runtime ber-cache, atribusi | Pack 2 Berkas 02, 03 | TC-19, piktogram | feat/s2-07-arasaac-pictograms | Selesai | 2026-11-23 |
+| S2-08 | Suara sistem TTS, katalog suara, generateClip, cache klip audio demo & umpan balik | Pack 2 Berkas 04, 05, 06 | TC-18, TTS | feat/s2-08-system-voice-tts | Selesai | 2026-11-23 |
+| S3-07 | Pemutar siswa & TV: kartu isyarat bergantian sinkron audio mode A/B/C, sorotan karaoke, single-screen layout | Pack 2 Berkas 04 | TC-11, TC-20, TC-23 | feat/s3-07-player-sign-audio-sync | Selesai | 2026-11-23 |
+| S3-08 | Kuis: pertanyaan tersinkron isyarat & audio, tombol lihat isyarat, tipe cocokkan_isyarat | Pack 2 Berkas 04, 07 | TC-22, kuis | feat/s3-08-quiz-sign-voice | Selesai | 2026-11-23 |
+| S3-09 | Tahap tinjau guru: panel isyarat & suara, switch SIBI/BISINDO, ganti suara, pratinjau, rekaman | Pack 2 Berkas 05, 06 | TC-15, TC-16 | feat/s3-09-teacher-review-panel | Selesai | 2026-11-23 |
+| S4-05 | Verifikasi isyarat, audit lisensi, uji lintas perangkat & aksesibilitas, finalisasi proposal | Pack 2 Berkas 02, 07 | TC-10, TC-24, audit | feat/s4-05-verification-audit | Selesai | 2026-11-23 |
+

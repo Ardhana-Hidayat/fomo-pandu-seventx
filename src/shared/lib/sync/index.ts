@@ -187,3 +187,6 @@ export function calibrationRatio(measuredMs: number, estimatedMs: number): numbe
   if (estimatedMs <= 0 || measuredMs <= 0) return 1;
   return Math.min(2, Math.max(0.5, measuredMs / estimatedMs));
 }
+
+export * from "./sign-schedule";
+

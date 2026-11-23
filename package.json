@@ -19,7 +19,10 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx --conditions=react-server scripts/db-migrate.ts",
     "db:seed": "tsx --conditions=react-server scripts/db-seed.ts",
-    "db:reset": "tsx --conditions=react-server scripts/db-reset.ts"
+    "db:reset": "tsx --conditions=react-server scripts/db-reset.ts",
+    "signs:fetch": "tsx scripts/signs/fetch-sources.ts",
+    "signs:build": "tsx scripts/signs/generate-manifest-v2.ts",
+    "media:pictos": "tsx scripts/media/fetch-pictograms.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.2.14",

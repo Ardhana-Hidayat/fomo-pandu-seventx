@@ -16,12 +16,6 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Jika sudah login dan mengakses /guru/masuk, redirect ke /guru
-  if (isGuruLoginRoute && teacherCookie) {
-    const dashboardUrl = new URL("/guru", request.url);
-    return NextResponse.redirect(dashboardUrl);
-  }
-
   return NextResponse.next({
     request: {
       headers: requestHeaders,

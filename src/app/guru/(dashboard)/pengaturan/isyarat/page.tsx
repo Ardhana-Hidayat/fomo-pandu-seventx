@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentTeacher } from "@/features/auth";
-import { SignLibraryClient } from "@/features/signs/components/SignLibraryClient";
+import { SignLibraryClient } from "@/features/signs";
 
 export const instant = false;
 

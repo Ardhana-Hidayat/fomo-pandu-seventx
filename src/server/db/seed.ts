@@ -17,7 +17,7 @@ import {
 import { clipHash } from "../services/tts/hash";
 import { generateSensoryFriendlyTone } from "../services/media/tts";
 import { storage } from "../services/storage";
-import demoLessonData from "./demo-lesson-data";
+import { demoLessonData } from "./demo-lesson-data";
 
 export async function seedDatabase(): Promise<{
   teacherId: string;

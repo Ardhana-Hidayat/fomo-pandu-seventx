@@ -180,5 +180,3 @@ export const demoLessonData: DemoLessonData = {
     },
   ],
 };
-
-export default demoLessonData;

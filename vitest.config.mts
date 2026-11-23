@@ -7,9 +7,6 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
     pool: 'forks',
-    forks: {
-      singleFork: true,
-    },
   },
   resolve: {
     alias: {

@@ -15,7 +15,8 @@
   "ignoreDependencies": [
     "tailwindcss",
     "@tailwindcss/turbopack",
-    "@types/qrcode.react"
+    "@types/qrcode.react",
+    "@types/canvas-confetti"
   ],
   "ignoreBinaries": [
     "playwright"

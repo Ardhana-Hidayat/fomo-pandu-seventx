@@ -50,7 +50,8 @@ jobs:
 
   # -------------------------------------------------------------
   # TAHAP 2: DEPLOY OTOMATIS KE VERCEL PRODUCTION
-  # Berjalan hanya jika push ke branch 'main' dan seluruh test lulus
+  # Berjalan jika push ke branch 'main' dan seluruh test lulus
+  # Aman: Melewati deployment jika VERCEL_TOKEN belum diset di GitHub Secrets
   # -------------------------------------------------------------
   deploy-production:
     name: Deploy to Vercel Production
@@ -62,16 +63,29 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Periksa Ketersediaan Kredensial Vercel
+        id: check-token
+        run: |
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "token_available=false" >> $GITHUB_OUTPUT
+            echo "::notice title=Vercel Token Kosong::Secret VERCEL_TOKEN belum diset di GitHub Secrets. Deployment via GitHub Actions dilewati. Jika repository ini terhubung via Vercel Git App (recommended), Vercel akan otomatis mendeploy commit ini."
+          else
+            echo "token_available=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup Node.js Runtime (v20)
+        if: steps.check-token.outputs.token_available == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
       - name: Install Dependencies
+        if: steps.check-token.outputs.token_available == 'true'
         run: npm install --legacy-peer-deps
 
       - name: Deploy to Vercel
+        if: steps.check-token.outputs.token_available == 'true'
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}

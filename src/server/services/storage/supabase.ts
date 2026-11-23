@@ -1,4 +1,5 @@
 import "server-only";
+import { createClient } from "@supabase/supabase-js";
 import type { StorageProvider } from "./index";
 import { localStorageProvider } from "./local";
 
@@ -12,10 +13,6 @@ export class SupabaseStorageProvider implements StorageProvider {
     }
 
     try {
-      // Lazy load Supabase client if available
-      const mod = "@supabase/supabase-js";
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { createClient } = require(mod);
       return createClient(supabaseUrl, serviceKey);
     } catch {
       return null;

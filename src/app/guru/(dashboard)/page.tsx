@@ -128,7 +128,7 @@ export default async function TeacherDashboardPage() {
               <strong>Budi (Kelas 3B)</strong>: mencoba 3 kali pada materi &quot;Mengenal Sabun&quot;.
             </div>
             <Link
-              href="/guru/kelas"
+              href={classrooms[0] ? `/guru/kelas/${classrooms[0].id}` : "/guru"}
               className="text-sm font-bold text-[var(--link)] hover:underline shrink-0"
             >
               Lihat hasil

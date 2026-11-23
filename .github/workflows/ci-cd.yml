@@ -37,7 +37,9 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          npm install --legacy-peer-deps
+          npm install --no-save @rolldown/binding-linux-x64-gnu@1.2.19 || true
 
       - name: Jalankan ESLint (Code Quality & Accessibility Standards)
         run: npm run lint

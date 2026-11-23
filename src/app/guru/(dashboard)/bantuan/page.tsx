@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Card, Icon, Button } from "@/shared/ui";
 
 export const instant = false;

@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from 'react';
+import Link from 'next/link';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'compact' | 'normal' | 'large' | 'tv';
@@ -87,10 +88,18 @@ export function Button({
 
   if ('href' in props && props.href !== undefined) {
     const { href, ...anchorProps } = props;
+    const isExternal = typeof href === 'string' && (/^(https?:|\/\/|mailto:|tel:)/i.test(href));
+    if (isExternal) {
+      return (
+        <a href={href} className={baseClass} {...anchorProps}>
+          {content}
+        </a>
+      );
+    }
     return (
-      <a href={href} className={baseClass} {...anchorProps}>
+      <Link href={href} className={baseClass} {...anchorProps}>
         {content}
-      </a>
+      </Link>
     );
   }
 

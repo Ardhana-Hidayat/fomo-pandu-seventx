@@ -188,6 +188,28 @@ export async function createPlaceholderPictogram(
   }
 }
 
+const CURATED_ARASAAC_IDS: Record<string, number> = {
+  "cuci tangan": 8975,
+  "mencuci tangan": 8975,
+  "wash hands": 8975,
+  "gosok tangan": 2443,
+  "rub hands": 2443,
+  bilas: 8977,
+  rinse: 8977,
+  keringkan: 2566,
+  dry: 2566,
+  air: 2414,
+  water: 2414,
+  sabun: 34846,
+  soap: 34846,
+  handuk: 2593,
+  towel: 2593,
+  "sikat gigi": 2694,
+  toothbrush: 2694,
+  "tangan bersih": 26172,
+  "clean hands": 26172,
+};
+
 export async function findOrFetchPictogram(
   keywordId: string,
   keywordEn?: string
@@ -208,6 +230,19 @@ export async function findOrFetchPictogram(
     }
   }
 
+  // 1b. Cek curated mapping agar ID akurat dan tidak tertukar (misal cuci tangan tidak tertukar cuci mobil)
+  const curatedId = CURATED_ARASAAC_IDS[cleanId] ?? (cleanEn ? CURATED_ARASAAC_IDS[cleanEn] : undefined);
+  if (curatedId) {
+    const curatedAsset = await downloadAndCacheArasaacPictogram(
+      curatedId,
+      cleanId,
+      cleanEn
+    );
+    if (curatedAsset.ok) {
+      return curatedAsset;
+    }
+  }
+
   // 2. Lookup ARASAAC API (Bahasa Indonesia dulu)
   let results = await searchArasaacApi(cleanId, "id");
 
@@ -216,16 +251,23 @@ export async function findOrFetchPictogram(
     results = await searchArasaacApi(cleanEn, "en");
   }
 
-  // 4. Jika ditemukan di ARASAAC, unduh dan cache
-  const firstMatch = results[0];
-  if (firstMatch) {
-    const cachedAsset = await downloadAndCacheArasaacPictogram(
-      firstMatch._id,
-      cleanId,
-      cleanEn
+  // 4. Jika ditemukan di ARASAAC, cari yang keyword-nya paling tepat
+  if (results.length > 0) {
+    const exactMatch = results.find((r) =>
+      r.keywords?.some((k) =>
+        cleanEn ? k.keyword.toLowerCase() === cleanEn : k.keyword.toLowerCase() === cleanId
+      )
     );
-    if (cachedAsset.ok) {
-      return cachedAsset;
+    const selectedMatch = exactMatch ?? results[0];
+    if (selectedMatch) {
+      const cachedAsset = await downloadAndCacheArasaacPictogram(
+        selectedMatch._id,
+        cleanId,
+        cleanEn
+      );
+      if (cachedAsset.ok) {
+        return cachedAsset;
+      }
     }
   }
 

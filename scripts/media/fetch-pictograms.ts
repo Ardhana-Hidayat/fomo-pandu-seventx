@@ -5,15 +5,15 @@ import path from "node:path";
  * Pengunduh dan pembangun metadata piktogram ARASAAC demo untuk PANDU (Pack 2 Berkas 03 Â§6).
  */
 const DEMO_KEYWORDS: Record<string, { id: number; name: string; alt: string }> = {
-  air: { id: 2344, name: "water", alt: "Air mengalir dari keran" },
-  "cuci-tangan": { id: 2470, name: "wash hands", alt: "Dua tangan dibasahi air" },
-  sabun: { id: 34846, name: "soap", alt: "Sabun batang" },
-  "gosok-tangan": { id: 2470, name: "rub hands", alt: "Tangan digosok dengan sabun" },
-  bilas: { id: 2471, name: "rinse", alt: "Tangan dibilas air mengalir" },
-  handuk: { id: 2474, name: "towel", alt: "Handuk bersih" },
-  keringkan: { id: 2474, name: "dry", alt: "Tangan dikeringkan dengan handuk" },
-  "tangan-bersih": { id: 2472, name: "clean hands", alt: "Dua tangan yang bersih" },
-  "sikat-gigi": { id: 2476, name: "toothbrush", alt: "Sikat gigi dan pasta gigi" },
+  air: { id: 2414, name: "water tap", alt: "Air mengalir dari keran" },
+  "cuci-tangan": { id: 8975, name: "wash hands", alt: "Mencuci tangan dengan air dan sabun" },
+  sabun: { id: 34846, name: "soap", alt: "Sabun batang pembersih" },
+  "gosok-tangan": { id: 2443, name: "lather hands", alt: "Menggosok telapak tangan dengan sabun" },
+  bilas: { id: 8977, name: "rinse hands", alt: "Membilas tangan di bawah air mengalir" },
+  handuk: { id: 2593, name: "towel", alt: "Handuk kain bersih" },
+  keringkan: { id: 2566, name: "dry hands", alt: "Mengeringkan tangan dengan handuk" },
+  "tangan-bersih": { id: 26172, name: "clean hands", alt: "Tangan yang bersih dan sehat" },
+  "sikat-gigi": { id: 2694, name: "toothbrush", alt: "Sikat gigi dan pasta gigi" },
 };
 
 async function main() {

@@ -5,47 +5,47 @@
   "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
   "items": {
     "air": {
-      "id": 2344,
-      "name": "water",
+      "id": 2414,
+      "name": "water tap",
       "alt": "Air mengalir dari keran"
     },
     "cuci-tangan": {
-      "id": 2470,
+      "id": 8975,
       "name": "wash hands",
-      "alt": "Dua tangan dibasahi air"
+      "alt": "Mencuci tangan dengan air dan sabun"
     },
     "sabun": {
       "id": 34846,
       "name": "soap",
-      "alt": "Sabun batang"
+      "alt": "Sabun batang pembersih"
     },
     "gosok-tangan": {
-      "id": 2470,
-      "name": "rub hands",
-      "alt": "Tangan digosok dengan sabun"
+      "id": 2443,
+      "name": "lather hands",
+      "alt": "Menggosok telapak tangan dengan sabun"
     },
     "bilas": {
-      "id": 2471,
-      "name": "rinse",
-      "alt": "Tangan dibilas air mengalir"
+      "id": 8977,
+      "name": "rinse hands",
+      "alt": "Membilas tangan di bawah air mengalir"
     },
     "handuk": {
-      "id": 2474,
+      "id": 2593,
       "name": "towel",
-      "alt": "Handuk bersih"
+      "alt": "Handuk kain bersih"
     },
     "keringkan": {
-      "id": 2474,
-      "name": "dry",
-      "alt": "Tangan dikeringkan dengan handuk"
+      "id": 2566,
+      "name": "dry hands",
+      "alt": "Mengeringkan tangan dengan handuk"
     },
     "tangan-bersih": {
-      "id": 2472,
+      "id": 26172,
       "name": "clean hands",
-      "alt": "Dua tangan yang bersih"
+      "alt": "Tangan yang bersih dan sehat"
     },
     "sikat-gigi": {
-      "id": 2476,
+      "id": 2694,
       "name": "toothbrush",
       "alt": "Sikat gigi dan pasta gigi"
     },
@@ -698,6 +698,301 @@
       "id": 3118,
       "name": "church",
       "alt": "Gereja ibadah"
+    },
+    "kepala": {
+      "id": 2408,
+      "name": "head",
+      "alt": "Kepala manusia"
+    },
+    "rambut": {
+      "id": 2426,
+      "name": "hair",
+      "alt": "Rambut kepala"
+    },
+    "leher": {
+      "id": 2422,
+      "name": "neck",
+      "alt": "Leher"
+    },
+    "perut": {
+      "id": 2424,
+      "name": "belly",
+      "alt": "Perut"
+    },
+    "jari": {
+      "id": 2419,
+      "name": "finger",
+      "alt": "Jari-jari tangan"
+    },
+    "lidah": {
+      "id": 2417,
+      "name": "tongue",
+      "alt": "Lidah"
+    },
+    "ayah": {
+      "id": 2730,
+      "name": "father",
+      "alt": "Ayah / Bapak"
+    },
+    "ibu": {
+      "id": 2731,
+      "name": "mother",
+      "alt": "Ibu / Mama"
+    },
+    "kakek": {
+      "id": 2732,
+      "name": "grandfather",
+      "alt": "Kakek"
+    },
+    "nenek": {
+      "id": 2733,
+      "name": "grandmother",
+      "alt": "Nenek"
+    },
+    "kakak": {
+      "id": 2734,
+      "name": "brother",
+      "alt": "Saudara laki-laki / Kakak"
+    },
+    "adik": {
+      "id": 2735,
+      "name": "sister",
+      "alt": "Saudara perempuan / Adik"
+    },
+    "anak": {
+      "id": 2736,
+      "name": "child",
+      "alt": "Anak"
+    },
+    "papan-tulis": {
+      "id": 2542,
+      "name": "blackboard",
+      "alt": "Papan tulis kelas"
+    },
+    "spidol": {
+      "id": 2544,
+      "name": "marker",
+      "alt": "Spidol papan tulis"
+    },
+    "kertas": {
+      "id": 2547,
+      "name": "sheet of paper",
+      "alt": "Kertas tulis"
+    },
+    "kotak-pensil": {
+      "id": 2540,
+      "name": "pencil case",
+      "alt": "Kotak pensil"
+    },
+    "bendera": {
+      "id": 2580,
+      "name": "flag",
+      "alt": "Bendera merah putih"
+    },
+    "seragam": {
+      "id": 2908,
+      "name": "uniform",
+      "alt": "Pakaian seragam sekolah"
+    },
+    "teh": {
+      "id": 2871,
+      "name": "tea",
+      "alt": "Secangkir teh hangat"
+    },
+    "jus": {
+      "id": 2873,
+      "name": "juice",
+      "alt": "Segelas jus buah segar"
+    },
+    "sup": {
+      "id": 2862,
+      "name": "soup",
+      "alt": "Semangkuk sup hangat"
+    },
+    "mie": {
+      "id": 2861,
+      "name": "noodles",
+      "alt": "Mie rebus atau goreng"
+    },
+    "daging": {
+      "id": 2876,
+      "name": "meat",
+      "alt": "Daging"
+    },
+    "keju": {
+      "id": 2869,
+      "name": "cheese",
+      "alt": "Keju"
+    },
+    "biskuit": {
+      "id": 2866,
+      "name": "biscuit",
+      "alt": "Kue biskuit"
+    },
+    "permen": {
+      "id": 2868,
+      "name": "sweet",
+      "alt": "Permen manis"
+    },
+    "berdoa": {
+      "id": 2605,
+      "name": "to pray",
+      "alt": "Berdoa dengan tenang"
+    },
+    "bernyanyi": {
+      "id": 2606,
+      "name": "to sing",
+      "alt": "Bernyanyi lagu"
+    },
+    "menari": {
+      "id": 2607,
+      "name": "to dance",
+      "alt": "Menari riang"
+    },
+    "berenang": {
+      "id": 2608,
+      "name": "to swim",
+      "alt": "Berenang di air"
+    },
+    "melompat": {
+      "id": 2609,
+      "name": "to jump",
+      "alt": "Melompat tinggi"
+    },
+    "mendengar": {
+      "id": 2413,
+      "name": "to listen",
+      "alt": "Mendengarkan suara"
+    },
+    "melihat": {
+      "id": 2411,
+      "name": "to look",
+      "alt": "Melihat dengan mata"
+    },
+    "bicara": {
+      "id": 2604,
+      "name": "to speak",
+      "alt": "Berbicara"
+    },
+    "tersenyum": {
+      "id": 2600,
+      "name": "to smile",
+      "alt": "Tersenyum ramah"
+    },
+    "tertawa": {
+      "id": 2601,
+      "name": "to laugh",
+      "alt": "Tertawa gembira"
+    },
+    "takut": {
+      "id": 2690,
+      "name": "scared",
+      "alt": "Merasa takut"
+    },
+    "lelah": {
+      "id": 2692,
+      "name": "tired",
+      "alt": "Merasa lelah / capek"
+    },
+    "lapar": {
+      "id": 2695,
+      "name": "hungry",
+      "alt": "Merasa lapar"
+    },
+    "haus": {
+      "id": 2696,
+      "name": "thirsty",
+      "alt": "Merasa haus"
+    },
+    "sakit": {
+      "id": 2742,
+      "name": "ill / sick",
+      "alt": "Sedang sakit"
+    },
+    "bebek": {
+      "id": 2955,
+      "name": "duck",
+      "alt": "Bebek"
+    },
+    "kuda": {
+      "id": 2957,
+      "name": "horse",
+      "alt": "Kuda"
+    },
+    "gajah": {
+      "id": 2962,
+      "name": "elephant",
+      "alt": "Gajah besar"
+    },
+    "monyet": {
+      "id": 2965,
+      "name": "monkey",
+      "alt": "Monyet"
+    },
+    "kupu-kupu": {
+      "id": 2970,
+      "name": "butterfly",
+      "alt": "Kupu-kupu indah"
+    },
+    "rumah-sakit": {
+      "id": 2745,
+      "name": "hospital",
+      "alt": "Gedung rumah sakit"
+    },
+    "perpustakaan": {
+      "id": 2579,
+      "name": "library",
+      "alt": "Ruang perpustakaan buku"
+    },
+    "kantin": {
+      "id": 2578,
+      "name": "canteen",
+      "alt": "Kantin sekolah"
+    },
+    "lapangan": {
+      "id": 2581,
+      "name": "sports field",
+      "alt": "Lapangan olahraga"
+    },
+    "kolam": {
+      "id": 2520,
+      "name": "pond",
+      "alt": "Kolam air"
+    },
+    "pantai": {
+      "id": 2522,
+      "name": "beach",
+      "alt": "Pantai berpasir"
+    },
+    "pelangi": {
+      "id": 2507,
+      "name": "rainbow",
+      "alt": "Pelangi indah di langit"
+    },
+    "angin": {
+      "id": 2506,
+      "name": "wind",
+      "alt": "Angin bertiup"
+    },
+    "ungu": {
+      "id": 2718,
+      "name": "purple",
+      "alt": "Warna ungu"
+    },
+    "oranye": {
+      "id": 2719,
+      "name": "orange",
+      "alt": "Warna oranye / jingga"
+    },
+    "abu-abu": {
+      "id": 2720,
+      "name": "grey",
+      "alt": "Warna abu-abu"
+    },
+    "merah-muda": {
+      "id": 2724,
+      "name": "pink",
+      "alt": "Warna merah muda / merah jambu"
     }
   }
 }

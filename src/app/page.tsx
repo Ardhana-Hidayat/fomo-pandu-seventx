@@ -1,28 +1,7 @@
-'use client';
-
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Button, Card, Field, Icon, DisplayPreferencesTrigger } from '@/shared/ui';
+import Link from "next/link";
+import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
 
 export default function HomePage() {
-  const router = useRouter();
-  const [classCode, setClassCode] = useState('');
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  function handleJoinClass(e: React.FormEvent) {
-    e.preventDefault();
-    const clean = classCode.trim();
-
-    if (clean.length !== 6 || !/^\d{6}$/.test(clean)) {
-      setErrorMsg('Kode kelas terdiri dari 6 angka.');
-      return;
-    }
-
-    setErrorMsg(null);
-    router.push(`/kelas/${clean}`);
-  }
-
   return (
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* Header Utama */}
@@ -37,7 +16,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Konten Utama: Dua Pintu */}
+      {/* Konten Utama: Dua Pintu Seimbang */}
       <main
         id="main-content"
         className="mx-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center p-4 py-8 sm:p-8"
@@ -53,56 +32,56 @@ export default function HomePage() {
 
         <div className="grid w-full max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2">
           {/* Pintu Siswa: Masuk Kelas */}
-          <Card as="section" className="flex flex-col justify-between">
-            <form onSubmit={handleJoinClass} className="flex flex-col gap-4">
-              <div>
-                <h2 className="text-xl font-bold text-[var(--ink)]">
+          <Card as="section" className="flex flex-col justify-between p-6 sm:p-8">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2.5 rounded-xl bg-[var(--surface-2)] text-[var(--ink)] border border-[var(--border)]">
+                  <Icon name="Cards" size={28} />
+                </div>
+                <h2 className="text-2xl font-bold text-[var(--ink)]">
                   Siswa
                 </h2>
-                <p className="text-sm text-[var(--ink-2)] mt-1">
-                  Masukkan kode dari guru untuk mulai belajar.
-                </p>
               </div>
-
-              <Field
-                id="kode-kelas"
-                label="Kode kelas (6 angka)"
-                codeMode={true}
-                placeholder="000000"
-                value={classCode}
-                onChange={(e) => setClassCode(e.target.value)}
-                error={errorMsg ?? undefined}
-              />
-
-              <Button
-                type="submit"
-                variant="primary"
-                size="large"
-                icon={<Icon name="DoorOpen" size={24} />}
-                className="w-full mt-2"
-              >
-                Masuk kelas
-              </Button>
-            </form>
-          </Card>
-
-          {/* Pintu Guru: Ruang Guru */}
-          <Card as="section" className="flex flex-col justify-between">
-            <div className="flex flex-col gap-2">
-              <h2 className="text-xl font-bold text-[var(--ink)]">
-                Guru
-              </h2>
-              <p className="text-sm text-[var(--ink-2)] mt-1">
-                Kelola ruang kelas, buat materi adaptif, dan pantau hasil belajar siswa.
+              <p className="text-base text-[var(--ink-2)] mt-3 leading-relaxed">
+                Belajar dengan kartu peraga multi-saluran: teks bersinkron, audio ramah sensorik, gambar visual, dan kartu isyarat SIBI/BISINDO.
               </p>
             </div>
 
-            <div className="mt-8 flex flex-col gap-3">
+            <div className="mt-8">
+              <Button
+                variant="primary"
+                size="large"
+                href="/masuk"
+                icon={<Icon name="DoorOpen" size={24} />}
+                className="w-full"
+              >
+                Masuk kelas
+              </Button>
+            </div>
+          </Card>
+
+          {/* Pintu Guru: Ruang Guru */}
+          <Card as="section" className="flex flex-col justify-between p-6 sm:p-8">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2.5 rounded-xl bg-[var(--surface-2)] text-[var(--ink)] border border-[var(--border)]">
+                  <Icon name="Chalkboard" size={28} />
+                </div>
+                <h2 className="text-2xl font-bold text-[var(--ink)]">
+                  Guru
+                </h2>
+              </div>
+              <p className="text-base text-[var(--ink-2)] mt-3 leading-relaxed">
+                Kelola ruang kelas, buat materi adaptif, tinjau bahasa isyarat dan suara sistem, serta pantau rekomendasi belajar siswa.
+              </p>
+            </div>
+
+            <div className="mt-8">
               <Button
                 variant="secondary"
                 size="large"
                 href="/guru"
-                icon={<Icon name="Chalkboard" size={24} />}
+                icon={<Icon name="DoorOpen" size={24} />}
                 className="w-full"
               >
                 Buka ruang guru

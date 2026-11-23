@@ -116,8 +116,28 @@ export function CardPlayer({
   // Update real-time sync state at time `t` (ms)
   const updateSyncAtTime = useCallback(
     (tMs: number, schedule: { slots: SignSlot[]; signEnd: number }, tl: Timeline) => {
-      const wIdx = wordIndexAt(tl, tMs);
-      const prog = progressInWord(tl, tMs);
+      const totalWords = tl.words.length;
+      if (totalWords === 0) return;
+
+      const lastWordIdx = totalWords - 1;
+      const lastWord = tl.words[lastWordIdx];
+
+      let wIdx = wordIndexAt(tl, tMs);
+      let prog = progressInWord(tl, tMs);
+
+      // Presisi highlight kata terakhir:
+      // Bila audio berada di kata terakhir atau dalam free clock untuk ejaan isyarat kata terakhir,
+      // kata terakhir tetap aktif (wIdx = lastWordIdx).
+      if (lastWord && tMs >= lastWord.start) {
+        if (tMs < schedule.signEnd || tMs <= tl.total + 300) {
+          wIdx = lastWordIdx;
+          prog = Math.min(1, Math.max(0, (tMs - lastWord.start) / Math.max(1, lastWord.end - lastWord.start)));
+          if (tMs >= lastWord.end) {
+            prog = 1;
+          }
+        }
+      }
+
       const slot = slotAt(schedule.slots, tMs);
       const doneWord = completedSignWord(schedule.slots, tMs);
 
@@ -150,9 +170,13 @@ export function CardPlayer({
 
         // Check if finished past schedule.signEnd
         if (currentTimeMs >= schedule.signEnd) {
-          stopPlayback();
-          setActiveWordIdx(tl.words.length);
+          const lastWordIdx = tl.words.length - 1;
+          setActiveWordIdx(lastWordIdx);
           setActiveWordProgress(1);
+          setTimeout(() => {
+            stopPlayback();
+            setActiveWordIdx(tl.words.length);
+          }, 400);
           return;
         }
 
@@ -210,8 +234,12 @@ export function CardPlayer({
           };
           runPlaybackLoop(null, signSchedule, scaledTimeline);
         } else {
-          stopPlayback();
-          setActiveWordIdx(scaledTimeline.words.length);
+          setActiveWordIdx(scaledTimeline.words.length - 1);
+          setActiveWordProgress(1);
+          setTimeout(() => {
+            stopPlayback();
+            setActiveWordIdx(scaledTimeline.words.length);
+          }, 400);
         }
       };
 
@@ -250,8 +278,12 @@ export function CardPlayer({
         if (elapsed < duration) {
           // Free clock until signEnd
         } else {
-          stopPlayback();
-          setActiveWordIdx(scaledTimeline.words.length);
+          setActiveWordIdx(scaledTimeline.words.length - 1);
+          setActiveWordProgress(1);
+          setTimeout(() => {
+            stopPlayback();
+            setActiveWordIdx(scaledTimeline.words.length);
+          }, 400);
         }
       };
 
@@ -267,8 +299,12 @@ export function CardPlayer({
       updateSyncAtTime(elapsed, signSchedule, scaledTimeline);
 
       if (elapsed >= duration) {
-        stopPlayback();
-        setActiveWordIdx(scaledTimeline.words.length);
+        setActiveWordIdx(scaledTimeline.words.length - 1);
+        setActiveWordProgress(1);
+        setTimeout(() => {
+          stopPlayback();
+          setActiveWordIdx(scaledTimeline.words.length);
+        }, 400);
         return;
       }
       animFrameRef.current = requestAnimationFrame(timerLoop);

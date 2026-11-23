@@ -32,14 +32,35 @@ function createDb(): DbClient {
     return drizzlePostgres(client, { schema }) as unknown as DbClient;
   }
 
-  // In test environment without explicit data dir, use in-memory PGlite
+  // In test environment without explicit data dir, use in-memory PGlite.
+  // In serverless environment (e.g. Vercel), the current working directory is read-only, so fallback to /tmp.
+  const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
   const pglitePath =
-    process.env.NODE_ENV === "test" ? undefined : "./.data/pglite";
-  if (pglitePath && !fs.existsSync(pglitePath)) {
-    fs.mkdirSync(pglitePath, { recursive: true });
+    process.env.NODE_ENV === "test"
+      ? undefined
+      : isServerless
+        ? "/tmp/pglite"
+        : "./.data/pglite";
+
+  if (pglitePath) {
+    try {
+      if (!fs.existsSync(pglitePath)) {
+        fs.mkdirSync(pglitePath, { recursive: true });
+      }
+    } catch {
+      // Jika pembuatan direktori gagal, fallback ke in-memory PGlite agar tidak melempar EROFS
+    }
   }
-  const pglite = globalForDb.pglite ?? new PGlite(pglitePath);
-  globalForDb.pglite = pglite;
+
+  let pglite = globalForDb.pglite;
+  if (!pglite) {
+    try {
+      pglite = new PGlite(pglitePath);
+    } catch {
+      pglite = new PGlite();
+    }
+    globalForDb.pglite = pglite;
+  }
   return drizzlePglite(pglite, { schema });
 }
 

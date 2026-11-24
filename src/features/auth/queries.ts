@@ -88,8 +88,13 @@ export async function getCurrentStudent(): Promise<CurrentStudentSession | null>
       return null;
     }
 
-    const parsed = parseStudentCookiePayload(rawCookie);
-    const token = parsed ? parsed.token : rawCookie;
+    let decoded = rawCookie;
+    try {
+      decoded = decodeURIComponent(rawCookie);
+    } catch {}
+
+    const parsed = parseStudentCookiePayload(decoded);
+    const token = parsed ? parsed.token : decoded;
 
     let session = await validateSession(token, "siswa");
     if (!session && parsed && parsed.studentId && parsed.classroomId) {

@@ -39,10 +39,16 @@ export function signStudentCookiePayload(
 export function parseStudentCookiePayload(
   rawCookie: string
 ): { token: string; studentId: string; classroomId: string } | null {
-  if (!rawCookie.includes(":")) {
-    return { token: rawCookie, studentId: "", classroomId: "" };
+  if (!rawCookie) return null;
+  let decoded = rawCookie;
+  try {
+    decoded = decodeURIComponent(rawCookie);
+  } catch {}
+
+  if (!decoded.includes(":")) {
+    return { token: decoded, studentId: "", classroomId: "" };
   }
-  const parts = rawCookie.split(":");
+  const parts = decoded.split(":");
   if (parts.length !== 4) return null;
   const [token, studentId, classroomId, sig] = parts;
   if (!token || !studentId || !classroomId || !sig) return null;

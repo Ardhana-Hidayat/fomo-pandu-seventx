@@ -13,7 +13,14 @@ import { db } from "@/server/db/client";
 import { teachers, students, classrooms, lessons, type Teacher, type Student, type Classroom } from "@/server/db/schema";
 import { eq, sql } from "drizzle-orm";
 import { getOrCreateDemoTeacher } from "@/server/services/auth/demo";
-import { DEMO_TEACHER_ID, DEMO_CLASSROOM_ID } from "@/server/db/demo-lesson-data";
+import {
+  DEMO_TEACHER_ID,
+  DEMO_CLASSROOM_ID,
+  DEMO_CLASS_1A_ID,
+  DEMO_CLASS_2B_ID,
+  DEMO_CLASS_3C_ID,
+  DEMO_CLASS_4D_ID,
+} from "@/server/db/demo-lesson-data";
 
 export interface CurrentTeacherSession {
   teacher: Teacher;
@@ -122,7 +129,15 @@ export async function getCurrentStudent(): Promise<CurrentStudentSession | null>
       .limit(1)
       .then((rows) => rows[0]);
 
-    if (!classroom && session.classroomId === DEMO_CLASSROOM_ID) {
+    const ALL_DEMO_CLASS_IDS = [
+      DEMO_CLASSROOM_ID,
+      DEMO_CLASS_1A_ID,
+      DEMO_CLASS_2B_ID,
+      DEMO_CLASS_3C_ID,
+      DEMO_CLASS_4D_ID,
+    ];
+
+    if (!classroom && (ALL_DEMO_CLASS_IDS.includes(session.classroomId) || !session.classroomId)) {
       const { seedDatabase } = await import("@/server/db/seed");
       await seedDatabase();
       classroom = await db
@@ -134,13 +149,14 @@ export async function getCurrentStudent(): Promise<CurrentStudentSession | null>
     }
 
     if (!student && classroom) {
-      // Pulihkan siswa demo jika sesi valid tapi instans baru di serverless
+      // Pulihkan siswa jika sesi valid tapi instans baru di serverless
+      const displayName = parsed?.studentName || "Siswa";
       const inserted = await db
         .insert(students)
         .values({
           id: session.studentId,
           classroomId: classroom.id,
-          displayName: "Siswa Demo",
+          displayName,
           needsPreset: "campuran",
         })
         .returning();

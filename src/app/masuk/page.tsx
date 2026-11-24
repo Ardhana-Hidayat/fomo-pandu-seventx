@@ -2,12 +2,11 @@
 
 import { useState, Suspense } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Button, Card, Field, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
 import { joinClassroomAction } from "@/features/auth/actions";
 
 function StudentLoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const codeParam = searchParams.get("kode")?.trim() ?? "";
   const hasValidCodeParam = codeParam.length === 6 && /^\d{6}$/.test(codeParam);
@@ -50,8 +49,11 @@ function StudentLoginForm() {
         return;
       }
 
-      router.push(`/kelas/${cleanCode}`);
-      router.refresh();
+      // Hard navigation memastikan cookie ik_siswa yang baru saja diset
+      // terbawa secara segar di HTTP request header ke /kelas/[kode]
+      // dan menghindari masalah router.refresh() yang membatalkan navigasi client.
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+      window.location.assign(`/kelas/${cleanCode}`);
     } catch {
       setErrorMsg("Gagal menyambungkan ke kelas. Coba lagi.");
       setIsSubmitting(false);

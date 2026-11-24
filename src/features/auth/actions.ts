@@ -121,7 +121,7 @@ export async function joinClassroomAction(
   // 3. Buat sesi siswa dan simpan di cookie (dengan signature payload tahan serverless)
   const { token } = await createStudentSession(studentId, classroom.id);
   const cookieStore = await cookies();
-  const signedCookie = signStudentCookiePayload(token, studentId, classroom.id);
+  const signedCookie = signStudentCookiePayload(token, studentId, classroom.id, cleanName);
 
   cookieStore.set(STUDENT_COOKIE_NAME, signedCookie, {
     httpOnly: true,

@@ -29,16 +29,20 @@ export function getDemoTeacherToken(): string {
 export function signStudentCookiePayload(
   token: string,
   studentId: string,
-  classroomId: string
+  classroomId: string,
+  studentName?: string
 ): string {
-  const payload = `${token}:${studentId}:${classroomId}`;
+  const safeName = studentName ? encodeURIComponent(studentName) : "";
+  const payload = safeName
+    ? `${token}:${studentId}:${classroomId}:${safeName}`
+    : `${token}:${studentId}:${classroomId}`;
   const sig = createHmac("sha256", env.SESSION_SECRET).update(payload).digest("hex");
   return `${payload}:${sig}`;
 }
 
 export function parseStudentCookiePayload(
   rawCookie: string
-): { token: string; studentId: string; classroomId: string } | null {
+): { token: string; studentId: string; classroomId: string; studentName?: string } | null {
   if (!rawCookie) return null;
   let decoded = rawCookie;
   try {
@@ -49,14 +53,29 @@ export function parseStudentCookiePayload(
     return { token: decoded, studentId: "", classroomId: "" };
   }
   const parts = decoded.split(":");
-  if (parts.length !== 4) return null;
-  const [token, studentId, classroomId, sig] = parts;
-  if (!token || !studentId || !classroomId || !sig) return null;
-  const expectedSig = createHmac("sha256", env.SESSION_SECRET)
-    .update(`${token}:${studentId}:${classroomId}`)
-    .digest("hex");
-  if (sig !== expectedSig) return null;
-  return { token, studentId, classroomId };
+  if (parts.length === 4) {
+    const [token, studentId, classroomId, sig] = parts;
+    if (!token || !studentId || !classroomId || !sig) return null;
+    const expectedSig = createHmac("sha256", env.SESSION_SECRET)
+      .update(`${token}:${studentId}:${classroomId}`)
+      .digest("hex");
+    if (sig !== expectedSig) return null;
+    return { token, studentId, classroomId };
+  }
+  if (parts.length === 5) {
+    const [token, studentId, classroomId, safeName, sig] = parts;
+    if (!token || !studentId || !classroomId || !safeName || !sig) return null;
+    const expectedSig = createHmac("sha256", env.SESSION_SECRET)
+      .update(`${token}:${studentId}:${classroomId}:${safeName}`)
+      .digest("hex");
+    if (sig !== expectedSig) return null;
+    let studentName = safeName;
+    try {
+      studentName = decodeURIComponent(safeName);
+    } catch {}
+    return { token, studentId, classroomId, studentName };
+  }
+  return null;
 }
 
 export async function createTeacherSession(

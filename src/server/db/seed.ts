@@ -27,7 +27,35 @@ import {
   DEMO_PUBLICATION_ID,
 } from "./demo-lesson-data";
 
+let seedPromise: Promise<{
+  teacherId: string;
+  classroomId: string;
+  lessonId: string;
+  publicationId: string;
+  classesCount?: number;
+}> | null = null;
+
 export async function seedDatabase(): Promise<{
+  teacherId: string;
+  classroomId: string;
+  lessonId: string;
+  publicationId: string;
+  classesCount?: number;
+}> {
+  if (seedPromise) {
+    return seedPromise;
+  }
+  seedPromise = (async () => {
+    try {
+      return await seedDatabaseInternal();
+    } finally {
+      seedPromise = null;
+    }
+  })();
+  return seedPromise;
+}
+
+async function seedDatabaseInternal(): Promise<{
   teacherId: string;
   classroomId: string;
   lessonId: string;

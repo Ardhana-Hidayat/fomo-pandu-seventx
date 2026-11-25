@@ -15,6 +15,7 @@ export default async function PrintCardsPage({
   if (!session) redirect("/guru/masuk");
 
   const { id } = await params;
+  // getTeacherLesson memanggil getLessonWithContent untuk memuat kartu materi & soal kuis
   const lesson = await getTeacherLesson(id, session.teacher.id);
   if (!lesson) notFound();
 
@@ -31,6 +32,7 @@ export default async function PrintCardsPage({
   return (
     <PrintPageClient
       lesson={lesson}
+      questions={lesson.questions}
       shareUrl={shareUrl}
       shareCode={shareCode}
     />

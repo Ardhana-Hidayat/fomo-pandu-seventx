@@ -54,7 +54,7 @@ export function CreateLessonOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-[2px]"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-[2px]"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose();
@@ -67,12 +67,12 @@ export function CreateLessonOverlay({
         role="dialog"
         aria-modal="true"
         aria-labelledby="create-lesson-overlay-title"
-        className="w-full max-w-3xl lg:max-w-4xl max-h-[90dvh] overflow-y-auto rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] p-5 sm:p-8 text-[var(--ink)] shadow-2xl"
+        className="w-full max-w-3xl lg:max-w-4xl max-h-[90dvh] overflow-y-auto rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6 text-[var(--ink)] shadow-2xl"
       >
         <div className="flex items-center justify-between gap-4 pb-4 border-b border-[var(--border)]">
           <h2
             id="create-lesson-overlay-title"
-            className="text-xl sm:text-2xl font-bold text-[var(--ink)]"
+            className="min-w-0 text-xl sm:text-2xl font-bold text-[var(--ink)]"
           >
             Tambah Materi
           </h2>
@@ -80,7 +80,7 @@ export function CreateLessonOverlay({
             type="button"
             onClick={onClose}
             aria-label="Tutup jendela tambah materi"
-            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--ink)] cursor-pointer hover:bg-[var(--surface-2)]"
+            className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--ink)] cursor-pointer hover:bg-[var(--surface-2)]"
           >
             <Icon name="X" size={22} />
           </button>

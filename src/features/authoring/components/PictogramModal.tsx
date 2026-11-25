@@ -133,8 +133,8 @@ export function PictogramModal({
           Cari simbol komunikasi augmentatif dari pustaka ARASAAC untuk melengkapi kartu belajar.
         </p>
 
-        <form onSubmit={handleSearch} className="flex gap-2">
-          <div className="flex-1">
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-2">
+          <div className="flex-1 min-w-0">
             <Field
               id="picto-query"
               label="Kata Kunci Piktogram"
@@ -150,6 +150,7 @@ export function PictogramModal({
               size="normal"
               disabled={isLoading}
               icon={<Icon name="Sparkle" size={18} />}
+              className="w-full sm:w-auto"
             >
               {isLoading ? "Mencari..." : "Cari"}
             </Button>
@@ -193,7 +194,7 @@ export function PictogramModal({
         </div>
 
         {/* Aksi */}
-        <div className="flex items-center justify-end gap-3 pt-3 border-t-2 border-[var(--border)]">
+        <div className="flex flex-wrap items-center justify-end gap-3 pt-3 border-t-2 border-[var(--border)]">
           <Button type="button" variant="secondary" size="normal" onClick={onClose}>
             Batal
           </Button>

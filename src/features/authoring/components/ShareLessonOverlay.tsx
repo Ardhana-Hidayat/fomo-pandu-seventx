@@ -220,9 +220,6 @@ export function ShareLessonOverlay({
                   <span className="font-mono text-xl sm:text-2xl font-extrabold tracking-[0.18em] text-[var(--link)] select-all">
                     {activeShare.shareCode}
                   </span>
-                  <span className="block text-[11px] text-[var(--muted)] mt-0.5">
-                    Kode akses 6 angka: <strong className="font-mono text-[var(--ink-2)]">{activeShare.classroomJoinCode}</strong>
-                  </span>
                 </div>
               </div>
 

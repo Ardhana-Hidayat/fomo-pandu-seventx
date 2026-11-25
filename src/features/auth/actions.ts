@@ -38,13 +38,13 @@ export async function signInDemoAction(): Promise<void> {
 export async function joinClassroomAction(
   joinCode: string,
   studentName: string
-): Promise<Result<{ classroomId: string; studentId: string; lessonId?: string }>> {
+): Promise<Result<{ classroomId: string; studentId: string; lessonId?: string; joinCode: string }>> {
   const cleanCode = joinCode.trim();
   const cleanName = studentName.trim();
 
-  if (cleanCode.length !== 6 || !/^\d{6}$/.test(cleanCode)) {
+  if (cleanCode.length < 6 || !/^[a-zA-Z0-9_-]{6,16}$/.test(cleanCode)) {
     return err(
-      makeAppError("INVALID_CODE", "Kode materi harus terdiri dari 6 angka.")
+      makeAppError("INVALID_CODE", "Kode materi minimal 6 karakter huruf atau angka.")
     );
   }
 
@@ -54,13 +54,38 @@ export async function joinClassroomAction(
     );
   }
 
-  // 1. Cari kelas aktif berdasarkan joinCode
-  let classroom = await db
-    .select()
-    .from(classrooms)
-    .where(and(eq(classrooms.joinCode, cleanCode), isNull(classrooms.archivedAt)))
+  // 1. Cari publikasi materi berdasarkan shareCode terlebih dahulu, lalu fallback ke joinCode 6 angka
+  let targetLessonId: string | undefined;
+  let classroom: typeof classrooms.$inferSelect | undefined;
+
+  const matchedPub = await db
+    .select({
+      lessonId: publications.lessonId,
+      classroomId: publications.classroomId,
+    })
+    .from(publications)
+    .where(eq(sql`lower(${publications.shareCode})`, cleanCode.toLowerCase()))
     .limit(1)
     .then((rows) => rows[0]);
+
+  if (matchedPub) {
+    targetLessonId = matchedPub.lessonId;
+    classroom = await db
+      .select()
+      .from(classrooms)
+      .where(and(eq(classrooms.id, matchedPub.classroomId), isNull(classrooms.archivedAt)))
+      .limit(1)
+      .then((rows) => rows[0]);
+  }
+
+  if (!classroom && /^\d{6}$/.test(cleanCode)) {
+    classroom = await db
+      .select()
+      .from(classrooms)
+      .where(and(eq(classrooms.joinCode, cleanCode), isNull(classrooms.archivedAt)))
+      .limit(1)
+      .then((rows) => rows[0]);
+  }
 
   const DEMO_CODES = ["123456", "222333"];
   if (!classroom && DEMO_CODES.includes(cleanCode)) {
@@ -131,18 +156,22 @@ export async function joinClassroomAction(
     maxAge: Math.floor(STUDENT_SESSION_TTL_MS / 1000),
   });
 
-  const latestPub = await db
-    .select({ lessonId: publications.lessonId })
-    .from(publications)
-    .where(eq(publications.classroomId, classroom.id))
-    .orderBy(desc(publications.publishedAt))
-    .limit(1)
-    .then((rows) => rows[0]);
+  if (!targetLessonId) {
+    const latestPub = await db
+      .select({ lessonId: publications.lessonId })
+      .from(publications)
+      .where(eq(publications.classroomId, classroom.id))
+      .orderBy(desc(publications.publishedAt))
+      .limit(1)
+      .then((rows) => rows[0]);
+    targetLessonId = latestPub?.lessonId;
+  }
 
   return ok({
     classroomId: classroom.id,
     studentId,
-    lessonId: latestPub?.lessonId,
+    lessonId: targetLessonId,
+    joinCode: classroom.joinCode,
   });
 }
 

@@ -73,7 +73,7 @@ export function ShareClassroomOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-[2px]"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-[2px]"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose();
@@ -86,7 +86,7 @@ export function ShareClassroomOverlay({
         role="dialog"
         aria-modal="true"
         aria-labelledby="share-classroom-title"
-        className="w-full max-w-xl max-h-[90dvh] overflow-y-auto rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] p-5 sm:p-7 text-[var(--ink)] shadow-2xl"
+        className="w-full max-w-xl max-h-[90dvh] overflow-y-auto rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6 text-[var(--ink)] shadow-2xl"
       >
         {/* Header Overlay */}
         <div className="flex items-center justify-between gap-4 pb-4 border-b border-[var(--border)]">
@@ -130,7 +130,7 @@ export function ShareClassroomOverlay({
                 role="radio"
                 aria-checked={active}
                 onClick={() => setMethod(val)}
-                className={`flex min-h-[44px] items-center justify-center gap-2 rounded-[var(--r-tombol)] border-2 px-3 py-2 text-sm font-bold transition-all cursor-pointer ${
+                className={`flex min-h-[44px] flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 rounded-[var(--r-tombol)] border-2 px-2 sm:px-3 py-2 text-xs sm:text-sm font-bold text-center transition-all cursor-pointer ${
                   active
                     ? "border-[var(--primary)] bg-[var(--accent-subtle)] text-[var(--primary)]"
                     : "border-[var(--border)] bg-[var(--surface)] text-[var(--ink-2)] hover:border-[var(--border-strong)] hover:text-[var(--ink)]"
@@ -144,7 +144,7 @@ export function ShareClassroomOverlay({
         </div>
 
         {/* Konten Sesuai Pilihan */}
-        <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-5 flex flex-col items-center gap-4 text-center">
+        <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-4 sm:p-5 flex flex-col items-center gap-4 text-center">
           {method === "qr" && (
             <>
               <div className="rounded-2xl bg-white p-4 border-2 border-[var(--border)] shadow-xs">
@@ -167,7 +167,7 @@ export function ShareClassroomOverlay({
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-2.5 w-full max-w-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full max-w-sm">
                 <Button
                   type="button"
                   variant="secondary"
@@ -198,7 +198,7 @@ export function ShareClassroomOverlay({
                 {shareUrl}
               </div>
 
-              <div className="grid grid-cols-2 gap-2.5 w-full max-w-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full max-w-sm">
                 <Button
                   type="button"
                   variant="primary"
@@ -225,7 +225,7 @@ export function ShareClassroomOverlay({
           {method === "code" && (
             <>
               <div className="w-full rounded-2xl border-2 border-[var(--border-strong)] bg-[var(--surface)] py-5 px-4">
-                <span className="font-mono text-4xl sm:text-5xl font-extrabold tracking-[0.2em] text-[var(--link)] select-all">
+                <span className="font-mono text-3xl sm:text-5xl font-extrabold tracking-[0.15em] sm:tracking-[0.2em] text-[var(--link)] select-all break-all">
                   {joinCode}
                 </span>
               </div>

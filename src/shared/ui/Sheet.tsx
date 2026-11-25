@@ -47,7 +47,7 @@ export function Sheet({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-[2px]"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose();
@@ -61,10 +61,10 @@ export function Sheet({
         aria-modal="true"
         aria-labelledby="sheet-title"
         aria-describedby={description ? 'sheet-description' : undefined}
-        className="w-full max-w-xl max-h-[90dvh] overflow-y-auto rounded-t-[24px] sm:rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] p-6 text-[var(--ink)] shadow-[0_8px_0_0_var(--border-strong)]"
+        className="w-full max-w-xl max-h-[90dvh] overflow-y-auto rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6 text-[var(--ink)] shadow-[0_8px_0_0_var(--border-strong)]"
       >
         <div className="flex items-start justify-between gap-4 pb-4 border-b-2 border-[var(--border)]">
-          <div>
+          <div className="min-w-0">
             <h2 id="sheet-title" className="text-xl font-bold text-[var(--ink)]">
               {title}
             </h2>
@@ -78,7 +78,7 @@ export function Sheet({
             type="button"
             onClick={onClose}
             aria-label="Tutup lembar"
-            className="inline-flex min-h-[48px] min-w-[48px] items-center justify-center rounded-[var(--r-tombol)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] cursor-pointer hover:bg-[var(--surface-2)]"
+            className="inline-flex min-h-[48px] min-w-[48px] shrink-0 items-center justify-center rounded-[var(--r-tombol)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] cursor-pointer hover:bg-[var(--surface-2)]"
           >
             <Icon name="X" size={24} />
           </button>

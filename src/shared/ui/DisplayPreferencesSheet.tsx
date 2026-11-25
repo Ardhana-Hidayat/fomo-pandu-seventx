@@ -177,7 +177,7 @@ export function DisplayPreferencesSheet() {
         </section>
 
         {/* Aksi Bawah */}
-        <div className="flex items-center justify-between gap-4 pt-4 border-t-2 border-[var(--border)]">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t-2 border-[var(--border)]">
           <Button variant="secondary" onClick={resetPreferences}>
             Atur Ulang
           </Button>

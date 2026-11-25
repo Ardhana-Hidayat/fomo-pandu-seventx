@@ -297,7 +297,7 @@ export function LessonWizard({
 
       {/* Pilihan 2 Mode Utama: Buat Manual & Upload PDF (Ringkas & Bersih) */}
       <div
-        className="grid grid-cols-2 gap-3"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-3"
         role="radiogroup"
         aria-label="Pilih cara membuat materi"
       >

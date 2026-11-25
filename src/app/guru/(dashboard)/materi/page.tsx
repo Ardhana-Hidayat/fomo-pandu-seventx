@@ -1,6 +1,11 @@
 import { redirect } from "next/navigation";
 import { getCurrentTeacher } from "@/features/auth";
-import { listTeacherLessons, CreateLessonButton } from "@/features/authoring";
+import {
+  listTeacherLessons,
+  listTeacherLessonShares,
+  CreateLessonButton,
+  ShareLessonButton,
+} from "@/features/authoring";
 import { listClassroomsWithStats } from "@/features/classrooms";
 import { Card, Button, Icon } from "@/shared/ui";
 
@@ -10,8 +15,9 @@ export default async function LessonLibraryPage() {
   const session = await getCurrentTeacher();
   if (!session) redirect("/guru/masuk");
 
-  const [lessons, rawClassrooms] = await Promise.all([
+  const [lessons, sharesByLesson, rawClassrooms] = await Promise.all([
     listTeacherLessons(session.teacher.id),
+    listTeacherLessonShares(session.teacher.id),
     listClassroomsWithStats(session.teacher.id),
   ]);
 
@@ -54,50 +60,83 @@ export default async function LessonLibraryPage() {
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {lessons.map((l) => (
-            <Card key={l.id} className="flex flex-col justify-between gap-4">
-              <div>
-                <div className="flex items-start justify-between gap-2">
-                  <h2 className="text-xl font-bold text-[var(--ink)]">{l.title}</h2>
-                  <span
-                    className={`text-xs px-2.5 py-1 rounded-full font-bold border ${
-                      l.status === "published"
-                        ? "bg-emerald-100 text-emerald-900 border-emerald-500"
-                        : "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)]"
-                    }`}
-                  >
-                    {l.status === "published" ? "Terbit" : "Draf"}
-                  </span>
-                </div>
-                {l.topic && (
-                  <p className="mt-1 text-sm text-[var(--muted)] line-clamp-2">
-                    Topik: {l.topic}
-                  </p>
-                )}
-              </div>
+          {lessons.map((l) => {
+            const lessonShares = sharesByLesson[l.id] ?? [];
+            const primaryShare = lessonShares[0];
+            const tvHref = primaryShare
+              ? `/tv/${primaryShare.classroomJoinCode}/${l.id}`
+              : `/guru/materi/${l.id}/presentasi`;
 
-              <div className="flex items-center gap-2 pt-3 border-t border-[var(--border)]">
-                <Button
-                  variant="primary"
-                  size="normal"
-                  href={`/guru/materi/${l.id}/edit`}
-                  icon={<Icon name="NotePencil" size={18} />}
-                  className="flex-1"
-                >
-                  Sunting
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="normal"
-                  href={`/guru/materi/${l.id}/hasil`}
-                  icon={<Icon name="ChartBar" size={18} />}
-                  aria-label="Rekap hasil belajar"
-                >
-                  Hasil
-                </Button>
-              </div>
-            </Card>
-          ))}
+            return (
+              <Card key={l.id} className="flex flex-col justify-between gap-4">
+                <div>
+                  <div className="flex items-start justify-between gap-2">
+                    <h2 className="text-xl font-bold text-[var(--ink)]">
+                      {l.title}
+                    </h2>
+                    <span
+                      className={`shrink-0 text-xs px-2.5 py-1 rounded-full font-bold border ${
+                        l.status === "published"
+                          ? "bg-emerald-100 text-emerald-900 border-emerald-500"
+                          : "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)]"
+                      }`}
+                    >
+                      {l.status === "published" ? "Terbit" : "Draf"}
+                    </span>
+                  </div>
+                  {l.topic && (
+                    <p className="mt-1 text-sm text-[var(--muted)] line-clamp-2">
+                      Topik: {l.topic}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-2 pt-3 border-t border-[var(--border)]">
+                  <div className="grid grid-cols-2 gap-2">
+                    <ShareLessonButton
+                      lessonId={l.id}
+                      lessonTitle={l.title}
+                      shares={lessonShares}
+                      classrooms={classrooms}
+                      className="w-full justify-center"
+                    />
+                    <Button
+                      variant="secondary"
+                      size="normal"
+                      href={tvHref}
+                      icon={<Icon name="Television" size={18} />}
+                      aria-label={`Tampilkan ${l.title} di TV`}
+                      className="w-full justify-center"
+                    >
+                      Tampilkan di TV
+                    </Button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      variant="primary"
+                      size="normal"
+                      href={`/guru/materi/${l.id}/edit`}
+                      icon={<Icon name="NotePencil" size={18} />}
+                      className="w-full justify-center"
+                    >
+                      Sunting
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      size="normal"
+                      href={`/guru/materi/${l.id}/hasil`}
+                      icon={<Icon name="ChartBar" size={18} />}
+                      aria-label="Rekap hasil belajar"
+                      className="w-full justify-center"
+                    >
+                      Hasil
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>

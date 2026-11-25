@@ -54,7 +54,7 @@ export function CreateLessonOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-[2px]"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 bg-black/60 backdrop-blur-[2px]"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose();
@@ -67,30 +67,36 @@ export function CreateLessonOverlay({
         role="dialog"
         aria-modal="true"
         aria-labelledby="create-lesson-overlay-title"
-        className="w-full max-w-3xl lg:max-w-4xl max-h-[90dvh] overflow-y-auto rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6 text-[var(--ink)] shadow-2xl"
+        className="w-full sm:max-w-3xl lg:max-w-4xl max-h-[92dvh] sm:max-h-[90dvh] flex flex-col rounded-t-[24px] sm:rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] shadow-2xl overflow-hidden"
       >
-        <div className="flex items-center justify-between gap-4 pb-4 border-b border-[var(--border)]">
-          <h2
-            id="create-lesson-overlay-title"
-            className="min-w-0 text-xl sm:text-2xl font-bold text-[var(--ink)]"
-          >
-            Tambah Materi
-          </h2>
+        <div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-7 sm:py-5 border-b border-[var(--border)] shrink-0 bg-[var(--surface)]">
+          <div className="min-w-0">
+            <h2
+              id="create-lesson-overlay-title"
+              className="text-xl sm:text-2xl font-bold text-[var(--ink)] leading-tight"
+            >
+              Tambah Materi
+            </h2>
+            <p className="text-xs sm:text-sm text-[var(--muted)] mt-0.5">
+              Susun kartu belajar secara manual atau ekstrak otomatis dari file PDF.
+            </p>
+          </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Tutup jendela tambah materi"
-            className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--ink)] cursor-pointer hover:bg-[var(--surface-2)]"
+            className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--ink)] cursor-pointer hover:bg-[var(--surface-2)] transition-colors"
           >
             <Icon name="X" size={22} />
           </button>
         </div>
 
-        <div className="pt-5">
+        <div className="overflow-y-auto overscroll-contain p-5 sm:p-7">
           <LessonWizard
             classrooms={classrooms}
             preselectedClassroomId={preselectedClassroomId}
             onSuccess={onClose}
+            embedded
           />
         </div>
       </div>

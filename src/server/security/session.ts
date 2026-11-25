@@ -11,7 +11,6 @@ export const STUDENT_COOKIE_NAME = "ik_siswa";
 export const TEACHER_SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 hari
 export const STUDENT_SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 1 hari
 
-const DEMO_TEACHER_ID = "00000000-0000-4000-8000-000000000001";
 const revokedHashes = new Set<string>();
 
 export function hashToken(token: string): string {
@@ -134,7 +133,7 @@ export async function validateSession(
   token: string,
   expectedRole?: "guru" | "siswa"
 ): Promise<AppSession | null> {
-  if (!token || token.length < 32) {
+  if (!token || token.length < 32 || token === getDemoTeacherToken()) {
     return null;
   }
 
@@ -161,36 +160,6 @@ export async function validateSession(
 
   if (rows[0]) {
     return rows[0];
-  }
-
-  // Self-healing jika token adalah demo teacher token di kontainer serverless baru
-  if (token === getDemoTeacherToken() && expectedRole !== "siswa") {
-    const expiresAt = new Date(Date.now() + TEACHER_SESSION_TTL_MS);
-    try {
-      const inserted = await db
-        .insert(appSessions)
-        .values({
-          id: "00000000-0000-4000-8000-000000000099",
-          tokenHash,
-          role: "guru",
-          teacherId: DEMO_TEACHER_ID,
-          expiresAt,
-        })
-        .onConflictDoNothing()
-        .returning();
-      if (inserted[0]) return inserted[0];
-    } catch {}
-
-    return {
-      id: "00000000-0000-4000-8000-000000000099",
-      tokenHash,
-      role: "guru",
-      teacherId: DEMO_TEACHER_ID,
-      studentId: null,
-      classroomId: null,
-      expiresAt,
-      createdAt: new Date(),
-    };
   }
 
   return null;

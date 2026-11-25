@@ -12,7 +12,6 @@ import {
 import { db } from "@/server/db/client";
 import { teachers, students, classrooms, lessons, type Teacher, type Student, type Classroom } from "@/server/db/schema";
 import { eq, sql } from "drizzle-orm";
-import { getOrCreateDemoTeacher } from "@/server/services/auth/demo";
 import {
   DEMO_TEACHER_ID,
   DEMO_CLASSROOM_ID,
@@ -41,20 +40,21 @@ export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null>
     }
 
     const session = await validateSession(token, "guru");
-    if (!session || session.role !== "guru" || !session.teacherId) {
+    if (
+      !session ||
+      session.role !== "guru" ||
+      !session.teacherId ||
+      session.teacherId === DEMO_TEACHER_ID
+    ) {
       return null;
     }
 
-    let teacher = await db
+    const teacher = await db
       .select()
       .from(teachers)
       .where(eq(teachers.id, session.teacherId))
       .limit(1)
       .then((rows) => rows[0]);
-
-    if (!teacher && (session.teacherId === DEMO_TEACHER_ID || !session.teacherId)) {
-      teacher = await getOrCreateDemoTeacher();
-    }
 
     if (!teacher) {
       return null;

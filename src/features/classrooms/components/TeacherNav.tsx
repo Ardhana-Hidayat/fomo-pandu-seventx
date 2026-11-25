@@ -65,6 +65,17 @@ export function TeacherSidebar() {
           );
         })}
       </nav>
+      <div className="mt-auto pt-4 border-t border-[var(--border)]">
+        <form action="/api/auth/logout" method="POST">
+          <button
+            type="submit"
+            className="flex w-full min-h-[44px] items-center gap-3 px-3.5 py-2.5 rounded-[var(--r-tombol)] font-semibold text-sm sm:text-base text-[var(--ink-2)] hover:bg-[var(--surface-2)] hover:text-[var(--ink)] transition-colors duration-[120ms]"
+          >
+            <Icon name="DoorOpen" size={20} />
+            <span>Keluar</span>
+          </button>
+        </form>
+      </div>
     </aside>
   );
 }
@@ -150,6 +161,17 @@ export function TeacherMobileNav() {
                   </Link>
                 );
               })}
+              <div className="mt-2 pt-2 border-t border-[var(--border)]">
+                <form action="/api/auth/logout" method="POST">
+                  <button
+                    type="submit"
+                    className="flex w-full min-h-[44px] items-center gap-3 px-3.5 py-2.5 rounded-[var(--r-tombol)] font-semibold text-sm text-[var(--ink-2)] hover:bg-[var(--surface-2)] hover:text-[var(--ink)] transition-colors duration-[120ms]"
+                  >
+                    <Icon name="DoorOpen" size={20} />
+                    <span>Keluar</span>
+                  </button>
+                </form>
+              </div>
             </div>
           </nav>
         </>

@@ -11,7 +11,7 @@ interface TeacherSettingsProps {
 }
 
 export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
-  const { preferences, setPreference } = usePreferences();
+  const { preferences, setPreference, openSheet } = usePreferences();
   const [audioSpeed, setAudioSpeed] = useState<"0.8" | "0.9" | "1.0">("0.9");
 
   // Healthcheck state
@@ -65,157 +65,219 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
     setIsCheckingHealth(false);
   }
 
+  const displayName = teacher?.displayName || "Guru PanduIn";
+  const initial = displayName.trim().charAt(0).toUpperCase() || "G";
+
   return (
-    <div className="flex flex-col gap-6 w-full">
-      <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)]">
-        Pengaturan Ruang Guru
-      </h1>
+    <div className="flex flex-col gap-8 w-full">
+      <header className="flex flex-col gap-2">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ink)]">
+          Pengaturan Ruang Guru
+        </h1>
+        <p className="text-base text-[var(--ink-2)] max-w-2xl leading-relaxed">
+          Kelola kenyamanan tampilan, kecepatan suara belajar, pustaka isyarat SIBI, dan akun guru PanduIn.
+        </p>
+      </header>
 
-      {/* 1. Tema & Kontras */}
-      <Card as="section" className="flex flex-col gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-[var(--ink)]">Tema &amp; Kontras</h2>
-          <p className="text-sm text-[var(--ink-2)]">
-            Tiga palet warna berstandar WCAG AAA (kontras minimal 7:1) untuk kenyamanan visual.
-          </p>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Kolom Utama: Tampilan, Suara & Sistem Isyarat */}
+        <div className="lg:col-span-7 flex flex-col gap-6">
+          {/* 1. Tampilan & Suara */}
+          <Card as="section" className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
+                    <Icon name="TextAa" size={22} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-[var(--ink)]">Tampilan &amp; Kontras</h2>
+                    <p className="text-sm text-[var(--ink-2)] mt-0.5 leading-relaxed">
+                      Tiga palet warna berstandar WCAG AAA (kontras minimal 7:1) untuk kenyamanan visual.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="compact"
+                  onClick={openSheet}
+                  icon={<Icon name="TextAa" size={16} />}
+                  className="shrink-0 w-fit"
+                >
+                  Atur Huruf &amp; Jarak
+                </Button>
+              </div>
+
+              <div className="flex flex-wrap gap-2.5" role="radiogroup" aria-label="Tema dan kontras warna">
+                {(
+                  [
+                    ["terang", "Terang (17:1)"],
+                    ["gelap", "Gelap (15.7:1)"],
+                    ["kuning-hitam", "Kuning-Hitam (14.7:1)"],
+                  ] as const
+                ).map(([val, label]) => (
+                  <Chip
+                    key={val}
+                    label={label}
+                    selected={preferences.tema === val}
+                    onSelect={() => setPreference("tema", val)}
+                    role="radio"
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-[var(--border)] pt-6 flex flex-col gap-4">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
+                  <Icon name="SpeakerHigh" size={22} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-[var(--ink)]">Kecepatan Suara Belajar</h2>
+                  <p className="text-sm text-[var(--ink-2)] mt-0.5 leading-relaxed">
+                    Kecepatan pelafalan suara sintetis dan audio peraga untuk membantu pemahaman siswa.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2.5" role="radiogroup" aria-label="Kecepatan suara belajar">
+                {(
+                  [
+                    ["0.8", "Lambat (0.8x)"],
+                    ["0.9", "Tenang (0.9x) - Bawaan"],
+                    ["1.0", "Normal (1.0x)"],
+                  ] as const
+                ).map(([val, label]) => (
+                  <Chip
+                    key={val}
+                    label={label}
+                    selected={audioSpeed === val}
+                    onSelect={() => setAudioSpeed(val)}
+                    role="radio"
+                  />
+                ))}
+              </div>
+            </div>
+          </Card>
+
+          {/* 2. Sistem Isyarat & Pustaka */}
+          <Card as="section" className="flex flex-col gap-4">
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
+                <Icon name="Hand" size={22} />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-[var(--ink)]">Sistem Isyarat</h2>
+                <p className="text-sm text-[var(--ink-2)] mt-0.5 leading-relaxed">
+                  PanduIn menggunakan SIBI (Sistem Isyarat Bahasa Indonesia) sebagai sistem isyarat standar kelas.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
+              <div className="flex items-center gap-2.5 text-sm font-bold text-[var(--ink)]">
+                <Icon name="CheckCircle" size={20} className="text-[var(--primary)] shrink-0" />
+                <span>SIBI &bull; Pustaka Abjad (A &ndash; Z)</span>
+              </div>
+              <Button
+                variant="secondary"
+                size="normal"
+                href="/guru/pengaturan/isyarat"
+                icon={<Icon name="Hand" size={18} />}
+                className="shrink-0 w-fit"
+              >
+                Buka Pustaka Isyarat
+              </Button>
+            </div>
+          </Card>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {(
-            [
-              ["terang", "Terang (17:1)"],
-              ["gelap", "Gelap (15.7:1)"],
-              ["kuning-hitam", "Kuning-Hitam (14.7:1)"],
-            ] as const
-          ).map(([val, label]) => (
-            <Chip
-              key={val}
-              label={label}
-              selected={preferences.tema === val}
-              onSelect={() => setPreference("tema", val)}
-              role="radio"
-            />
-          ))}
-        </div>
-      </Card>
+        {/* Kolom Sekunder: Akun Guru & Pemeriksaan Layanan */}
+        <div className="lg:col-span-5 flex flex-col gap-6">
+          {/* 3. Akun Guru & Keluar */}
+          <Card as="section" className="flex flex-col gap-5 border-[var(--border-strong)]">
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
+                <Icon name="UsersThree" size={22} />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-[var(--ink)]">Akun Guru &amp; Keluar</h2>
+                <p className="text-sm text-[var(--ink-2)] mt-0.5 leading-relaxed">
+                  Informasi akun Google yang sedang aktif di ruang guru PanduIn.
+                </p>
+              </div>
+            </div>
 
-      {/* 2. Sistem Isyarat Bawaan & Tautan Pustaka */}
-      <Card as="section" className="flex flex-col gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-[var(--ink)]">Sistem Isyarat</h2>
-          <p className="text-sm text-[var(--ink-2)]">
-            PanduIn menggunakan SIBI (Sistem Isyarat Bahasa Indonesia) sebagai sistem isyarat standar.
-          </p>
-        </div>
+            <div className="flex items-center gap-3.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
+              <div
+                aria-hidden="true"
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-lg font-bold text-[var(--on-primary)]"
+              >
+                {initial}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-bold text-base text-[var(--ink)] truncate">
+                  {displayName}
+                </p>
+                <p className="text-sm text-[var(--muted)] truncate">
+                  {teacher?.email || "Masuk melalui akun Google"}
+                </p>
+              </div>
+            </div>
 
-        <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] text-sm font-bold text-[var(--ink)] w-fit">
-          <Icon name="Hand" size={18} className="text-[var(--primary)]" />
-          <span>SIBI (Sistem Isyarat Bahasa Indonesia)</span>
-        </div>
+            <div className="pt-2 border-t border-[var(--border)] flex flex-col gap-3">
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                Keluar akan mengakhiri sesi guru di perangkat ini. Materi dan kelas Anda tetap tersimpan aman.
+              </p>
+              <form action="/api/auth/logout" method="POST" className="w-full">
+                <Button
+                  type="submit"
+                  variant="danger"
+                  size="large"
+                  icon={<Icon name="DoorOpen" size={20} />}
+                  className="w-full"
+                >
+                  Keluar dari Akun
+                </Button>
+              </form>
+            </div>
+          </Card>
 
-        <div className="pt-3 border-t border-[var(--border)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <span className="text-sm font-bold text-[var(--ink)]">
-            Pustaka Isyarat Abjad (A - Z)
-          </span>
-          <Button
-            variant="secondary"
-            size="normal"
-            href="/guru/pengaturan/isyarat"
-            icon={<Icon name="Hand" size={18} />}
-          >
-            Buka Pustaka Isyarat
-          </Button>
-        </div>
-      </Card>
+          {/* 4. Pemeriksaan Kesehatan AI (Healthcheck) */}
+          <Card as="section" className="flex flex-col gap-4">
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
+                <Icon name="Sparkle" size={22} />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-[var(--ink)]">Pemeriksaan Layanan Otomatis</h2>
+                <p className="text-sm text-[var(--ink-2)] mt-0.5 leading-relaxed">
+                  Verifikasi koneksi model kecerdasan buatan Google Gemini atau kesiapan mode cadangan lokal.
+                </p>
+              </div>
+            </div>
 
-      {/* 3. Kecepatan Suara & Pemutar */}
-      <Card as="section" className="flex flex-col gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-[var(--ink)]">Kecepatan Suara Belajar</h2>
-          <p className="text-sm text-[var(--ink-2)]">
-            Kecepatan bicara sintetis dan audio peraga untuk mempermudah pemahaman siswa.
-          </p>
-        </div>
+            {healthResult && (
+              <StatusMessage type={healthResult.status === "ok" ? "benar" : "info"}>
+                {healthResult.message}
+              </StatusMessage>
+            )}
 
-        <div className="flex flex-wrap gap-2">
-          {(
-            [
-              ["0.8", "Lambat (0.8x)"],
-              ["0.9", "Tenang (0.9x) - Bawaan"],
-              ["1.0", "Normal (1.0x)"],
-            ] as const
-          ).map(([val, label]) => (
-            <Chip
-              key={val}
-              label={label}
-              selected={audioSpeed === val}
-              onSelect={() => setAudioSpeed(val)}
-              role="radio"
-            />
-          ))}
-        </div>
-      </Card>
-
-      {/* 4. Pemeriksaan Kesehatan AI (Healthcheck) */}
-      <Card as="section" className="flex flex-col gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-[var(--ink)]">Pemeriksaan Layanan Otomatis</h2>
-          <p className="text-sm text-[var(--ink-2)]">
-            Verifikasi koneksi model kecerdasan buatan Google Gemini atau kesiapan cadangan lokal.
-          </p>
-        </div>
-
-        {healthResult && (
-          <StatusMessage type={healthResult.status === "ok" ? "benar" : "info"}>
-            {healthResult.message}
-          </StatusMessage>
-        )}
-
-        <div>
-          <Button
-            type="button"
-            variant="primary"
-            size="normal"
-            disabled={isCheckingHealth}
-            onClick={handleCheckHealth}
-            icon={<Icon name="ArrowsClockwise" size={18} />}
-          >
-            {isCheckingHealth ? "Memeriksa layanan..." : "Uji layanan otomatis"}
-          </Button>
-        </div>
-      </Card>
-
-      {/* 5. Akun Guru & Keluar */}
-      <Card as="section" className="flex flex-col gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-[var(--ink)]">Akun Guru</h2>
-          <p className="text-sm text-[var(--ink-2)]">
-            Informasi akun Google yang sedang masuk di PanduIn.
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
-          <div className="min-w-0">
-            <p className="font-bold text-base text-[var(--ink)] truncate">
-              {teacher?.displayName || "Guru PanduIn"}
-            </p>
-            <p className="text-sm text-[var(--muted)] truncate">
-              {teacher?.email || "Masuk melalui akun Google"}
-            </p>
-          </div>
-
-          <form action="/api/auth/logout" method="POST" className="shrink-0">
             <Button
-              type="submit"
-              variant="danger"
+              type="button"
+              variant="primary"
               size="normal"
-              icon={<Icon name="DoorOpen" size={18} />}
+              disabled={isCheckingHealth}
+              onClick={handleCheckHealth}
+              icon={<Icon name="ArrowsClockwise" size={18} />}
+              className="w-full sm:w-fit"
             >
-              Keluar dari Akun
+              {isCheckingHealth ? "Memeriksa layanan..." : "Uji layanan otomatis"}
             </Button>
-          </form>
+          </Card>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

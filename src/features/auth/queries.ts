@@ -6,6 +6,7 @@ import {
   TEACHER_COOKIE_NAME,
   STUDENT_COOKIE_NAME,
   validateSession,
+  parseTeacherCookiePayload,
   parseStudentCookiePayload,
   createStudentSession,
 } from "@/server/security/session";
@@ -33,13 +34,18 @@ export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null>
   await connection();
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get(TEACHER_COOKIE_NAME)?.value;
+    const rawCookie = cookieStore.get(TEACHER_COOKIE_NAME)?.value;
 
-    if (!token) {
+    if (!rawCookie) {
       return null;
     }
 
-    const session = await validateSession(token, "guru");
+    const parsed = parseTeacherCookiePayload(rawCookie);
+    if (!parsed) {
+      return null;
+    }
+
+    const session = await validateSession(rawCookie, "guru");
     if (
       !session ||
       session.role !== "guru" ||
@@ -49,12 +55,45 @@ export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null>
       return null;
     }
 
-    const teacher = await db
+    let teacher = await db
       .select()
       .from(teachers)
       .where(eq(teachers.id, session.teacherId))
       .limit(1)
       .then((rows) => rows[0]);
+
+    if (!teacher && parsed.teacherId) {
+      if (parsed.email) {
+        teacher = await db
+          .select()
+          .from(teachers)
+          .where(eq(teachers.email, parsed.email))
+          .limit(1)
+          .then((rows) => rows[0]);
+      }
+
+      if (!teacher) {
+        const inserted = await db
+          .insert(teachers)
+          .values({
+            id: session.teacherId,
+            email: parsed.email ?? null,
+            displayName: parsed.displayName || "Guru",
+            authProvider: "google",
+          })
+          .onConflictDoNothing()
+          .returning();
+
+        teacher =
+          inserted[0] ??
+          (await db
+            .select()
+            .from(teachers)
+            .where(eq(teachers.id, session.teacherId))
+            .limit(1)
+            .then((rows) => rows[0]));
+      }
+    }
 
     if (!teacher) {
       return null;
@@ -77,7 +116,8 @@ export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null>
     }
 
     return { teacher, sessionId: session.id };
-  } catch {
+  } catch (err) {
+    console.error("getCurrentTeacher error:", err instanceof Error ? err.message : err);
     return null;
   }
 }

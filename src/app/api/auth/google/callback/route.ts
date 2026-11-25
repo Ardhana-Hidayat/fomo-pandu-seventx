@@ -11,6 +11,8 @@ import {
   TEACHER_COOKIE_NAME,
   TEACHER_SESSION_TTL_MS,
   createTeacherSession,
+  generateToken,
+  signTeacherCookiePayload,
 } from "@/server/security/session";
 
 interface GoogleTokenResponse {
@@ -27,7 +29,7 @@ function redirectWithError(origin: string, code: string) {
   const response = NextResponse.redirect(new URL(`/guru/masuk?error=${code}`, origin));
   response.cookies.set(OAUTH_STATE_COOKIE_NAME, "", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: origin.startsWith("https://"),
     sameSite: "lax",
     path: "/",
     maxAge: 0,
@@ -73,11 +75,13 @@ export async function GET(request: NextRequest) {
     });
 
     if (!tokenRes.ok) {
+      console.error("Google OAuth token exchange failed with status:", tokenRes.status);
       return redirectWithError(origin, "google_token_failed");
     }
 
     const tokenData = (await tokenRes.json()) as GoogleTokenResponse;
     if (!tokenData.access_token) {
+      console.error("Google OAuth token response missing access_token");
       return redirectWithError(origin, "google_token_failed");
     }
 
@@ -88,6 +92,7 @@ export async function GET(request: NextRequest) {
     });
 
     if (!userRes.ok) {
+      console.error("Google OAuth userinfo failed with status:", userRes.status);
       return redirectWithError(origin, "google_userinfo_failed");
     }
 
@@ -102,53 +107,67 @@ export async function GET(request: NextRequest) {
       email.split("@")[0] ||
       "Guru";
 
-    const existing = await db
-      .select()
-      .from(teachers)
-      .where(eq(teachers.email, email))
-      .limit(1)
-      .then((rows) => rows[0]);
+    const upserted = await db
+      .insert(teachers)
+      .values({
+        email,
+        displayName,
+        authProvider: "google",
+      })
+      .onConflictDoUpdate({
+        target: teachers.email,
+        set: {
+          displayName,
+          authProvider: "google",
+        },
+      })
+      .returning();
 
-    let teacher = existing;
-    if (existing) {
-      const updated = await db
-        .update(teachers)
-        .set({
-          displayName,
-          authProvider: "google",
-        })
-        .where(eq(teachers.id, existing.id))
-        .returning();
-      teacher = updated[0] ?? existing;
-    } else {
-      const inserted = await db
-        .insert(teachers)
-        .values({
-          email,
-          displayName,
-          authProvider: "google",
-        })
-        .returning();
-      teacher = inserted[0];
-    }
+    const teacher =
+      upserted[0] ??
+      (await db
+        .select()
+        .from(teachers)
+        .where(eq(teachers.email, email))
+        .limit(1)
+        .then((rows) => rows[0]));
 
     if (!teacher) {
+      console.error("Google OAuth teacher upsert returned no row");
       return redirectWithError(origin, "google_session_failed");
     }
 
-    const { token } = await createTeacherSession(teacher.id);
+    let sessionToken: string;
+    try {
+      const created = await createTeacherSession(teacher.id);
+      sessionToken = created.token;
+    } catch (sessionErr) {
+      console.error(
+        "Gagal menyimpan app_sessions guru, fallback ke cookie stateless:",
+        sessionErr instanceof Error ? sessionErr.message : sessionErr
+      );
+      sessionToken = generateToken();
+    }
+
+    const signedCookie = signTeacherCookiePayload(
+      sessionToken,
+      teacher.id,
+      teacher.email ?? email,
+      teacher.displayName
+    );
+    const isSecure = origin.startsWith("https://");
 
     const response = NextResponse.redirect(new URL("/guru", origin));
     response.cookies.set(OAUTH_STATE_COOKIE_NAME, "", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: isSecure,
       sameSite: "lax",
       path: "/",
       maxAge: 0,
     });
-    response.cookies.set(TEACHER_COOKIE_NAME, token, {
+    response.cookies.set(TEACHER_COOKIE_NAME, signedCookie, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: isSecure,
       sameSite: "lax",
       path: "/",
       maxAge: Math.floor(TEACHER_SESSION_TTL_MS / 1000),

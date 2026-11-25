@@ -28,7 +28,9 @@ export function SignCard({
 }: SignCardProps) {
   const cleanTerm = term.trim().toUpperCase();
   const letters = cleanTerm.split("").filter((char) => /[A-Z]/.test(char));
-  const currentLetter = (activeLetter ?? letters[activeLetterIndex] ?? letters[0] ?? "A").toUpperCase();
+  const resolvedLetter = (activeLetter ?? letters[activeLetterIndex] ?? letters[0] ?? "").toUpperCase();
+  const hasLetter = /^[A-Z]$/.test(resolvedLetter);
+  const currentLetter = hasLetter ? resolvedLetter : "?";
 
   const isCompact = size === "compact";
   const isLarge = size === "large";
@@ -37,20 +39,25 @@ export function SignCard({
 
   const isMoving = motion || currentLetter === "J" || currentLetter === "Z";
 
-  // Prioritas: Supabase Storage CDN jika dikonfigurasi, dengan fallback mulus ke lokal /signs/
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const remoteSrc = supabaseUrl
-    ? `${supabaseUrl.replace(/\/+$/, "")}/storage/v1/object/public/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`
+  // Prioritaskan aset lokal terverifikasi (/signs/<system>/<letter>.webp) agar bebas latensi dan akurat,
+  // dengan fallback ke Supabase Storage CDN jika aset lokal gagal dimuat.
+  const localSrc = hasLetter
+    ? `/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`
     : null;
-  const localSrc = `/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const remoteSrc =
+    hasLetter && supabaseUrl
+      ? `${supabaseUrl.replace(/\/+$/, "")}/storage/v1/object/public/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`
+      : null;
 
   const [failedUrls, setFailedUrls] = useState<Record<string, boolean>>({});
 
-  const activeSrc = remoteSrc && !failedUrls[remoteSrc]
-    ? remoteSrc
-    : !failedUrls[localSrc]
-    ? localSrc
-    : null;
+  const activeSrc =
+    localSrc && !failedUrls[localSrc]
+      ? localSrc
+      : remoteSrc && !failedUrls[remoteSrc]
+      ? remoteSrc
+      : null;
 
   return (
     <div
@@ -72,7 +79,16 @@ export function SignCard({
             : "aspect-square w-32 sm:w-36 p-2.5"
         }`}
       >
-        {/* Badge Sistem Isyarat (SIBI / BISINDO) */}
+        {/* Badge Huruf Aktif (kiri atas) & Sistem Isyarat (kanan atas) */}
+        {hasLetter && (
+          <span
+            className={`absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded font-mono font-black border border-[var(--border)] bg-[var(--sorot)] text-[var(--on-sorot)] select-none z-10 ${
+              isTv ? "text-sm" : isMatch ? "text-xs" : "text-[10px]"
+            }`}
+          >
+            {currentLetter}
+          </span>
+        )}
         <span
           className={`absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded font-mono font-extrabold border border-[var(--border)] bg-[var(--surface-2)] text-[var(--ink)] select-none z-10 ${
             isTv ? "text-xs" : isMatch ? "text-[10px]" : "text-[9px]"
@@ -85,12 +101,13 @@ export function SignCard({
         {activeSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
+            key={activeSrc}
             src={activeSrc}
             alt={`Isyarat huruf ${currentLetter} dalam ${system}`}
             onError={() => {
               setFailedUrls((prev) => ({ ...prev, [activeSrc]: true }));
             }}
-            className="w-full h-full object-contain p-1"
+            className="w-full h-full object-contain p-2"
           />
         ) : (
           /* Fallback Kotak Huruf Bersih jika aset WebP belum tersedia */

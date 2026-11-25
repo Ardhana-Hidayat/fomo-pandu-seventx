@@ -1,20 +1,24 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { Card, Button, Field, Chip, Icon } from "@/shared/ui";
+import { Card, Button, Field, Icon } from "@/shared/ui";
 import { SignCard } from "@/features/player";
 import {
   tokenize,
-  buildTimeline,
-  buildSignSchedule,
   slotAt,
   completedSignWord,
   wordIndexAt,
   progressInWord,
-  type SignSystem,
-  type Timeline,
   type SignSlot,
 } from "@/shared/lib/sync";
+import {
+  PACE_CONFIGS,
+  buildQuickInstructionPlan,
+  type PacePreset,
+  type PlaybackSegment,
+} from "../lib/playback-plan";
+
+const SIBI_SYSTEM = "SIBI" as const;
 
 interface PresetInstruction {
   id: string;
@@ -78,7 +82,7 @@ export function QuickInstructionsClient() {
   const [activePresetId, setActivePresetId] = useState<string | null>(PRESET_INSTRUCTIONS[0].id);
   const [activeText, setActiveText] = useState<string>(PRESET_INSTRUCTIONS[0].text);
   const [activeKeyTerms, setActiveKeyTerms] = useState<string[]>(PRESET_INSTRUCTIONS[0].keyTerms);
-  const [signSystem, setSignSystem] = useState<SignSystem>("SIBI");
+  const [pace, setPace] = useState<PacePreset>("sedang");
   const [isTvMode, setIsTvMode] = useState(false);
 
   // Sync & Playback State
@@ -86,12 +90,14 @@ export function QuickInstructionsClient() {
   const [activeWordIdx, setActiveWordIdx] = useState<number>(-1);
   const [activeWordProgress, setActiveWordProgress] = useState<number>(0);
   const [activeSignSlot, setActiveSignSlot] = useState<SignSlot | null>(null);
+  const [activeSegmentWordIdx, setActiveSegmentWordIdx] = useState<number | null>(null);
   const [completedWordIndex, setCompletedWordIndex] = useState<number | null>(null);
   const [manualTermIndex, setManualTermIndex] = useState(0);
   const [manualLetterIndex, setManualLetterIndex] = useState(0);
 
   const animFrameRef = useRef<number | null>(null);
-  const endTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const playbackRunIdRef = useRef(0);
 
   const expandedKeyWords = useMemo(() => {
     const words = activeKeyTerms
@@ -106,39 +112,34 @@ export function QuickInstructionsClient() {
     [activeText, expandedKeyWords]
   );
 
-  const speechTimeline = useMemo(
-    () =>
-      buildTimeline(tokens, {
-        speechRate: 1.0,
-        signSpeed: 1.0,
-        signEnabled: false,
-      }),
-    [tokens]
+  const paceConfig = PACE_CONFIGS[pace];
+
+  const playbackPlan = useMemo(
+    () => buildQuickInstructionPlan(tokens, paceConfig),
+    [tokens, paceConfig]
   );
 
-  const signBaseTimeline = useMemo(
-    () =>
-      buildTimeline(tokens, {
-        speechRate: 1.0,
-        signSpeed: 1.0,
-        signEnabled: true,
-      }),
-    [tokens]
-  );
-
-  const signSchedule = useMemo(
-    () => buildSignSchedule(signBaseTimeline, 450),
-    [signBaseTimeline]
-  );
+  // Preload semua gambar huruf SIBI agar pergantian huruf instan tanpa kedipan/keterlambatan
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const uniqueLetters = new Set(
+      expandedKeyWords.join("").toLowerCase().replace(/[^a-z]/g, "").split("")
+    );
+    uniqueLetters.forEach((ch) => {
+      const img = new Image();
+      img.src = `/signs/sibi/${ch}.webp`;
+    });
+  }, [expandedKeyWords]);
 
   const stopPlayback = useCallback(() => {
+    playbackRunIdRef.current += 1;
     if (animFrameRef.current !== null) {
       cancelAnimationFrame(animFrameRef.current);
       animFrameRef.current = null;
     }
-    if (endTimeoutRef.current !== null) {
-      clearTimeout(endTimeoutRef.current);
-      endTimeoutRef.current = null;
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
@@ -151,6 +152,7 @@ export function QuickInstructionsClient() {
     setActiveWordIdx(-1);
     setActiveWordProgress(0);
     setActiveSignSlot(null);
+    setActiveSegmentWordIdx(null);
     setCompletedWordIndex(null);
     setManualTermIndex(0);
     setManualLetterIndex(0);
@@ -162,37 +164,121 @@ export function QuickInstructionsClient() {
     };
   }, [stopPlayback]);
 
-  const updateSyncAtTime = useCallback(
-    (tMs: number, schedule: { slots: SignSlot[]; signEnd: number }, speechTl: Timeline) => {
-      const totalWords = speechTl.words.length;
-      if (totalWords === 0) return;
-
-      const lastWordIdx = totalWords - 1;
-      const lastWord = speechTl.words[lastWordIdx];
-
-      let wIdx = wordIndexAt(speechTl, tMs);
-      let prog = progressInWord(speechTl, tMs);
-
-      if (lastWord && tMs >= lastWord.start && tMs <= speechTl.total + 300) {
-        wIdx = lastWordIdx;
-        prog = Math.min(
-          1,
-          Math.max(0, (tMs - lastWord.start) / Math.max(1, lastWord.end - lastWord.start))
-        );
-        if (tMs >= lastWord.end) {
-          prog = 1;
-        }
+  // Pintasan keyboard mode TV (Escape tutup TV, Spasi putar/jeda)
+  useEffect(() => {
+    if (!isTvMode) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setIsTvMode(false);
       }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isTvMode]);
 
-      const slot = slotAt(schedule.slots, tMs);
-      const doneWord = completedSignWord(schedule.slots, tMs);
+  const startSegmentedPlayback = useCallback(
+    (plan: PlaybackSegment[], runId: number) => {
+      const stepSegment = (segIndex: number) => {
+        if (playbackRunIdRef.current !== runId) return;
 
-      setActiveWordIdx(wIdx);
-      setActiveWordProgress(prog);
-      setActiveSignSlot(slot);
-      setCompletedWordIndex(doneWord);
+        if (segIndex >= plan.length) {
+          setActiveWordIdx(tokens.length);
+          setActiveWordProgress(1);
+          setActiveSignSlot(null);
+          setActiveSegmentWordIdx(null);
+          timeoutRef.current = setTimeout(() => {
+            if (playbackRunIdRef.current === runId) {
+              stopPlayback();
+            }
+          }, 400);
+          return;
+        }
+
+        const seg = plan[segIndex]!;
+        const segStartPerf = performance.now();
+        let speechDone = false;
+
+        const hasSpeech =
+          typeof window !== "undefined" &&
+          "speechSynthesis" in window &&
+          seg.speechText.trim().length > 0;
+
+        if (hasSpeech) {
+          try {
+            window.speechSynthesis.cancel();
+            const utt = new SpeechSynthesisUtterance(seg.speechText);
+            utt.lang = "id-ID";
+            utt.rate = paceConfig.speechRate;
+            utt.onend = () => {
+              speechDone = true;
+            };
+            utt.onerror = () => {
+              speechDone = true;
+            };
+            window.speechSynthesis.speak(utt);
+          } catch {
+            speechDone = true;
+          }
+        } else {
+          speechDone = true;
+        }
+
+        // Batas pengaman jika speechSynthesis browser tidak memicu onend
+        const safetyTimeoutMs = seg.minDurationMs + 2200;
+
+        const tick = () => {
+          if (playbackRunIdRef.current !== runId) return;
+
+          const elapsed = performance.now() - segStartPerf;
+          if (elapsed >= safetyTimeoutMs) {
+            speechDone = true;
+          }
+
+          if (seg.isKey) {
+            const prog = Math.min(1, Math.max(0, elapsed / Math.max(1, seg.minDurationMs)));
+            const slot = slotAt(seg.schedule.slots, elapsed);
+            const doneLocal = completedSignWord(seg.schedule.slots, elapsed);
+
+            setActiveWordIdx(seg.startTokenIdx);
+            setActiveWordProgress(prog);
+            setActiveSegmentWordIdx(seg.startTokenIdx);
+            setActiveSignSlot(slot);
+            setCompletedWordIndex(doneLocal !== null ? seg.startTokenIdx : null);
+          } else {
+            const clampedElapsed = Math.min(elapsed, seg.timeline.total);
+            const localWIdx = Math.max(
+              0,
+              Math.min(seg.tokens.length - 1, wordIndexAt(seg.timeline, clampedElapsed))
+            );
+            const prog =
+              elapsed >= seg.timeline.total
+                ? 1
+                : progressInWord(seg.timeline, clampedElapsed);
+
+            setActiveWordIdx(seg.startTokenIdx + localWIdx);
+            setActiveWordProgress(prog);
+            setActiveSignSlot(null);
+            setCompletedWordIndex(null);
+          }
+
+          if (elapsed >= seg.minDurationMs && speechDone) {
+            // Jeda singkat antar segmen agar ritme tetap nyaman dan jelas
+            timeoutRef.current = setTimeout(() => {
+              stepSegment(segIndex + 1);
+            }, 140);
+            return;
+          }
+
+          animFrameRef.current = requestAnimationFrame(tick);
+        };
+
+        animFrameRef.current = requestAnimationFrame(tick);
+      };
+
+      stepSegment(0);
     },
-    []
+    [paceConfig.speechRate, stopPlayback, tokens.length]
   );
 
   function handleTogglePlay() {
@@ -200,69 +286,13 @@ export function QuickInstructionsClient() {
       stopPlayback();
       return;
     }
-    if (!activeText.trim() || tokens.length === 0) return;
+    if (!activeText.trim() || playbackPlan.length === 0) return;
 
     resetSyncState();
+    const runId = playbackRunIdRef.current + 1;
+    playbackRunIdRef.current = runId;
     setIsPlaying(true);
-
-    const startTime = performance.now();
-    const speechTotal = speechTimeline.total || 2500;
-    const maxDur = Math.max(speechTotal, signSchedule.signEnd || 0);
-
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utt = new SpeechSynthesisUtterance(activeText);
-      utt.lang = "id-ID";
-      utt.rate = 1.0;
-
-      utt.onboundary = (e) => {
-        if (e.name === "word" || !e.name) {
-          const charIndex = e.charIndex;
-          const idx = tokens.findIndex(
-            (t) => charIndex >= t.charStart && charIndex < t.charEnd
-          );
-          if (idx !== -1) {
-            setActiveWordIdx(idx);
-            setActiveWordProgress(0.2);
-          }
-        }
-      };
-
-      utt.onend = () => {
-        const elapsed = performance.now() - startTime;
-        if (elapsed < maxDur || signSchedule.signEnd > elapsed) {
-          return;
-        }
-        setActiveWordIdx(tokens.length);
-        setActiveWordProgress(1);
-        endTimeoutRef.current = setTimeout(() => {
-          stopPlayback();
-        }, 300);
-      };
-
-      utt.onerror = () => {
-        // Fallback to pure timer loop
-      };
-
-      window.speechSynthesis.speak(utt);
-    }
-
-    const timerLoop = () => {
-      const elapsed = performance.now() - startTime;
-      updateSyncAtTime(elapsed, signSchedule, speechTimeline);
-
-      if (elapsed >= maxDur) {
-        setActiveWordIdx(tokens.length);
-        setActiveWordProgress(1);
-        endTimeoutRef.current = setTimeout(() => {
-          stopPlayback();
-        }, 300);
-        return;
-      }
-      animFrameRef.current = requestAnimationFrame(timerLoop);
-    };
-
-    animFrameRef.current = requestAnimationFrame(timerLoop);
+    startSegmentedPlayback(playbackPlan, runId);
   }
 
   function handleSelectPreset(preset: PresetInstruction) {
@@ -283,17 +313,19 @@ export function QuickInstructionsClient() {
     setActiveKeyTerms(extractKeyTermsFromSentence(clean));
   }
 
-  function handleSelectSignSystem(system: SignSystem) {
-    if (system === signSystem) return;
+  function handleSelectPace(nextPace: PacePreset) {
+    if (nextPace === pace) return;
     resetSyncState();
-    setSignSystem(system);
+    setPace(nextPace);
   }
 
   const activeKeyTerm = activeSignSlot
-    ? (tokens[activeSignSlot.wordIndex]?.core ??
+    ? (tokens[activeSegmentWordIdx ?? activeSignSlot.wordIndex]?.core ??
       expandedKeyWords[manualTermIndex] ??
       activeKeyTerms[0] ??
       "")
+    : activeSegmentWordIdx !== null && tokens[activeSegmentWordIdx]?.isKey
+    ? tokens[activeSegmentWordIdx]!.core
     : (expandedKeyWords[manualTermIndex] ?? activeKeyTerms[0] ?? "");
 
   const activeLetterIndex = activeSignSlot ? activeSignSlot.letterIndex : manualLetterIndex;
@@ -304,8 +336,8 @@ export function QuickInstructionsClient() {
       : null;
 
   const renderKaraokeSentence = (sizeClass: string) => (
-    <div className="w-full py-3.5 px-4 sm:py-4 sm:px-6 rounded-xl border-2 border-[var(--border)] bg-[var(--surface-2)] text-center flex items-center justify-center min-h-[68px]">
-      <p className={`${sizeClass} font-extrabold leading-snug text-[var(--ink)]`}>
+    <div className="w-full py-3.5 px-4 sm:py-4 sm:px-6 rounded-xl border-2 border-[var(--border)] bg-[var(--surface-2)] text-center flex items-center justify-center min-h-[72px]">
+      <p className={`${sizeClass} font-extrabold leading-relaxed text-[var(--ink)]`}>
         {tokens.map((tok, idx) => {
           const isCurrent = idx === activeWordIdx;
           const isPassed = activeWordIdx > idx;
@@ -341,15 +373,15 @@ export function QuickInstructionsClient() {
           </Button>
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border-2 border-[var(--border)] bg-[var(--surface)] text-base sm:text-lg font-extrabold text-[var(--ink)]">
             <Icon name="Hand" size={22} />
-            Isyarat {signSystem}
+            Isyarat {SIBI_SYSTEM}
           </span>
         </header>
 
         <main className="my-auto flex flex-col items-center justify-center text-center w-full max-w-5xl mx-auto gap-6 sm:gap-8">
           {activeKeyTerm ? (
-            <div className="w-full max-w-[380px] h-[270px] sm:max-w-[440px] sm:h-[330px] flex items-center justify-center">
+            <div className="w-full max-w-[380px] h-[280px] sm:max-w-[440px] sm:h-[340px] flex items-center justify-center">
               <SignCard
-                system={signSystem}
+                system={SIBI_SYSTEM}
                 term={activeKeyTerm}
                 activeLetter={activeSignSlot?.ch}
                 activeLetterIndex={activeLetterIndex}
@@ -400,7 +432,7 @@ export function QuickInstructionsClient() {
             Instruksi Cepat di Kelas
           </h1>
           <p className="mt-1 text-sm sm:text-base text-[var(--ink-2)]">
-            Sampaikan instruksi visual dengan kartu isyarat SIBI/BISINDO, suara, dan sorotan kata tersinkron.
+            Sampaikan instruksi visual dengan kartu isyarat SIBI, suara, dan sorotan kata tersinkron.
           </p>
         </div>
 
@@ -417,11 +449,11 @@ export function QuickInstructionsClient() {
       </div>
 
       {/* Workspace Grid: Controls (Left) + Presentation Card (Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Panel Kontrol (Input, Sistem Isyarat, & Preset Kelas) */}
-        <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-5">
-          {/* Input Kalimat & Toggle SIBI/BISINDO */}
-          <Card as="section" className="flex flex-col gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        {/* Panel Kontrol (Input Kalimat & Pilihan Instruksi Rutin) */}
+        <div className="lg:col-span-5 flex flex-col gap-5">
+          {/* Input Kalimat */}
+          <Card as="section" className="flex flex-col gap-4">
             <form onSubmit={handleGenerateCustom} className="flex flex-col gap-3">
               <Field
                 id="custom-instruction"
@@ -441,69 +473,50 @@ export function QuickInstructionsClient() {
                 Tampilkan Kalimat
               </Button>
             </form>
-
-            <div className="pt-4 border-t border-[var(--border)] flex flex-col gap-2">
-              <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wide">
-                Sistem Bahasa Isyarat
-              </span>
-              <div
-                className="grid grid-cols-2 gap-2"
-                role="radiogroup"
-                aria-label="Sistem bahasa isyarat"
-              >
-                <Button
-                  type="button"
-                  role="radio"
-                  aria-checked={signSystem === "SIBI"}
-                  variant={signSystem === "SIBI" ? "primary" : "secondary"}
-                  size="normal"
-                  onClick={() => handleSelectSignSystem("SIBI")}
-                  className="w-full"
-                >
-                  SIBI
-                </Button>
-                <Button
-                  type="button"
-                  role="radio"
-                  aria-checked={signSystem === "BISINDO"}
-                  variant={signSystem === "BISINDO" ? "primary" : "secondary"}
-                  size="normal"
-                  onClick={() => handleSelectSignSystem("BISINDO")}
-                  className="w-full"
-                >
-                  BISINDO
-                </Button>
-              </div>
-            </div>
           </Card>
 
           {/* Pilihan Instruksi Rutin */}
-          <Card as="section" className="flex flex-col gap-3">
-            <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wide">
-              Pilihan Instruksi Rutin
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {PRESET_INSTRUCTIONS.map((preset) => (
-                <Chip
-                  key={preset.id}
-                  label={preset.label}
-                  selected={activePresetId === preset.id}
-                  onSelect={() => handleSelectPreset(preset)}
-                  role="button"
-                />
-              ))}
+          <Card as="section" className="flex-1 flex flex-col gap-3">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wide">
+                Pilihan Instruksi Rutin
+              </span>
+              <span className="text-xs font-semibold text-[var(--muted)]">
+                {PRESET_INSTRUCTIONS.length} siap pakai
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {PRESET_INSTRUCTIONS.map((preset) => {
+                const isSelected = activePresetId === preset.id;
+                return (
+                  <button
+                    key={preset.id}
+                    type="button"
+                    onClick={() => handleSelectPreset(preset)}
+                    aria-pressed={isSelected}
+                    className={`min-h-[44px] px-3.5 py-2.5 rounded-xl border-2 text-left text-sm font-bold transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                      isSelected
+                        ? "bg-[var(--primary)] text-[var(--on-primary)] border-[var(--primary)] shadow-sm"
+                        : "bg-[var(--surface-2)] text-[var(--ink)] border-[var(--border)] hover:bg-[var(--surface)]"
+                    }`}
+                  >
+                    <span className="truncate">{preset.label}</span>
+                    {isSelected && <Icon name="Check" size={16} className="shrink-0" />}
+                  </button>
+                );
+              })}
             </div>
           </Card>
         </div>
 
         {/* Kartu Presentasi (CardPlayer-style) */}
-        <div className="lg:col-span-7 xl:col-span-8">
-          <Card className="w-full flex flex-col justify-between items-center gap-5 sm:gap-6 p-5 sm:p-8 border-2 border-[var(--border)] bg-[var(--surface)] shadow-md">
+        <div className="lg:col-span-7 flex">
+          <Card className="w-full flex flex-col justify-between items-center gap-5 p-5 sm:p-7 border-2 border-[var(--border)] bg-[var(--surface)] shadow-md">
             {/* Bar Info Kata Kunci */}
             <div className="w-full flex flex-wrap items-center justify-between gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[var(--border)] bg-[var(--surface-2)] text-xs font-extrabold text-[var(--ink)]">
                 <Icon name="Hand" size={14} />
-                {signSystem}
+                Isyarat {SIBI_SYSTEM}
               </span>
 
               {expandedKeyWords.length > 0 && (
@@ -533,11 +546,11 @@ export function QuickInstructionsClient() {
               )}
             </div>
 
-            {/* Peraga Kartu Isyarat SIBI / BISINDO Tersinkron */}
+            {/* Peraga Kartu Isyarat SIBI Tersinkron */}
             {activeKeyTerm ? (
-              <div className="w-full max-w-[340px] h-[250px] sm:max-w-[380px] sm:h-[280px] flex flex-col items-center justify-center shrink-0">
+              <div className="w-full max-w-[320px] h-[250px] sm:max-w-[360px] sm:h-[290px] flex flex-col items-center justify-center shrink-0">
                 <SignCard
-                  system={signSystem}
+                  system={SIBI_SYSTEM}
                   term={activeKeyTerm}
                   activeLetter={activeSignSlot?.ch}
                   activeLetterIndex={activeLetterIndex}
@@ -554,30 +567,59 @@ export function QuickInstructionsClient() {
             {/* Kalimat Penuh dengan Sorotan Karaoke Kata-demi-Kata (--progres) */}
             {renderKaraokeSentence("text-lg sm:text-2xl md:text-3xl")}
 
-            {/* Kontrol Pemutaran Seragam */}
-            <div className="w-full max-w-md grid grid-cols-2 gap-3 pt-1">
-              <Button
-                type="button"
-                variant="secondary"
-                size="large"
-                onClick={resetSyncState}
-                icon={<Icon name="ArrowCounterClockwise" size={20} />}
-                className="w-full"
+            {/* Kontrol Kecepatan & Pemutaran Seragam */}
+            <div className="w-full flex flex-col items-center gap-3 pt-1">
+              <div
+                className="inline-flex items-center gap-1 p-1 rounded-xl border border-[var(--border)] bg-[var(--surface-2)]"
+                role="radiogroup"
+                aria-label="Kecepatan suara dan isyarat"
               >
-                Ulangi
-              </Button>
+                {(Object.keys(PACE_CONFIGS) as PacePreset[]).map((key) => {
+                  const cfg = PACE_CONFIGS[key];
+                  const active = pace === key;
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      role="radio"
+                      aria-checked={active}
+                      onClick={() => handleSelectPace(key)}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                        active
+                          ? "bg-[var(--primary)] text-[var(--on-primary)] shadow-xs"
+                          : "text-[var(--ink-2)] hover:text-[var(--ink)]"
+                      }`}
+                    >
+                      {cfg.label}
+                    </button>
+                  );
+                })}
+              </div>
 
-              <Button
-                type="button"
-                variant={isPlaying ? "secondary" : "primary"}
-                size="large"
-                onClick={handleTogglePlay}
-                icon={<Icon name={isPlaying ? "Pause" : "SpeakerHigh"} size={20} />}
-                className="w-full font-bold"
-                aria-label={isPlaying ? "Jeda suara instruksi" : "Putar suara instruksi"}
-              >
-                {isPlaying ? "Jeda" : "Putar"}
-              </Button>
+              <div className="w-full max-w-md grid grid-cols-2 gap-3">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="large"
+                  onClick={resetSyncState}
+                  icon={<Icon name="ArrowCounterClockwise" size={20} />}
+                  className="w-full"
+                >
+                  Ulangi
+                </Button>
+
+                <Button
+                  type="button"
+                  variant={isPlaying ? "secondary" : "primary"}
+                  size="large"
+                  onClick={handleTogglePlay}
+                  icon={<Icon name={isPlaying ? "Pause" : "SpeakerHigh"} size={20} />}
+                  className="w-full font-bold"
+                  aria-label={isPlaying ? "Jeda suara instruksi" : "Putar suara instruksi"}
+                >
+                  {isPlaying ? "Jeda" : "Putar"}
+                </Button>
+              </div>
             </div>
           </Card>
         </div>

@@ -62,7 +62,7 @@ export async function joinClassroomAction(
     .limit(1)
     .then((rows) => rows[0]);
 
-  const DEMO_CODES = ["123456", "888999", "111222", "222333", "333444", "444555"];
+  const DEMO_CODES = ["123456", "222333"];
   if (!classroom && DEMO_CODES.includes(cleanCode)) {
     const { seedDatabase } = await import("@/server/db/seed");
     await seedDatabase();

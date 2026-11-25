@@ -1,7 +1,11 @@
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { getCurrentTeacher } from "@/features/auth";
-import { getClassroomDetail } from "@/features/classrooms";
+import {
+  getClassroomDetail,
+  getClassroomStudentAnalytics,
+  StudentEvaluationPanel,
+} from "@/features/classrooms";
 import { Card, Button, Icon } from "@/shared/ui";
 
 export const instant = false;
@@ -15,7 +19,10 @@ export default async function ClassroomDetailPage({
   if (!session) redirect("/guru/masuk");
 
   const { id } = await params;
-  const data = await getClassroomDetail(id, session.teacher.id);
+  const [data, analytics] = await Promise.all([
+    getClassroomDetail(id, session.teacher.id),
+    getClassroomStudentAnalytics(id, session.teacher.id),
+  ]);
   if (!data) notFound();
 
   const { classroom, students: classStudents, publications } = data;
@@ -164,6 +171,13 @@ export default async function ClassroomDetailPage({
           </div>
         )}
       </section>
+      {/* Manajemen Aktivitas, Analisa & Rekomendasi Siswa */}
+      {analytics && (
+        <StudentEvaluationPanel
+          classroomId={classroom.id}
+          analytics={analytics}
+        />
+      )}
     </div>
   );
 }

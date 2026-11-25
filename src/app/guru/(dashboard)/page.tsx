@@ -1,6 +1,9 @@
-import Link from "next/link";
 import { getCurrentTeacher } from "@/features/auth";
-import { listClassroomsWithStats } from "@/features/classrooms";
+import {
+  getTeacherDashboardOverview,
+  TeacherDashboardCharts,
+} from "@/features/classrooms";
+import { CreateLessonButton } from "@/features/authoring";
 import { Card, Button, Icon } from "@/shared/ui";
 
 export const instant = false;
@@ -9,30 +12,114 @@ export default async function TeacherDashboardPage() {
   const session = await getCurrentTeacher();
   if (!session) return null;
 
-  const classrooms = await listClassroomsWithStats(session.teacher.id);
+  const overview = await getTeacherDashboardOverview(session.teacher.id);
+  const { classrooms, kpis, needsDistribution } = overview;
+
+  const classroomOptions = classrooms.map((c) => ({
+    id: c.id,
+    name: c.name,
+    joinCode: c.joinCode,
+  }));
 
   return (
     <div className="flex flex-col gap-8">
-      {/* Sambutan */}
+      {/* Sambutan & Aksi Cepat */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-[var(--ink)]">
             Selamat datang, {session.teacher.displayName}
           </h1>
           <p className="mt-1 text-base text-[var(--ink-2)]">
-            {session.teacher.schoolName ?? "SLB Inklusif"}
+            {session.teacher.schoolName ?? "SLB Inklusif"} &bull; Ringkasan Ruang Guru
           </p>
         </div>
 
-        <Button
-          variant="primary"
-          size="normal"
-          href="/guru/kelas/baru"
-          icon={<Icon name="Chalkboard" size={20} />}
-        >
-          Buat ruang kelas
-        </Button>
+        <div className="flex flex-wrap items-center gap-3">
+          <CreateLessonButton
+            classrooms={classroomOptions}
+            label="Buat Materi"
+            variant="secondary"
+            size="normal"
+          />
+          <Button
+            variant="primary"
+            size="normal"
+            href="/guru/kelas/baru"
+            icon={<Icon name="Chalkboard" size={20} />}
+          >
+            Buat ruang kelas
+          </Button>
+        </div>
       </div>
+
+      {/* Ringkasan KPI Utama */}
+      <section
+        aria-label="Ringkasan statistik utama"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+      >
+        <Card className="p-5 flex items-center gap-4">
+          <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--accent-subtle)] text-[var(--primary)] border border-[var(--border)]">
+            <Icon name="Chalkboard" size={24} />
+          </span>
+          <div className="min-w-0">
+            <span className="text-xs font-bold uppercase tracking-wide text-[var(--muted)] block">
+              Kelas Aktif
+            </span>
+            <span className="text-3xl font-extrabold font-mono text-[var(--ink)] leading-tight">
+              {kpis.activeClassrooms}
+            </span>
+          </div>
+        </Card>
+
+        <Card className="p-5 flex items-center gap-4">
+          <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--info-bg)] text-[var(--info-ink)] border border-[var(--border)]">
+            <Icon name="UsersThree" size={24} />
+          </span>
+          <div className="min-w-0">
+            <span className="text-xs font-bold uppercase tracking-wide text-[var(--muted)] block">
+              Total Siswa
+            </span>
+            <span className="text-3xl font-extrabold font-mono text-[var(--ink)] leading-tight">
+              {kpis.totalStudents}
+            </span>
+          </div>
+        </Card>
+
+        <Card className="p-5 flex items-center gap-4">
+          <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--surface-2)] text-[var(--ink)] border border-[var(--border)]">
+            <Icon name="Cards" size={24} />
+          </span>
+          <div className="min-w-0">
+            <span className="text-xs font-bold uppercase tracking-wide text-[var(--muted)] block">
+              Materi Terbit
+            </span>
+            <span className="text-3xl font-extrabold font-mono text-[var(--ink)] leading-tight">
+              {kpis.publishedLessons}
+            </span>
+          </div>
+        </Card>
+
+        <Card className="p-5 flex items-center gap-4">
+          <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--benar-bg)] text-[var(--benar-ink)] border border-[var(--border)]">
+            <Icon name="ChartBar" size={24} />
+          </span>
+          <div className="min-w-0">
+            <span className="text-xs font-bold uppercase tracking-wide text-[var(--muted)] block">
+              Rata-rata Ketuntasan
+            </span>
+            <span className="text-3xl font-extrabold font-mono text-[var(--benar-ink)] leading-tight">
+              {kpis.averageKetuntasan}%
+            </span>
+          </div>
+        </Card>
+      </section>
+
+      {/* Visualisasi SVG Analitik */}
+      <TeacherDashboardCharts
+        classrooms={classrooms}
+        needsDistribution={needsDistribution}
+        totalStudents={kpis.totalStudents}
+      />
 
       {/* Daftar Ruang Kelas */}
       <section className="flex flex-col gap-4">
@@ -68,15 +155,20 @@ export default async function TeacherDashboardPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {classrooms.map((c) => (
-              <Card key={c.id} className="flex flex-col justify-between gap-4">
+              <Card key={c.id} className="flex flex-col justify-between gap-4 p-5">
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <h3 className="text-xl font-bold text-[var(--ink)]">
                       {c.name}
                     </h3>
-                    <span className="text-xs px-2.5 py-1 rounded-full border border-[var(--border)] font-bold bg-[var(--surface-2)]">
-                      {c.defaultSignSystem}
-                    </span>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <span className="text-xs px-2.5 py-1 rounded-full border border-[var(--border)] font-bold bg-[var(--surface-2)]">
+                        {c.defaultSignSystem}
+                      </span>
+                      <span className="text-xs px-2.5 py-1 rounded-full border border-[var(--border)] font-mono font-bold bg-[var(--accent-subtle)] text-[var(--primary)]">
+                        {c.ketuntasanPercent}% tuntas
+                      </span>
+                    </div>
                   </div>
 
                   <div className="mt-3 flex items-baseline gap-2">
@@ -87,7 +179,7 @@ export default async function TeacherDashboardPage() {
                   </div>
 
                   <p className="mt-1 text-sm text-[var(--muted)]">
-                    {c.studentCount} siswa &bull; {c.lessonCount} materi terbit
+                    {c.studentCount} siswa ({c.activeStudentCount} aktif) &bull; {c.lessonCount} materi terbit
                   </p>
                 </div>
 
@@ -96,9 +188,10 @@ export default async function TeacherDashboardPage() {
                     variant="primary"
                     size="normal"
                     href={`/guru/kelas/${c.id}`}
+                    icon={<Icon name="ChartBar" size={18} />}
                     className="flex-1"
                   >
-                    Buka kelas
+                    Buka kelas &amp; Analisis
                   </Button>
                   <Button
                     variant="secondary"
@@ -114,27 +207,6 @@ export default async function TeacherDashboardPage() {
             ))}
           </div>
         )}
-      </section>
-
-      {/* Bagian Perlu Perhatian */}
-      <section className="flex flex-col gap-3">
-        <h2 className="text-xl font-bold text-[var(--ink)]">
-          Perlu Perhatian
-        </h2>
-        <Card className="flex flex-col gap-3 p-4">
-          <div className="flex items-center gap-3 text-sm font-medium">
-            <Icon name="Warning" size={24} className="text-[var(--ulang-edge)] shrink-0" />
-            <div className="flex-1">
-              <strong>Budi (Kelas 3B)</strong>: mencoba 3 kali pada materi &quot;Mengenal Sabun&quot;.
-            </div>
-            <Link
-              href={classrooms[0] ? `/guru/kelas/${classrooms[0].id}` : "/guru"}
-              className="text-sm font-bold text-[var(--link)] hover:underline shrink-0"
-            >
-              Lihat hasil
-            </Link>
-          </div>
-        </Card>
       </section>
     </div>
   );

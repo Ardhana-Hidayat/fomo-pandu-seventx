@@ -144,7 +144,7 @@ export async function getClassroomById(
   }
 }
 
-const DEMO_CODES = ["123456", "888999", "111222", "222333", "333444", "444555"];
+const DEMO_CODES = ["123456", "222333"];
 
 export async function getClassroomByJoinCode(
   joinCode: string

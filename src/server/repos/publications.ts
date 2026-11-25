@@ -214,7 +214,7 @@ export async function getPublicationByShareCode(
 
     let found = rows[0];
     if (!found && process.env.NODE_ENV !== "test") {
-      const DEMO_SHARE_CODES = ["DEMO1234", "GIGI1234", "HEWN1234", "BUAH1234", "AMAN1234"];
+      const DEMO_SHARE_CODES = ["DEMO1234", "HEWN1234"];
       if (DEMO_SHARE_CODES.includes(shareCode.trim().toUpperCase())) {
         try {
           const { seedDatabase } = await import("../db/seed");

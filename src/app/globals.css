@@ -342,3 +342,13 @@ body {
   line-height: var(--jarak-baris);
   min-height: 100dvh;
 }
+
+/* Sembunyikan scrollbar yang terlihat secara global sambil mempertahankan fungsi gulir */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}

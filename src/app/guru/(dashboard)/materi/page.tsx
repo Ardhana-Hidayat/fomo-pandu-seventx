@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCurrentTeacher } from "@/features/auth";
-import { listTeacherLessons } from "@/features/authoring";
+import { listTeacherLessons, CreateLessonButton } from "@/features/authoring";
+import { listClassroomsWithStats } from "@/features/classrooms";
 import { Card, Button, Icon } from "@/shared/ui";
 
 export const instant = false;
@@ -9,7 +10,16 @@ export default async function LessonLibraryPage() {
   const session = await getCurrentTeacher();
   if (!session) redirect("/guru/masuk");
 
-  const lessons = await listTeacherLessons(session.teacher.id);
+  const [lessons, rawClassrooms] = await Promise.all([
+    listTeacherLessons(session.teacher.id),
+    listClassroomsWithStats(session.teacher.id),
+  ]);
+
+  const classrooms = rawClassrooms.map((c) => ({
+    id: c.id,
+    name: c.name,
+    joinCode: c.joinCode,
+  }));
 
   return (
     <div className="flex flex-col gap-6">
@@ -23,14 +33,12 @@ export default async function LessonLibraryPage() {
           </p>
         </div>
 
-        <Button
+        <CreateLessonButton
+          classrooms={classrooms}
+          label="Buat materi baru"
           variant="primary"
           size="normal"
-          href="/guru/materi/baru"
-          icon={<Icon name="NotePencil" size={20} />}
-        >
-          Buat materi baru
-        </Button>
+        />
       </div>
 
       {lessons.length === 0 ? (
@@ -40,16 +48,14 @@ export default async function LessonLibraryPage() {
             Belum ada materi
           </h2>
           <p className="text-sm text-[var(--ink-2)] max-w-md">
-            Mulai susun materi pertama dari topik sederhana, teks, dokumen PDF, atau foto buku teks.
+            Mulai susun materi pertama secara manual atau unggah dokumen PDF modul belajar.
           </p>
-          <Button
+          <CreateLessonButton
+            classrooms={classrooms}
+            label="Mulai susun materi"
             variant="primary"
             size="normal"
-            href="/guru/materi/baru"
-            icon={<Icon name="NotePencil" size={20} />}
-          >
-            Mulai susun materi
-          </Button>
+          />
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -16,10 +16,7 @@ import { getOrCreateDemoTeacher } from "@/server/services/auth/demo";
 import {
   DEMO_TEACHER_ID,
   DEMO_CLASSROOM_ID,
-  DEMO_CLASS_1A_ID,
   DEMO_CLASS_2B_ID,
-  DEMO_CLASS_3C_ID,
-  DEMO_CLASS_4D_ID,
 } from "@/server/db/demo-lesson-data";
 
 export interface CurrentTeacherSession {
@@ -131,10 +128,7 @@ export async function getCurrentStudent(): Promise<CurrentStudentSession | null>
 
     const ALL_DEMO_CLASS_IDS = [
       DEMO_CLASSROOM_ID,
-      DEMO_CLASS_1A_ID,
       DEMO_CLASS_2B_ID,
-      DEMO_CLASS_3C_ID,
-      DEMO_CLASS_4D_ID,
     ];
 
     if (!classroom && (ALL_DEMO_CLASS_IDS.includes(session.classroomId) || !session.classroomId)) {

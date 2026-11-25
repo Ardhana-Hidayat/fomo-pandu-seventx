@@ -4,6 +4,491 @@
   "attribution": "Piktogram: ARASAAC (arasaac.org), Pemerintah Aragon, penulis Sergio Palao.",
   "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
   "items": {
+    "2": {
+      "id": 2628,
+      "name": "2",
+      "alt": "Piktogram 2"
+    },
+    "3": {
+      "id": 2629,
+      "name": "3",
+      "alt": "Piktogram 3"
+    },
+    "4": {
+      "id": 2630,
+      "name": "4",
+      "alt": "Piktogram 4"
+    },
+    "5": {
+      "id": 2631,
+      "name": "5",
+      "alt": "Piktogram 5"
+    },
+    "6": {
+      "id": 2632,
+      "name": "6",
+      "alt": "Piktogram 6"
+    },
+    "7": {
+      "id": 2633,
+      "name": "7",
+      "alt": "Piktogram 7"
+    },
+    "8": {
+      "id": 2634,
+      "name": "8",
+      "alt": "Piktogram 8"
+    },
+    "9": {
+      "id": 2635,
+      "name": "9",
+      "alt": "Piktogram 9"
+    },
+    "10": {
+      "id": 7025,
+      "name": "10",
+      "alt": "Piktogram 10"
+    },
+    "11": {
+      "id": 29260,
+      "name": "11",
+      "alt": "Piktogram 11"
+    },
+    "12": {
+      "id": 29262,
+      "name": "12",
+      "alt": "Piktogram 12"
+    },
+    "13": {
+      "id": 29264,
+      "name": "13",
+      "alt": "Piktogram 13"
+    },
+    "14": {
+      "id": 29266,
+      "name": "14",
+      "alt": "Piktogram 14"
+    },
+    "15": {
+      "id": 29268,
+      "name": "15",
+      "alt": "Piktogram 15"
+    },
+    "16": {
+      "id": 29270,
+      "name": "16",
+      "alt": "Piktogram 16"
+    },
+    "17": {
+      "id": 29272,
+      "name": "17",
+      "alt": "Piktogram 17"
+    },
+    "18": {
+      "id": 29274,
+      "name": "18",
+      "alt": "Piktogram 18"
+    },
+    "19": {
+      "id": 29276,
+      "name": "19",
+      "alt": "Piktogram 19"
+    },
+    "20": {
+      "id": 29550,
+      "name": "20",
+      "alt": "Piktogram 20"
+    },
+    "21": {
+      "id": 29280,
+      "name": "21",
+      "alt": "Piktogram 21"
+    },
+    "22": {
+      "id": 29282,
+      "name": "22",
+      "alt": "Piktogram 22"
+    },
+    "23": {
+      "id": 29284,
+      "name": "23",
+      "alt": "Piktogram 23"
+    },
+    "24": {
+      "id": 29286,
+      "name": "24",
+      "alt": "Piktogram 24"
+    },
+    "25": {
+      "id": 29288,
+      "name": "25",
+      "alt": "Piktogram 25"
+    },
+    "26": {
+      "id": 29290,
+      "name": "26",
+      "alt": "Piktogram 26"
+    },
+    "27": {
+      "id": 29292,
+      "name": "27",
+      "alt": "Piktogram 27"
+    },
+    "28": {
+      "id": 29294,
+      "name": "28",
+      "alt": "Piktogram 28"
+    },
+    "29": {
+      "id": 29296,
+      "name": "29",
+      "alt": "Piktogram 29"
+    },
+    "32": {
+      "id": 29304,
+      "name": "32",
+      "alt": "Piktogram 32"
+    },
+    "33": {
+      "id": 29306,
+      "name": "33",
+      "alt": "Piktogram 33"
+    },
+    "34": {
+      "id": 29308,
+      "name": "34",
+      "alt": "Piktogram 34"
+    },
+    "35": {
+      "id": 29310,
+      "name": "35",
+      "alt": "Piktogram 35"
+    },
+    "36": {
+      "id": 29312,
+      "name": "36",
+      "alt": "Piktogram 36"
+    },
+    "37": {
+      "id": 29314,
+      "name": "37",
+      "alt": "Piktogram 37"
+    },
+    "38": {
+      "id": 29316,
+      "name": "38",
+      "alt": "Piktogram 38"
+    },
+    "39": {
+      "id": 29318,
+      "name": "39",
+      "alt": "Piktogram 39"
+    },
+    "40": {
+      "id": 29320,
+      "name": "40",
+      "alt": "Piktogram 40"
+    },
+    "41": {
+      "id": 29324,
+      "name": "41",
+      "alt": "Piktogram 41"
+    },
+    "42": {
+      "id": 29326,
+      "name": "42",
+      "alt": "Piktogram 42"
+    },
+    "43": {
+      "id": 29328,
+      "name": "43",
+      "alt": "Piktogram 43"
+    },
+    "44": {
+      "id": 29330,
+      "name": "44",
+      "alt": "Piktogram 44"
+    },
+    "45": {
+      "id": 29332,
+      "name": "45",
+      "alt": "Piktogram 45"
+    },
+    "46": {
+      "id": 29334,
+      "name": "46",
+      "alt": "Piktogram 46"
+    },
+    "47": {
+      "id": 29336,
+      "name": "47",
+      "alt": "Piktogram 47"
+    },
+    "48": {
+      "id": 29338,
+      "name": "48",
+      "alt": "Piktogram 48"
+    },
+    "49": {
+      "id": 29340,
+      "name": "49",
+      "alt": "Piktogram 49"
+    },
+    "50": {
+      "id": 29342,
+      "name": "50",
+      "alt": "Piktogram 50"
+    },
+    "51": {
+      "id": 29346,
+      "name": "51",
+      "alt": "Piktogram 51"
+    },
+    "52": {
+      "id": 29348,
+      "name": "52",
+      "alt": "Piktogram 52"
+    },
+    "53": {
+      "id": 29350,
+      "name": "53",
+      "alt": "Piktogram 53"
+    },
+    "54": {
+      "id": 29352,
+      "name": "54",
+      "alt": "Piktogram 54"
+    },
+    "55": {
+      "id": 29354,
+      "name": "55",
+      "alt": "Piktogram 55"
+    },
+    "56": {
+      "id": 29356,
+      "name": "56",
+      "alt": "Piktogram 56"
+    },
+    "57": {
+      "id": 29358,
+      "name": "57",
+      "alt": "Piktogram 57"
+    },
+    "58": {
+      "id": 29360,
+      "name": "58",
+      "alt": "Piktogram 58"
+    },
+    "59": {
+      "id": 29362,
+      "name": "59",
+      "alt": "Piktogram 59"
+    },
+    "60": {
+      "id": 29364,
+      "name": "60",
+      "alt": "Piktogram 60"
+    },
+    "61": {
+      "id": 29366,
+      "name": "61",
+      "alt": "Piktogram 61"
+    },
+    "62": {
+      "id": 29368,
+      "name": "62",
+      "alt": "Piktogram 62"
+    },
+    "63": {
+      "id": 29370,
+      "name": "63",
+      "alt": "Piktogram 63"
+    },
+    "64": {
+      "id": 29372,
+      "name": "64",
+      "alt": "Piktogram 64"
+    },
+    "65": {
+      "id": 29374,
+      "name": "65",
+      "alt": "Piktogram 65"
+    },
+    "66": {
+      "id": 29376,
+      "name": "66",
+      "alt": "Piktogram 66"
+    },
+    "67": {
+      "id": 29378,
+      "name": "67",
+      "alt": "Piktogram 67"
+    },
+    "68": {
+      "id": 29380,
+      "name": "68",
+      "alt": "Piktogram 68"
+    },
+    "69": {
+      "id": 29382,
+      "name": "69",
+      "alt": "Piktogram 69"
+    },
+    "70": {
+      "id": 29388,
+      "name": "70",
+      "alt": "Piktogram 70"
+    },
+    "71": {
+      "id": 29390,
+      "name": "71",
+      "alt": "Piktogram 71"
+    },
+    "72": {
+      "id": 29392,
+      "name": "72",
+      "alt": "Piktogram 72"
+    },
+    "73": {
+      "id": 29394,
+      "name": "73",
+      "alt": "Piktogram 73"
+    },
+    "74": {
+      "id": 29396,
+      "name": "74",
+      "alt": "Piktogram 74"
+    },
+    "75": {
+      "id": 29398,
+      "name": "75",
+      "alt": "Piktogram 75"
+    },
+    "76": {
+      "id": 29400,
+      "name": "76",
+      "alt": "Piktogram 76"
+    },
+    "77": {
+      "id": 29402,
+      "name": "77",
+      "alt": "Piktogram 77"
+    },
+    "78": {
+      "id": 29404,
+      "name": "78",
+      "alt": "Piktogram 78"
+    },
+    "79": {
+      "id": 29406,
+      "name": "79",
+      "alt": "Piktogram 79"
+    },
+    "80": {
+      "id": 29410,
+      "name": "80",
+      "alt": "Piktogram 80"
+    },
+    "81": {
+      "id": 29412,
+      "name": "81",
+      "alt": "Piktogram 81"
+    },
+    "82": {
+      "id": 29414,
+      "name": "82",
+      "alt": "Piktogram 82"
+    },
+    "83": {
+      "id": 29416,
+      "name": "83",
+      "alt": "Piktogram 83"
+    },
+    "84": {
+      "id": 29418,
+      "name": "84",
+      "alt": "Piktogram 84"
+    },
+    "85": {
+      "id": 29420,
+      "name": "85",
+      "alt": "Piktogram 85"
+    },
+    "86": {
+      "id": 29422,
+      "name": "86",
+      "alt": "Piktogram 86"
+    },
+    "87": {
+      "id": 29424,
+      "name": "87",
+      "alt": "Piktogram 87"
+    },
+    "88": {
+      "id": 29426,
+      "name": "88",
+      "alt": "Piktogram 88"
+    },
+    "89": {
+      "id": 29428,
+      "name": "89",
+      "alt": "Piktogram 89"
+    },
+    "90": {
+      "id": 29430,
+      "name": "90",
+      "alt": "Piktogram 90"
+    },
+    "91": {
+      "id": 29434,
+      "name": "91",
+      "alt": "Piktogram 91"
+    },
+    "92": {
+      "id": 29436,
+      "name": "92",
+      "alt": "Piktogram 92"
+    },
+    "93": {
+      "id": 29438,
+      "name": "93",
+      "alt": "Piktogram 93"
+    },
+    "94": {
+      "id": 29440,
+      "name": "94",
+      "alt": "Piktogram 94"
+    },
+    "95": {
+      "id": 29442,
+      "name": "95",
+      "alt": "Piktogram 95"
+    },
+    "96": {
+      "id": 29444,
+      "name": "96",
+      "alt": "Piktogram 96"
+    },
+    "97": {
+      "id": 29446,
+      "name": "97",
+      "alt": "Piktogram 97"
+    },
+    "98": {
+      "id": 29448,
+      "name": "98",
+      "alt": "Piktogram 98"
+    },
+    "99": {
+      "id": 29450,
+      "name": "99",
+      "alt": "Piktogram 99"
+    },
+    "100": {
+      "id": 29256,
+      "name": "100",
+      "alt": "Piktogram 100"
+    },
     "air": {
       "id": 2414,
       "name": "water tap",
@@ -1053,6 +1538,3721 @@
       "id": 6564,
       "name": "look",
       "alt": "Menengok kanan dan kiri"
+    },
+    "dislike": {
+      "id": 37825,
+      "name": "dislike",
+      "alt": "Piktogram dislike"
+    },
+    "buy": {
+      "id": 6457,
+      "name": "buy",
+      "alt": "Piktogram buy"
+    },
+    "close": {
+      "id": 30383,
+      "name": "close",
+      "alt": "Piktogram close"
+    },
+    "slim": {
+      "id": 25048,
+      "name": "slim",
+      "alt": "Piktogram slim"
+    },
+    "like-37826": {
+      "id": 37826,
+      "name": "like",
+      "alt": "Piktogram like"
+    },
+    "bathe-2271": {
+      "id": 2271,
+      "name": "bathe",
+      "alt": "Piktogram bathe"
+    },
+    "tired": {
+      "id": 2314,
+      "name": "tired",
+      "alt": "Piktogram tired"
+    },
+    "today": {
+      "id": 7131,
+      "name": "today",
+      "alt": "Piktogram today"
+    },
+    "buy-8986": {
+      "id": 8986,
+      "name": "buy",
+      "alt": "Piktogram buy"
+    },
+    "warehouse": {
+      "id": 6896,
+      "name": "warehouse",
+      "alt": "Piktogram warehouse"
+    },
+    "bathe": {
+      "id": 6058,
+      "name": "bathe",
+      "alt": "Piktogram bathe"
+    },
+    "tired-28709": {
+      "id": 28709,
+      "name": "tired",
+      "alt": "Piktogram tired"
+    },
+    "far": {
+      "id": 30385,
+      "name": "far",
+      "alt": "Piktogram far"
+    },
+    "bathe-36349": {
+      "id": 36349,
+      "name": "bathe",
+      "alt": "Piktogram bathe"
+    },
+    "be": {
+      "id": 5466,
+      "name": "be",
+      "alt": "Piktogram be"
+    },
+    "like": {
+      "id": 37721,
+      "name": "like",
+      "alt": "Piktogram like"
+    },
+    "today-38276": {
+      "id": 38276,
+      "name": "today",
+      "alt": "Piktogram today"
+    },
+    "psychiatrist": {
+      "id": 38474,
+      "name": "psychiatrist",
+      "alt": "Piktogram psychiatrist"
+    },
+    "psychiatrist-38880": {
+      "id": 38880,
+      "name": "psychiatrist",
+      "alt": "Piktogram psychiatrist"
+    },
+    "below": {
+      "id": 5355,
+      "name": "below",
+      "alt": "Piktogram below"
+    },
+    "inside": {
+      "id": 5439,
+      "name": "inside",
+      "alt": "Piktogram inside"
+    },
+    "up": {
+      "id": 5388,
+      "name": "up",
+      "alt": "Piktogram up"
+    },
+    "want": {
+      "id": 5441,
+      "name": "want",
+      "alt": "Piktogram want"
+    },
+    "count": {
+      "id": 2714,
+      "name": "count",
+      "alt": "Piktogram count"
+    },
+    "cut": {
+      "id": 5975,
+      "name": "cut",
+      "alt": "Piktogram cut"
+    },
+    "outside": {
+      "id": 5475,
+      "name": "outside",
+      "alt": "Piktogram outside"
+    },
+    "run": {
+      "id": 6465,
+      "name": "run",
+      "alt": "Piktogram run"
+    },
+    "drink": {
+      "id": 6061,
+      "name": "drink",
+      "alt": "Piktogram drink"
+    },
+    "yesterday": {
+      "id": 6926,
+      "name": "yesterday",
+      "alt": "Piktogram yesterday"
+    },
+    "tomorrow": {
+      "id": 7152,
+      "name": "tomorrow",
+      "alt": "Piktogram tomorrow"
+    },
+    "short": {
+      "id": 25839,
+      "name": "short",
+      "alt": "Piktogram short"
+    },
+    "before": {
+      "id": 32745,
+      "name": "before",
+      "alt": "Piktogram before"
+    },
+    "now": {
+      "id": 32747,
+      "name": "now",
+      "alt": "Piktogram now"
+    },
+    "tired-35537": {
+      "id": 35537,
+      "name": "tired",
+      "alt": "Piktogram tired"
+    },
+    "be-36392": {
+      "id": 36392,
+      "name": "be",
+      "alt": "Piktogram be"
+    },
+    "after": {
+      "id": 32749,
+      "name": "after",
+      "alt": "Piktogram after"
+    },
+    "tomorrow-38278": {
+      "id": 38278,
+      "name": "tomorrow",
+      "alt": "Piktogram tomorrow"
+    },
+    "yesterday-38279": {
+      "id": 38279,
+      "name": "yesterday",
+      "alt": "Piktogram yesterday"
+    },
+    "drink-2276": {
+      "id": 2276,
+      "name": "drink",
+      "alt": "Piktogram drink"
+    },
+    "comb": {
+      "id": 2512,
+      "name": "comb",
+      "alt": "Piktogram comb"
+    },
+    "around": {
+      "id": 5376,
+      "name": "around",
+      "alt": "Piktogram around"
+    },
+    "there": {
+      "id": 5375,
+      "name": "there",
+      "alt": "Piktogram there"
+    },
+    "under": {
+      "id": 5437,
+      "name": "under",
+      "alt": "Piktogram under"
+    },
+    "behind": {
+      "id": 5443,
+      "name": "behind",
+      "alt": "Piktogram behind"
+    },
+    "here": {
+      "id": 5382,
+      "name": "here",
+      "alt": "Piktogram here"
+    },
+    "refuel": {
+      "id": 5448,
+      "name": "refuel",
+      "alt": "Piktogram refuel"
+    },
+    "above": {
+      "id": 5451,
+      "name": "above",
+      "alt": "Piktogram above"
+    },
+    "descend": {
+      "id": 6053,
+      "name": "descend",
+      "alt": "Piktogram descend"
+    },
+    "soap": {
+      "id": 6547,
+      "name": "soap",
+      "alt": "Piktogram soap"
+    },
+    "never": {
+      "id": 5527,
+      "name": "never",
+      "alt": "Piktogram never"
+    },
+    "dry": {
+      "id": 7239,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "get-tired": {
+      "id": 6959,
+      "name": "get tired",
+      "alt": "Piktogram get tired"
+    },
+    "rent": {
+      "id": 8012,
+      "name": "rent",
+      "alt": "Piktogram rent"
+    },
+    "cut-8084": {
+      "id": 8084,
+      "name": "cut",
+      "alt": "Piktogram cut"
+    },
+    "rinse": {
+      "id": 8560,
+      "name": "rinse",
+      "alt": "Piktogram rinse"
+    },
+    "calculate": {
+      "id": 8518,
+      "name": "calculate",
+      "alt": "Piktogram calculate"
+    },
+    "rinse-8978": {
+      "id": 8978,
+      "name": "rinse",
+      "alt": "Piktogram rinse"
+    },
+    "direct": {
+      "id": 8991,
+      "name": "direct",
+      "alt": "Piktogram direct"
+    },
+    "fine-10173": {
+      "id": 10173,
+      "name": "fine",
+      "alt": "Piktogram fine"
+    },
+    "fine": {
+      "id": 10172,
+      "name": "fine",
+      "alt": "Piktogram fine"
+    },
+    "some": {
+      "id": 11175,
+      "name": "some",
+      "alt": "Piktogram some"
+    },
+    "better": {
+      "id": 11470,
+      "name": "better",
+      "alt": "Piktogram better"
+    },
+    "draw": {
+      "id": 5506,
+      "name": "draw",
+      "alt": "Piktogram draw"
+    },
+    "now-13026": {
+      "id": 13026,
+      "name": "now",
+      "alt": "Piktogram now"
+    },
+    "after-13080": {
+      "id": 13080,
+      "name": "after",
+      "alt": "Piktogram after"
+    },
+    "before-13028": {
+      "id": 13028,
+      "name": "before",
+      "alt": "Piktogram before"
+    },
+    "dry-16887": {
+      "id": 16887,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "food-storehouse": {
+      "id": 15832,
+      "name": "food storehouse",
+      "alt": "Piktogram food storehouse"
+    },
+    "rinse-21343": {
+      "id": 21343,
+      "name": "rinse",
+      "alt": "Piktogram rinse"
+    },
+    "always": {
+      "id": 17322,
+      "name": "always",
+      "alt": "Piktogram always"
+    },
+    "rinse-21345": {
+      "id": 21345,
+      "name": "rinse",
+      "alt": "Piktogram rinse"
+    },
+    "rinse-21347": {
+      "id": 21347,
+      "name": "rinse",
+      "alt": "Piktogram rinse"
+    },
+    "dry-22104": {
+      "id": 22104,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "comb-22029": {
+      "id": 22029,
+      "name": "comb",
+      "alt": "Piktogram comb"
+    },
+    "dry-22105": {
+      "id": 22105,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "honk": {
+      "id": 22139,
+      "name": "honk",
+      "alt": "Piktogram honk"
+    },
+    "cut-25020": {
+      "id": 25020,
+      "name": "cut",
+      "alt": "Piktogram cut"
+    },
+    "dry-27485": {
+      "id": 27485,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "dry-27486": {
+      "id": 27486,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "cut-27696": {
+      "id": 27696,
+      "name": "cut",
+      "alt": "Piktogram cut"
+    },
+    "attend": {
+      "id": 21385,
+      "name": "attend",
+      "alt": "Piktogram attend"
+    },
+    "cut-27695": {
+      "id": 27695,
+      "name": "cut",
+      "alt": "Piktogram cut"
+    },
+    "gargles": {
+      "id": 27784,
+      "name": "gargles",
+      "alt": "Piktogram gargles"
+    },
+    "dry-28503": {
+      "id": 28503,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "rinse-28505": {
+      "id": 28505,
+      "name": "rinse",
+      "alt": "Piktogram rinse"
+    },
+    "gargles-30038": {
+      "id": 30038,
+      "name": "gargles",
+      "alt": "Piktogram gargles"
+    },
+    "drink-29716": {
+      "id": 29716,
+      "name": "drink",
+      "alt": "Piktogram drink"
+    },
+    "gargles-30039": {
+      "id": 30039,
+      "name": "gargles",
+      "alt": "Piktogram gargles"
+    },
+    "dry-30520": {
+      "id": 30520,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "hurt": {
+      "id": 30620,
+      "name": "hurt",
+      "alt": "Piktogram hurt"
+    },
+    "bath": {
+      "id": 31853,
+      "name": "bath",
+      "alt": "Piktogram bath"
+    },
+    "tired-31925": {
+      "id": 31925,
+      "name": "tired",
+      "alt": "Piktogram tired"
+    },
+    "transport-in-wheelchair": {
+      "id": 32288,
+      "name": "transport in wheelchair",
+      "alt": "Piktogram transport in wheelchair"
+    },
+    "transport-in-wheelchair-33930": {
+      "id": 33930,
+      "name": "transport in wheelchair",
+      "alt": "Piktogram transport in wheelchair"
+    },
+    "transport-in-wheelchair-33931": {
+      "id": 33931,
+      "name": "transport in wheelchair",
+      "alt": "Piktogram transport in wheelchair"
+    },
+    "dry-28507": {
+      "id": 28507,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "direct-34353": {
+      "id": 34353,
+      "name": "direct",
+      "alt": "Piktogram direct"
+    },
+    "cover": {
+      "id": 34465,
+      "name": "cover",
+      "alt": "Piktogram cover"
+    },
+    "move": {
+      "id": 36473,
+      "name": "move",
+      "alt": "Piktogram move"
+    },
+    "everybody": {
+      "id": 36081,
+      "name": "everybody",
+      "alt": "Piktogram everybody"
+    },
+    "want-36518": {
+      "id": 36518,
+      "name": "want",
+      "alt": "Piktogram want"
+    },
+    "get-on-bus": {
+      "id": 36593,
+      "name": "get on bus",
+      "alt": "Piktogram get on bus"
+    },
+    "get-on-bus-36594": {
+      "id": 36594,
+      "name": "get on bus",
+      "alt": "Piktogram get on bus"
+    },
+    "prick-the-food": {
+      "id": 36654,
+      "name": "prick the food",
+      "alt": "Piktogram prick the food"
+    },
+    "prick-the-food-36658": {
+      "id": 36658,
+      "name": "prick the food",
+      "alt": "Piktogram prick the food"
+    },
+    "close-36758": {
+      "id": 36758,
+      "name": "close",
+      "alt": "Piktogram close"
+    },
+    "soap-36910": {
+      "id": 36910,
+      "name": "soap",
+      "alt": "Piktogram soap"
+    },
+    "take-to-school": {
+      "id": 37036,
+      "name": "take to school",
+      "alt": "Piktogram take to school"
+    },
+    "pick-up-from-school": {
+      "id": 37047,
+      "name": "pick up from school",
+      "alt": "Piktogram pick up from school"
+    },
+    "drink-37528": {
+      "id": 37528,
+      "name": "drink",
+      "alt": "Piktogram drink"
+    },
+    "deserted": {
+      "id": 37580,
+      "name": "deserted",
+      "alt": "Piktogram deserted"
+    },
+    "dry-37777": {
+      "id": 37777,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "hang": {
+      "id": 37895,
+      "name": "hang",
+      "alt": "Piktogram hang"
+    },
+    "dry-37835": {
+      "id": 37835,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "shortcut": {
+      "id": 38284,
+      "name": "shortcut",
+      "alt": "Piktogram shortcut"
+    },
+    "hospital-classroom": {
+      "id": 38392,
+      "name": "hospital classroom",
+      "alt": "Piktogram hospital classroom"
+    },
+    "hospital-classroom-38393": {
+      "id": 38393,
+      "name": "hospital classroom",
+      "alt": "Piktogram hospital classroom"
+    },
+    "paediatric-psychiatrist": {
+      "id": 38475,
+      "name": "paediatric psychiatrist",
+      "alt": "Piktogram paediatric psychiatrist"
+    },
+    "dry-38471": {
+      "id": 38471,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "sieve": {
+      "id": 38703,
+      "name": "sieve",
+      "alt": "Piktogram sieve"
+    },
+    "serve": {
+      "id": 38707,
+      "name": "serve",
+      "alt": "Piktogram serve"
+    },
+    "fine-38774": {
+      "id": 38774,
+      "name": "fine",
+      "alt": "Piktogram fine"
+    },
+    "fine-38773": {
+      "id": 38773,
+      "name": "fine",
+      "alt": "Piktogram fine"
+    },
+    "paediatric-psychiatrist-38879": {
+      "id": 38879,
+      "name": "paediatric psychiatrist",
+      "alt": "Piktogram paediatric psychiatrist"
+    },
+    "hate": {
+      "id": 38936,
+      "name": "hate",
+      "alt": "Piktogram hate"
+    },
+    "turn": {
+      "id": 39544,
+      "name": "turn",
+      "alt": "Piktogram turn"
+    },
+    "return-from-school": {
+      "id": 39738,
+      "name": "return from school",
+      "alt": "Piktogram return from school"
+    },
+    "rinse-39766": {
+      "id": 39766,
+      "name": "rinse",
+      "alt": "Piktogram rinse"
+    },
+    "buy-39753": {
+      "id": 39753,
+      "name": "buy",
+      "alt": "Piktogram buy"
+    },
+    "sew": {
+      "id": 2722,
+      "name": "sew",
+      "alt": "Piktogram sew"
+    },
+    "uneven": {
+      "id": 4628,
+      "name": "uneven",
+      "alt": "Piktogram uneven"
+    },
+    "equal": {
+      "id": 4667,
+      "name": "equal",
+      "alt": "Piktogram equal"
+    },
+    "no": {
+      "id": 5526,
+      "name": "no",
+      "alt": "Piktogram no"
+    },
+    "ride-a-bike": {
+      "id": 6045,
+      "name": "ride a bike",
+      "alt": "Piktogram ride a bike"
+    },
+    "dining-room": {
+      "id": 5970,
+      "name": "dining-room",
+      "alt": "Piktogram dining-room"
+    },
+    "drive": {
+      "id": 6458,
+      "name": "drive",
+      "alt": "Piktogram drive"
+    },
+    "eat": {
+      "id": 6456,
+      "name": "eat",
+      "alt": "Piktogram eat"
+    },
+    "love": {
+      "id": 6600,
+      "name": "love",
+      "alt": "Piktogram love"
+    },
+    "work": {
+      "id": 6624,
+      "name": "work",
+      "alt": "Piktogram work"
+    },
+    "like-7124": {
+      "id": 7124,
+      "name": "like",
+      "alt": "Piktogram like"
+    },
+    "many": {
+      "id": 7168,
+      "name": "many",
+      "alt": "Piktogram many"
+    },
+    "dress": {
+      "id": 6627,
+      "name": "dress",
+      "alt": "Piktogram dress"
+    },
+    "stop": {
+      "id": 7196,
+      "name": "stop",
+      "alt": "Piktogram stop"
+    },
+    "few": {
+      "id": 7209,
+      "name": "few",
+      "alt": "Piktogram few"
+    },
+    "dislike-7179": {
+      "id": 7179,
+      "name": "dislike",
+      "alt": "Piktogram dislike"
+    },
+    "left": {
+      "id": 9203,
+      "name": "left",
+      "alt": "Piktogram left"
+    },
+    "kitchen": {
+      "id": 10752,
+      "name": "kitchen",
+      "alt": "Piktogram kitchen"
+    },
+    "love-11536": {
+      "id": 11536,
+      "name": "love",
+      "alt": "Piktogram love"
+    },
+    "love-11538": {
+      "id": 11538,
+      "name": "love",
+      "alt": "Piktogram love"
+    },
+    "fun": {
+      "id": 24733,
+      "name": "fun",
+      "alt": "Piktogram fun"
+    },
+    "none": {
+      "id": 11314,
+      "name": "none",
+      "alt": "Piktogram none"
+    },
+    "fat": {
+      "id": 25133,
+      "name": "fat",
+      "alt": "Piktogram fat"
+    },
+    "long": {
+      "id": 26162,
+      "name": "long",
+      "alt": "Piktogram long"
+    },
+    "tall": {
+      "id": 25782,
+      "name": "tall",
+      "alt": "Piktogram tall"
+    },
+    "short-26002": {
+      "id": 26002,
+      "name": "short",
+      "alt": "Piktogram short"
+    },
+    "empty": {
+      "id": 26527,
+      "name": "empty",
+      "alt": "Piktogram empty"
+    },
+    "have-a-shower": {
+      "id": 26803,
+      "name": "have a shower",
+      "alt": "Piktogram have a shower"
+    },
+    "full": {
+      "id": 26176,
+      "name": "full",
+      "alt": "Piktogram full"
+    },
+    "travel": {
+      "id": 28173,
+      "name": "travel",
+      "alt": "Piktogram travel"
+    },
+    "scared": {
+      "id": 35535,
+      "name": "scared",
+      "alt": "Piktogram scared"
+    },
+    "surprised": {
+      "id": 35529,
+      "name": "surprised",
+      "alt": "Piktogram surprised"
+    },
+    "first": {
+      "id": 32129,
+      "name": "first",
+      "alt": "Piktogram first"
+    },
+    "bored": {
+      "id": 35531,
+      "name": "bored",
+      "alt": "Piktogram bored"
+    },
+    "be-36480": {
+      "id": 36480,
+      "name": "be",
+      "alt": "Piktogram be"
+    },
+    "content": {
+      "id": 35547,
+      "name": "content",
+      "alt": "Piktogram content"
+    },
+    "first-37753": {
+      "id": 37753,
+      "name": "first",
+      "alt": "Piktogram first"
+    },
+    "the-day-before-yesterday": {
+      "id": 38272,
+      "name": "the day before yesterday",
+      "alt": "Piktogram the day before yesterday"
+    },
+    "few-40005": {
+      "id": 40005,
+      "name": "few",
+      "alt": "Piktogram few"
+    },
+    "many-40006": {
+      "id": 40006,
+      "name": "many",
+      "alt": "Piktogram many"
+    },
+    "boring": {
+      "id": 2245,
+      "name": "boring",
+      "alt": "Piktogram boring"
+    },
+    "the-day-after-tomorrow": {
+      "id": 38277,
+      "name": "the day after tomorrow",
+      "alt": "Piktogram the day after tomorrow"
+    },
+    "scared-2261": {
+      "id": 2261,
+      "name": "scared",
+      "alt": "Piktogram scared"
+    },
+    "brush-teeth": {
+      "id": 2326,
+      "name": "brush teeth",
+      "alt": "Piktogram brush teeth"
+    },
+    "eat-2349": {
+      "id": 2349,
+      "name": "eat",
+      "alt": "Piktogram eat"
+    },
+    "confused": {
+      "id": 2352,
+      "name": "confused",
+      "alt": "Piktogram confused"
+    },
+    "concierge": {
+      "id": 2353,
+      "name": "concierge",
+      "alt": "Piktogram concierge"
+    },
+    "have-a-shower-2371": {
+      "id": 2371,
+      "name": "have a shower",
+      "alt": "Piktogram have a shower"
+    },
+    "like-2418": {
+      "id": 2418,
+      "name": "like",
+      "alt": "Piktogram like"
+    },
+    "angry": {
+      "id": 2374,
+      "name": "angry",
+      "alt": "Piktogram angry"
+    },
+    "dizzy": {
+      "id": 2464,
+      "name": "dizzy",
+      "alt": "Piktogram dizzy"
+    },
+    "surprised-2574": {
+      "id": 2574,
+      "name": "surprised",
+      "alt": "Piktogram surprised"
+    },
+    "nought": {
+      "id": 2626,
+      "name": "nought",
+      "alt": "Piktogram nought"
+    },
+    "one": {
+      "id": 2627,
+      "name": "one",
+      "alt": "Piktogram one"
+    },
+    "drop-the-glass": {
+      "id": 2675,
+      "name": "drop the glass",
+      "alt": "Piktogram drop the glass"
+    },
+    "dress-2781": {
+      "id": 2781,
+      "name": "dress",
+      "alt": "Piktogram dress"
+    },
+    "exit": {
+      "id": 2806,
+      "name": "exit",
+      "alt": "Piktogram exit"
+    },
+    "drive-2712": {
+      "id": 2712,
+      "name": "drive",
+      "alt": "Piktogram drive"
+    },
+    "content-3245": {
+      "id": 3245,
+      "name": "content",
+      "alt": "Piktogram content"
+    },
+    "happy": {
+      "id": 3250,
+      "name": "happy",
+      "alt": "Piktogram happy"
+    },
+    "lighted": {
+      "id": 4640,
+      "name": "lighted",
+      "alt": "Piktogram lighted"
+    },
+    "narrow": {
+      "id": 4643,
+      "name": "narrow",
+      "alt": "Piktogram narrow"
+    },
+    "wide": {
+      "id": 4559,
+      "name": "wide",
+      "alt": "Piktogram wide"
+    },
+    "travel-4671": {
+      "id": 4671,
+      "name": "travel",
+      "alt": "Piktogram travel"
+    },
+    "full-4688": {
+      "id": 4688,
+      "name": "full",
+      "alt": "Piktogram full"
+    },
+    "knock": {
+      "id": 4687,
+      "name": "knock",
+      "alt": "Piktogram knock"
+    },
+    "weigh": {
+      "id": 4717,
+      "name": "weigh",
+      "alt": "Piktogram weigh"
+    },
+    "empty-4767": {
+      "id": 4767,
+      "name": "empty",
+      "alt": "Piktogram empty"
+    },
+    "one-4889": {
+      "id": 4889,
+      "name": "one",
+      "alt": "Piktogram one"
+    },
+    "3-4891": {
+      "id": 4891,
+      "name": "3",
+      "alt": "Piktogram 3"
+    },
+    "2-4890": {
+      "id": 4890,
+      "name": "2",
+      "alt": "Piktogram 2"
+    },
+    "ill": {
+      "id": 3308,
+      "name": "ill",
+      "alt": "Piktogram ill"
+    },
+    "open": {
+      "id": 4549,
+      "name": "open",
+      "alt": "Piktogram open"
+    },
+    "4-4892": {
+      "id": 4892,
+      "name": "4",
+      "alt": "Piktogram 4"
+    },
+    "5-4893": {
+      "id": 4893,
+      "name": "5",
+      "alt": "Piktogram 5"
+    },
+    "7-4895": {
+      "id": 4895,
+      "name": "7",
+      "alt": "Piktogram 7"
+    },
+    "6-4894": {
+      "id": 4894,
+      "name": "6",
+      "alt": "Piktogram 6"
+    },
+    "8-4896": {
+      "id": 4896,
+      "name": "8",
+      "alt": "Piktogram 8"
+    },
+    "9-4897": {
+      "id": 4897,
+      "name": "9",
+      "alt": "Piktogram 9"
+    },
+    "hungry": {
+      "id": 4962,
+      "name": "hungry",
+      "alt": "Piktogram hungry"
+    },
+    "soap-the-face": {
+      "id": 4939,
+      "name": "soap the face",
+      "alt": "Piktogram soap the face"
+    },
+    "thirsty": {
+      "id": 4963,
+      "name": "thirsty",
+      "alt": "Piktogram thirsty"
+    },
+    "approach": {
+      "id": 5359,
+      "name": "approach",
+      "alt": "Piktogram approach"
+    },
+    "some-5374": {
+      "id": 5374,
+      "name": "some",
+      "alt": "Piktogram some"
+    },
+    "in-front": {
+      "id": 5438,
+      "name": "in front",
+      "alt": "Piktogram in front"
+    },
+    "undo": {
+      "id": 5440,
+      "name": "undo",
+      "alt": "Piktogram undo"
+    },
+    "thread": {
+      "id": 5453,
+      "name": "thread",
+      "alt": "Piktogram thread"
+    },
+    "boil": {
+      "id": 5485,
+      "name": "boil",
+      "alt": "Piktogram boil"
+    },
+    "few-5546": {
+      "id": 5546,
+      "name": "few",
+      "alt": "Piktogram few"
+    },
+    "less": {
+      "id": 5512,
+      "name": "less",
+      "alt": "Piktogram less"
+    },
+    "no-5800": {
+      "id": 5800,
+      "name": "no",
+      "alt": "Piktogram no"
+    },
+    "more": {
+      "id": 5508,
+      "name": "more",
+      "alt": "Piktogram more"
+    },
+    "kitchen-5965": {
+      "id": 5965,
+      "name": "kitchen",
+      "alt": "Piktogram kitchen"
+    },
+    "stir": {
+      "id": 5981,
+      "name": "stir",
+      "alt": "Piktogram stir"
+    },
+    "whisk": {
+      "id": 5925,
+      "name": "whisk",
+      "alt": "Piktogram whisk"
+    },
+    "school": {
+      "id": 6454,
+      "name": "school",
+      "alt": "Piktogram school"
+    },
+    "dislike-6155": {
+      "id": 6155,
+      "name": "dislike",
+      "alt": "Piktogram dislike"
+    },
+    "enter": {
+      "id": 6491,
+      "name": "enter",
+      "alt": "Piktogram enter"
+    },
+    "thread-6489": {
+      "id": 6489,
+      "name": "thread",
+      "alt": "Piktogram thread"
+    },
+    "soap-the-face-6546": {
+      "id": 6546,
+      "name": "soap the face",
+      "alt": "Piktogram soap the face"
+    },
+    "exit-6606": {
+      "id": 6606,
+      "name": "exit",
+      "alt": "Piktogram exit"
+    },
+    "go-upstairs": {
+      "id": 6617,
+      "name": "go upstairs",
+      "alt": "Piktogram go upstairs"
+    },
+    "baste": {
+      "id": 5486,
+      "name": "baste",
+      "alt": "Piktogram baste"
+    },
+    "unfriendly": {
+      "id": 6902,
+      "name": "unfriendly",
+      "alt": "Piktogram unfriendly"
+    },
+    "ride": {
+      "id": 6643,
+      "name": "ride",
+      "alt": "Piktogram ride"
+    },
+    "scare": {
+      "id": 6916,
+      "name": "scare",
+      "alt": "Piktogram scare"
+    },
+    "ashamed": {
+      "id": 6922,
+      "name": "ashamed",
+      "alt": "Piktogram ashamed"
+    },
+    "brush-teeth-6971": {
+      "id": 6971,
+      "name": "brush teeth",
+      "alt": "Piktogram brush teeth"
+    },
+    "land": {
+      "id": 6917,
+      "name": "land",
+      "alt": "Piktogram land"
+    },
+    "nought-6972": {
+      "id": 6972,
+      "name": "nought",
+      "alt": "Piktogram nought"
+    },
+    "5-6979": {
+      "id": 6979,
+      "name": "5",
+      "alt": "Piktogram 5"
+    },
+    "caretaker": {
+      "id": 6995,
+      "name": "caretaker",
+      "alt": "Piktogram caretaker"
+    },
+    "confuse": {
+      "id": 6992,
+      "name": "confuse",
+      "alt": "Piktogram confuse"
+    },
+    "4-7005": {
+      "id": 7005,
+      "name": "4",
+      "alt": "Piktogram 4"
+    },
+    "wax": {
+      "id": 7009,
+      "name": "wax",
+      "alt": "Piktogram wax"
+    },
+    "2-7027": {
+      "id": 7027,
+      "name": "2",
+      "alt": "Piktogram 2"
+    },
+    "open-7020": {
+      "id": 7020,
+      "name": "open",
+      "alt": "Piktogram open"
+    },
+    "close-7056": {
+      "id": 7056,
+      "name": "close",
+      "alt": "Piktogram close"
+    },
+    "plug": {
+      "id": 7035,
+      "name": "plug",
+      "alt": "Piktogram plug"
+    },
+    "chase": {
+      "id": 7037,
+      "name": "chase",
+      "alt": "Piktogram chase"
+    },
+    "chase-7038": {
+      "id": 7038,
+      "name": "chase",
+      "alt": "Piktogram chase"
+    },
+    "sail": {
+      "id": 7170,
+      "name": "sail",
+      "alt": "Piktogram sail"
+    },
+    "sink": {
+      "id": 7133,
+      "name": "sink",
+      "alt": "Piktogram sink"
+    },
+    "9-7188": {
+      "id": 7188,
+      "name": "9",
+      "alt": "Piktogram 9"
+    },
+    "sew-7068": {
+      "id": 7068,
+      "name": "sew",
+      "alt": "Piktogram sew"
+    },
+    "8-7189": {
+      "id": 7189,
+      "name": "8",
+      "alt": "Piktogram 8"
+    },
+    "6-7241": {
+      "id": 7241,
+      "name": "6",
+      "alt": "Piktogram 6"
+    },
+    "romantic": {
+      "id": 7232,
+      "name": "romantic",
+      "alt": "Piktogram romantic"
+    },
+    "thirsty-7273": {
+      "id": 7273,
+      "name": "thirsty",
+      "alt": "Piktogram thirsty"
+    },
+    "pleasant": {
+      "id": 7251,
+      "name": "pleasant",
+      "alt": "Piktogram pleasant"
+    },
+    "7-7248": {
+      "id": 7248,
+      "name": "7",
+      "alt": "Piktogram 7"
+    },
+    "3-7283": {
+      "id": 7283,
+      "name": "3",
+      "alt": "Piktogram 3"
+    },
+    "sadden": {
+      "id": 7286,
+      "name": "sadden",
+      "alt": "Piktogram sadden"
+    },
+    "one-7291": {
+      "id": 7291,
+      "name": "one",
+      "alt": "Piktogram one"
+    },
+    "live": {
+      "id": 7302,
+      "name": "live",
+      "alt": "Piktogram live"
+    },
+    "spread": {
+      "id": 7292,
+      "name": "spread",
+      "alt": "Piktogram spread"
+    },
+    "knead": {
+      "id": 8015,
+      "name": "knead",
+      "alt": "Piktogram knead"
+    },
+    "wide-8022": {
+      "id": 8022,
+      "name": "wide",
+      "alt": "Piktogram wide"
+    },
+    "kneel": {
+      "id": 8032,
+      "name": "kneel",
+      "alt": "Piktogram kneel"
+    },
+    "kneel-8033": {
+      "id": 8033,
+      "name": "kneel",
+      "alt": "Piktogram kneel"
+    },
+    "brown-haired": {
+      "id": 8066,
+      "name": "brown-haired",
+      "alt": "Piktogram brown-haired"
+    },
+    "change-the-sanitary-towel": {
+      "id": 8054,
+      "name": "change the sanitary towel",
+      "alt": "Piktogram change the sanitary towel"
+    },
+    "narrow-8116": {
+      "id": 8116,
+      "name": "narrow",
+      "alt": "Piktogram narrow"
+    },
+    "red-haired": {
+      "id": 8184,
+      "name": "red-haired",
+      "alt": "Piktogram red-haired"
+    },
+    "rub": {
+      "id": 8251,
+      "name": "rub",
+      "alt": "Piktogram rub"
+    },
+    "blond": {
+      "id": 8213,
+      "name": "blond",
+      "alt": "Piktogram blond"
+    },
+    "extinct": {
+      "id": 8252,
+      "name": "extinct",
+      "alt": "Piktogram extinct"
+    },
+    "absentminded": {
+      "id": 8551,
+      "name": "absentminded",
+      "alt": "Piktogram absentminded"
+    },
+    "unplug": {
+      "id": 8086,
+      "name": "unplug",
+      "alt": "Piktogram unplug"
+    },
+    "heat": {
+      "id": 8520,
+      "name": "heat",
+      "alt": "Piktogram heat"
+    },
+    "absentminded-8553": {
+      "id": 8553,
+      "name": "absentminded",
+      "alt": "Piktogram absentminded"
+    },
+    "distract": {
+      "id": 8552,
+      "name": "distract",
+      "alt": "Piktogram distract"
+    },
+    "rinse-the-mouth": {
+      "id": 8559,
+      "name": "rinse the mouth",
+      "alt": "Piktogram rinse the mouth"
+    },
+    "wash-hair": {
+      "id": 8616,
+      "name": "wash hair",
+      "alt": "Piktogram wash hair"
+    },
+    "crazy": {
+      "id": 8618,
+      "name": "crazy",
+      "alt": "Piktogram crazy"
+    },
+    "lather-the-hair": {
+      "id": 8615,
+      "name": "lather the hair",
+      "alt": "Piktogram lather the hair"
+    },
+    "serious": {
+      "id": 8690,
+      "name": "serious",
+      "alt": "Piktogram serious"
+    },
+    "shy": {
+      "id": 8707,
+      "name": "shy",
+      "alt": "Piktogram shy"
+    },
+    "crack": {
+      "id": 8984,
+      "name": "crack",
+      "alt": "Piktogram crack"
+    },
+    "wash-hair-8976": {
+      "id": 8976,
+      "name": "wash hair",
+      "alt": "Piktogram wash hair"
+    },
+    "dry-8688": {
+      "id": 8688,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "drain": {
+      "id": 8568,
+      "name": "drain",
+      "alt": "Piktogram drain"
+    },
+    "conduct": {
+      "id": 8990,
+      "name": "conduct",
+      "alt": "Piktogram conduct"
+    },
+    "entertain": {
+      "id": 8992,
+      "name": "entertain",
+      "alt": "Piktogram entertain"
+    },
+    "guide": {
+      "id": 8994,
+      "name": "guide",
+      "alt": "Piktogram guide"
+    },
+    "bend": {
+      "id": 9003,
+      "name": "bend",
+      "alt": "Piktogram bend"
+    },
+    "bend-9004": {
+      "id": 9004,
+      "name": "bend",
+      "alt": "Piktogram bend"
+    },
+    "grate": {
+      "id": 9023,
+      "name": "grate",
+      "alt": "Piktogram grate"
+    },
+    "weave": {
+      "id": 9039,
+      "name": "weave",
+      "alt": "Piktogram weave"
+    },
+    "right": {
+      "id": 9202,
+      "name": "right",
+      "alt": "Piktogram right"
+    },
+    "air-9045": {
+      "id": 9045,
+      "name": "air",
+      "alt": "Piktogram air"
+    },
+    "weave-9040": {
+      "id": 9040,
+      "name": "weave",
+      "alt": "Piktogram weave"
+    },
+    "conduct-9700": {
+      "id": 9700,
+      "name": "conduct",
+      "alt": "Piktogram conduct"
+    },
+    "dining-room-9824": {
+      "id": 9824,
+      "name": "dining-room",
+      "alt": "Piktogram dining-room"
+    },
+    "past": {
+      "id": 9839,
+      "name": "past",
+      "alt": "Piktogram past"
+    },
+    "horizontal": {
+      "id": 9891,
+      "name": "horizontal",
+      "alt": "Piktogram horizontal"
+    },
+    "future": {
+      "id": 9829,
+      "name": "future",
+      "alt": "Piktogram future"
+    },
+    "present": {
+      "id": 9848,
+      "name": "present",
+      "alt": "Piktogram present"
+    },
+    "vertical": {
+      "id": 9892,
+      "name": "vertical",
+      "alt": "Piktogram vertical"
+    },
+    "content-9907": {
+      "id": 9907,
+      "name": "content",
+      "alt": "Piktogram content"
+    },
+    "infirmary": {
+      "id": 9918,
+      "name": "infirmary",
+      "alt": "Piktogram infirmary"
+    },
+    "clip-fingernails": {
+      "id": 10153,
+      "name": "clip fingernails",
+      "alt": "Piktogram clip fingernails"
+    },
+    "lower-the-toilet-seat": {
+      "id": 10144,
+      "name": "lower the toilet seat",
+      "alt": "Piktogram lower the toilet seat"
+    },
+    "file": {
+      "id": 10169,
+      "name": "file",
+      "alt": "Piktogram file"
+    },
+    "ring": {
+      "id": 10171,
+      "name": "ring",
+      "alt": "Piktogram ring"
+    },
+    "flush-the-toilet": {
+      "id": 10184,
+      "name": "flush the toilet",
+      "alt": "Piktogram flush the toilet"
+    },
+    "lift-the-toilet-seat": {
+      "id": 10168,
+      "name": "lift the toilet seat",
+      "alt": "Piktogram lift the toilet seat"
+    },
+    "travel-10186": {
+      "id": 10186,
+      "name": "travel",
+      "alt": "Piktogram travel"
+    },
+    "travel-10187": {
+      "id": 10187,
+      "name": "travel",
+      "alt": "Piktogram travel"
+    },
+    "travel-10188": {
+      "id": 10188,
+      "name": "travel",
+      "alt": "Piktogram travel"
+    },
+    "roast": {
+      "id": 10140,
+      "name": "roast",
+      "alt": "Piktogram roast"
+    },
+    "travel-10189": {
+      "id": 10189,
+      "name": "travel",
+      "alt": "Piktogram travel"
+    },
+    "happy-10192": {
+      "id": 10192,
+      "name": "happy",
+      "alt": "Piktogram happy"
+    },
+    "fly": {
+      "id": 10190,
+      "name": "fly",
+      "alt": "Piktogram fly"
+    },
+    "frightened": {
+      "id": 10208,
+      "name": "frightened",
+      "alt": "Piktogram frightened"
+    },
+    "unpleasant": {
+      "id": 10195,
+      "name": "unpleasant",
+      "alt": "Piktogram unpleasant"
+    },
+    "pleasant-10212": {
+      "id": 10212,
+      "name": "pleasant",
+      "alt": "Piktogram pleasant"
+    },
+    "kitchen-10753": {
+      "id": 10753,
+      "name": "kitchen",
+      "alt": "Piktogram kitchen"
+    },
+    "shower": {
+      "id": 11244,
+      "name": "shower",
+      "alt": "Piktogram shower"
+    },
+    "roast-11184": {
+      "id": 11184,
+      "name": "roast",
+      "alt": "Piktogram roast"
+    },
+    "undress": {
+      "id": 11232,
+      "name": "undress",
+      "alt": "Piktogram undress"
+    },
+    "jitters": {
+      "id": 11312,
+      "name": "jitters",
+      "alt": "Piktogram jitters"
+    },
+    "scratch": {
+      "id": 11356,
+      "name": "scratch",
+      "alt": "Piktogram scratch"
+    },
+    "transport-in-wheelchair-11466": {
+      "id": 11466,
+      "name": "transport in wheelchair",
+      "alt": "Piktogram transport in wheelchair"
+    },
+    "travel-11540": {
+      "id": 11540,
+      "name": "travel",
+      "alt": "Piktogram travel"
+    },
+    "travel-11542": {
+      "id": 11542,
+      "name": "travel",
+      "alt": "Piktogram travel"
+    },
+    "adapt": {
+      "id": 11687,
+      "name": "adapt",
+      "alt": "Piktogram adapt"
+    },
+    "frightened-11951": {
+      "id": 11951,
+      "name": "frightened",
+      "alt": "Piktogram frightened"
+    },
+    "travel-11544": {
+      "id": 11544,
+      "name": "travel",
+      "alt": "Piktogram travel"
+    },
+    "ashamed-11953": {
+      "id": 11953,
+      "name": "ashamed",
+      "alt": "Piktogram ashamed"
+    },
+    "sad": {
+      "id": 11959,
+      "name": "sad",
+      "alt": "Piktogram sad"
+    },
+    "put-toothpaste": {
+      "id": 11961,
+      "name": "put toothpaste",
+      "alt": "Piktogram put toothpaste"
+    },
+    "romantic-11957": {
+      "id": 11957,
+      "name": "romantic",
+      "alt": "Piktogram romantic"
+    },
+    "patch": {
+      "id": 15473,
+      "name": "patch",
+      "alt": "Piktogram patch"
+    },
+    "undress-15371": {
+      "id": 15371,
+      "name": "undress",
+      "alt": "Piktogram undress"
+    },
+    "healthy": {
+      "id": 12293,
+      "name": "healthy",
+      "alt": "Piktogram healthy"
+    },
+    "laundry": {
+      "id": 15736,
+      "name": "laundry",
+      "alt": "Piktogram laundry"
+    },
+    "fly-16113": {
+      "id": 16113,
+      "name": "fly",
+      "alt": "Piktogram fly"
+    },
+    "cleaning-products-storehouse": {
+      "id": 15836,
+      "name": "cleaning products storehouse",
+      "alt": "Piktogram cleaning products storehouse"
+    },
+    "dishevelled-16293": {
+      "id": 16293,
+      "name": "dishevelled",
+      "alt": "Piktogram dishevelled"
+    },
+    "dishevelled": {
+      "id": 16289,
+      "name": "dishevelled",
+      "alt": "Piktogram dishevelled"
+    },
+    "brushed": {
+      "id": 16327,
+      "name": "brushed",
+      "alt": "Piktogram brushed"
+    },
+    "double": {
+      "id": 16345,
+      "name": "double",
+      "alt": "Piktogram double"
+    },
+    "crouch": {
+      "id": 16437,
+      "name": "crouch",
+      "alt": "Piktogram crouch"
+    },
+    "brushed-16331": {
+      "id": 16331,
+      "name": "brushed",
+      "alt": "Piktogram brushed"
+    },
+    "fill": {
+      "id": 16883,
+      "name": "fill",
+      "alt": "Piktogram fill"
+    },
+    "entertain-16647": {
+      "id": 16647,
+      "name": "entertain",
+      "alt": "Piktogram entertain"
+    },
+    "garage": {
+      "id": 16975,
+      "name": "garage",
+      "alt": "Piktogram garage"
+    },
+    "cancel": {
+      "id": 17194,
+      "name": "cancel",
+      "alt": "Piktogram cancel"
+    },
+    "brush-nails": {
+      "id": 17212,
+      "name": "brush nails",
+      "alt": "Piktogram brush nails"
+    },
+    "clean": {
+      "id": 17269,
+      "name": "clean",
+      "alt": "Piktogram clean"
+    },
+    "crush": {
+      "id": 17273,
+      "name": "crush",
+      "alt": "Piktogram crush"
+    },
+    "lower": {
+      "id": 19557,
+      "name": "lower",
+      "alt": "Piktogram lower"
+    },
+    "drain-17229": {
+      "id": 17229,
+      "name": "drain",
+      "alt": "Piktogram drain"
+    },
+    "1-2-3": {
+      "id": 19548,
+      "name": "1-2-3",
+      "alt": "Piktogram 1-2-3"
+    },
+    "rise": {
+      "id": 19572,
+      "name": "rise",
+      "alt": "Piktogram rise"
+    },
+    "block": {
+      "id": 21387,
+      "name": "block",
+      "alt": "Piktogram block"
+    },
+    "adopt": {
+      "id": 21353,
+      "name": "adopt",
+      "alt": "Piktogram adopt"
+    },
+    "brush-hair": {
+      "id": 21529,
+      "name": "brush hair",
+      "alt": "Piktogram brush hair"
+    },
+    "angry-21820": {
+      "id": 21820,
+      "name": "angry",
+      "alt": "Piktogram angry"
+    },
+    "load": {
+      "id": 21492,
+      "name": "load",
+      "alt": "Piktogram load"
+    },
+    "soap-one-s-body": {
+      "id": 21822,
+      "name": "soap one's body",
+      "alt": "Piktogram soap one's body"
+    },
+    "soap-one-s-body-21824": {
+      "id": 21824,
+      "name": "soap one's body",
+      "alt": "Piktogram soap one's body"
+    },
+    "soap-one-s-body-21826": {
+      "id": 21826,
+      "name": "soap one's body",
+      "alt": "Piktogram soap one's body"
+    },
+    "export": {
+      "id": 21857,
+      "name": "export",
+      "alt": "Piktogram export"
+    },
+    "import": {
+      "id": 21927,
+      "name": "import",
+      "alt": "Piktogram import"
+    },
+    "dry-22106": {
+      "id": 22106,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "miss": {
+      "id": 22033,
+      "name": "miss",
+      "alt": "Piktogram miss"
+    },
+    "select-clothing": {
+      "id": 22110,
+      "name": "select clothing",
+      "alt": "Piktogram select clothing"
+    },
+    "hiccough": {
+      "id": 22127,
+      "name": "hiccough",
+      "alt": "Piktogram hiccough"
+    },
+    "better-22627": {
+      "id": 22627,
+      "name": "better",
+      "alt": "Piktogram better"
+    },
+    "cyberclassroom": {
+      "id": 22751,
+      "name": "cyberclassroom",
+      "alt": "Piktogram cyberclassroom"
+    },
+    "stand": {
+      "id": 24035,
+      "name": "stand",
+      "alt": "Piktogram stand"
+    },
+    "stand-24036": {
+      "id": 24036,
+      "name": "stand",
+      "alt": "Piktogram stand"
+    },
+    "straight": {
+      "id": 25195,
+      "name": "straight",
+      "alt": "Piktogram straight"
+    },
+    "fun-24735": {
+      "id": 24735,
+      "name": "fun",
+      "alt": "Piktogram fun"
+    },
+    "wait-at-bus-stop": {
+      "id": 25077,
+      "name": "wait at bus stop",
+      "alt": "Piktogram wait at bus stop"
+    },
+    "stand-26075": {
+      "id": 26075,
+      "name": "stand",
+      "alt": "Piktogram stand"
+    },
+    "residence-for-disabled-people": {
+      "id": 25733,
+      "name": "residence for disabled people",
+      "alt": "Piktogram residence for disabled people"
+    },
+    "wait-at-bus-stop-25078": {
+      "id": 25078,
+      "name": "wait at bus stop",
+      "alt": "Piktogram wait at bus stop"
+    },
+    "stir-25738": {
+      "id": 25738,
+      "name": "stir",
+      "alt": "Piktogram stir"
+    },
+    "miss-26314": {
+      "id": 26314,
+      "name": "miss",
+      "alt": "Piktogram miss"
+    },
+    "frightened-26483": {
+      "id": 26483,
+      "name": "frightened",
+      "alt": "Piktogram frightened"
+    },
+    "enter-26811": {
+      "id": 26811,
+      "name": "enter",
+      "alt": "Piktogram enter"
+    },
+    "dirty": {
+      "id": 26459,
+      "name": "dirty",
+      "alt": "Piktogram dirty"
+    },
+    "lather-the-hair-26945": {
+      "id": 26945,
+      "name": "lather the hair",
+      "alt": "Piktogram lather the hair"
+    },
+    "exit-27067": {
+      "id": 27067,
+      "name": "exit",
+      "alt": "Piktogram exit"
+    },
+    "worried-26986": {
+      "id": 26986,
+      "name": "worried",
+      "alt": "Piktogram worried"
+    },
+    "worried": {
+      "id": 26985,
+      "name": "worried",
+      "alt": "Piktogram worried"
+    },
+    "divide-27070": {
+      "id": 27070,
+      "name": "divide",
+      "alt": "Piktogram divide"
+    },
+    "divide": {
+      "id": 27069,
+      "name": "divide",
+      "alt": "Piktogram divide"
+    },
+    "brush-teeth-27489": {
+      "id": 27489,
+      "name": "brush teeth",
+      "alt": "Piktogram brush teeth"
+    },
+    "visit": {
+      "id": 27568,
+      "name": "visit",
+      "alt": "Piktogram visit"
+    },
+    "curious": {
+      "id": 27705,
+      "name": "curious",
+      "alt": "Piktogram curious"
+    },
+    "ride-27626": {
+      "id": 27626,
+      "name": "ride",
+      "alt": "Piktogram ride"
+    },
+    "pry": {
+      "id": 27703,
+      "name": "pry",
+      "alt": "Piktogram pry"
+    },
+    "curious-27706": {
+      "id": 27706,
+      "name": "curious",
+      "alt": "Piktogram curious"
+    },
+    "first-27990": {
+      "id": 27990,
+      "name": "first",
+      "alt": "Piktogram first"
+    },
+    "have-a-shower-27728": {
+      "id": 27728,
+      "name": "have a shower",
+      "alt": "Piktogram have a shower"
+    },
+    "first-27992": {
+      "id": 27992,
+      "name": "first",
+      "alt": "Piktogram first"
+    },
+    "crush-28157": {
+      "id": 28157,
+      "name": "crush",
+      "alt": "Piktogram crush"
+    },
+    "visit-28187": {
+      "id": 28187,
+      "name": "visit",
+      "alt": "Piktogram visit"
+    },
+    "first-27993": {
+      "id": 27993,
+      "name": "first",
+      "alt": "Piktogram first"
+    },
+    "validate": {
+      "id": 28291,
+      "name": "validate",
+      "alt": "Piktogram validate"
+    },
+    "validate-28292": {
+      "id": 28292,
+      "name": "validate",
+      "alt": "Piktogram validate"
+    },
+    "second": {
+      "id": 28315,
+      "name": "second",
+      "alt": "Piktogram second"
+    },
+    "second-28319": {
+      "id": 28319,
+      "name": "second",
+      "alt": "Piktogram second"
+    },
+    "second-28320": {
+      "id": 28320,
+      "name": "second",
+      "alt": "Piktogram second"
+    },
+    "third-28329": {
+      "id": 28329,
+      "name": "third",
+      "alt": "Piktogram third"
+    },
+    "third-28330": {
+      "id": 28330,
+      "name": "third",
+      "alt": "Piktogram third"
+    },
+    "third": {
+      "id": 28327,
+      "name": "third",
+      "alt": "Piktogram third"
+    },
+    "absentminded-28635": {
+      "id": 28635,
+      "name": "absentminded",
+      "alt": "Piktogram absentminded"
+    },
+    "unclog": {
+      "id": 28607,
+      "name": "unclog",
+      "alt": "Piktogram unclog"
+    },
+    "time": {
+      "id": 28599,
+      "name": "time",
+      "alt": "Piktogram time"
+    },
+    "soap-the-face-28621": {
+      "id": 28621,
+      "name": "soap the face",
+      "alt": "Piktogram soap the face"
+    },
+    "eat-28641": {
+      "id": 28641,
+      "name": "eat",
+      "alt": "Piktogram eat"
+    },
+    "content-28647": {
+      "id": 28647,
+      "name": "content",
+      "alt": "Piktogram content"
+    },
+    "angry-28671": {
+      "id": 28671,
+      "name": "angry",
+      "alt": "Piktogram angry"
+    },
+    "enter-28687": {
+      "id": 28687,
+      "name": "enter",
+      "alt": "Piktogram enter"
+    },
+    "exit-28689": {
+      "id": 28689,
+      "name": "exit",
+      "alt": "Piktogram exit"
+    },
+    "hang-28691": {
+      "id": 28691,
+      "name": "hang",
+      "alt": "Piktogram hang"
+    },
+    "boring-28705": {
+      "id": 28705,
+      "name": "boring",
+      "alt": "Piktogram boring"
+    },
+    "worry": {
+      "id": 28713,
+      "name": "worry",
+      "alt": "Piktogram worry"
+    },
+    "ill-28741": {
+      "id": 28741,
+      "name": "ill",
+      "alt": "Piktogram ill"
+    },
+    "ill-28742": {
+      "id": 28742,
+      "name": "ill",
+      "alt": "Piktogram ill"
+    },
+    "take-off-the-sanitary-napkin": {
+      "id": 29024,
+      "name": "take off the sanitary napkin",
+      "alt": "Piktogram take off the sanitary napkin"
+    },
+    "peel-off-sanitary-napkin": {
+      "id": 29030,
+      "name": "peel off sanitary napkin",
+      "alt": "Piktogram peel off sanitary napkin"
+    },
+    "roll-up-sanitary-pad": {
+      "id": 29026,
+      "name": "roll up sanitary pad",
+      "alt": "Piktogram roll up sanitary pad"
+    },
+    "brush-nails-29040": {
+      "id": 29040,
+      "name": "brush nails",
+      "alt": "Piktogram brush nails"
+    },
+    "put-soap-on": {
+      "id": 29034,
+      "name": "put soap on",
+      "alt": "Piktogram put soap on"
+    },
+    "lather-the-hands": {
+      "id": 29210,
+      "name": "lather the hands",
+      "alt": "Piktogram lather the hands"
+    },
+    "travel-29206": {
+      "id": 29206,
+      "name": "travel",
+      "alt": "Piktogram travel"
+    },
+    "10-29254": {
+      "id": 29254,
+      "name": "10",
+      "alt": "Piktogram 10"
+    },
+    "thirty": {
+      "id": 29298,
+      "name": "thirty",
+      "alt": "Piktogram thirty"
+    },
+    "thirty-one": {
+      "id": 29302,
+      "name": "thirty-one",
+      "alt": "Piktogram thirty-one"
+    },
+    "preschool": {
+      "id": 29853,
+      "name": "preschool",
+      "alt": "Piktogram preschool"
+    },
+    "healthy-29648": {
+      "id": 29648,
+      "name": "healthy",
+      "alt": "Piktogram healthy"
+    },
+    "official-language-school": {
+      "id": 29911,
+      "name": "official language school",
+      "alt": "Piktogram official language school"
+    },
+    "conservatory": {
+      "id": 29907,
+      "name": "conservatory",
+      "alt": "Piktogram conservatory"
+    },
+    "art-school": {
+      "id": 29917,
+      "name": "art school",
+      "alt": "Piktogram art school"
+    },
+    "driving-school": {
+      "id": 29961,
+      "name": "driving school",
+      "alt": "Piktogram driving school"
+    },
+    "rinse-one-s-mouth": {
+      "id": 30032,
+      "name": "rinse one's mouth",
+      "alt": "Piktogram rinse one's mouth"
+    },
+    "put-toothpaste-30087": {
+      "id": 30087,
+      "name": "put toothpaste",
+      "alt": "Piktogram put toothpaste"
+    },
+    "anxious": {
+      "id": 30484,
+      "name": "anxious",
+      "alt": "Piktogram anxious"
+    },
+    "put-toothpaste-30086": {
+      "id": 30086,
+      "name": "put toothpaste",
+      "alt": "Piktogram put toothpaste"
+    },
+    "anxious-30485": {
+      "id": 30485,
+      "name": "anxious",
+      "alt": "Piktogram anxious"
+    },
+    "lather-the-hands-30506": {
+      "id": 30506,
+      "name": "lather the hands",
+      "alt": "Piktogram lather the hands"
+    },
+    "dizzy-30924": {
+      "id": 30924,
+      "name": "dizzy",
+      "alt": "Piktogram dizzy"
+    },
+    "embarrass": {
+      "id": 30632,
+      "name": "embarrass",
+      "alt": "Piktogram embarrass"
+    },
+    "drinkable": {
+      "id": 30932,
+      "name": "drinkable",
+      "alt": "Piktogram drinkable"
+    },
+    "absentminded-30926": {
+      "id": 30926,
+      "name": "absentminded",
+      "alt": "Piktogram absentminded"
+    },
+    "surprised-31099": {
+      "id": 31099,
+      "name": "surprised",
+      "alt": "Piktogram surprised"
+    },
+    "angry-31101": {
+      "id": 31101,
+      "name": "angry",
+      "alt": "Piktogram angry"
+    },
+    "jitters-31095": {
+      "id": 31095,
+      "name": "jitters",
+      "alt": "Piktogram jitters"
+    },
+    "absentminded-31103": {
+      "id": 31103,
+      "name": "absentminded",
+      "alt": "Piktogram absentminded"
+    },
+    "rejoice": {
+      "id": 31186,
+      "name": "rejoice",
+      "alt": "Piktogram rejoice"
+    },
+    "full-31190": {
+      "id": 31190,
+      "name": "full",
+      "alt": "Piktogram full"
+    },
+    "lie": {
+      "id": 31312,
+      "name": "lie",
+      "alt": "Piktogram lie"
+    },
+    "press": {
+      "id": 31488,
+      "name": "press",
+      "alt": "Piktogram press"
+    },
+    "shy-31750": {
+      "id": 31750,
+      "name": "shy",
+      "alt": "Piktogram shy"
+    },
+    "boring-31744": {
+      "id": 31744,
+      "name": "boring",
+      "alt": "Piktogram boring"
+    },
+    "dislike-31760": {
+      "id": 31760,
+      "name": "dislike",
+      "alt": "Piktogram dislike"
+    },
+    "absentminded-31762": {
+      "id": 31762,
+      "name": "absentminded",
+      "alt": "Piktogram absentminded"
+    },
+    "dizzy-31795": {
+      "id": 31795,
+      "name": "dizzy",
+      "alt": "Piktogram dizzy"
+    },
+    "pleasant-31764": {
+      "id": 31764,
+      "name": "pleasant",
+      "alt": "Piktogram pleasant"
+    },
+    "happy-31849": {
+      "id": 31849,
+      "name": "happy",
+      "alt": "Piktogram happy"
+    },
+    "confused-31855": {
+      "id": 31855,
+      "name": "confused",
+      "alt": "Piktogram confused"
+    },
+    "brush-teeth-31880": {
+      "id": 31880,
+      "name": "brush teeth",
+      "alt": "Piktogram brush teeth"
+    },
+    "angry-31884": {
+      "id": 31884,
+      "name": "angry",
+      "alt": "Piktogram angry"
+    },
+    "like-31861": {
+      "id": 31861,
+      "name": "like",
+      "alt": "Piktogram like"
+    },
+    "hungry-31890": {
+      "id": 31890,
+      "name": "hungry",
+      "alt": "Piktogram hungry"
+    },
+    "scared-31896": {
+      "id": 31896,
+      "name": "scared",
+      "alt": "Piktogram scared"
+    },
+    "content-31923": {
+      "id": 31923,
+      "name": "content",
+      "alt": "Piktogram content"
+    },
+    "ashamed-31919": {
+      "id": 31919,
+      "name": "ashamed",
+      "alt": "Piktogram ashamed"
+    },
+    "sad-31939": {
+      "id": 31939,
+      "name": "sad",
+      "alt": "Piktogram sad"
+    },
+    "romantic-31995": {
+      "id": 31995,
+      "name": "romantic",
+      "alt": "Piktogram romantic"
+    },
+    "soap-the-face-31991": {
+      "id": 31991,
+      "name": "soap the face",
+      "alt": "Piktogram soap the face"
+    },
+    "sweaty": {
+      "id": 32125,
+      "name": "sweaty",
+      "alt": "Piktogram sweaty"
+    },
+    "last": {
+      "id": 32069,
+      "name": "last",
+      "alt": "Piktogram last"
+    },
+    "content-32123": {
+      "id": 32123,
+      "name": "content",
+      "alt": "Piktogram content"
+    },
+    "thirsty-32140": {
+      "id": 32140,
+      "name": "thirsty",
+      "alt": "Piktogram thirsty"
+    },
+    "dress-32135": {
+      "id": 32135,
+      "name": "dress",
+      "alt": "Piktogram dress"
+    },
+    "absentminded-32146": {
+      "id": 32146,
+      "name": "absentminded",
+      "alt": "Piktogram absentminded"
+    },
+    "have-a-shower-32162": {
+      "id": 32162,
+      "name": "have a shower",
+      "alt": "Piktogram have a shower"
+    },
+    "surprised-32170": {
+      "id": 32170,
+      "name": "surprised",
+      "alt": "Piktogram surprised"
+    },
+    "unfriendly-32150": {
+      "id": 32150,
+      "name": "unfriendly",
+      "alt": "Piktogram unfriendly"
+    },
+    "ill-32296": {
+      "id": 32296,
+      "name": "ill",
+      "alt": "Piktogram ill"
+    },
+    "pee": {
+      "id": 32264,
+      "name": "pee",
+      "alt": "Piktogram pee"
+    },
+    "serious-32300": {
+      "id": 32300,
+      "name": "serious",
+      "alt": "Piktogram serious"
+    },
+    "secure": {
+      "id": 32316,
+      "name": "secure",
+      "alt": "Piktogram secure"
+    },
+    "secure-32317": {
+      "id": 32317,
+      "name": "secure",
+      "alt": "Piktogram secure"
+    },
+    "unfasten": {
+      "id": 32320,
+      "name": "unfasten",
+      "alt": "Piktogram unfasten"
+    },
+    "downhearted": {
+      "id": 32328,
+      "name": "downhearted",
+      "alt": "Piktogram downhearted"
+    },
+    "unfasten-32321": {
+      "id": 32321,
+      "name": "unfasten",
+      "alt": "Piktogram unfasten"
+    },
+    "nostalgic": {
+      "id": 32360,
+      "name": "nostalgic",
+      "alt": "Piktogram nostalgic"
+    },
+    "downhearted-32329": {
+      "id": 32329,
+      "name": "downhearted",
+      "alt": "Piktogram downhearted"
+    },
+    "calm-down": {
+      "id": 32780,
+      "name": "calm down",
+      "alt": "Piktogram calm down"
+    },
+    "shave-32810": {
+      "id": 32810,
+      "name": "shave",
+      "alt": "Piktogram shave"
+    },
+    "shave": {
+      "id": 32691,
+      "name": "shave",
+      "alt": "Piktogram shave"
+    },
+    "dismount": {
+      "id": 33014,
+      "name": "dismount",
+      "alt": "Piktogram dismount"
+    },
+    "undress-34019": {
+      "id": 34019,
+      "name": "undress",
+      "alt": "Piktogram undress"
+    },
+    "conductor": {
+      "id": 34527,
+      "name": "conductor",
+      "alt": "Piktogram conductor"
+    },
+    "dress-34569": {
+      "id": 34569,
+      "name": "dress",
+      "alt": "Piktogram dress"
+    },
+    "tug": {
+      "id": 34123,
+      "name": "tug",
+      "alt": "Piktogram tug"
+    },
+    "wash-the-face": {
+      "id": 34611,
+      "name": "wash the face",
+      "alt": "Piktogram wash the face"
+    },
+    "unbuckle": {
+      "id": 34659,
+      "name": "unbuckle",
+      "alt": "Piktogram unbuckle"
+    },
+    "dressed-34737": {
+      "id": 34737,
+      "name": "dressed",
+      "alt": "Piktogram dressed"
+    },
+    "dressed": {
+      "id": 34735,
+      "name": "dressed",
+      "alt": "Piktogram dressed"
+    },
+    "wash-the-face-34777": {
+      "id": 34777,
+      "name": "wash the face",
+      "alt": "Piktogram wash the face"
+    },
+    "wash-the-face-34775": {
+      "id": 34775,
+      "name": "wash the face",
+      "alt": "Piktogram wash the face"
+    },
+    "gallop": {
+      "id": 34832,
+      "name": "gallop",
+      "alt": "Piktogram gallop"
+    },
+    "bend-35021": {
+      "id": 35021,
+      "name": "bend",
+      "alt": "Piktogram bend"
+    },
+    "ride-35483": {
+      "id": 35483,
+      "name": "ride",
+      "alt": "Piktogram ride"
+    },
+    "live-35103": {
+      "id": 35103,
+      "name": "live",
+      "alt": "Piktogram live"
+    },
+    "wash-hair-35037": {
+      "id": 35037,
+      "name": "wash hair",
+      "alt": "Piktogram wash hair"
+    },
+    "roast-35441": {
+      "id": 35441,
+      "name": "roast",
+      "alt": "Piktogram roast"
+    },
+    "spur": {
+      "id": 35487,
+      "name": "spur",
+      "alt": "Piktogram spur"
+    },
+    "confused-35521": {
+      "id": 35521,
+      "name": "confused",
+      "alt": "Piktogram confused"
+    },
+    "thirsty-35523": {
+      "id": 35523,
+      "name": "thirsty",
+      "alt": "Piktogram thirsty"
+    },
+    "confused-35541": {
+      "id": 35541,
+      "name": "confused",
+      "alt": "Piktogram confused"
+    },
+    "hungry-35525": {
+      "id": 35525,
+      "name": "hungry",
+      "alt": "Piktogram hungry"
+    },
+    "dizzy-35543": {
+      "id": 35543,
+      "name": "dizzy",
+      "alt": "Piktogram dizzy"
+    },
+    "5-35631": {
+      "id": 35631,
+      "name": "5",
+      "alt": "Piktogram 5"
+    },
+    "4-35665": {
+      "id": 35665,
+      "name": "4",
+      "alt": "Piktogram 4"
+    },
+    "one-35677": {
+      "id": 35677,
+      "name": "one",
+      "alt": "Piktogram one"
+    },
+    "disembark": {
+      "id": 35633,
+      "name": "disembark",
+      "alt": "Piktogram disembark"
+    },
+    "2-35679": {
+      "id": 35679,
+      "name": "2",
+      "alt": "Piktogram 2"
+    },
+    "3-35681": {
+      "id": 35681,
+      "name": "3",
+      "alt": "Piktogram 3"
+    },
+    "6-35683": {
+      "id": 35683,
+      "name": "6",
+      "alt": "Piktogram 6"
+    },
+    "7-35685": {
+      "id": 35685,
+      "name": "7",
+      "alt": "Piktogram 7"
+    },
+    "8-35687": {
+      "id": 35687,
+      "name": "8",
+      "alt": "Piktogram 8"
+    },
+    "9-35689": {
+      "id": 35689,
+      "name": "9",
+      "alt": "Piktogram 9"
+    },
+    "10-35691": {
+      "id": 35691,
+      "name": "10",
+      "alt": "Piktogram 10"
+    },
+    "board": {
+      "id": 35725,
+      "name": "board",
+      "alt": "Piktogram board"
+    },
+    "board-35745": {
+      "id": 35745,
+      "name": "board",
+      "alt": "Piktogram board"
+    },
+    "nought-35693": {
+      "id": 35693,
+      "name": "nought",
+      "alt": "Piktogram nought"
+    },
+    "put-soap-on-35729": {
+      "id": 35729,
+      "name": "put soap on",
+      "alt": "Piktogram put soap on"
+    },
+    "latch": {
+      "id": 35787,
+      "name": "latch",
+      "alt": "Piktogram latch"
+    },
+    "lather-the-hands-35977": {
+      "id": 35977,
+      "name": "lather the hands",
+      "alt": "Piktogram lather the hands"
+    },
+    "disembark-35751": {
+      "id": 35751,
+      "name": "disembark",
+      "alt": "Piktogram disembark"
+    },
+    "depilate": {
+      "id": 36005,
+      "name": "depilate",
+      "alt": "Piktogram depilate"
+    },
+    "closed": {
+      "id": 36311,
+      "name": "closed",
+      "alt": "Piktogram closed"
+    },
+    "open-36309": {
+      "id": 36309,
+      "name": "open",
+      "alt": "Piktogram open"
+    },
+    "depilate-36006": {
+      "id": 36006,
+      "name": "depilate",
+      "alt": "Piktogram depilate"
+    },
+    "crazy-36411": {
+      "id": 36411,
+      "name": "crazy",
+      "alt": "Piktogram crazy"
+    },
+    "worried-36341": {
+      "id": 36341,
+      "name": "worried",
+      "alt": "Piktogram worried"
+    },
+    "fun-36481": {
+      "id": 36481,
+      "name": "fun",
+      "alt": "Piktogram fun"
+    },
+    "serious-36449": {
+      "id": 36449,
+      "name": "serious",
+      "alt": "Piktogram serious"
+    },
+    "fun-36482": {
+      "id": 36482,
+      "name": "fun",
+      "alt": "Piktogram fun"
+    },
+    "kneel-36492": {
+      "id": 36492,
+      "name": "kneel",
+      "alt": "Piktogram kneel"
+    },
+    "put-soap-on-36525": {
+      "id": 36525,
+      "name": "put soap on",
+      "alt": "Piktogram put soap on"
+    },
+    "file-36553": {
+      "id": 36553,
+      "name": "file",
+      "alt": "Piktogram file"
+    },
+    "get-on-bus-36595": {
+      "id": 36595,
+      "name": "get on bus",
+      "alt": "Piktogram get on bus"
+    },
+    "open-bus-doors": {
+      "id": 36483,
+      "name": "open bus doors",
+      "alt": "Piktogram open bus doors"
+    },
+    "sweaty-36598": {
+      "id": 36598,
+      "name": "sweaty",
+      "alt": "Piktogram sweaty"
+    },
+    "wipe-the-pee": {
+      "id": 36555,
+      "name": "wipe the pee",
+      "alt": "Piktogram wipe the pee"
+    },
+    "take-the-knife-and-fork": {
+      "id": 36628,
+      "name": "take the knife and fork",
+      "alt": "Piktogram take the knife and fork"
+    },
+    "take-the-fork": {
+      "id": 36629,
+      "name": "take the fork",
+      "alt": "Piktogram take the fork"
+    },
+    "cut-food": {
+      "id": 36632,
+      "name": "cut food",
+      "alt": "Piktogram cut food"
+    },
+    "wipe-the-pee-36653": {
+      "id": 36653,
+      "name": "wipe the pee",
+      "alt": "Piktogram wipe the pee"
+    },
+    "throw-sanitary-napkin-away": {
+      "id": 36671,
+      "name": "throw sanitary napkin away",
+      "alt": "Piktogram throw sanitary napkin away"
+    },
+    "calm-down-36688": {
+      "id": 36688,
+      "name": "calm down",
+      "alt": "Piktogram calm down"
+    },
+    "ready-to-eat": {
+      "id": 36655,
+      "name": "ready to eat",
+      "alt": "Piktogram ready to eat"
+    },
+    "select-clothing-36724": {
+      "id": 36724,
+      "name": "select clothing",
+      "alt": "Piktogram select clothing"
+    },
+    "far-36759": {
+      "id": 36759,
+      "name": "far",
+      "alt": "Piktogram far"
+    },
+    "get-off-the-bus-36844": {
+      "id": 36844,
+      "name": "get off the bus",
+      "alt": "Piktogram get off the bus"
+    },
+    "get-off-the-bus": {
+      "id": 36842,
+      "name": "get off the bus",
+      "alt": "Piktogram get off the bus"
+    },
+    "get-off-the-bus-36843": {
+      "id": 36843,
+      "name": "get off the bus",
+      "alt": "Piktogram get off the bus"
+    },
+    "spread-the-soap": {
+      "id": 36860,
+      "name": "spread the soap",
+      "alt": "Piktogram spread the soap"
+    },
+    "wait-in-a-line": {
+      "id": 36845,
+      "name": "wait in a line",
+      "alt": "Piktogram wait in a line"
+    },
+    "open-rear-doors": {
+      "id": 36871,
+      "name": "open rear doors",
+      "alt": "Piktogram open rear doors"
+    },
+    "get-off-the-bus-36879": {
+      "id": 36879,
+      "name": "get off the bus",
+      "alt": "Piktogram get off the bus"
+    },
+    "wait-at-bus-stop-36913": {
+      "id": 36913,
+      "name": "wait at bus stop",
+      "alt": "Piktogram wait at bus stop"
+    },
+    "spread-the-soap-36918": {
+      "id": 36918,
+      "name": "spread the soap",
+      "alt": "Piktogram spread the soap"
+    },
+    "get-off-the-car": {
+      "id": 36958,
+      "name": "get off the car",
+      "alt": "Piktogram get off the car"
+    },
+    "wait-at-bus-stop-36917": {
+      "id": 36917,
+      "name": "wait at bus stop",
+      "alt": "Piktogram wait at bus stop"
+    },
+    "get-into-the-car": {
+      "id": 36969,
+      "name": "get into the car",
+      "alt": "Piktogram get into the car"
+    },
+    "indicate": {
+      "id": 36964,
+      "name": "indicate",
+      "alt": "Piktogram indicate"
+    },
+    "spread-the-soap-37030": {
+      "id": 37030,
+      "name": "spread the soap",
+      "alt": "Piktogram spread the soap"
+    },
+    "spread-the-soap-37032": {
+      "id": 37032,
+      "name": "spread the soap",
+      "alt": "Piktogram spread the soap"
+    },
+    "spread-the-soap-37031": {
+      "id": 37031,
+      "name": "spread the soap",
+      "alt": "Piktogram spread the soap"
+    },
+    "get-into-the-bus": {
+      "id": 36968,
+      "name": "get into the bus",
+      "alt": "Piktogram get into the bus"
+    },
+    "thick": {
+      "id": 37063,
+      "name": "thick",
+      "alt": "Piktogram thick"
+    },
+    "spread-the-soap-37033": {
+      "id": 37033,
+      "name": "spread the soap",
+      "alt": "Piktogram spread the soap"
+    },
+    "thin": {
+      "id": 37064,
+      "name": "thin",
+      "alt": "Piktogram thin"
+    },
+    "shave-off": {
+      "id": 37056,
+      "name": "shave off",
+      "alt": "Piktogram shave off"
+    },
+    "anxious-37175": {
+      "id": 37175,
+      "name": "anxious",
+      "alt": "Piktogram anxious"
+    },
+    "serious-37191": {
+      "id": 37191,
+      "name": "serious",
+      "alt": "Piktogram serious"
+    },
+    "anxious-37176": {
+      "id": 37176,
+      "name": "anxious",
+      "alt": "Piktogram anxious"
+    },
+    "dance-and-music-school": {
+      "id": 37225,
+      "name": "dance and music school",
+      "alt": "Piktogram dance and music school"
+    },
+    "smooth-out": {
+      "id": 37205,
+      "name": "smooth out",
+      "alt": "Piktogram smooth out"
+    },
+    "climb": {
+      "id": 37248,
+      "name": "climb",
+      "alt": "Piktogram climb"
+    },
+    "descend-37244": {
+      "id": 37244,
+      "name": "descend",
+      "alt": "Piktogram descend"
+    },
+    "infirmary-37341": {
+      "id": 37341,
+      "name": "infirmary",
+      "alt": "Piktogram infirmary"
+    },
+    "infirmary-37400": {
+      "id": 37400,
+      "name": "infirmary",
+      "alt": "Piktogram infirmary"
+    },
+    "climb-37262": {
+      "id": 37262,
+      "name": "climb",
+      "alt": "Piktogram climb"
+    },
+    "infirmary-37311": {
+      "id": 37311,
+      "name": "infirmary",
+      "alt": "Piktogram infirmary"
+    },
+    "put-soap-on-37409": {
+      "id": 37409,
+      "name": "put soap on",
+      "alt": "Piktogram put soap on"
+    },
+    "unzip": {
+      "id": 37414,
+      "name": "unzip",
+      "alt": "Piktogram unzip"
+    },
+    "unzip-37429": {
+      "id": 37429,
+      "name": "unzip",
+      "alt": "Piktogram unzip"
+    },
+    "last-37751": {
+      "id": 37751,
+      "name": "last",
+      "alt": "Piktogram last"
+    },
+    "downhearted-37766": {
+      "id": 37766,
+      "name": "downhearted",
+      "alt": "Piktogram downhearted"
+    },
+    "close-the-bus-doors": {
+      "id": 37476,
+      "name": "close the bus doors",
+      "alt": "Piktogram close the bus doors"
+    },
+    "like-37758": {
+      "id": 37758,
+      "name": "like",
+      "alt": "Piktogram like"
+    },
+    "shy-37767": {
+      "id": 37767,
+      "name": "shy",
+      "alt": "Piktogram shy"
+    },
+    "shy-37791": {
+      "id": 37791,
+      "name": "shy",
+      "alt": "Piktogram shy"
+    },
+    "pleasant-37800": {
+      "id": 37800,
+      "name": "pleasant",
+      "alt": "Piktogram pleasant"
+    },
+    "healthy-37797": {
+      "id": 37797,
+      "name": "healthy",
+      "alt": "Piktogram healthy"
+    },
+    "concierge-37823": {
+      "id": 37823,
+      "name": "concierge",
+      "alt": "Piktogram concierge"
+    },
+    "displease": {
+      "id": 37801,
+      "name": "displease",
+      "alt": "Piktogram displease"
+    },
+    "calm": {
+      "id": 37828,
+      "name": "calm",
+      "alt": "Piktogram calm"
+    },
+    "quiet": {
+      "id": 38050,
+      "name": "quiet",
+      "alt": "Piktogram quiet"
+    },
+    "fast": {
+      "id": 37850,
+      "name": "fast",
+      "alt": "Piktogram fast"
+    },
+    "dry-37049": {
+      "id": 37049,
+      "name": "dry",
+      "alt": "Piktogram dry"
+    },
+    "go-down-escalator": {
+      "id": 38148,
+      "name": "go down escalator",
+      "alt": "Piktogram go down escalator"
+    },
+    "shake-your-hands-dry": {
+      "id": 37868,
+      "name": "shake your hands dry",
+      "alt": "Piktogram shake your hands dry"
+    },
+    "go-up-escalator": {
+      "id": 38151,
+      "name": "go up escalator",
+      "alt": "Piktogram go up escalator"
+    },
+    "go-up-moving-ramp": {
+      "id": 38150,
+      "name": "go up moving ramp",
+      "alt": "Piktogram go up moving ramp"
+    },
+    "break-glass": {
+      "id": 38109,
+      "name": "break glass",
+      "alt": "Piktogram break glass"
+    },
+    "descend-moving-ramp": {
+      "id": 38149,
+      "name": "descend moving ramp",
+      "alt": "Piktogram descend moving ramp"
+    },
+    "recharge-the-battery": {
+      "id": 38333,
+      "name": "recharge the battery",
+      "alt": "Piktogram recharge the battery"
+    },
+    "wait-in-a-line-38410": {
+      "id": 38410,
+      "name": "wait in a line",
+      "alt": "Piktogram wait in a line"
+    },
+    "ill-38481": {
+      "id": 38481,
+      "name": "ill",
+      "alt": "Piktogram ill"
+    },
+    "slim-38589": {
+      "id": 38589,
+      "name": "slim",
+      "alt": "Piktogram slim"
+    },
+    "lather-the-hair-38555": {
+      "id": 38555,
+      "name": "lather the hair",
+      "alt": "Piktogram lather the hair"
+    },
+    "gymnasium": {
+      "id": 38476,
+      "name": "gymnasium",
+      "alt": "Piktogram gymnasium"
+    },
+    "roll-up-sanitary-pad-38670": {
+      "id": 38670,
+      "name": "roll up sanitary pad",
+      "alt": "Piktogram roll up sanitary pad"
+    },
+    "throw-sanitary-napkin-away-38607": {
+      "id": 38607,
+      "name": "throw sanitary napkin away",
+      "alt": "Piktogram throw sanitary napkin away"
+    },
+    "spread-38678": {
+      "id": 38678,
+      "name": "spread",
+      "alt": "Piktogram spread"
+    },
+    "melt": {
+      "id": 38711,
+      "name": "melt",
+      "alt": "Piktogram melt"
+    },
+    "mash": {
+      "id": 38694,
+      "name": "mash",
+      "alt": "Piktogram mash"
+    },
+    "demoulding": {
+      "id": 38705,
+      "name": "demoulding",
+      "alt": "Piktogram demoulding"
+    },
+    "defend": {
+      "id": 38809,
+      "name": "defend",
+      "alt": "Piktogram defend"
+    },
+    "furious": {
+      "id": 38811,
+      "name": "furious",
+      "alt": "Piktogram furious"
+    },
+    "move-38822": {
+      "id": 38822,
+      "name": "move",
+      "alt": "Piktogram move"
+    },
+    "infirmary-38878": {
+      "id": 38878,
+      "name": "infirmary",
+      "alt": "Piktogram infirmary"
+    },
+    "patient": {
+      "id": 38912,
+      "name": "patient",
+      "alt": "Piktogram patient"
+    },
+    "nervous": {
+      "id": 38929,
+      "name": "nervous",
+      "alt": "Piktogram nervous"
+    },
+    "nervous-38930": {
+      "id": 38930,
+      "name": "nervous",
+      "alt": "Piktogram nervous"
+    },
+    "calm-38932": {
+      "id": 38932,
+      "name": "calm",
+      "alt": "Piktogram calm"
+    },
+    "calm-38931": {
+      "id": 38931,
+      "name": "calm",
+      "alt": "Piktogram calm"
+    },
+    "hospital-classroom-39050": {
+      "id": 39050,
+      "name": "hospital classroom",
+      "alt": "Piktogram hospital classroom"
+    },
+    "get-off-the-train": {
+      "id": 38979,
+      "name": "get off the train",
+      "alt": "Piktogram get off the train"
+    },
+    "rotten": {
+      "id": 39167,
+      "name": "rotten",
+      "alt": "Piktogram rotten"
+    },
+    "research": {
+      "id": 39288,
+      "name": "research",
+      "alt": "Piktogram research"
+    },
+    "get-out-of-the-bathtub": {
+      "id": 39397,
+      "name": "get out of the bathtub",
+      "alt": "Piktogram get out of the bathtub"
+    },
+    "get-into-the-bathtub": {
+      "id": 39398,
+      "name": "get into the bathtub",
+      "alt": "Piktogram get into the bathtub"
+    },
+    "put-soap-on-39211": {
+      "id": 39211,
+      "name": "put soap on",
+      "alt": "Piktogram put soap on"
+    },
+    "fry": {
+      "id": 39476,
+      "name": "fry",
+      "alt": "Piktogram fry"
+    },
+    "hurt-39428": {
+      "id": 39428,
+      "name": "hurt",
+      "alt": "Piktogram hurt"
+    },
+    "fry-vegetables": {
+      "id": 39477,
+      "name": "fry vegetables",
+      "alt": "Piktogram fry vegetables"
+    },
+    "mild": {
+      "id": 39514,
+      "name": "mild",
+      "alt": "Piktogram mild"
+    },
+    "flush-the-toilet-39547": {
+      "id": 39547,
+      "name": "flush the toilet",
+      "alt": "Piktogram flush the toilet"
+    },
+    "serious-39513": {
+      "id": 39513,
+      "name": "serious",
+      "alt": "Piktogram serious"
+    },
+    "healthy-39515": {
+      "id": 39515,
+      "name": "healthy",
+      "alt": "Piktogram healthy"
+    },
+    "short-39777": {
+      "id": 39777,
+      "name": "short",
+      "alt": "Piktogram short"
+    },
+    "inflate": {
+      "id": 39648,
+      "name": "inflate",
+      "alt": "Piktogram inflate"
+    },
+    "tall-39778": {
+      "id": 39778,
+      "name": "tall",
+      "alt": "Piktogram tall"
+    },
+    "content-39814": {
+      "id": 39814,
+      "name": "content",
+      "alt": "Piktogram content"
+    },
+    "stop-39835": {
+      "id": 39835,
+      "name": "stop",
+      "alt": "Piktogram stop"
+    },
+    "replace": {
+      "id": 39930,
+      "name": "replace",
+      "alt": "Piktogram replace"
+    },
+    "steam": {
+      "id": 39839,
+      "name": "steam",
+      "alt": "Piktogram steam"
+    },
+    "cocky": {
+      "id": 39971,
+      "name": "cocky",
+      "alt": "Piktogram cocky"
+    },
+    "cocky-39972": {
+      "id": 39972,
+      "name": "cocky",
+      "alt": "Piktogram cocky"
+    },
+    "visit-39936": {
+      "id": 39936,
+      "name": "visit",
+      "alt": "Piktogram visit"
+    },
+    "at-your-house": {
+      "id": 39998,
+      "name": "at your house",
+      "alt": "Piktogram at your house"
+    },
+    "at-your-house-39999": {
+      "id": 39999,
+      "name": "at your house",
+      "alt": "Piktogram at your house"
+    },
+    "at-your-house-40000": {
+      "id": 40000,
+      "name": "at your house",
+      "alt": "Piktogram at your house"
+    },
+    "at-your-house-40001": {
+      "id": 40001,
+      "name": "at your house",
+      "alt": "Piktogram at your house"
+    },
+    "at-our-house": {
+      "id": 40002,
+      "name": "at our house",
+      "alt": "Piktogram at our house"
+    },
+    "at-my-house": {
+      "id": 40003,
+      "name": "at my house",
+      "alt": "Piktogram at my house"
+    },
+    "write": {
+      "id": 2380,
+      "name": "write",
+      "alt": "Piktogram write"
+    },
+    "paint": {
+      "id": 2348,
+      "name": "paint",
+      "alt": "Piktogram paint"
+    },
+    "paste": {
+      "id": 2511,
+      "name": "paste",
+      "alt": "Piktogram paste"
+    },
+    "dash": {
+      "id": 3200,
+      "name": "dash",
+      "alt": "Piktogram dash"
+    },
+    "touch": {
+      "id": 3293,
+      "name": "touch",
+      "alt": "Piktogram touch"
+    },
+    "clear": {
+      "id": 4604,
+      "name": "clear",
+      "alt": "Piktogram clear"
+    },
+    "accident": {
+      "id": 4551,
+      "name": "accident",
+      "alt": "Piktogram accident"
+    },
+    "dark": {
+      "id": 4710,
+      "name": "dark",
+      "alt": "Piktogram dark"
+    },
+    "slow": {
+      "id": 4676,
+      "name": "slow",
+      "alt": "Piktogram slow"
+    },
+    "be-5465": {
+      "id": 5465,
+      "name": "be",
+      "alt": "Piktogram be"
+    },
+    "yes": {
+      "id": 5584,
+      "name": "yes",
+      "alt": "Piktogram yes"
+    },
+    "airport": {
+      "id": 6031,
+      "name": "airport",
+      "alt": "Piktogram airport"
+    },
+    "walk": {
+      "id": 6044,
+      "name": "walk",
+      "alt": "Piktogram walk"
+    },
+    "bedroom": {
+      "id": 5988,
+      "name": "bedroom",
+      "alt": "Piktogram bedroom"
+    },
+    "library": {
+      "id": 6063,
+      "name": "library",
+      "alt": "Piktogram library"
+    },
+    "i-do-not-want": {
+      "id": 6156,
+      "name": "I do not want",
+      "alt": "Piktogram I do not want"
+    },
+    "fly-6246": {
+      "id": 6246,
+      "name": "fly",
+      "alt": "Piktogram fly"
+    },
+    "fall": {
+      "id": 6067,
+      "name": "fall",
+      "alt": "Piktogram fall"
+    },
+    "sleep": {
+      "id": 6479,
+      "name": "sleep",
+      "alt": "Piktogram sleep"
+    },
+    "study": {
+      "id": 6495,
+      "name": "study",
+      "alt": "Piktogram study"
+    },
+    "pharmacy": {
+      "id": 6497,
+      "name": "pharmacy",
+      "alt": "Piktogram pharmacy"
+    },
+    "throw": {
+      "id": 6543,
+      "name": "throw",
+      "alt": "Piktogram throw"
+    },
+    "get-up": {
+      "id": 6549,
+      "name": "get up",
+      "alt": "Piktogram get up"
+    },
+    "swim": {
+      "id": 6568,
+      "name": "swim",
+      "alt": "Piktogram swim"
+    },
+    "play": {
+      "id": 6537,
+      "name": "play",
+      "alt": "Piktogram play"
+    },
+    "hear": {
+      "id": 6572,
+      "name": "hear",
+      "alt": "Piktogram hear"
+    },
+    "sing": {
+      "id": 6960,
+      "name": "sing",
+      "alt": "Piktogram sing"
+    },
+    "jump": {
+      "id": 6607,
+      "name": "jump",
+      "alt": "Piktogram jump"
+    },
+    "read": {
+      "id": 7141,
+      "name": "read",
+      "alt": "Piktogram read"
+    },
+    "stripy": {
+      "id": 7225,
+      "name": "stripy",
+      "alt": "Piktogram stripy"
+    },
+    "between": {
+      "id": 7765,
+      "name": "between",
+      "alt": "Piktogram between"
+    },
+    "where": {
+      "id": 7764,
+      "name": "where",
+      "alt": "Piktogram where"
+    },
+    "win": {
+      "id": 7218,
+      "name": "win",
+      "alt": "Piktogram win"
+    },
+    "over": {
+      "id": 7814,
+      "name": "over",
+      "alt": "Piktogram over"
+    },
+    "draw-8088": {
+      "id": 8088,
+      "name": "draw",
+      "alt": "Piktogram draw"
+    },
+    "live-11605": {
+      "id": 11605,
+      "name": "live",
+      "alt": "Piktogram live"
+    },
+    "undress-11233": {
+      "id": 11233,
+      "name": "undress",
+      "alt": "Piktogram undress"
+    },
+    "stand-13370": {
+      "id": 13370,
+      "name": "stand",
+      "alt": "Piktogram stand"
+    },
+    "rest": {
+      "id": 16643,
+      "name": "rest",
+      "alt": "Piktogram rest"
+    },
+    "hotel": {
+      "id": 15730,
+      "name": "hotel",
+      "alt": "Piktogram hotel"
+    },
+    "celebrate": {
+      "id": 16475,
+      "name": "celebrate",
+      "alt": "Piktogram celebrate"
+    },
+    "pee-16713": {
+      "id": 16713,
+      "name": "pee",
+      "alt": "Piktogram pee"
+    },
+    "ski": {
+      "id": 16701,
+      "name": "ski",
+      "alt": "Piktogram ski"
+    },
+    "invite": {
+      "id": 16717,
+      "name": "invite",
+      "alt": "Piktogram invite"
+    },
+    "celebrate-16649": {
+      "id": 16649,
+      "name": "celebrate",
+      "alt": "Piktogram celebrate"
+    },
+    "know": {
+      "id": 16885,
+      "name": "know",
+      "alt": "Piktogram know"
+    },
+    "toast": {
+      "id": 17330,
+      "name": "toast",
+      "alt": "Piktogram toast"
+    },
+    "how-many": {
+      "id": 24731,
+      "name": "how many?",
+      "alt": "Piktogram how many?"
+    },
+    "find": {
+      "id": 24773,
+      "name": "find",
+      "alt": "Piktogram find"
+    },
+    "lose": {
+      "id": 24779,
+      "name": "lose",
+      "alt": "Piktogram lose"
+    },
+    "smell": {
+      "id": 25275,
+      "name": "smell",
+      "alt": "Piktogram smell"
+    },
+    "residence": {
+      "id": 25729,
+      "name": "residence",
+      "alt": "Piktogram residence"
+    },
+    "young": {
+      "id": 26146,
+      "name": "young",
+      "alt": "Piktogram young"
+    },
+    "dark-26993": {
+      "id": 26993,
+      "name": "dark",
+      "alt": "Piktogram dark"
+    },
+    "die": {
+      "id": 29863,
+      "name": "die",
+      "alt": "Piktogram die"
+    },
+    "showers": {
+      "id": 32426,
+      "name": "showers",
+      "alt": "Piktogram showers"
+    },
+    "curled": {
+      "id": 26392,
+      "name": "curled",
+      "alt": "Piktogram curled"
+    },
+    "prison": {
+      "id": 32430,
+      "name": "prison",
+      "alt": "Piktogram prison"
+    },
+    "sweet": {
+      "id": 32440,
+      "name": "sweet",
+      "alt": "Piktogram sweet"
+    },
+    "slalom": {
+      "id": 32520,
+      "name": "slalom",
+      "alt": "Piktogram slalom"
+    },
+    "salty": {
+      "id": 32524,
+      "name": "salty",
+      "alt": "Piktogram salty"
+    },
+    "finish": {
+      "id": 32814,
+      "name": "finish",
+      "alt": "Piktogram finish"
+    },
+    "uncomfortable": {
+      "id": 32528,
+      "name": "uncomfortable",
+      "alt": "Piktogram uncomfortable"
     }
   }
 }

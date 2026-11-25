@@ -40,7 +40,17 @@ export default async function StudentClassroomPage({
             </p>
           </div>
 
-          <DisplayPreferencesTrigger className="shrink-0" />
+          <div className="flex items-center gap-2 shrink-0">
+            <Button
+              variant="secondary"
+              size="normal"
+              href="/"
+              icon={<Icon name="CaretLeft" size={18} />}
+            >
+              Beranda
+            </Button>
+            <DisplayPreferencesTrigger />
+          </div>
         </div>
       </header>
 

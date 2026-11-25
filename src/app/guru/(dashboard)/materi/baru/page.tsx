@@ -28,7 +28,7 @@ export default async function NewLessonPage({
           Penyusun Materi Belajar
         </h1>
         <p className="text-sm text-[var(--muted)]">
-          Buat kartu belajar multimodal dan latihan soal adaptif secara otomatis.
+          Pilih Buat Manual atau Upload PDF untuk menyusun kartu belajar dan latihan soal adaptif.
         </p>
       </div>
 

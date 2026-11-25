@@ -23,7 +23,7 @@ export default async function TeacherLayout({
     <div className="flex min-h-[100dvh] md:h-[100dvh] md:overflow-hidden flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* Header Guru — 64px, 1px bottom border (DESIGN.md §6 Teacher Navigation) */}
       <header className="sticky top-0 z-30 h-16 shrink-0 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
-        <div className="mx-auto flex h-full max-w-7xl items-center justify-between">
+        <div className="flex h-full w-full items-center justify-between">
           <div className="flex items-center gap-4">
             <a
               href="/guru"
@@ -52,7 +52,7 @@ export default async function TeacherLayout({
       </header>
 
       {/* Konten Utama Guru */}
-      <div className="flex flex-1 min-h-0 mx-auto w-full max-w-7xl">
+      <div className="flex flex-1 min-h-0 w-full">
         <TeacherSidebar />
         <main
           id="main-content"

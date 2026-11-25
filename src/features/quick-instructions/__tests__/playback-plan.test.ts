@@ -3,6 +3,8 @@ import { tokenize, slotAt } from "@/shared/lib/sync";
 import {
   PACE_CONFIGS,
   buildQuickInstructionPlan,
+  resolveSegmentState,
+  extractUniqueSignLetters,
 } from "../lib/playback-plan";
 
 describe("buildQuickInstructionPlan", () => {
@@ -46,5 +48,33 @@ describe("buildQuickInstructionPlan", () => {
 
   it("mengembalikan rencana kosong untuk daftar token kosong", () => {
     expect(buildQuickInstructionPlan([])).toEqual([]);
+  });
+
+  it("menampilkan huruf terakhir penuh selama letterMs dan tidak melompat ke huruf pertama saat segmen selesai", () => {
+    const tokens = tokenize("Buka buku", ["buka", "buku"]);
+    const pace = PACE_CONFIGS.sedang;
+    const plan = buildQuickInstructionPlan(tokens, pace);
+    const buka = plan[0]!;
+    const lastSlot = buka.schedule.slots[buka.schedule.slots.length - 1]!;
+
+    expect(lastSlot.ch).toBe("A");
+    expect(lastSlot.end - lastSlot.start).toBeGreaterThanOrEqual(pace.letterMs);
+    expect(buka.minDurationMs).toBeGreaterThanOrEqual(lastSlot.end);
+
+    // Tepat sebelum huruf terakhir berakhir: masih aktif huruf A, belum completed
+    const beforeEnd = resolveSegmentState(buka, lastSlot.end - 1);
+    expect(beforeEnd.activeSignSlot?.ch).toBe("A");
+    expect(beforeEnd.activeSignSlot?.letterIndex).toBe(3);
+    expect(beforeEnd.completedWordIndex).toBeNull();
+
+    // Setelah huruf terakhir selesai: tetap bertahan di huruf terakhir A (tidak reset ke huruf 0)
+    const afterEnd = resolveSegmentState(buka, lastSlot.end + 10);
+    expect(afterEnd.activeSignSlot?.ch).toBe("A");
+    expect(afterEnd.activeSignSlot?.letterIndex).toBe(3);
+    expect(afterEnd.completedWordIndex).toBe(0);
+  });
+
+  it("mengekstrak huruf unik untuk preloading ringan", () => {
+    expect(extractUniqueSignLetters(["buka", "buku"])).toEqual(["b", "u", "k", "a"]);
   });
 });

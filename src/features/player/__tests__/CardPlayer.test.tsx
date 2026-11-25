@@ -118,4 +118,54 @@ describe("CardPlayer Component", () => {
     expect(screen.getByAltText("Isyarat huruf A dalam SIBI")).toBeDefined();
     expect(screen.getByText("SIBI")).toBeDefined();
   });
+
+  it("menampilkan kontrol kecepatan inklusif (Lambat, Sedang, Normal) dengan bawaan Sedang", () => {
+    render(
+      <PreferencesProvider>
+        <CardPlayer cards={dummyCards} backHref="/kelas/123456" />
+      </PreferencesProvider>
+    );
+
+    const lambat = screen.getByRole("radio", { name: "Lambat" });
+    const sedang = screen.getByRole("radio", { name: "Sedang" });
+    const normal = screen.getByRole("radio", { name: "Normal" });
+
+    expect(sedang.getAttribute("aria-checked")).toBe("true");
+    expect(lambat.getAttribute("aria-checked")).toBe("false");
+    expect(normal.getAttribute("aria-checked")).toBe("false");
+
+    fireEvent.click(lambat);
+    expect(lambat.getAttribute("aria-checked")).toBe("true");
+    expect(sedang.getAttribute("aria-checked")).toBe("false");
+  });
+
+  it("hanya melakukan preload huruf SIBI unik dari kartu aktif", () => {
+    const loadedSrcs: string[] = [];
+    const OriginalImage = window.Image;
+    class MockImage {
+      decoding = "";
+      set src(val: string) {
+        loadedSrcs.push(val);
+      }
+    }
+    // @ts-expect-error mock Image for preload assertion
+    window.Image = MockImage;
+
+    try {
+      render(
+        <PreferencesProvider>
+          <CardPlayer cards={dummyCards} backHref="/kelas/123456" />
+        </PreferencesProvider>
+      );
+
+      // keyTerms kartu 1 adalah ["buku"] -> huruf unik: b, u, k
+      expect(loadedSrcs.sort()).toEqual([
+        "/signs/sibi/b.webp",
+        "/signs/sibi/k.webp",
+        "/signs/sibi/u.webp",
+      ]);
+    } finally {
+      window.Image = OriginalImage;
+    }
+  });
 });

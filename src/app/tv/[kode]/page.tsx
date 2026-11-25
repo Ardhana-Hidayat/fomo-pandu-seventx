@@ -20,19 +20,29 @@ export default async function TVClassroomMenuPage({
 
   return (
     <div className="flex min-h-[100dvh] flex-col justify-between p-8 sm:p-14 bg-[var(--bg)] text-[var(--ink)]">
-      <header className="flex items-center justify-between border-b-4 border-[var(--border)] pb-6">
-        <div>
-          <span className="text-xl font-bold text-[var(--muted)] uppercase block">
-            Mode Presentasi Layar TV
-          </span>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-[var(--ink)]">
-            {classroom.name}
-          </h1>
+      <header className="flex flex-wrap items-center justify-between gap-4 border-b-4 border-[var(--border)] pb-6">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="secondary"
+            size="normal"
+            href="/"
+            icon={<Icon name="CaretLeft" size={20} />}
+          >
+            Beranda
+          </Button>
+          <div>
+            <span className="text-sm sm:text-xl font-bold text-[var(--muted)] uppercase block">
+              Mode Presentasi Layar TV
+            </span>
+            <h1 className="text-3xl sm:text-5xl font-extrabold text-[var(--ink)]">
+              {classroom.name}
+            </h1>
+          </div>
         </div>
 
         <div className="text-right">
-          <span className="text-sm font-bold text-[var(--muted)] block">KODE KELAS</span>
-          <span className="font-mono text-4xl sm:text-5xl font-extrabold tracking-widest text-[var(--link)]">
+          <span className="text-sm font-bold text-[var(--muted)] block">KODE LAYAR</span>
+          <span className="font-mono text-3xl sm:text-5xl font-extrabold tracking-widest text-[var(--link)]">
             {classroom.joinCode}
           </span>
         </div>
@@ -48,7 +58,7 @@ export default async function TVClassroomMenuPage({
 
         {publications.length === 0 ? (
           <Card className="p-12 text-center text-2xl font-bold text-[var(--muted)]">
-            Belum ada materi yang diterbitkan di kelas ini.
+            Belum ada materi yang siap ditampilkan.
           </Card>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -94,7 +104,7 @@ export default async function TVClassroomMenuPage({
       </main>
 
       <footer className="text-center text-sm font-bold text-[var(--muted)] border-t-2 border-[var(--border)] pt-4">
-        PANDU &bull; Hubungkan layar TV kelas untuk pembelajaran bersama
+        PANDU &bull; Layar TV untuk pembelajaran bersama
       </footer>
     </div>
   );

@@ -7,20 +7,15 @@ import type { LessonCard } from "@/server/db/schema";
 import {
   tokenize,
   buildTimeline,
-  scaleTimeline,
-  buildSignSchedule,
-  slotAt,
-  completedSignWord,
-  wordIndexAt,
-  progressInWord,
   PACE_CONFIGS,
   buildQuickInstructionPlan,
+  resolveActiveSignDisplay,
   type PacePreset,
-  type Timeline,
   type SignSlot,
 } from "@/shared/lib/sync";
 import {
   preloadSignImagesForWords,
+  runAudioTimelinePlayback,
   runSegmentedPlayback,
 } from "@/shared/lib/sync/segmented-playback";
 
@@ -34,7 +29,8 @@ interface CardPlayerProps {
   title?: string;
   cards: PlayerCard[];
   quizHref?: string;
-  backHref: string;
+  backHref?: string;
+  onExit?: () => void;
   signSystem?: "SIBI" | "BISINDO";
   playbackRate?: number;
 }
@@ -43,7 +39,8 @@ export function CardPlayer({
   title,
   cards,
   quizHref,
-  backHref,
+  backHref = "/",
+  onExit,
 }: CardPlayerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pace, setPace] = useState<PacePreset>("sedang");
@@ -53,7 +50,8 @@ export function CardPlayer({
   const [activeSignSlot, setActiveSignSlot] = useState<SignSlot | null>(null);
   const [activeSegmentWordIdx, setActiveSegmentWordIdx] = useState<number | null>(null);
   const [completedWordIndex, setCompletedWordIndex] = useState<number | null>(null);
-  const [manualTermIndex, setManualTermIndex] = useState(0);
+  const [lastSignedWordIdx, setLastSignedWordIdx] = useState<number | null>(null);
+  const [manualWordIdx, setManualWordIdx] = useState<number | null>(null);
   const [manualLetterIndex, setManualLetterIndex] = useState(0);
 
   const currentCard = cards[currentIndex];
@@ -61,21 +59,21 @@ export function CardPlayer({
   const isLastCard = currentIndex === totalCards - 1;
   const paceConfig = PACE_CONFIGS[pace];
 
-  // Key terms & Tokens (pecah frasa multi-kata agar tiap kata kunci tersinkron penuh)
-  const keyTerms = useMemo(() => {
-    return Array.isArray(currentCard?.keyTerms) ? currentCard.keyTerms : [];
-  }, [currentCard]);
-  const expandedKeyWords = useMemo(() => {
-    const words = keyTerms
-      .flatMap((t) => t.trim().split(/[\s-]+/))
-      .map((w) => w.replace(/[^a-zA-Z0-9]/g, "").toLowerCase())
-      .filter(Boolean);
-    return Array.from(new Set(words));
-  }, [keyTerms]);
-  const cardText = currentCard?.text ?? "";
-  const tokens = useMemo(() => tokenize(cardText, expandedKeyWords), [cardText, expandedKeyWords]);
+  const resolvedBackHref =
+    !backHref || backHref.startsWith("/kelas/") ? "/" : backHref;
 
-  // Rencana segmen pemutaran serempak (sama dengan Instruksi Cepat)
+  // Tokenize dan eja SEMUA kata berhuruf dalam teks kartu secara berurutan (tanpa lompat/ulang)
+  const cardText = currentCard?.text ?? "";
+  const tokens = useMemo(
+    () => tokenize(cardText, [], { allWords: true }),
+    [cardText]
+  );
+  const cardSignWords = useMemo(
+    () => tokens.filter((t) => t.isKey).map((t) => t.core),
+    [tokens]
+  );
+
+  // Rencana segmen pemutaran serempak untuk setiap kata berurutan
   const playbackPlan = useMemo(
     () => buildQuickInstructionPlan(tokens, paceConfig),
     [tokens, paceConfig]
@@ -108,7 +106,6 @@ export function CardPlayer({
   const animFrameRef = useRef<number | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const playbackRunIdRef = useRef(0);
-  const freeClockStartRef = useRef<{ startPerf: number; startAudioMs: number } | null>(null);
 
   // Stop all playback
   const stopPlayback = useCallback(() => {
@@ -121,9 +118,11 @@ export function CardPlayer({
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    freeClockStartRef.current = null;
 
     if (audioElementRef.current) {
+      audioElementRef.current.onloadedmetadata = null;
+      audioElementRef.current.onended = null;
+      audioElementRef.current.onerror = null;
       audioElementRef.current.pause();
       audioElementRef.current.currentTime = 0;
     }
@@ -136,12 +135,13 @@ export function CardPlayer({
 
   const resetSyncState = useCallback(() => {
     stopPlayback();
+    setLastSignedWordIdx(null);
     setActiveWordIdx(-1);
     setActiveWordProgress(0);
     setActiveSignSlot(null);
     setActiveSegmentWordIdx(null);
     setCompletedWordIndex(null);
-    setManualTermIndex(0);
+    setManualWordIdx(null);
     setManualLetterIndex(0);
   }, [stopPlayback]);
 
@@ -154,77 +154,8 @@ export function CardPlayer({
 
   // Preload hanya huruf unik SIBI pada kartu aktif (ringan & cepat)
   useEffect(() => {
-    return preloadSignImagesForWords(expandedKeyWords);
-  }, [expandedKeyWords]);
-
-  // Update real-time sync state at time `t` (ms) untuk Mode A (berkas audio)
-  const updateSyncAtTime = useCallback(
-    (tMs: number, schedule: { slots: SignSlot[]; signEnd: number }, speechTl: Timeline) => {
-      const totalWords = speechTl.words.length;
-      if (totalWords === 0) return;
-
-      const lastWordIdx = totalWords - 1;
-      const lastWord = speechTl.words[lastWordIdx];
-
-      let wIdx = wordIndexAt(speechTl, tMs);
-      let prog = progressInWord(speechTl, tMs);
-
-      if (lastWord && tMs >= lastWord.start) {
-        if (tMs <= speechTl.total + 300) {
-          wIdx = lastWordIdx;
-          prog = Math.min(1, Math.max(0, (tMs - lastWord.start) / Math.max(1, lastWord.end - lastWord.start)));
-          if (tMs >= lastWord.end) {
-            prog = 1;
-          }
-        }
-      }
-
-      const slot = slotAt(schedule.slots, tMs);
-      const doneWord = completedSignWord(schedule.slots, tMs);
-
-      setActiveWordIdx(wIdx);
-      setActiveWordProgress(prog);
-      setActiveSignSlot(slot);
-      setActiveSegmentWordIdx(slot ? slot.wordIndex : null);
-      setCompletedWordIndex(doneWord);
-    },
-    []
-  );
-
-  // Start Animation Frame Loop untuk Mode A (berkas audio)
-  const runPlaybackLoop = useCallback(
-    (audio: HTMLAudioElement | null, schedule: { slots: SignSlot[]; signEnd: number }, speechTl: Timeline) => {
-      const loop = () => {
-        let currentTimeMs = 0;
-
-        if (audio && !audio.paused && !audio.ended) {
-          currentTimeMs = audio.currentTime * 1000;
-        } else if (freeClockStartRef.current) {
-          const elapsed = performance.now() - freeClockStartRef.current.startPerf;
-          currentTimeMs = freeClockStartRef.current.startAudioMs + elapsed * paceConfig.speechRate;
-        } else {
-          return;
-        }
-
-        updateSyncAtTime(currentTimeMs, schedule, speechTl);
-
-        const endThreshold = Math.max(speechTl.total, schedule.signEnd);
-        if (currentTimeMs >= endThreshold) {
-          setActiveWordIdx(speechTl.words.length);
-          setActiveWordProgress(1);
-          timeoutRef.current = setTimeout(() => {
-            stopPlayback();
-          }, 300);
-          return;
-        }
-
-        animFrameRef.current = requestAnimationFrame(loop);
-      };
-
-      animFrameRef.current = requestAnimationFrame(loop);
-    },
-    [stopPlayback, updateSyncAtTime, paceConfig.speechRate]
-  );
+    return preloadSignImagesForWords(cardSignWords);
+  }, [cardSignWords]);
 
   // Pemutaran tersegmentasi serempak (TTS + sorotan kata + ejaan SIBI)
   const startSegmentedPlayback = useCallback(() => {
@@ -238,6 +169,9 @@ export function CardPlayer({
     runSegmentedPlayback(playbackPlan, tokens.length, paceConfig.speechRate, {
       isActive: () => playbackRunIdRef.current === runId,
       onSync: (state) => {
+        if (state.activeSegmentWordIdx !== null) {
+          setLastSignedWordIdx(state.activeSegmentWordIdx);
+        }
         setActiveWordIdx(state.activeWordIdx);
         setActiveWordProgress(state.activeWordProgress);
         setActiveSegmentWordIdx(state.activeSegmentWordIdx);
@@ -246,9 +180,15 @@ export function CardPlayer({
       },
       onComplete: stopPlayback,
       setFrame: (id) => {
+        if (id === null && animFrameRef.current !== null) {
+          cancelAnimationFrame(animFrameRef.current);
+        }
         animFrameRef.current = id;
       },
       setTimer: (id) => {
+        if (timeoutRef.current !== null) {
+          clearTimeout(timeoutRef.current);
+        }
         timeoutRef.current = id;
       },
     });
@@ -263,62 +203,51 @@ export function CardPlayer({
 
     const audioSrc = currentCard?.audioUrl || currentCard?.audioRef;
 
-    if (audioSrc) {
+    if (audioSrc && typeof Audio !== "undefined") {
+      resetSyncState();
+      const runId = playbackRunIdRef.current + 1;
+      playbackRunIdRef.current = runId;
+
       if (!audioElementRef.current) {
         audioElementRef.current = new Audio();
       }
       const audio = audioElementRef.current;
-      audio.src = audioSrc;
-      audio.playbackRate = paceConfig.speechRate;
 
-      const handleLoadedMetadata = () => {
-        const durMs = (audio.duration || 2.5) * 1000;
-        const scaledSpeech = scaleTimeline(speechTimeline, durMs);
-        const sched = buildSignSchedule(signBaseTimeline, paceConfig.letterMs);
-
-        audio
-          .play()
-          .then(() => {
-            setIsPlaying(true);
-            freeClockStartRef.current = null;
-            runPlaybackLoop(audio, sched, scaledSpeech);
-          })
-          .catch(() => {
-            startSegmentedPlayback();
-          });
-
-        audio.onended = () => {
-          const currentMs = audio.currentTime * 1000;
-          if (currentMs < sched.signEnd) {
-            if (animFrameRef.current !== null) {
-              cancelAnimationFrame(animFrameRef.current);
-              animFrameRef.current = null;
+      runAudioTimelinePlayback(
+        audio,
+        audioSrc,
+        speechTimeline,
+        signBaseTimeline,
+        paceConfig,
+        {
+          isActive: () => playbackRunIdRef.current === runId,
+          onStarted: () => setIsPlaying(true),
+          onSync: (state) => {
+            if (state.activeSegmentWordIdx !== null) {
+              setLastSignedWordIdx(state.activeSegmentWordIdx);
             }
-            freeClockStartRef.current = {
-              startPerf: performance.now(),
-              startAudioMs: currentMs,
-            };
-            runPlaybackLoop(null, sched, scaledSpeech);
-          } else {
-            setActiveWordIdx(scaledSpeech.words.length);
-            setActiveWordProgress(1);
-            timeoutRef.current = setTimeout(() => {
-              stopPlayback();
-            }, 300);
-          }
-        };
-      };
-
-      audio.onerror = () => {
-        startSegmentedPlayback();
-      };
-
-      if (audio.readyState >= 1) {
-        handleLoadedMetadata();
-      } else {
-        audio.onloadedmetadata = handleLoadedMetadata;
-        audio.load();
-      }
+            setActiveWordIdx(state.activeWordIdx);
+            setActiveWordProgress(state.activeWordProgress);
+            setActiveSegmentWordIdx(state.activeSegmentWordIdx);
+            setActiveSignSlot(state.activeSignSlot);
+            setCompletedWordIndex(state.completedWordIndex);
+          },
+          onComplete: stopPlayback,
+          onFallbackToTTS: startSegmentedPlayback,
+          setFrame: (id) => {
+            if (id === null && animFrameRef.current !== null) {
+              cancelAnimationFrame(animFrameRef.current);
+            }
+            animFrameRef.current = id;
+          },
+          setTimer: (id) => {
+            if (timeoutRef.current !== null) {
+              clearTimeout(timeoutRef.current);
+            }
+            timeoutRef.current = id;
+          },
+        }
+      );
       return;
     }
 
@@ -353,20 +282,22 @@ export function CardPlayer({
     );
   }
 
-  // Kata kunci aktif untuk kartu isyarat: ikuti kata yang sedang dieja saat pemutaran, atau kata terpilih saat jeda
-  const activeKeyTerm = activeSignSlot
-    ? (tokens[activeSegmentWordIdx ?? activeSignSlot.wordIndex]?.core ??
-      expandedKeyWords[manualTermIndex] ??
-      keyTerms[0] ??
-      "")
-    : activeSegmentWordIdx !== null && tokens[activeSegmentWordIdx]?.isKey
-    ? tokens[activeSegmentWordIdx]!.core
-    : (expandedKeyWords[manualTermIndex] ?? keyTerms[0] ?? "");
-  const activeLetterIndex = activeSignSlot ? activeSignSlot.letterIndex : manualLetterIndex;
-  const completedWordText =
-    completedWordIndex !== null && tokens[completedWordIndex]?.isKey
-      ? tokens[completedWordIndex]?.text
-      : null;
+  // Kata aktif untuk kartu isyarat: ikuti urutan tepat kata yang sedang dieja saat putar, atau kata terpilih saat jeda
+  const {
+    displayedWordIdx,
+    activeKeyTerm,
+    activeLetterIndex,
+    completedWordText,
+  } = resolveActiveSignDisplay({
+    tokens,
+    isPlaying,
+    activeSignSlot,
+    activeSegmentWordIdx,
+    lastSignedWordIdx,
+    completedWordIndex,
+    manualWordIdx,
+    manualLetterIndex,
+  });
 
   const hasVisualCard = Boolean(currentCard.imageUrl || currentCard.imageAlt);
 
@@ -374,16 +305,32 @@ export function CardPlayer({
     <div className="flex min-h-[100dvh] sm:h-[100dvh] sm:max-h-[100dvh] flex-col justify-between sm:overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
       {/* 1. Header Kompak & Bersih */}
       <header className="shrink-0 border-b border-[var(--border)] bg-[var(--surface)] px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2 z-20">
-        <Button
-          variant="secondary"
-          size="normal"
-          href={backHref}
-          icon={<Icon name="CaretLeft" size={18} />}
-          className="shrink-0 px-3 sm:px-4"
-          aria-label="Kembali"
-        >
-          Kembali
-        </Button>
+        {onExit ? (
+          <Button
+            variant="secondary"
+            size="normal"
+            onClick={() => {
+              stopPlayback();
+              onExit();
+            }}
+            icon={<Icon name="CaretLeft" size={18} />}
+            className="shrink-0 px-3 sm:px-4"
+            aria-label="Kembali"
+          >
+            Kembali
+          </Button>
+        ) : (
+          <Button
+            variant="secondary"
+            size="normal"
+            href={resolvedBackHref}
+            icon={<Icon name="CaretLeft" size={18} />}
+            className="shrink-0 px-3 sm:px-4"
+            aria-label="Kembali"
+          >
+            Kembali
+          </Button>
+        )}
 
         {title ? (
           <h1 className="min-w-0 flex-1 text-center font-extrabold text-sm sm:text-base text-[var(--ink)] truncate px-2">
@@ -455,13 +402,24 @@ export function CardPlayer({
                 const isCurrent = idx === activeWordIdx;
                 const isPassed = activeWordIdx > idx;
                 const progress = isCurrent ? activeWordProgress : isPassed ? 1 : 0;
+                const isInspected = !isPlaying && tok.isKey && idx === displayedWordIdx;
 
                 return (
                   <span
-                    key={idx}
+                    key={`${currentCard.id}-${idx}`}
                     data-state={isCurrent ? "sedang" : isPassed ? "sudah" : "belum"}
                     style={{ "--progres": progress } as React.CSSProperties}
-                    className="kata inline-block mx-1 px-1 py-0.5 select-none"
+                    onClick={() => {
+                      if (!isPlaying && tok.isKey) {
+                        setManualWordIdx(idx);
+                        setManualLetterIndex(0);
+                      }
+                    }}
+                    className={`kata inline-block mx-1 px-1 py-0.5 select-none ${
+                      !isPlaying && tok.isKey ? "cursor-pointer" : ""
+                    } ${
+                      isInspected ? "underline decoration-2 underline-offset-4" : ""
+                    }`}
                   >
                     {tok.text}
                   </span>

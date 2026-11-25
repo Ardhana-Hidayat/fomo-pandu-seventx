@@ -1,10 +1,14 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
+  buildQuickInstructionPlan,
   buildTimeline,
   calibrationRatio,
   countSyllables,
   letterAt,
+  PACE_CONFIGS,
   progressInWord,
+  resolveActiveSignDisplay,
+  resolveSegmentState,
   segment,
   segmentSpeech,
   signLetters,
@@ -13,6 +17,7 @@ import {
   wordIndexAt,
   wordStates,
 } from "../index";
+import { runSegmentedPlayback } from "../segmented-playback";
 
 const SENTENCE = "Basahi tangan dengan air.";
 const KEYS = ["tangan", "air"];
@@ -102,5 +107,168 @@ describe("kalibrasi", () => {
     expect(calibrationRatio(100, 1000)).toBe(0.5);
     expect(calibrationRatio(1200, 1000)).toBeCloseTo(1.2);
     expect(calibrationRatio(0, 1000)).toBe(1);
+  });
+});
+
+describe("sinkronisasi seluruh kata, tanda baca, kata hubung, dan kata berulang", () => {
+  it("menandai semua kata berhuruf termasuk tanda baca dan tanda hubung saat allWords aktif", () => {
+    const tokens = tokenize("Lihat kupu-kupu, buka halaman 5 - selesai!", [], {
+      allWords: true,
+    });
+
+    expect(tokens.map((t) => t.text)).toEqual([
+      "Lihat",
+      "kupu-kupu,",
+      "buka",
+      "halaman",
+      "5",
+      "-",
+      "selesai!",
+    ]);
+    expect(tokens.map((t) => t.core)).toEqual([
+      "lihat",
+      "kupu-kupu",
+      "buka",
+      "halaman",
+      "5",
+      "",
+      "selesai",
+    ]);
+    // Angka/simbol tanpa huruf tidak boleh menjadi kata isyarat agar tidak memunculkan tanda '?'
+    expect(tokens.map((t) => t.isKey)).toEqual([
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+    ]);
+    expect(signLetters(tokens[1]!.core)).toEqual([
+      "K",
+      "U",
+      "P",
+      "U",
+      "K",
+      "U",
+      "P",
+      "U",
+    ]);
+  });
+
+  it("mencocokkan kata kunci pada kata ulang bertanda hubung", () => {
+    const tokens = tokenize("Lihat kupu-kupu terbang.", ["kupu"]);
+    expect(tokens[1]?.isKey).toBe(true);
+    expect(tokens[2]?.isKey).toBe(false);
+  });
+
+  it("menyusun segmen berurutan untuk kalimat dengan kata berulang tanpa melompati atau menggandakan token", () => {
+    const sentence = "Buka buku dan baca buku";
+    const tokens = tokenize(sentence, [], { allWords: true });
+    const plan = buildQuickInstructionPlan(tokens, PACE_CONFIGS.sedang);
+
+    // Tepat 5 segmen untuk 5 kata dalam urutan yang sama persis
+    expect(plan).toHaveLength(5);
+    expect(plan.map((s) => s.speechText)).toEqual([
+      "Buka",
+      "buku",
+      "dan",
+      "baca",
+      "buku",
+    ]);
+    expect(plan.map((s) => [s.startTokenIdx, s.endTokenIdx])).toEqual([
+      [0, 0],
+      [1, 1],
+      [2, 2],
+      [3, 3],
+      [4, 4],
+    ]);
+
+    // Setiap kemunculan kata "buku" memiliki jadwal ejaan lengkap dengan dwell huruf terakhir
+    for (const seg of plan) {
+      const lastSlot = seg.schedule.slots[seg.schedule.slots.length - 1]!;
+      expect(lastSlot.end - lastSlot.start).toBeGreaterThanOrEqual(
+        PACE_CONFIGS.sedang.letterMs
+      );
+      const afterEnd = resolveSegmentState(seg, lastSlot.end + 5);
+      expect(afterEnd.activeWordIdx).toBe(seg.startTokenIdx);
+      expect(afterEnd.activeSignSlot?.ch).toBe(lastSlot.ch);
+      expect(afterEnd.completedWordIndex).toBe(seg.startTokenIdx);
+    }
+  });
+
+  it("mempertahankan kata isyarat terakhir saat melewati token non-huruf di tengah kalimat", () => {
+    const tokens = tokenize("Halaman 5 selesai", [], { allWords: true });
+    const display = resolveActiveSignDisplay({
+      tokens,
+      isPlaying: true,
+      activeSignSlot: null,
+      activeSegmentWordIdx: null,
+      lastSignedWordIdx: 0,
+      completedWordIndex: null,
+      manualWordIdx: null,
+      manualLetterIndex: 0,
+    });
+    expect(display.activeKeyTerm).toBe("halaman");
+    expect(display.displayedWordIdx).toBe(0);
+  });
+
+  it("runSegmentedPlayback memutar setiap token kata secara berurutan tanpa loncat atau pengulangan", () => {
+    vi.useFakeTimers();
+    const rafOrig = globalThis.requestAnimationFrame;
+    const cancelRafOrig = globalThis.cancelAnimationFrame;
+    globalThis.requestAnimationFrame = (cb) =>
+      setTimeout(() => cb(performance.now()), 50) as unknown as number;
+    globalThis.cancelAnimationFrame = (id) =>
+      clearTimeout(id as unknown as ReturnType<typeof setTimeout>);
+
+    try {
+      const tokens = tokenize("Buka buku dan baca buku", [], { allWords: true });
+      const plan = buildQuickInstructionPlan(tokens, PACE_CONFIGS.normal);
+
+      const seenWords: number[] = [];
+      const seenSlotsPerWord = new Map<number, string[]>();
+      let completed = false;
+      let active = true;
+
+      runSegmentedPlayback(plan, tokens.length, PACE_CONFIGS.normal.speechRate, {
+        isActive: () => active,
+        onSync: (state) => {
+          if (state.activeWordIdx < tokens.length) {
+            if (seenWords[seenWords.length - 1] !== state.activeWordIdx) {
+              seenWords.push(state.activeWordIdx);
+            }
+          }
+          if (state.activeSignSlot && state.activeSegmentWordIdx !== null) {
+            const arr = seenSlotsPerWord.get(state.activeSegmentWordIdx) ?? [];
+            if (arr[arr.length - 1] !== state.activeSignSlot.ch) {
+              arr.push(state.activeSignSlot.ch);
+            }
+            seenSlotsPerWord.set(state.activeSegmentWordIdx, arr);
+          }
+        },
+        onComplete: () => {
+          active = false;
+          completed = true;
+        },
+        setFrame: () => {},
+        setTimer: () => {},
+      });
+
+      // Maju cukup waktu untuk semua segmen dan jeda akhir
+      vi.advanceTimersByTime(30000);
+
+      expect(completed).toBe(true);
+      expect(seenWords).toEqual([0, 1, 2, 3, 4]);
+      expect(seenSlotsPerWord.get(0)?.join("")).toBe("BUKA");
+      expect(seenSlotsPerWord.get(1)?.join("")).toBe("BUKU");
+      expect(seenSlotsPerWord.get(2)?.join("")).toBe("DAN");
+      expect(seenSlotsPerWord.get(3)?.join("")).toBe("BACA");
+      expect(seenSlotsPerWord.get(4)?.join("")).toBe("BUKU");
+    } finally {
+      globalThis.requestAnimationFrame = rafOrig;
+      globalThis.cancelAnimationFrame = cancelRafOrig;
+      vi.useRealTimers();
+    }
   });
 });

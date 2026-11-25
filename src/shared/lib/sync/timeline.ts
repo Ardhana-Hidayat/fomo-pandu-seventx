@@ -46,21 +46,44 @@ export interface TimelineOptions {
   wordGapMs?: number;     // bawaan 110
 }
 
+export interface TokenizeOptions {
+  /** Tandai semua kata berhuruf A-Z sebagai kata isyarat agar seluruh kalimat dieja berurutan. */
+  allWords?: boolean;
+}
+
 /** Pecah teks menjadi token dengan posisi karakter. */
-export function tokenize(text: string, keyTerms: string[] = []): Token[] {
-  const keys = new Set(keyTerms.map((k) => k.trim().toLowerCase()).filter(Boolean));
+export function tokenize(
+  text: string,
+  keyTerms: string[] = [],
+  options?: TokenizeOptions
+): Token[] {
+  const keys = new Set<string>();
+  for (const rawKey of keyTerms) {
+    const trimmed = rawKey.trim().toLowerCase();
+    if (!trimmed) continue;
+    keys.add(trimmed);
+    for (const part of trimmed.split(/[\s-]+/)) {
+      const cleaned = part.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, "");
+      if (cleaned) keys.add(cleaned);
+    }
+  }
+
   const out: Token[] = [];
   const re = /\S+/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(text)) !== null) {
     const raw = m[0];
     const core = raw.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, "").toLowerCase();
+    const hasLetters = signLetters(core).length > 0;
+    const matchesKey =
+      keys.has(core) ||
+      core.split(/[-/]+/).some((part) => part.length > 0 && keys.has(part));
     out.push({
       text: raw,
       core,
       charStart: m.index,
       charEnd: m.index + raw.length,
-      isKey: keys.has(core),
+      isKey: hasLetters && (Boolean(options?.allWords) || matchesKey),
     });
   }
   return out;
@@ -77,7 +100,12 @@ export function countSyllables(word: string): number {
 
 /** Huruf yang diisyaratkan untuk sebuah kata: hanya a-z, huruf besar. */
 export function signLetters(word: string): string[] {
-  return word.toUpperCase().replace(/[^A-Z]/g, "").split("");
+  return word
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toUpperCase()
+    .replace(/[^A-Z]/g, "")
+    .split("");
 }
 
 /**

@@ -28,7 +28,15 @@ export default async function TVLessonPage({
 
   return (
     <div className="fixed inset-0 z-50 bg-[var(--bg)] text-[var(--ink)] overflow-hidden">
-      <TVPlayer lesson={lesson} backHref={`/tv/${kode}`} />
+      <TVPlayer
+        lesson={lesson}
+        backHref={`/tv/${kode}`}
+        quizHref={
+          lesson.questions.length > 0
+            ? `/tv/${kode}/${lesson.id}/kuis`
+            : undefined
+        }
+      />
     </div>
   );
 }

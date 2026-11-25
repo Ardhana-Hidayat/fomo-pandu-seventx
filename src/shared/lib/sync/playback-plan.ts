@@ -186,3 +186,71 @@ export function extractUniqueSignLetters(words: string[]): string[] {
   );
   return Array.from(letters);
 }
+
+/**
+ * Tentukan kata dan huruf SIBI yang sedang ditampilkan pada `SignCard`,
+ * baik saat pemutaran aktif maupun saat jeda/inspeksi manual.
+ */
+export function resolveActiveSignDisplay(params: {
+  tokens: Token[];
+  isPlaying: boolean;
+  activeSignSlot: SignSlot | null;
+  activeSegmentWordIdx: number | null;
+  lastSignedWordIdx: number | null;
+  completedWordIndex: number | null;
+  manualWordIdx: number | null;
+  manualLetterIndex: number;
+}): {
+  displayedWordIdx: number;
+  activeKeyTerm: string;
+  activeLetterIndex: number;
+  completedWordText: string | null;
+} {
+  const {
+    tokens,
+    isPlaying,
+    activeSignSlot,
+    activeSegmentWordIdx,
+    lastSignedWordIdx,
+    completedWordIndex,
+    manualWordIdx,
+    manualLetterIndex,
+  } = params;
+
+  const firstSignableIdx = tokens.findIndex((t) => t.isKey);
+  const resolvedManualIdx =
+    manualWordIdx !== null && tokens[manualWordIdx]?.isKey
+      ? manualWordIdx
+      : firstSignableIdx >= 0
+      ? firstSignableIdx
+      : -1;
+  const fallbackPlayingIdx =
+    lastSignedWordIdx !== null && tokens[lastSignedWordIdx]?.isKey
+      ? lastSignedWordIdx
+      : resolvedManualIdx;
+
+  const displayedWordIdx = isPlaying
+    ? activeSignSlot
+      ? (activeSegmentWordIdx ?? activeSignSlot.wordIndex)
+      : activeSegmentWordIdx !== null && tokens[activeSegmentWordIdx]?.isKey
+      ? activeSegmentWordIdx
+      : fallbackPlayingIdx
+    : resolvedManualIdx;
+
+  const activeKeyTerm =
+    displayedWordIdx >= 0 ? (tokens[displayedWordIdx]?.core ?? "") : "";
+  const activeLetterIndex = activeSignSlot
+    ? activeSignSlot.letterIndex
+    : manualLetterIndex;
+  const completedWordText =
+    completedWordIndex !== null && tokens[completedWordIndex]?.isKey
+      ? (tokens[completedWordIndex]?.text ?? null)
+      : null;
+
+  return {
+    displayedWordIdx,
+    activeKeyTerm,
+    activeLetterIndex,
+    completedWordText,
+  };
+}

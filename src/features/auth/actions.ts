@@ -44,7 +44,7 @@ export async function joinClassroomAction(
 
   if (cleanCode.length !== 6 || !/^\d{6}$/.test(cleanCode)) {
     return err(
-      makeAppError("INVALID_CODE", "Kode kelas harus terdiri dari 6 angka.")
+      makeAppError("INVALID_CODE", "Kode materi harus terdiri dari 6 angka.")
     );
   }
 
@@ -78,7 +78,7 @@ export async function joinClassroomAction(
     return err(
       makeAppError(
         "CLASSROOM_NOT_FOUND",
-        "Kode kelas tidak ditemukan. Cek kembali kode dari guru."
+        "Kode belajar tidak ditemukan. Cek kembali kode dari guru."
       )
     );
   }

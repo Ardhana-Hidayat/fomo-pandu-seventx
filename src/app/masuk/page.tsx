@@ -78,7 +78,7 @@ function StudentLoginForm() {
           </div>
 
           <Field
-            id="kode-kelas"
+            id="kode-materi"
             label="Kode materi (6 angka)"
             codeMode={true}
             placeholder="000000"
@@ -105,7 +105,7 @@ function StudentLoginForm() {
               Siapa Namamu?
             </h1>
             <p className="mt-1 text-sm text-[var(--ink-2)]">
-              Ketik nama panggilanmu untuk ruang kelas <strong>{joinCode}</strong>.
+              Ketik nama panggilanmu untuk mulai belajar dengan kode <strong>{joinCode}</strong>.
             </p>
           </div>
 
@@ -127,7 +127,7 @@ function StudentLoginForm() {
               disabled={isSubmitting}
               className="w-full"
             >
-              {isSubmitting ? "Menyambungkan..." : "Masuk kelas"}
+              {isSubmitting ? "Menyambungkan..." : "Mulai belajar"}
             </Button>
             <Button
               type="button"
@@ -139,7 +139,7 @@ function StudentLoginForm() {
               }}
               className="w-full"
             >
-              Ubah kode kelas
+              Ubah kode materi
             </Button>
           </div>
         </form>
@@ -163,7 +163,7 @@ export default function StudentLoginPage() {
       <header className="h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
         <div className="mx-auto flex h-full w-full max-w-5xl items-center justify-between">
           <Link href="/" className="text-base font-bold tracking-tight text-[var(--ink)] hover:text-[var(--primary)] transition-colors duration-[120ms]">
-            PANDU
+            PanduIn
           </Link>
           <DisplayPreferencesTrigger />
         </div>
@@ -173,7 +173,7 @@ export default function StudentLoginPage() {
         id="main-content"
         className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center p-4 sm:p-6"
       >
-        <Suspense fallback={<Card className="w-full p-8 text-center text-[var(--muted)]">Memuat halaman masuk kelas...</Card>}>
+        <Suspense fallback={<Card className="w-full p-8 text-center text-[var(--muted)]">Memuat halaman masuk siswa...</Card>}>
           <StudentLoginForm />
         </Suspense>
       </main>

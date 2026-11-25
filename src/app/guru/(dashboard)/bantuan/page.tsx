@@ -6,7 +6,7 @@ export default function TeacherHelpPage() {
   return (
     <div className="flex flex-col gap-6 w-full">
       <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ink)]">
-        Bantuan Guru &amp; Panduan Kelas
+        Bantuan Guru &amp; Panduan Mengajar
       </h1>
 
       {/* Alur Kerja Cepat */}
@@ -17,9 +17,9 @@ export default function TeacherHelpPage() {
           </div>
           <div>
             <h2 className="text-base font-bold text-[var(--ink)]">
-              Alur Pengajaran PANDU di Kelas
+              Alur Pengajaran PanduIn
             </h2>
-            <span className="text-xs text-[var(--muted)]">4 langkah mudah mengintegrasikan media belajar ke kelas</span>
+            <span className="text-xs text-[var(--muted)]">4 langkah mudah menyiapkan dan membagikan materi belajar adaptif</span>
           </div>
         </div>
 
@@ -28,9 +28,9 @@ export default function TeacherHelpPage() {
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--on-primary)]">
               1
             </span>
-            <h3 className="text-xs font-bold text-[var(--ink)]">Buat Kelas</h3>
+            <h3 className="text-xs font-bold text-[var(--ink)]">Buat Materi Baru</h3>
             <p className="text-xs text-[var(--ink-2)]">
-              Buka menu Kelas, klik &ldquo;Buat kelas baru&rdquo; untuk mendapatkan 6 angka kode unik kelas Anda.
+              Buka menu Materi, klik &ldquo;Buat materi baru&rdquo; secara manual atau unggah dokumen PDF modul belajar.
             </p>
           </div>
 
@@ -38,9 +38,9 @@ export default function TeacherHelpPage() {
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--on-primary)]">
               2
             </span>
-            <h3 className="text-xs font-bold text-[var(--ink)]">Susun Kartu Belajar</h3>
+            <h3 className="text-xs font-bold text-[var(--ink)]">Susun Kartu &amp; Kuis</h3>
             <p className="text-xs text-[var(--ink-2)]">
-              Gunakan editor materi untuk membuat kartu teks, audio, piktogram ARASAAC, dan isyarat tangan.
+              Gunakan editor materi untuk menyesuaikan kartu teks, audio, piktogram ARASAAC, isyarat SIBI, dan soal latihan.
             </p>
           </div>
 
@@ -48,9 +48,9 @@ export default function TeacherHelpPage() {
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--on-primary)]">
               3
             </span>
-            <h3 className="text-xs font-bold text-[var(--ink)]">Tampilkan ke TV Kelas</h3>
+            <h3 className="text-xs font-bold text-[var(--ink)]">Bagikan atau Tampilkan di TV</h3>
             <p className="text-xs text-[var(--ink-2)]">
-              Tautkan layar Smart TV kelas agar materi dapat disimak seluruh siswa secara bersamaan.
+              Bagikan tautan, QR Code, dan 6 angka kode materi ke siswa, cetak kartu A4, atau tampilkan di layar Smart TV.
             </p>
           </div>
 

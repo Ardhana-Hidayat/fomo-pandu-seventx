@@ -1,18 +1,22 @@
 import "server-only";
 
+import { cache } from "react";
 import { connection } from "next/server";
 import { cookies } from "next/headers";
 import {
   TEACHER_COOKIE_NAME,
   STUDENT_COOKIE_NAME,
+  TEACHER_SESSION_TTL_MS,
   validateSession,
+  verifyTeacherCookieStateless,
   parseTeacherCookiePayload,
   parseStudentCookiePayload,
   createStudentSession,
+  hashToken,
 } from "@/server/security/session";
 import { db } from "@/server/db/client";
-import { teachers, students, classrooms, lessons, type Teacher, type Student, type Classroom } from "@/server/db/schema";
-import { eq, sql } from "drizzle-orm";
+import { teachers, students, classrooms, type Teacher, type Student, type Classroom } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 import {
   DEMO_TEACHER_ID,
   DEMO_CLASSROOM_ID,
@@ -30,7 +34,7 @@ export interface CurrentStudentSession {
   sessionId: string;
 }
 
-export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null> {
+const getCurrentTeacherCached = cache(async (): Promise<CurrentTeacherSession | null> => {
   await connection();
   try {
     const cookieStore = await cookies();
@@ -40,11 +44,41 @@ export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null>
       return null;
     }
 
+    // Fast path: verifikasi stateless HMAC v1 cookie tanpa roundtrip DB berulang saat navigasi
+    const stateless = verifyTeacherCookieStateless(rawCookie);
+    if (stateless) {
+      if (!stateless.teacherId || stateless.teacherId === DEMO_TEACHER_ID) {
+        return null;
+      }
+
+      const createdAtMs =
+        typeof stateless.expiresAt === "number"
+          ? stateless.expiresAt - TEACHER_SESSION_TTL_MS
+          : Date.now();
+
+      const teacher: Teacher = {
+        id: stateless.teacherId,
+        email: stateless.email ?? null,
+        displayName: stateless.displayName || "Guru",
+        schoolName: null,
+        authProvider: "google",
+        settings: null,
+        createdAt: new Date(createdAtMs),
+      };
+
+      return {
+        teacher,
+        sessionId: `stateless-${hashToken(stateless.token).slice(0, 16)}`,
+      };
+    }
+
+    // Tolak langsung jika cookie v1 tidak valid/kedaluwarsa/di-revoke atau token demo
     const parsed = parseTeacherCookiePayload(rawCookie);
-    if (!parsed) {
+    if (!parsed || parsed.teacherId) {
       return null;
     }
 
+    // Fallback untuk token sesi legacy berbasis DB (bukan v1 dan bukan demo)
     const session = await validateSession(rawCookie, "guru");
     if (
       !session ||
@@ -55,64 +89,15 @@ export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null>
       return null;
     }
 
-    let teacher = await db
+    const teacher = await db
       .select()
       .from(teachers)
       .where(eq(teachers.id, session.teacherId))
       .limit(1)
       .then((rows) => rows[0]);
 
-    if (!teacher && parsed.teacherId) {
-      if (parsed.email) {
-        teacher = await db
-          .select()
-          .from(teachers)
-          .where(eq(teachers.email, parsed.email))
-          .limit(1)
-          .then((rows) => rows[0]);
-      }
-
-      if (!teacher) {
-        const inserted = await db
-          .insert(teachers)
-          .values({
-            id: session.teacherId,
-            email: parsed.email ?? null,
-            displayName: parsed.displayName || "Guru",
-            authProvider: "google",
-          })
-          .onConflictDoNothing()
-          .returning();
-
-        teacher =
-          inserted[0] ??
-          (await db
-            .select()
-            .from(teachers)
-            .where(eq(teachers.id, session.teacherId))
-            .limit(1)
-            .then((rows) => rows[0]));
-      }
-    }
-
-    if (!teacher) {
+    if (!teacher || teacher.id === DEMO_TEACHER_ID) {
       return null;
-    }
-
-    if (teacher.id === DEMO_TEACHER_ID && process.env.NODE_ENV !== "test") {
-      try {
-        const hasLessons = await db
-          .select({ count: sql<number>`count(*)::int` })
-          .from(lessons)
-          .where(eq(lessons.teacherId, teacher.id))
-          .then((rows) => rows[0]?.count ?? 0);
-        if (hasLessons === 0) {
-          const { seedDatabase } = await import("@/server/db/seed");
-          await seedDatabase();
-        }
-      } catch (e) {
-        console.error("Gagal auto-seed di getCurrentTeacher:", e);
-      }
     }
 
     return { teacher, sessionId: session.id };
@@ -120,6 +105,10 @@ export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null>
     console.error("getCurrentTeacher error:", err instanceof Error ? err.message : err);
     return null;
   }
+});
+
+export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null> {
+  return getCurrentTeacherCached();
 }
 
 export async function getCurrentStudent(): Promise<CurrentStudentSession | null> {

@@ -68,7 +68,7 @@ export default function CreditPage() {
             </div>
           </div>
           <p className="text-base text-[var(--ink-2)]">
-            Aset peraga huruf isyarat PANDU diolah dari dataset penelitian terbuka berlisensi resmi CC BY 4.0 dan diverifikasi bersama guru SLB terhadap rujukan kurikulum resmi:
+            Aset peraga huruf isyarat PanduIn diolah dari dataset penelitian terbuka berlisensi resmi CC BY 4.0 dan diverifikasi bersama guru SLB terhadap rujukan kurikulum resmi:
           </p>
 
           <div className="space-y-4 text-sm text-[var(--ink-2)]">
@@ -105,7 +105,7 @@ export default function CreditPage() {
             </div>
           </div>
           <p className="text-xs text-[var(--muted)] italic">
-            *PANDU secara tegas <strong>tidak menggunakan gambar tangan buatan AI generatif</strong> demi menjaga ketepatan anatomis, proporsi sendi jari, dan validitas rujukan pengajaran bahasa isyarat.
+            *PanduIn secara tegas <strong>tidak menggunakan gambar tangan buatan AI generatif</strong> demi menjaga ketepatan anatomis, proporsi sendi jari, dan validitas rujukan pengajaran bahasa isyarat.
           </p>
         </Card>
 
@@ -135,7 +135,7 @@ export default function CreditPage() {
             </div>
             <div>
               <strong className="text-[var(--ink)]">JetBrains Mono</strong>
-              <p>Tipografi monospace dengan karakter tinggi dan jelas untuk angka dan kode kelas.</p>
+              <p>Tipografi monospace dengan karakter tinggi dan jelas untuk angka dan kode materi.</p>
             </div>
           </div>
         </Card>
@@ -163,7 +163,7 @@ export default function CreditPage() {
 
       {/* Footer */}
       <footer className="w-full border-t-2 border-[var(--border)] bg-[var(--surface)] px-4 py-4 text-center text-sm text-[var(--muted)]">
-        <p>PANDU &bull; Dirancang untuk aksesibilitas dan kemandirian belajar SLB</p>
+        <p>PanduIn &bull; Dirancang untuk aksesibilitas dan kemandirian belajar SLB</p>
       </footer>
     </div>
   );

@@ -4,6 +4,7 @@ import { eq, and, gt } from "drizzle-orm";
 import { db } from "../db/client";
 import { appSessions, type AppSession } from "../db/schema";
 import { env } from "../config/env";
+import { DEMO_TEACHER_ID } from "../db/demo-lesson-data";
 
 export const TEACHER_COOKIE_NAME = "ik_guru";
 export const STUDENT_COOKIE_NAME = "ik_siswa";
@@ -99,7 +100,8 @@ export function parseTeacherCookiePayload(rawCookie: string): TeacherCookiePaylo
       !parsed.token ||
       typeof parsed.token !== "string" ||
       !parsed.teacherId ||
-      typeof parsed.teacherId !== "string"
+      typeof parsed.teacherId !== "string" ||
+      parsed.teacherId === DEMO_TEACHER_ID
     ) {
       return null;
     }
@@ -119,6 +121,27 @@ export function parseTeacherCookiePayload(rawCookie: string): TeacherCookiePaylo
   } catch {
     return null;
   }
+}
+
+/**
+ * Verifikasi cepat payload cookie guru v1 secara stateless (HMAC timingSafeEqual,
+ * masa berlaku wajib aktif, panjang token >= 32, bukan guru demo, dan belum di-revoke).
+ */
+export function verifyTeacherCookieStateless(rawCookie: string): TeacherCookiePayload | null {
+  const parsed = parseTeacherCookiePayload(rawCookie);
+  if (!parsed || !parsed.teacherId || parsed.teacherId === DEMO_TEACHER_ID) {
+    return null;
+  }
+  if (parsed.token.length < 32 || parsed.token === getDemoTeacherToken()) {
+    return null;
+  }
+  if (typeof parsed.expiresAt !== "number" || !Number.isFinite(parsed.expiresAt) || parsed.expiresAt <= Date.now()) {
+    return null;
+  }
+  if (revokedHashes.has(hashToken(parsed.token))) {
+    return null;
+  }
+  return parsed;
 }
 
 export function signStudentCookiePayload(

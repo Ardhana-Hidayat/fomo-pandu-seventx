@@ -37,12 +37,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'PANDU — Panduan Dukungan Inklusif',
+  title: 'PanduIn — Panduan Dukungan Inklusif',
   description:
     'Alat belajar adaptif untuk siswa dan guru SLB: teks bersinkron, audio, piktogram, dan kartu isyarat huruf.',
   openGraph: {
-    title: 'PANDU — Panduan Dukungan Inklusif',
-    description: 'Platform kartu belajar adaptif dan latihan interaktif untuk SLB dan kelas inklusif.',
+    title: 'PanduIn — Panduan Dukungan Inklusif',
+    description: 'Platform kartu belajar adaptif dan latihan interaktif untuk SLB dan pembelajaran inklusif.',
     type: 'website',
   },
 };

@@ -22,7 +22,7 @@ export default async function TeacherLoginPage({
       <header className="h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
         <div className="mx-auto flex h-full w-full max-w-5xl items-center justify-between">
           <Link href="/" className="text-base font-bold tracking-tight text-[var(--ink)] hover:text-[var(--primary)] transition-colors duration-[120ms]">
-            PANDU
+            PanduIn
           </Link>
           <DisplayPreferencesTrigger />
         </div>
@@ -38,7 +38,7 @@ export default async function TeacherLoginPage({
               Masuk Ruang Guru
             </h1>
             <p className="mt-1 text-sm text-[var(--ink-2)]">
-              Masuk dengan akun Google untuk mengakses ruang kelas, menyusun materi adaptif, dan melihat hasil belajar siswa.
+              Masuk dengan akun Google untuk mengakses Ruang Guru, menyusun materi adaptif, dan melihat hasil belajar siswa.
             </p>
           </div>
 

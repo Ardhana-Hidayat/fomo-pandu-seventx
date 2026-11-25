@@ -35,9 +35,10 @@ export function TeacherSidebar() {
       <div className="mb-4 pb-3 border-b border-[var(--border)]">
         <Link
           href="/guru"
+          prefetch={true}
           className="text-base font-bold tracking-tight text-[var(--ink)] flex items-center gap-2 hover:text-[var(--primary)] transition-colors duration-[120ms]"
         >
-          <span>PANDU</span>
+          <span>PanduIn</span>
           <span className="text-xs px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--surface-2)] text-[var(--muted)] font-semibold">
             Ruang Guru
           </span>
@@ -51,6 +52,7 @@ export function TeacherSidebar() {
             <Link
               key={item.href}
               href={item.href}
+              prefetch={true}
               aria-current={isActive ? "page" : undefined}
               className={`flex min-h-[44px] items-center gap-3 px-3.5 py-2.5 rounded-[var(--r-tombol)] font-semibold text-sm sm:text-base transition-colors duration-[120ms] ${
                 isActive
@@ -104,7 +106,7 @@ export function TeacherMobileNav() {
           onClick={() => setOpen(false)}
           className="flex items-center gap-2 text-base font-bold tracking-tight text-[var(--ink)] hover:text-[var(--primary)] transition-colors duration-[120ms]"
         >
-          <span>PANDU</span>
+          <span>PanduIn</span>
           <span className="text-xs px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--surface-2)] text-[var(--muted)] font-semibold">
             Ruang Guru
           </span>

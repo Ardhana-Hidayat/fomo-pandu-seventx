@@ -3,7 +3,14 @@
 import { useState } from "react";
 import { Card, Button, Chip, Icon, StatusMessage, usePreferences } from "@/shared/ui";
 
-export function TeacherSettingsClient() {
+export interface TeacherSettingsProps {
+  teacher?: {
+    displayName: string;
+    email?: string | null;
+  };
+}
+
+export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
   const { preferences, setPreference } = usePreferences();
   const [audioSpeed, setAudioSpeed] = useState<"0.8" | "0.9" | "1.0">("0.9");
 
@@ -97,7 +104,7 @@ export function TeacherSettingsClient() {
         <div>
           <h2 className="text-xl font-bold text-[var(--ink)]">Sistem Isyarat</h2>
           <p className="text-sm text-[var(--ink-2)]">
-            PANDU menggunakan SIBI (Sistem Isyarat Bahasa Indonesia) sebagai sistem isyarat standar.
+            PanduIn menggunakan SIBI (Sistem Isyarat Bahasa Indonesia) sebagai sistem isyarat standar.
           </p>
         </div>
 
@@ -175,6 +182,38 @@ export function TeacherSettingsClient() {
           >
             {isCheckingHealth ? "Memeriksa layanan..." : "Uji layanan otomatis"}
           </Button>
+        </div>
+      </Card>
+
+      {/* 5. Akun Guru & Keluar */}
+      <Card as="section" className="flex flex-col gap-4">
+        <div>
+          <h2 className="text-xl font-bold text-[var(--ink)]">Akun Guru</h2>
+          <p className="text-sm text-[var(--ink-2)]">
+            Informasi akun Google yang sedang masuk di PanduIn.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div className="min-w-0">
+            <p className="font-bold text-base text-[var(--ink)] truncate">
+              {teacher?.displayName || "Guru PanduIn"}
+            </p>
+            <p className="text-sm text-[var(--muted)] truncate">
+              {teacher?.email || "Masuk melalui akun Google"}
+            </p>
+          </div>
+
+          <form action="/api/auth/logout" method="POST" className="shrink-0">
+            <Button
+              type="submit"
+              variant="danger"
+              size="normal"
+              icon={<Icon name="DoorOpen" size={18} />}
+            >
+              Keluar dari Akun
+            </Button>
+          </form>
         </div>
       </Card>
     </div>

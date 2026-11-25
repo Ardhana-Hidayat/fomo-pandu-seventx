@@ -19,7 +19,7 @@ export default async function LessonResultsPage({
   if (!lesson) notFound();
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 w-full">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
@@ -31,12 +31,9 @@ export default async function LessonResultsPage({
               <span>Pustaka materi</span>
             </Link>
           </div>
-          <h1 className="text-3xl font-bold text-[var(--ink)] mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] mt-1">
             Rekap Hasil Belajar: {lesson.title}
           </h1>
-          <p className="text-sm text-[var(--muted)]">
-            Ketercapaian siswa pada materi ini di semua kelas.
-          </p>
         </div>
 
         <Button

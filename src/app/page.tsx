@@ -6,7 +6,7 @@ export default function HomePage() {
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* Header Utama — 64px, white bg, 1px bottom border (DESIGN.md §6) */}
       <header className="h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
-        <div className="mx-auto flex h-full max-w-5xl items-center justify-between">
+        <div className="mx-auto flex h-full w-full max-w-5xl items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-lg font-bold tracking-tight text-[var(--ink)]">
               PANDU

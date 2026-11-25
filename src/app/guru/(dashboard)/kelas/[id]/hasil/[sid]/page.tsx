@@ -140,7 +140,7 @@ export default async function StudentDetailPage({
   const lessonSummaries = Array.from(lessonSummaryMap.values());
 
   return (
-    <div className="flex flex-col gap-6 max-w-4xl">
+    <div className="flex flex-col gap-6 w-full">
       {/* Header */}
       <div>
         <div className="flex items-center gap-2">
@@ -154,7 +154,7 @@ export default async function StudentDetailPage({
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-2">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--ink)]">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)]">
               Profil Belajar: {student.displayName}
             </h1>
             <p className="mt-1 text-sm text-[var(--muted)]">

@@ -22,7 +22,7 @@ export default async function LessonLibraryPage() {
   }));
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 w-full">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)]">
           Pustaka Materi

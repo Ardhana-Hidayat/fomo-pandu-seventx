@@ -4,15 +4,10 @@ export const instant = false;
 
 export default function TeacherHelpPage() {
   return (
-    <div className="flex flex-col gap-6 max-w-4xl">
-      <div>
-        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--ink)]">
-          Bantuan Guru &amp; Panduan Kelas
-        </h1>
-        <p className="mt-1 text-sm text-[var(--ink-2)]">
-          Panduan praktis pengelolaan kelas, penyusunan materi ajar adaptif, dan penggunaan fitur PANDU di sekolah.
-        </p>
-      </div>
+    <div className="flex flex-col gap-6 w-full">
+      <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ink)]">
+        Bantuan Guru &amp; Panduan Kelas
+      </h1>
 
       {/* Alur Kerja Cepat */}
       <Card as="section" className="flex flex-col gap-4">

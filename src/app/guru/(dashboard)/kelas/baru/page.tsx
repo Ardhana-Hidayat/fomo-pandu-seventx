@@ -5,15 +5,10 @@ export const instant = false;
 
 export default function NewClassroomPage() {
   return (
-    <div className="flex flex-col gap-6 max-w-2xl">
-      <div>
-        <h1 className="text-3xl font-bold text-[var(--ink)]">
-          Buat Ruang Kelas Baru
-        </h1>
-        <p className="mt-1 text-base text-[var(--ink-2)]">
-          Ruang kelas digunakan untuk membagikan materi dan mengelola siswa secara mandiri.
-        </p>
-      </div>
+    <div className="flex flex-col gap-6 w-full">
+      <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)]">
+        Buat Ruang Kelas Baru
+      </h1>
 
       <Card as="section">
         <form action={createClassroomAction} className="flex flex-col gap-5">
@@ -44,7 +39,7 @@ export default function NewClassroomPage() {
             <label className="font-bold text-[var(--ink)] text-base">
               Sistem Isyarat Bawaan
             </label>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-4">
               <label className="flex items-center gap-2 cursor-pointer font-bold">
                 <input
                   type="radio"

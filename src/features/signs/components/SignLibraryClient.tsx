@@ -93,7 +93,7 @@ export function SignLibraryClient() {
   }
 
   return (
-    <div className="flex flex-col gap-6 max-w-5xl">
+    <div className="flex flex-col gap-6 w-full">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -106,12 +106,9 @@ export function SignLibraryClient() {
               <span>Kembali ke Pengaturan</span>
             </Link>
           </div>
-          <h1 className="text-3xl font-black text-[var(--ink)] mt-1">
+          <h1 className="text-2xl sm:text-3xl font-black text-[var(--ink)] mt-1">
             Pustaka Isyarat Abjad (A - Z)
           </h1>
-          <p className="mt-1 text-sm text-[var(--ink-2)]">
-            Dataset terbuka resmi berlisensi CC BY 4.0 untuk SIBI dan BISINDO.
-          </p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -162,7 +159,7 @@ export function SignLibraryClient() {
       </Card>
 
       {/* Rujukan Sistem */}
-      <div className="text-xs text-[var(--muted)] flex items-center justify-between">
+      <div className="text-xs text-[var(--muted)] flex flex-wrap items-center justify-between gap-2">
         <span>
           Rujukan kebenaran:{" "}
           {activeTab === "SIBI" ? (

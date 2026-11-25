@@ -12,6 +12,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/guru", label: "Beranda", icon: "Chalkboard" },
+  { href: "/guru/kelas", label: "Kelas", icon: "UsersThree" },
   { href: "/guru/materi", label: "Materi", icon: "Cards" },
   { href: "/guru/instruksi-cepat", label: "Instruksi Cepat", icon: "NotePencil" },
   { href: "/guru/pengaturan", label: "Pengaturan", icon: "GearSix" },
@@ -59,7 +60,7 @@ export function TeacherBottomNav() {
   return (
     <nav
       aria-label="Menu navigasi cepat"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 grid grid-cols-5 gap-1 border-t border-[var(--border)] bg-[var(--surface)] px-2 py-1.5 shadow-lg"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 grid grid-cols-6 gap-1 border-t border-[var(--border)] bg-[var(--surface)] px-2 py-1.5 shadow-lg"
     >
       {NAV_ITEMS.map((item) => {
         const isActive =

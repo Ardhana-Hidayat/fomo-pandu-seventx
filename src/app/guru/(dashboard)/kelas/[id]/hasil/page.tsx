@@ -26,7 +26,7 @@ export default async function ClassroomResultsPage({
   const studentsList = recap?.students ?? [];
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 w-full">
       <div>
         <div className="flex items-center gap-2">
           <Link
@@ -37,12 +37,9 @@ export default async function ClassroomResultsPage({
             <span>Kembali ke {classroom.name}</span>
           </Link>
         </div>
-        <h1 className="text-3xl font-bold text-[var(--ink)] mt-1">
+        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] mt-1">
           Rekap Hasil Belajar &bull; {classroom.name}
         </h1>
-        <p className="text-sm text-[var(--muted)]">
-          Ringkasan ketercapaian dan penguasaan materi siswa di kelas ini.
-        </p>
       </div>
 
       {recap && (

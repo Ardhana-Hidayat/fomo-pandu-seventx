@@ -60,13 +60,10 @@ export function TeacherSettingsClient() {
   }
 
   return (
-    <div className="flex flex-col gap-6 max-w-3xl">
-      <div>
-        <h1 className="text-3xl font-bold text-[var(--ink)]">Pengaturan Ruang Guru</h1>
-        <p className="mt-1 text-base text-[var(--ink-2)]">
-          Sesuaikan preferensi belajar, sistem isyarat bawaan kelas, dan periksa kesiapan layanan otomatis.
-        </p>
-      </div>
+    <div className="flex flex-col gap-6 w-full">
+      <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)]">
+        Pengaturan Ruang Guru
+      </h1>
 
       {/* 1. Tema & Kontras */}
       <Card as="section" className="flex flex-col gap-4">
@@ -120,7 +117,7 @@ export function TeacherSettingsClient() {
           />
         </div>
 
-        <div className="pt-3 border-t border-[var(--border)] flex items-center justify-between">
+        <div className="pt-3 border-t border-[var(--border)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <span className="text-sm font-bold text-[var(--ink)]">
             Pustaka Isyarat Abjad (A - Z)
           </span>

@@ -30,7 +30,7 @@ export default async function StudentClassroomPage({
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* Header Siswa */}
       <header className="sticky top-0 z-30 min-h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 sm:px-6">
-        <div className="mx-auto flex max-w-4xl items-center justify-between gap-3">
+        <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-3">
           <div className="min-w-0">
             <h1 className="text-lg sm:text-xl font-bold tracking-tight text-[var(--ink)] truncate">
               {classroom.name}

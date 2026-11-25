@@ -28,7 +28,7 @@ export default async function ClassroomDetailPage({
   const { classroom, students: classStudents, publications } = data;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 w-full">
       {/* Header Kelas */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -41,7 +41,7 @@ export default async function ClassroomDetailPage({
               <span>Semua kelas</span>
             </Link>
           </div>
-          <h1 className="text-3xl font-bold text-[var(--ink)] mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] mt-1">
             {classroom.name}
           </h1>
           <p className="text-sm text-[var(--muted)]">
@@ -49,7 +49,7 @@ export default async function ClassroomDetailPage({
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <Button
             variant="secondary"
             size="normal"

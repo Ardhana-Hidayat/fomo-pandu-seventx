@@ -13,7 +13,7 @@ export default async function TeacherLoginPage() {
   return (
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       <header className="h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
-        <div className="mx-auto flex h-full max-w-5xl items-center justify-between">
+        <div className="mx-auto flex h-full w-full max-w-5xl items-center justify-between">
           <Link href="/" className="text-base font-bold tracking-tight text-[var(--ink)] hover:text-[var(--primary)] transition-colors duration-[120ms]">
             PANDU
           </Link>

@@ -22,15 +22,10 @@ export default async function NewLessonPage({
   }));
 
   return (
-    <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-3xl font-bold text-[var(--ink)]">
-          Penyusun Materi Belajar
-        </h1>
-        <p className="text-sm text-[var(--muted)]">
-          Pilih Buat Manual atau Upload PDF untuk menyusun kartu belajar dan latihan soal adaptif.
-        </p>
-      </div>
+    <div className="flex flex-col gap-6 w-full">
+      <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)]">
+        Penyusun Materi Belajar
+      </h1>
 
       <LessonWizard
         classrooms={classrooms}

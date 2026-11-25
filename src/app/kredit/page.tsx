@@ -7,7 +7,7 @@ export default function CreditPage() {
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* Header */}
       <header className="sticky top-0 z-30 h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
-        <div className="mx-auto flex h-full max-w-4xl items-center justify-between gap-3">
+        <div className="mx-auto flex h-full w-full max-w-4xl items-center justify-between gap-3">
           <Button
             variant="ghost"
             size="normal"
@@ -25,14 +25,9 @@ export default function CreditPage() {
         id="main-content"
         className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 p-4 sm:p-6 lg:p-8"
       >
-        <div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[var(--ink)]">
-            Kredit &amp; Atribusi Aset Terbuka
-          </h1>
-          <p className="mt-2 text-base text-[var(--ink-2)]">
-            PANDU dibangun di atas sumber daya terbuka, rujukan resmi bahasa isyarat, dan riset aksesibilitas universal.
-          </p>
-        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)]">
+          Kredit &amp; Atribusi Aset Terbuka
+        </h1>
 
         {/* 1. ARASAAC */}
         <Card as="section" className="flex flex-col gap-3">

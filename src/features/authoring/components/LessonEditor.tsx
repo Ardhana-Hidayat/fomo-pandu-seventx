@@ -279,7 +279,7 @@ export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
   }
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-6xl">
+    <div className="flex flex-col gap-6 w-full">
       {/* Header Editor */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b-2 border-[var(--border)] pb-4">
         <div>
@@ -294,10 +294,10 @@ export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
               {lesson.status === "published" ? "Sudah Terbit" : "Draf"}
             </span>
           </div>
-          <h1 className="text-3xl font-bold text-[var(--ink)] mt-1">{title}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] mt-1">{title}</h1>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button
             variant="secondary"
             size="normal"

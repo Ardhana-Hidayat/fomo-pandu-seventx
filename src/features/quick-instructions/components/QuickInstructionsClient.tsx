@@ -1,60 +1,275 @@
 "use client";
 
-import { useState } from "react";
-import { Card, Button, Field, Chip, Icon, type IconName } from "@/shared/ui";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { Card, Button, Field, Chip, Icon } from "@/shared/ui";
 import { SignCard } from "@/features/player";
+import {
+  tokenize,
+  buildTimeline,
+  buildSignSchedule,
+  slotAt,
+  completedSignWord,
+  wordIndexAt,
+  progressInWord,
+  type SignSystem,
+  type Timeline,
+  type SignSlot,
+} from "@/shared/lib/sync";
 
-interface InstructionCard {
-  step: number;
+interface PresetInstruction {
+  id: string;
+  label: string;
   text: string;
-  keyTerm: string;
-  iconName: IconName;
+  keyTerms: string[];
 }
 
-const PRESET_INSTRUCTIONS = [
+const PRESET_INSTRUCTIONS: PresetInstruction[] = [
   {
+    id: "buka-buku",
     label: "Buka buku",
-    text: "Buka buku pelajaranmu",
-    steps: [
-      { step: 1, text: "Ambil buku pelajaran", keyTerm: "BUKU", iconName: "Cards" as IconName },
-      { step: 2, text: "Buka halaman lima", keyTerm: "BUKA", iconName: "Cards" as IconName },
-    ],
+    text: "Buka buku pelajaranmu halaman lima",
+    keyTerms: ["BUKA", "BUKU"],
   },
   {
+    id: "duduk-rapi",
     label: "Duduk rapi",
     text: "Duduk dengan tenang dan rapi",
-    steps: [
-      { step: 1, text: "Duduk di bangku", keyTerm: "DUDUK", iconName: "Chalkboard" as IconName },
-      { step: 2, text: "Dengarkan dengan tenang", keyTerm: "TENANG", iconName: "CheckCircle" as IconName },
-    ],
+    keyTerms: ["DUDUK", "TENANG", "RAPI"],
   },
   {
+    id: "ambil-pensil",
     label: "Ambil pensil",
-    text: "Ambil pensil dan kertas",
-    steps: [
-      { step: 1, text: "Keluarkan pensil", keyTerm: "PENSIL", iconName: "NotePencil" as IconName },
-      { step: 2, text: "Siapkan kertas tulis", keyTerm: "KERTAS", iconName: "FileText" as IconName },
-    ],
+    text: "Ambil pensil dan kertas tulis",
+    keyTerms: ["AMBIL", "PENSIL", "KERTAS"],
   },
   {
+    id: "waktu-istirahat",
     label: "Waktu istirahat",
     text: "Waktunya istirahat dan mencuci tangan",
-    steps: [
-      { step: 1, text: "Rapikan alat tulis", keyTerm: "RAPI", iconName: "CheckCircle" as IconName },
-      { step: 2, text: "Boleh makan dan istirahat", keyTerm: "MAKAN", iconName: "DoorOpen" as IconName },
-    ],
+    keyTerms: ["ISTIRAHAT", "TANGAN"],
+  },
+  {
+    id: "angkat-tangan",
+    label: "Angkat tangan",
+    text: "Angkat tangan sebelum bertanya",
+    keyTerms: ["ANGKAT", "TANGAN", "BERTANYA"],
+  },
+  {
+    id: "perhatikan-papan",
+    label: "Perhatikan papan",
+    text: "Perhatikan papan tulis di depan",
+    keyTerms: ["PAPAN", "TULIS"],
   },
 ];
 
+function extractKeyTermsFromSentence(sentence: string): string[] {
+  const words = sentence
+    .trim()
+    .split(/[\s-]+/)
+    .map((w) => w.replace(/[^a-zA-Z0-9]/g, "").toUpperCase())
+    .filter(Boolean);
+  const meaningful = words.filter((w) => w.length >= 2);
+  const chosen = meaningful.length > 0 ? meaningful : words;
+  return Array.from(new Set(chosen));
+}
+
 export function QuickInstructionsClient() {
   const [customText, setCustomText] = useState("");
-  const [activeCards, setActiveCards] = useState<InstructionCard[]>(PRESET_INSTRUCTIONS[0].steps);
+  const [activePresetId, setActivePresetId] = useState<string | null>(PRESET_INSTRUCTIONS[0].id);
+  const [activeText, setActiveText] = useState<string>(PRESET_INSTRUCTIONS[0].text);
+  const [activeKeyTerms, setActiveKeyTerms] = useState<string[]>(PRESET_INSTRUCTIONS[0].keyTerms);
+  const [signSystem, setSignSystem] = useState<SignSystem>("SIBI");
   const [isTvMode, setIsTvMode] = useState(false);
-  const [activeCardIdx, setActiveCardIdx] = useState(0);
 
-  function handleSelectPreset(preset: (typeof PRESET_INSTRUCTIONS)[number]) {
-    setActiveCards(preset.steps);
-    setActiveCardIdx(0);
+  // Sync & Playback State
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [activeWordIdx, setActiveWordIdx] = useState<number>(-1);
+  const [activeWordProgress, setActiveWordProgress] = useState<number>(0);
+  const [activeSignSlot, setActiveSignSlot] = useState<SignSlot | null>(null);
+  const [completedWordIndex, setCompletedWordIndex] = useState<number | null>(null);
+  const [manualTermIndex, setManualTermIndex] = useState(0);
+  const [manualLetterIndex, setManualLetterIndex] = useState(0);
+
+  const animFrameRef = useRef<number | null>(null);
+  const endTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const expandedKeyWords = useMemo(() => {
+    const words = activeKeyTerms
+      .flatMap((t) => t.trim().split(/[\s-]+/))
+      .map((w) => w.replace(/[^a-zA-Z0-9]/g, "").toLowerCase())
+      .filter(Boolean);
+    return Array.from(new Set(words));
+  }, [activeKeyTerms]);
+
+  const tokens = useMemo(
+    () => tokenize(activeText, expandedKeyWords),
+    [activeText, expandedKeyWords]
+  );
+
+  const speechTimeline = useMemo(
+    () =>
+      buildTimeline(tokens, {
+        speechRate: 1.0,
+        signSpeed: 1.0,
+        signEnabled: false,
+      }),
+    [tokens]
+  );
+
+  const signBaseTimeline = useMemo(
+    () =>
+      buildTimeline(tokens, {
+        speechRate: 1.0,
+        signSpeed: 1.0,
+        signEnabled: true,
+      }),
+    [tokens]
+  );
+
+  const signSchedule = useMemo(
+    () => buildSignSchedule(signBaseTimeline, 450),
+    [signBaseTimeline]
+  );
+
+  const stopPlayback = useCallback(() => {
+    if (animFrameRef.current !== null) {
+      cancelAnimationFrame(animFrameRef.current);
+      animFrameRef.current = null;
+    }
+    if (endTimeoutRef.current !== null) {
+      clearTimeout(endTimeoutRef.current);
+      endTimeoutRef.current = null;
+    }
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsPlaying(false);
+  }, []);
+
+  const resetSyncState = useCallback(() => {
+    stopPlayback();
+    setActiveWordIdx(-1);
+    setActiveWordProgress(0);
+    setActiveSignSlot(null);
+    setCompletedWordIndex(null);
+    setManualTermIndex(0);
+    setManualLetterIndex(0);
+  }, [stopPlayback]);
+
+  useEffect(() => {
+    return () => {
+      stopPlayback();
+    };
+  }, [stopPlayback]);
+
+  const updateSyncAtTime = useCallback(
+    (tMs: number, schedule: { slots: SignSlot[]; signEnd: number }, speechTl: Timeline) => {
+      const totalWords = speechTl.words.length;
+      if (totalWords === 0) return;
+
+      const lastWordIdx = totalWords - 1;
+      const lastWord = speechTl.words[lastWordIdx];
+
+      let wIdx = wordIndexAt(speechTl, tMs);
+      let prog = progressInWord(speechTl, tMs);
+
+      if (lastWord && tMs >= lastWord.start && tMs <= speechTl.total + 300) {
+        wIdx = lastWordIdx;
+        prog = Math.min(
+          1,
+          Math.max(0, (tMs - lastWord.start) / Math.max(1, lastWord.end - lastWord.start))
+        );
+        if (tMs >= lastWord.end) {
+          prog = 1;
+        }
+      }
+
+      const slot = slotAt(schedule.slots, tMs);
+      const doneWord = completedSignWord(schedule.slots, tMs);
+
+      setActiveWordIdx(wIdx);
+      setActiveWordProgress(prog);
+      setActiveSignSlot(slot);
+      setCompletedWordIndex(doneWord);
+    },
+    []
+  );
+
+  function handleTogglePlay() {
+    if (isPlaying) {
+      stopPlayback();
+      return;
+    }
+    if (!activeText.trim() || tokens.length === 0) return;
+
+    resetSyncState();
+    setIsPlaying(true);
+
+    const startTime = performance.now();
+    const speechTotal = speechTimeline.total || 2500;
+    const maxDur = Math.max(speechTotal, signSchedule.signEnd || 0);
+
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      const utt = new SpeechSynthesisUtterance(activeText);
+      utt.lang = "id-ID";
+      utt.rate = 1.0;
+
+      utt.onboundary = (e) => {
+        if (e.name === "word" || !e.name) {
+          const charIndex = e.charIndex;
+          const idx = tokens.findIndex(
+            (t) => charIndex >= t.charStart && charIndex < t.charEnd
+          );
+          if (idx !== -1) {
+            setActiveWordIdx(idx);
+            setActiveWordProgress(0.2);
+          }
+        }
+      };
+
+      utt.onend = () => {
+        const elapsed = performance.now() - startTime;
+        if (elapsed < maxDur || signSchedule.signEnd > elapsed) {
+          return;
+        }
+        setActiveWordIdx(tokens.length);
+        setActiveWordProgress(1);
+        endTimeoutRef.current = setTimeout(() => {
+          stopPlayback();
+        }, 300);
+      };
+
+      utt.onerror = () => {
+        // Fallback to pure timer loop
+      };
+
+      window.speechSynthesis.speak(utt);
+    }
+
+    const timerLoop = () => {
+      const elapsed = performance.now() - startTime;
+      updateSyncAtTime(elapsed, signSchedule, speechTimeline);
+
+      if (elapsed >= maxDur) {
+        setActiveWordIdx(tokens.length);
+        setActiveWordProgress(1);
+        endTimeoutRef.current = setTimeout(() => {
+          stopPlayback();
+        }, 300);
+        return;
+      }
+      animFrameRef.current = requestAnimationFrame(timerLoop);
+    };
+
+    animFrameRef.current = requestAnimationFrame(timerLoop);
+  }
+
+  function handleSelectPreset(preset: PresetInstruction) {
+    resetSyncState();
+    setActivePresetId(preset.id);
+    setActiveText(preset.text);
+    setActiveKeyTerms(preset.keyTerms);
   }
 
   function handleGenerateCustom(e: React.FormEvent) {
@@ -62,75 +277,114 @@ export function QuickInstructionsClient() {
     const clean = customText.trim();
     if (!clean) return;
 
-    // Split sentences or comma into 1-4 steps
-    const rawParts = clean.split(/[.,\n]+/).map((p) => p.trim()).filter(Boolean);
-    const parts = rawParts.length > 0 ? rawParts.slice(0, 4) : [clean];
-
-    const generated: InstructionCard[] = parts.map((part, idx) => {
-      const words = part.split(/\s+/).filter(Boolean);
-      const keyWord = words[0] || "IKUTI";
-      return {
-        step: idx + 1,
-        text: part,
-        keyTerm: keyWord.toUpperCase(),
-        iconName: "Cards" as IconName,
-      };
-    });
-
-    setActiveCards(generated);
-    setActiveCardIdx(0);
+    resetSyncState();
+    setActivePresetId(null);
+    setActiveText(clean);
+    setActiveKeyTerms(extractKeyTermsFromSentence(clean));
   }
+
+  function handleSelectSignSystem(system: SignSystem) {
+    if (system === signSystem) return;
+    resetSyncState();
+    setSignSystem(system);
+  }
+
+  const activeKeyTerm = activeSignSlot
+    ? (tokens[activeSignSlot.wordIndex]?.core ??
+      expandedKeyWords[manualTermIndex] ??
+      activeKeyTerms[0] ??
+      "")
+    : (expandedKeyWords[manualTermIndex] ?? activeKeyTerms[0] ?? "");
+
+  const activeLetterIndex = activeSignSlot ? activeSignSlot.letterIndex : manualLetterIndex;
+
+  const completedWordText =
+    completedWordIndex !== null && tokens[completedWordIndex]?.isKey
+      ? tokens[completedWordIndex]?.text
+      : null;
+
+  const renderKaraokeSentence = (sizeClass: string) => (
+    <div className="w-full py-3.5 px-4 sm:py-4 sm:px-6 rounded-xl border-2 border-[var(--border)] bg-[var(--surface-2)] text-center flex items-center justify-center min-h-[68px]">
+      <p className={`${sizeClass} font-extrabold leading-snug text-[var(--ink)]`}>
+        {tokens.map((tok, idx) => {
+          const isCurrent = idx === activeWordIdx;
+          const isPassed = activeWordIdx > idx;
+          const progress = isCurrent ? activeWordProgress : isPassed ? 1 : 0;
+
+          return (
+            <span
+              key={idx}
+              data-state={isCurrent ? "sedang" : isPassed ? "sudah" : "belum"}
+              style={{ "--progres": progress } as React.CSSProperties}
+              className="kata inline-block mx-1 px-1 py-0.5 select-none"
+            >
+              {tok.text}
+            </span>
+          );
+        })}
+      </p>
+    </div>
+  );
 
   // Tampilan Mode TV Layar Penuh
   if (isTvMode) {
-    const currentCard = activeCards[activeCardIdx] || activeCards[0];
     return (
-      <div className="fixed inset-0 z-50 flex flex-col justify-between p-8 sm:p-16 bg-[var(--bg)] text-[var(--ink)] select-none">
-        <header className="flex items-center justify-between">
+      <div className="fixed inset-0 z-50 flex flex-col justify-between p-6 sm:p-12 bg-[var(--bg)] text-[var(--ink)] select-none">
+        <header className="flex items-center justify-between gap-4">
           <Button
             variant="secondary"
             size="tv"
             onClick={() => setIsTvMode(false)}
-            icon={<Icon name="X" size={28} />}
+            icon={<Icon name="X" size={26} />}
           >
             Tutup TV
           </Button>
-          <span className="text-3xl font-extrabold text-[var(--muted)]">
-            Langkah {activeCardIdx + 1} dari {activeCards.length}
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border-2 border-[var(--border)] bg-[var(--surface)] text-base sm:text-lg font-extrabold text-[var(--ink)]">
+            <Icon name="Hand" size={22} />
+            Isyarat {signSystem}
           </span>
         </header>
 
-        <main className="my-auto flex flex-col items-center justify-center text-center max-w-5xl mx-auto gap-8">
-          <span className="flex h-20 w-20 items-center justify-center rounded-3xl bg-[var(--primary)] text-white text-4xl font-mono font-bold">
-            {currentCard.step}
-          </span>
-          <p className="font-extrabold text-5xl sm:text-7xl leading-tight">
-            {currentCard.text}
-          </p>
-          <div className="mt-4">
-            <SignCard term={currentCard.keyTerm} system="SIBI" size="tv" />
-          </div>
+        <main className="my-auto flex flex-col items-center justify-center text-center w-full max-w-5xl mx-auto gap-6 sm:gap-8">
+          {activeKeyTerm ? (
+            <div className="w-full max-w-[380px] h-[270px] sm:max-w-[440px] sm:h-[330px] flex items-center justify-center">
+              <SignCard
+                system={signSystem}
+                term={activeKeyTerm}
+                activeLetter={activeSignSlot?.ch}
+                activeLetterIndex={activeLetterIndex}
+                completedWord={completedWordText}
+                size="match"
+                onSelectLetter={(idx) => {
+                  if (!isPlaying) setManualLetterIndex(idx);
+                }}
+                className="h-full w-full"
+              />
+            </div>
+          ) : null}
+
+          {renderKaraokeSentence("text-2xl sm:text-4xl md:text-5xl")}
         </main>
 
-        <footer className="flex items-center justify-between">
+        <footer className="mx-auto grid w-full max-w-xl grid-cols-2 gap-3 sm:gap-4">
           <Button
             variant="secondary"
             size="tv"
-            disabled={activeCardIdx === 0}
-            onClick={() => setActiveCardIdx((p) => Math.max(0, p - 1))}
-            icon={<Icon name="CaretLeft" size={32} />}
+            onClick={resetSyncState}
+            icon={<Icon name="ArrowCounterClockwise" size={26} />}
+            className="w-full"
           >
-            Sebelumnya
+            Ulangi
           </Button>
           <Button
-            variant="primary"
+            variant={isPlaying ? "secondary" : "primary"}
             size="tv"
-            disabled={activeCardIdx === activeCards.length - 1}
-            onClick={() => setActiveCardIdx((p) => Math.min(activeCards.length - 1, p + 1))}
-            icon={<Icon name="CaretRight" size={32} />}
-            iconPosition="right"
+            onClick={handleTogglePlay}
+            icon={<Icon name={isPlaying ? "Pause" : "SpeakerHigh"} size={26} />}
+            className="w-full font-bold"
+            aria-label={isPlaying ? "Jeda suara instruksi" : "Putar suara instruksi"}
           >
-            Lanjut
+            {isPlaying ? "Jeda" : "Putar"}
           </Button>
         </footer>
       </div>
@@ -138,102 +392,196 @@ export function QuickInstructionsClient() {
   }
 
   return (
-    <div className="flex flex-col gap-6 max-w-4xl">
+    <div className="w-full flex flex-col gap-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-[var(--ink)]">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)]">
             Instruksi Cepat di Kelas
           </h1>
-          <p className="mt-1 text-base text-[var(--ink-2)]">
-            Jembatan komunikasi visual seketika: pecah instruksi menjadi langkah bergambar dan kartu isyarat.
+          <p className="mt-1 text-sm sm:text-base text-[var(--ink-2)]">
+            Sampaikan instruksi visual dengan kartu isyarat SIBI/BISINDO, suara, dan sorotan kata tersinkron.
           </p>
         </div>
 
         <Button
           type="button"
-          variant="primary"
+          variant="secondary"
           size="large"
           onClick={() => setIsTvMode(true)}
-          icon={<Icon name="Television" size={24} />}
+          icon={<Icon name="Television" size={22} />}
+          className="w-full sm:w-auto shrink-0"
         >
           Tampilkan di TV
         </Button>
       </div>
 
-      {/* Pintasan Cepat Instruksi Harian */}
-      <Card as="section" className="flex flex-col gap-3">
-        <span className="text-xs font-bold text-[var(--muted)] uppercase">
-          Pilihan Instruksi Rutin:
-        </span>
-        <div className="flex flex-wrap gap-2">
-          {PRESET_INSTRUCTIONS.map((preset, idx) => (
-            <Chip
-              key={idx}
-              label={preset.label}
-              onSelect={() => handleSelectPreset(preset)}
-              role="button"
-            />
-          ))}
-        </div>
-      </Card>
+      {/* Workspace Grid: Controls (Left) + Presentation Card (Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Panel Kontrol (Input, Sistem Isyarat, & Preset Kelas) */}
+        <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-5">
+          {/* Input Kalimat & Toggle SIBI/BISINDO */}
+          <Card as="section" className="flex flex-col gap-5">
+            <form onSubmit={handleGenerateCustom} className="flex flex-col gap-3">
+              <Field
+                id="custom-instruction"
+                label="Ketik Kalimat Instruksi"
+                placeholder="Contoh: Buka buku halaman lima..."
+                value={customText}
+                onChange={(e) => setCustomText(e.target.value)}
+              />
+              <Button
+                type="submit"
+                variant="primary"
+                size="large"
+                disabled={!customText.trim()}
+                icon={<Icon name="Sparkle" size={20} />}
+                className="w-full"
+              >
+                Tampilkan Kalimat
+              </Button>
+            </form>
 
-      {/* Formulir Instruksi Khusus */}
-      <Card as="section">
-        <form onSubmit={handleGenerateCustom} className="flex flex-col sm:flex-row items-end gap-3">
-          <div className="flex-1 w-full">
-            <Field
-              id="custom-instruction"
-              label="Ketik Instruksi Bebas"
-              placeholder="Contoh: Buka buku halaman 5, lalu ambil pensil..."
-              value={customText}
-              onChange={(e) => setCustomText(e.target.value)}
-            />
-          </div>
-          <Button
-            type="submit"
-            variant="primary"
-            size="large"
-            disabled={!customText.trim()}
-            icon={<Icon name="Sparkle" size={20} />}
-          >
-            Tampilkan
-          </Button>
-        </form>
-      </Card>
-
-      {/* Kartu Langkah Visual */}
-      <section className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-[var(--ink)]">
-            Langkah Visual Instruksi ({activeCards.length} Langkah)
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {activeCards.map((card, idx) => (
-            <Card key={idx} className="flex flex-col justify-between p-6 gap-4 border-2 border-[var(--border-strong)]">
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--primary)] text-white font-mono font-bold text-lg">
-                  {card.step}
-                </span>
-                <span className="text-xs font-mono font-bold px-2 py-0.5 rounded border border-[var(--border)] bg-[var(--surface-2)]">
-                  {card.keyTerm}
-                </span>
+            <div className="pt-4 border-t border-[var(--border)] flex flex-col gap-2">
+              <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wide">
+                Sistem Bahasa Isyarat
+              </span>
+              <div
+                className="grid grid-cols-2 gap-2"
+                role="radiogroup"
+                aria-label="Sistem bahasa isyarat"
+              >
+                <Button
+                  type="button"
+                  role="radio"
+                  aria-checked={signSystem === "SIBI"}
+                  variant={signSystem === "SIBI" ? "primary" : "secondary"}
+                  size="normal"
+                  onClick={() => handleSelectSignSystem("SIBI")}
+                  className="w-full"
+                >
+                  SIBI
+                </Button>
+                <Button
+                  type="button"
+                  role="radio"
+                  aria-checked={signSystem === "BISINDO"}
+                  variant={signSystem === "BISINDO" ? "primary" : "secondary"}
+                  size="normal"
+                  onClick={() => handleSelectSignSystem("BISINDO")}
+                  className="w-full"
+                >
+                  BISINDO
+                </Button>
               </div>
+            </div>
+          </Card>
 
-              <p className="text-2xl font-bold text-[var(--ink)] my-auto leading-snug">
-                {card.text}
-              </p>
-
-              {/* Isyarat Huruf */}
-              <div className="pt-3 border-t border-[var(--border)] flex justify-center">
-                <SignCard term={card.keyTerm} system="SIBI" size="normal" />
-              </div>
-            </Card>
-          ))}
+          {/* Pilihan Instruksi Rutin */}
+          <Card as="section" className="flex flex-col gap-3">
+            <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wide">
+              Pilihan Instruksi Rutin
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {PRESET_INSTRUCTIONS.map((preset) => (
+                <Chip
+                  key={preset.id}
+                  label={preset.label}
+                  selected={activePresetId === preset.id}
+                  onSelect={() => handleSelectPreset(preset)}
+                  role="button"
+                />
+              ))}
+            </div>
+          </Card>
         </div>
-      </section>
+
+        {/* Kartu Presentasi (CardPlayer-style) */}
+        <div className="lg:col-span-7 xl:col-span-8">
+          <Card className="w-full flex flex-col justify-between items-center gap-5 sm:gap-6 p-5 sm:p-8 border-2 border-[var(--border)] bg-[var(--surface)] shadow-md">
+            {/* Bar Info Kata Kunci */}
+            <div className="w-full flex flex-wrap items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[var(--border)] bg-[var(--surface-2)] text-xs font-extrabold text-[var(--ink)]">
+                <Icon name="Hand" size={14} />
+                {signSystem}
+              </span>
+
+              {expandedKeyWords.length > 0 && (
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {expandedKeyWords.map((kw, idx) => {
+                    const isCurrentTerm = activeKeyTerm.toLowerCase() === kw;
+                    return (
+                      <button
+                        key={kw}
+                        type="button"
+                        disabled={isPlaying}
+                        onClick={() => {
+                          setManualTermIndex(idx);
+                          setManualLetterIndex(0);
+                        }}
+                        className={`px-2.5 py-1 rounded-full border text-xs font-mono font-bold uppercase transition-colors cursor-pointer disabled:cursor-default ${
+                          isCurrentTerm
+                            ? "bg-[var(--primary)] text-[var(--on-primary)] border-[var(--primary)]"
+                            : "bg-[var(--surface-2)] text-[var(--ink-2)] border-[var(--border)] hover:bg-[var(--surface)]"
+                        }`}
+                      >
+                        {kw}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Peraga Kartu Isyarat SIBI / BISINDO Tersinkron */}
+            {activeKeyTerm ? (
+              <div className="w-full max-w-[340px] h-[250px] sm:max-w-[380px] sm:h-[280px] flex flex-col items-center justify-center shrink-0">
+                <SignCard
+                  system={signSystem}
+                  term={activeKeyTerm}
+                  activeLetter={activeSignSlot?.ch}
+                  activeLetterIndex={activeLetterIndex}
+                  completedWord={completedWordText}
+                  size="match"
+                  onSelectLetter={(idx) => {
+                    if (!isPlaying) setManualLetterIndex(idx);
+                  }}
+                  className="h-full w-full"
+                />
+              </div>
+            ) : null}
+
+            {/* Kalimat Penuh dengan Sorotan Karaoke Kata-demi-Kata (--progres) */}
+            {renderKaraokeSentence("text-lg sm:text-2xl md:text-3xl")}
+
+            {/* Kontrol Pemutaran Seragam */}
+            <div className="w-full max-w-md grid grid-cols-2 gap-3 pt-1">
+              <Button
+                type="button"
+                variant="secondary"
+                size="large"
+                onClick={resetSyncState}
+                icon={<Icon name="ArrowCounterClockwise" size={20} />}
+                className="w-full"
+              >
+                Ulangi
+              </Button>
+
+              <Button
+                type="button"
+                variant={isPlaying ? "secondary" : "primary"}
+                size="large"
+                onClick={handleTogglePlay}
+                icon={<Icon name={isPlaying ? "Pause" : "SpeakerHigh"} size={20} />}
+                className="w-full font-bold"
+                aria-label={isPlaying ? "Jeda suara instruksi" : "Putar suara instruksi"}
+              >
+                {isPlaying ? "Jeda" : "Putar"}
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }

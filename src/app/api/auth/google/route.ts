@@ -1,0 +1,38 @@
+import { randomBytes } from "node:crypto";
+import { NextResponse } from "next/server";
+import {
+  OAUTH_STATE_COOKIE_NAME,
+  getGoogleOAuthConfig,
+  getRequestOrigin,
+} from "@/server/security/google-oauth";
+
+export async function GET(request: Request) {
+  const origin = getRequestOrigin(request);
+  const config = getGoogleOAuthConfig();
+
+  if (!config) {
+    return NextResponse.redirect(new URL("/guru/masuk?error=google_not_configured", origin));
+  }
+
+  const state = randomBytes(24).toString("hex");
+  const redirectUri = `${origin}/api/auth/google/callback`;
+
+  const authUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
+  authUrl.searchParams.set("client_id", config.clientId);
+  authUrl.searchParams.set("redirect_uri", redirectUri);
+  authUrl.searchParams.set("response_type", "code");
+  authUrl.searchParams.set("scope", "openid email profile");
+  authUrl.searchParams.set("state", state);
+  authUrl.searchParams.set("prompt", "select_account");
+
+  const response = NextResponse.redirect(authUrl);
+  response.cookies.set(OAUTH_STATE_COOKIE_NAME, state, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 600,
+  });
+
+  return response;
+}

@@ -1,8 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import { Button, StatusMessage } from "@/shared/ui";
+
+const GOOGLE_ERROR_MESSAGES: Record<string, string> = {
+  google_not_configured:
+    "Login Google belum dikonfigurasi di server. Pastikan GOOGLE_CLIENT_ID dan GOOGLE_CLIENT_SECRET sudah diisi di Environment Variables.",
+  google_cancelled: "Login Google dibatalkan. Silakan coba lagi.",
+  google_invalid_state:
+    "Sesi login Google tidak valid atau kedaluwarsa. Silakan coba masuk kembali.",
+  google_token_failed:
+    "Gagal menukar kode otorisasi dengan Google. Periksa Authorized redirect URI di Google Cloud Console.",
+  google_userinfo_failed: "Gagal mengambil profil akun dari Google.",
+  google_email_unverified:
+    "Email Google Anda belum terverifikasi. Gunakan akun Google yang sudah terverifikasi.",
+  google_session_failed: "Gagal membuat sesi guru setelah login Google.",
+};
 
 function GoogleIcon() {
   return (
@@ -34,61 +47,38 @@ function GoogleIcon() {
   );
 }
 
-export function TeacherGoogleLoginButton() {
+export function TeacherGoogleLoginButton({
+  errorCode,
+}: {
+  errorCode?: string;
+}) {
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  async function handleGoogleLogin() {
-    setErrorMessage(null);
-
-    if (!supabaseUrl || !supabaseAnonKey) {
-      setErrorMessage(
-        "Login Google belum dikonfigurasi. Pastikan NEXT_PUBLIC_SUPABASE_URL dan NEXT_PUBLIC_SUPABASE_ANON_KEY sudah diisi."
-      );
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const supabase = createClient(supabaseUrl, supabaseAnonKey);
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-
-      if (error) {
-        setErrorMessage(error.message || "Gagal memulai login Google.");
-        setLoading(false);
-      }
-    } catch (err) {
-      setErrorMessage(
-        err instanceof Error ? err.message : "Terjadi kesalahan saat menghubungkan ke Google."
-      );
-      setLoading(false);
-    }
-  }
+  const errorMessage = errorCode
+    ? GOOGLE_ERROR_MESSAGES[errorCode] ?? "Gagal masuk dengan akun Google."
+    : null;
 
   return (
     <div className="flex flex-col gap-3">
-      <Button
-        type="button"
-        variant="primary"
-        size="large"
-        loading={loading}
-        icon={<GoogleIcon />}
-        onClick={handleGoogleLogin}
-        className="w-full"
+      <form
+        action="/api/auth/google"
+        method="GET"
+        onSubmit={() => setLoading(true)}
       >
-        Masuk dengan Google
-      </Button>
+        <Button
+          type="submit"
+          variant="primary"
+          size="large"
+          loading={loading}
+          icon={<GoogleIcon />}
+          className="w-full"
+        >
+          Masuk dengan Google
+        </Button>
+      </form>
 
       {errorMessage && (
-        <StatusMessage type="galat" title="Login Google tidak tersedia">
+        <StatusMessage type="galat" title="Login Google tidak berhasil">
           {errorMessage}
         </StatusMessage>
       )}

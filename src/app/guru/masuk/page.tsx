@@ -6,11 +6,16 @@ import { TeacherGoogleLoginButton } from "@/features/auth/components/TeacherGoog
 
 export const instant = false;
 
-export default async function TeacherLoginPage() {
+export default async function TeacherLoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
   const session = await getCurrentTeacher();
   if (session) {
     redirect("/guru");
   }
+  const { error } = await searchParams;
   return (
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       <header className="h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
@@ -37,7 +42,7 @@ export default async function TeacherLoginPage() {
           </div>
 
           <div className="flex flex-col gap-4">
-            <TeacherGoogleLoginButton />
+            <TeacherGoogleLoginButton errorCode={error} />
 
             <div className="relative flex items-center py-1">
               <div className="flex-grow border-t border-[var(--border)]" />

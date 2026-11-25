@@ -9,6 +9,7 @@ import { joinClassroomAction } from "@/features/auth/actions";
 function StudentLoginForm() {
   const searchParams = useSearchParams();
   const codeParam = searchParams.get("kode")?.trim() ?? "";
+  const materiParam = searchParams.get("materi")?.trim() ?? "";
   const hasValidCodeParam = codeParam.length === 6 && /^\d{6}$/.test(codeParam);
 
   const [joinCode, setJoinCode] = useState(hasValidCodeParam ? codeParam : "");
@@ -21,7 +22,7 @@ function StudentLoginForm() {
     e.preventDefault();
     const clean = joinCode.trim();
     if (clean.length !== 6 || !/^\d{6}$/.test(clean)) {
-      setErrorMsg("Kode kelas terdiri dari 6 angka.");
+      setErrorMsg("Kode belajar terdiri dari 6 angka.");
       return;
     }
     setErrorMsg(null);
@@ -49,13 +50,16 @@ function StudentLoginForm() {
         return;
       }
 
+      const targetLessonId = materiParam || result.data.lessonId;
+      const targetUrl = targetLessonId
+        ? `/kelas/${cleanCode}/materi/${targetLessonId}`
+        : `/kelas/${cleanCode}`;
+
       // Hard navigation memastikan cookie ik_siswa yang baru saja diset
-      // terbawa secara segar di HTTP request header ke /kelas/[kode]
-      // dan menghindari masalah router.refresh() yang membatalkan navigasi client.
-      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
-      window.location.assign(`/kelas/${cleanCode}`);
+      // terbawa secara segar di HTTP request header dan menghindari router.refresh() cancel.
+      window.location.assign(targetUrl);
     } catch {
-      setErrorMsg("Gagal menyambungkan ke kelas. Coba lagi.");
+      setErrorMsg("Gagal membuka materi. Coba lagi.");
       setIsSubmitting(false);
     }
   }
@@ -66,16 +70,16 @@ function StudentLoginForm() {
         <form onSubmit={handleCodeSubmit} className="flex flex-col gap-4">
           <div>
             <h1 className="text-2xl font-bold text-[var(--ink)]">
-              Masuk Kelas
+              Mulai Belajar
             </h1>
             <p className="mt-1 text-sm text-[var(--ink-2)]">
-              Ketik 6 angka kode kelas yang diberikan oleh guru.
+              Ketik 6 angka kode materi yang diberikan oleh guru.
             </p>
           </div>
 
           <Field
             id="kode-kelas"
-            label="Kode kelas (6 angka)"
+            label="Kode materi (6 angka)"
             codeMode={true}
             placeholder="000000"
             value={joinCode}

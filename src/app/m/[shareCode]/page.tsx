@@ -26,6 +26,6 @@ export default async function DirectShareEntryPage({
     redirect(`/kelas/${classroom.joinCode}/materi/${pub.lessonId}`);
   }
 
-  // Jika belum punya sesi, minta nama panggilan dengan join code yang sudah terisi
-  redirect(`/masuk?kode=${classroom.joinCode}`);
+  // Jika belum punya sesi, minta nama panggilan dan langsung arahkan ke materi tersebut
+  redirect(`/masuk?kode=${classroom.joinCode}&materi=${pub.lessonId}`);
 }

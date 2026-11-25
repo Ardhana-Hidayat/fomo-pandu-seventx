@@ -14,8 +14,8 @@ import {
   signStudentCookiePayload,
 } from "@/server/security/session";
 import { db } from "@/server/db/client";
-import { classrooms, students } from "@/server/db/schema";
-import { eq, and, isNull, sql } from "drizzle-orm";
+import { classrooms, publications, students } from "@/server/db/schema";
+import { eq, and, isNull, sql, desc } from "drizzle-orm";
 import type { Result } from "@/shared/lib/result";
 import { ok, err, makeAppError } from "@/shared/lib/result";
 
@@ -38,7 +38,7 @@ export async function signInDemoAction(): Promise<void> {
 export async function joinClassroomAction(
   joinCode: string,
   studentName: string
-): Promise<Result<{ classroomId: string; studentId: string }>> {
+): Promise<Result<{ classroomId: string; studentId: string; lessonId?: string }>> {
   const cleanCode = joinCode.trim();
   const cleanName = studentName.trim();
 
@@ -131,7 +131,19 @@ export async function joinClassroomAction(
     maxAge: Math.floor(STUDENT_SESSION_TTL_MS / 1000),
   });
 
-  return ok({ classroomId: classroom.id, studentId });
+  const latestPub = await db
+    .select({ lessonId: publications.lessonId })
+    .from(publications)
+    .where(eq(publications.classroomId, classroom.id))
+    .orderBy(desc(publications.publishedAt))
+    .limit(1)
+    .then((rows) => rows[0]);
+
+  return ok({
+    classroomId: classroom.id,
+    studentId,
+    lessonId: latestPub?.lessonId,
+  });
 }
 
 export async function signOutAction(): Promise<void> {

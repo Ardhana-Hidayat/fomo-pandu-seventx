@@ -14,7 +14,6 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/guru", label: "Beranda", icon: "Chalkboard" },
-  { href: "/guru/kelas", label: "Kelas", icon: "UsersThree" },
   { href: "/guru/materi", label: "Materi", icon: "Cards" },
   { href: "/guru/instruksi-cepat", label: "Instruksi Cepat", icon: "NotePencil" },
   { href: "/guru/pengaturan", label: "Pengaturan", icon: "GearSix" },

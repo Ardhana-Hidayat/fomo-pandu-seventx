@@ -36,29 +36,12 @@ export default function NewClassroomPage() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="font-bold text-[var(--ink)] text-base">
-              Sistem Isyarat Bawaan
-            </label>
-            <div className="flex flex-wrap gap-4">
-              <label className="flex items-center gap-2 cursor-pointer font-bold">
-                <input
-                  type="radio"
-                  name="defaultSignSystem"
-                  value="SIBI"
-                  defaultChecked
-                  className="h-5 w-5 accent-[var(--primary)]"
-                />
-                <span>SIBI (Sistem Isyarat Bahasa Indonesia)</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer font-bold">
-                <input
-                  type="radio"
-                  name="defaultSignSystem"
-                  value="BISINDO"
-                  className="h-5 w-5 accent-[var(--primary)]"
-                />
-                <span>BISINDO</span>
-              </label>
+            <span className="font-bold text-[var(--ink)] text-base">
+              Sistem Isyarat
+            </span>
+            <input type="hidden" name="defaultSignSystem" value="SIBI" />
+            <div className="inline-flex items-center gap-2 px-4 py-3 rounded-[var(--r-input)] border-2 border-[var(--border)] bg-[var(--surface-2)] text-[var(--ink)] font-bold text-sm w-fit">
+              <span>SIBI (Sistem Isyarat Bahasa Indonesia)</span>
             </div>
           </div>
 

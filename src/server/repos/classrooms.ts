@@ -75,7 +75,7 @@ export async function createClassroom(
         level: input.level ?? "sdlb",
         joinCode: code,
         rosterOnly: input.rosterOnly ?? false,
-        defaultSignSystem: input.defaultSignSystem ?? "SIBI",
+        defaultSignSystem: "SIBI",
         defaultChannels: input.defaultChannels ?? {
           text: true,
           audio: true,

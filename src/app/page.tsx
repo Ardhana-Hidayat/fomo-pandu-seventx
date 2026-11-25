@@ -43,7 +43,7 @@ export default function HomePage() {
                 </h2>
               </div>
               <p className="text-sm text-[var(--ink-2)] leading-relaxed max-w-[52ch]">
-                Belajar dengan kartu peraga multi-saluran: teks bersinkron, audio ramah sensorik, gambar visual, dan kartu isyarat SIBI/BISINDO.
+                Belajar dengan kartu peraga multi-saluran: teks bersinkron, audio ramah sensorik, gambar visual, dan kartu isyarat SIBI.
               </p>
             </div>
 

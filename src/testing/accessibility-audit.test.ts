@@ -201,7 +201,7 @@ describe("Story S4-01: Accessibility & Visual Audit", () => {
     it("menggunakan istilah pedagogis yang tenang dan jelas tanpa hiperbola", () => {
       const sampleSystemPhrases = [
         "Alat belajar adaptif untuk siswa dan guru SLB",
-        "Pustaka Isyarat SIBI & BISINDO",
+        "Pustaka Isyarat SIBI",
         "Mode cadangan otomatis aktif",
         "Tersambung! Model aktif.",
       ];

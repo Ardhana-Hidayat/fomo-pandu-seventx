@@ -38,8 +38,8 @@ describe("Pack 2 Test Cases (TC-15 to TC-24)", () => {
     expect(hashNormal).toBe(hashSlow); // Idempoten dan tidak butuh audio baru
   });
 
-  // TC-16: Guru mengganti SIBI ke BISINDO
-  it("TC-16: Penggantian sistem isyarat SIBI ke BISINDO", () => {
+  // TC-16: Sistem isyarat dikunci ke SIBI
+  it("TC-16: Sistem isyarat efektif selalu terkunci ke SIBI", () => {
     const lesson = {
       signSystem: "SIBI" as const,
       signScope: "key_terms",
@@ -53,12 +53,12 @@ describe("Pack 2 Test Cases (TC-15 to TC-24)", () => {
       keyTerms: ["tangan"],
     };
 
-    const toBisindo = effectiveCardSettings({ ...lesson, signSystem: "BISINDO" }, card);
-    expect(toBisindo.signSystem).toBe("BISINDO");
+    const lockedSibi = effectiveCardSettings({ ...lesson, signSystem: "BISINDO" }, card);
+    expect(lockedSibi.signSystem).toBe("SIBI");
 
-    // Resolusi isyarat BISINDO
-    const res = resolveSign("BISINDO", "A");
-    expect(res.system).toBe("BISINDO");
+    // Resolusi isyarat SIBI
+    const res = resolveSign("SIBI", "A");
+    expect(res.system).toBe("SIBI");
     expect(res.letter).toBe("A");
   });
 

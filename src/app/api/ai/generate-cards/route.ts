@@ -20,9 +20,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const { topic, rombel, signPreference } = parsed.data;
+    const { topic, rombel } = parsed.data;
 
-    const cards = await generateLearningCardsWithAI(topic, rombel, signPreference);
+    const cards = await generateLearningCardsWithAI(topic, rombel, 'SIBI');
 
     return NextResponse.json({
       success: true,

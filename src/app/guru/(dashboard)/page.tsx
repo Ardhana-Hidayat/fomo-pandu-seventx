@@ -146,7 +146,7 @@ export default async function TeacherDashboardPage() {
                     </h3>
                     <div className="flex items-center gap-1.5 shrink-0">
                       <span className="text-xs px-2.5 py-1 rounded-full border border-[var(--border)] font-bold bg-[var(--surface-2)]">
-                        {c.defaultSignSystem}
+                        SIBI
                       </span>
                       <span className="text-xs px-2.5 py-1 rounded-full border border-[var(--border)] font-mono font-bold bg-[var(--accent-subtle)] text-[var(--primary)]">
                         {c.ketuntasanPercent}% tuntas
@@ -179,7 +179,7 @@ export default async function TeacherDashboardPage() {
                   <ShareClassroomButton
                     classroomName={c.name}
                     joinCode={c.joinCode}
-                    signSystem={c.defaultSignSystem}
+                    signSystem="SIBI"
                   />
                   <Button
                     variant="secondary"

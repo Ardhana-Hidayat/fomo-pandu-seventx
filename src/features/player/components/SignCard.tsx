@@ -39,15 +39,18 @@ export function SignCard({
 
   const isMoving = motion || currentLetter === "J" || currentLetter === "Z";
 
-  // Prioritaskan aset lokal terverifikasi (/signs/<system>/<letter>.webp) agar bebas latensi dan akurat,
+  // Selalu kunci ke SIBI
+  const lockedSystem = "SIBI" as const;
+
+  // Prioritaskan aset lokal terverifikasi (/signs/sibi/<letter>.webp) agar bebas latensi dan akurat,
   // dengan fallback ke Supabase Storage CDN jika aset lokal gagal dimuat.
   const localSrc = hasLetter
-    ? `/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`
+    ? `/signs/${lockedSystem.toLowerCase()}/${currentLetter.toLowerCase()}.webp`
     : null;
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const remoteSrc =
     hasLetter && supabaseUrl
-      ? `${supabaseUrl.replace(/\/+$/, "")}/storage/v1/object/public/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`
+      ? `${supabaseUrl.replace(/\/+$/, "")}/storage/v1/object/public/signs/${lockedSystem.toLowerCase()}/${currentLetter.toLowerCase()}.webp`
       : null;
 
   const [failedUrls, setFailedUrls] = useState<Record<string, boolean>>({});
@@ -94,7 +97,7 @@ export function SignCard({
             isTv ? "text-xs" : isMatch ? "text-[10px]" : "text-[9px]"
           }`}
         >
-          {system}
+          {lockedSystem}
         </span>
 
         {/* Gambar Isyarat Nyata dari Dataset Terbuka */}
@@ -103,7 +106,7 @@ export function SignCard({
           <img
             key={activeSrc}
             src={activeSrc}
-            alt={`Isyarat huruf ${currentLetter} dalam ${system}`}
+            alt={`Isyarat huruf ${currentLetter} dalam ${lockedSystem}`}
             onError={() => {
               setFailedUrls((prev) => ({ ...prev, [activeSrc]: true }));
             }}

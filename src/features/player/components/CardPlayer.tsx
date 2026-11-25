@@ -430,7 +430,7 @@ export function CardPlayer({
               {activeKeyTerm ? (
                 <div className="w-full max-w-[320px] min-h-[200px] sm:w-auto sm:min-w-[230px] md:min-w-[268px] sm:max-w-[380px] sm:h-[230px] md:h-[268px] flex flex-col items-center justify-center shrink-0">
                   <SignCard
-                    system={signSystem}
+                    system="SIBI"
                     term={activeKeyTerm}
                     activeLetter={activeSignSlot?.ch}
                     activeLetterIndex={activeLetterIndex}

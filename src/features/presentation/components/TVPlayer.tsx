@@ -14,7 +14,6 @@ interface TVPlayerProps {
 export function TVPlayer({ lesson, backHref }: TVPlayerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showControls, setShowControls] = useState(true);
-  const [tvSignSystem, setTvSignSystem] = useState<"SIBI" | "BISINDO">("SIBI");
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const currentCard = lesson.cards[currentIndex];
@@ -43,10 +42,6 @@ export function TVPlayer({ lesson, backHref }: TVPlayerProps) {
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
         setCurrentIndex((prev) => Math.max(0, prev - 1));
-      } else if (e.key === "s" || e.key === "S") {
-        // Shortcut TV: Toggle SIBI/BISINDO
-        e.preventDefault();
-        setTvSignSystem((prev) => (prev === "SIBI" ? "BISINDO" : "SIBI"));
       }
     };
 
@@ -123,7 +118,7 @@ export function TVPlayer({ lesson, backHref }: TVPlayerProps) {
           <div className="mt-8 flex items-center justify-center">
             <SignCard
               term={currentCard.keyTerms[0]}
-              system={tvSignSystem}
+              system="SIBI"
               size="tv"
             />
           </div>

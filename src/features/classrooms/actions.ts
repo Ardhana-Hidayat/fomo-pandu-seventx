@@ -27,10 +27,7 @@ export async function createClassroomAction(
 
   const name = formData.get("name")?.toString().trim() ?? "";
   const level = formData.get("level")?.toString().trim() ?? "sdlb";
-  const defaultSignSystem =
-    formData.get("defaultSignSystem")?.toString() === "BISINDO"
-      ? "BISINDO"
-      : "SIBI";
+  const defaultSignSystem = "SIBI" as const;
   const rawRoster = formData.get("roster")?.toString() ?? "";
 
   const createdResult = await createClassroom(teacherSession.teacher.id, {

@@ -22,14 +22,14 @@ describe("effectiveCardSettings", () => {
     expect(eff.keyTerms).toEqual(["sabun", "air"]);
   });
 
-  it("override kartu menimpa pengaturan materi", () => {
+  it("override suara menimpa materi sementara sistem isyarat tetap terkunci ke SIBI", () => {
     const card = {
       signOverride: "BISINDO",
       voiceOverride: "C",
       keyTerms: ["tangan"],
     };
     const eff = effectiveCardSettings(baseLesson, card);
-    expect(eff.signSystem).toBe("BISINDO");
+    expect(eff.signSystem).toBe("SIBI");
     expect(eff.voiceKey).toBe("C");
   });
 

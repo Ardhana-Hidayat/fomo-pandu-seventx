@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Card, Button, Chip, Icon, StatusMessage, usePreferences } from "@/shared/ui";
 
-export interface TeacherSettingsProps {
+interface TeacherSettingsProps {
   teacher?: {
     displayName: string;
     email?: string | null;

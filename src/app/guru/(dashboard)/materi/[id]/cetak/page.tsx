@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { getCurrentTeacher } from "@/features/auth";
 import { getTeacherLesson } from "@/features/authoring";
@@ -17,9 +18,21 @@ export default async function PrintCardsPage({
   const lesson = await getTeacherLesson(id, session.teacher.id);
   if (!lesson) notFound();
 
-  // If lesson has publications, use the first shareCode, otherwise fallback to lesson.id
-  const shareCode = lesson.publications?.[0]?.shareCode ?? lesson.id;
-  const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/m/${shareCode}`;
+  const reqHeaders = await headers();
+  const host = reqHeaders.get("x-forwarded-host") ?? reqHeaders.get("host");
+  const proto = reqHeaders.get("x-forwarded-proto") ?? "http";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (host ? `${proto}://${host}` : "http://localhost:3000");
 
-  return <PrintPageClient lesson={lesson} shareUrl={shareUrl} />;
+  const shareCode = lesson.publications?.[0]?.shareCode ?? null;
+  const shareUrl = `${baseUrl.replace(/\/+$/, "")}/m/${shareCode ?? lesson.id}`;
+
+  return (
+    <PrintPageClient
+      lesson={lesson}
+      shareUrl={shareUrl}
+      shareCode={shareCode}
+    />
+  );
 }

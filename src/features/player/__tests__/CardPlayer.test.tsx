@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { PreferencesProvider } from "@/shared/ui";
 import { CardPlayer } from "../components/CardPlayer";
@@ -27,7 +27,7 @@ describe("CardPlayer Component", () => {
       id: "c-2",
       lessonId: "l-1",
       position: 2,
-      text: "Siti menulis cerita",
+      text: "Zebra minum wafel",
       cardType: "instruction",
       audioRef: null,
       audioSource: "none" as const,
@@ -43,23 +43,28 @@ describe("CardPlayer Component", () => {
     },
   ];
 
-  it("merender kartu pertama dan teks dengan benar", () => {
+  it("merender kartu pertama dan semua kata secara berurutan tanpa hilang", () => {
     render(
       <PreferencesProvider>
-        <CardPlayer cards={dummyCards} backHref="/kelas/123456" />
+        <CardPlayer cards={dummyCards} backHref="/" />
       </PreferencesProvider>
     );
 
     expect(screen.getByText(/Kartu 1 dari 2/i)).toBeDefined();
-    expect(screen.getByText(/Budi/i)).toBeDefined();
-    expect(screen.getByText(/membaca/i)).toBeDefined();
-    expect(screen.getAllByText(/buku/i).length).toBeGreaterThanOrEqual(1);
+    const wordSpans = Array.from(document.querySelectorAll("span.kata"));
+    expect(wordSpans.map((el) => el.textContent)).toEqual([
+      "Budi",
+      "membaca",
+      "buku",
+      "di",
+      "perpustakaan",
+    ]);
   });
 
   it("menampilkan gambar peraga jika tersedia", () => {
     render(
       <PreferencesProvider>
-        <CardPlayer cards={dummyCards} backHref="/kelas/123456" />
+        <CardPlayer cards={dummyCards} backHref="/" />
       </PreferencesProvider>
     );
 
@@ -68,22 +73,52 @@ describe("CardPlayer Component", () => {
     expect(img.getAttribute("src")).toBe("https://example.com/image1.png");
   });
 
-  it("menampilkan tombol navigasi Kembali, Suara, dan Lanjut", () => {
-    render(
+  it("menghormati backHref='/' dan mencegah tautan bocor ke '/kelas/...'", () => {
+    const { rerender } = render(
+      <PreferencesProvider>
+        <CardPlayer cards={dummyCards} backHref="/" />
+      </PreferencesProvider>
+    );
+
+    const backLink = screen.getByRole("link", { name: /Kembali/i });
+    expect(backLink.getAttribute("href")).toBe("/");
+
+    rerender(
       <PreferencesProvider>
         <CardPlayer cards={dummyCards} backHref="/kelas/123456" />
       </PreferencesProvider>
     );
+    expect(screen.getByRole("link", { name: /Kembali/i }).getAttribute("href")).toBe("/");
+  });
 
-    expect(screen.getByRole("button", { name: /Kembali/i })).toBeDefined();
-    expect(screen.getByRole("button", { name: /Putar|Suara/i })).toBeDefined();
+  it("mendukung callback onExit saat tombol Kembali diklik", () => {
+    const onExit = vi.fn();
+    render(
+      <PreferencesProvider>
+        <CardPlayer cards={dummyCards} onExit={onExit} />
+      </PreferencesProvider>
+    );
+
+    fireEvent.click(screen.getAllByRole("button", { name: /Kembali/i })[0]!);
+    expect(onExit).toHaveBeenCalledTimes(1);
+  });
+
+  it("menampilkan tombol navigasi Kembali, Putar, dan Lanjut", () => {
+    render(
+      <PreferencesProvider>
+        <CardPlayer cards={dummyCards} backHref="/" />
+      </PreferencesProvider>
+    );
+
+    expect(screen.getByRole("link", { name: /Kembali/i })).toBeDefined();
+    expect(screen.getByRole("button", { name: /Putar suara materi/i })).toBeDefined();
     expect(screen.getByRole("button", { name: /Lanjut/i })).toBeDefined();
   });
 
   it("mempertahankan elemen img SIBI yang sama saat berpindah huruf agar tidak berkedip", () => {
     render(
       <PreferencesProvider>
-        <CardPlayer cards={dummyCards} backHref="/kelas/123456" />
+        <CardPlayer cards={dummyCards} backHref="/" />
       </PreferencesProvider>
     );
 
@@ -98,31 +133,65 @@ describe("CardPlayer Component", () => {
     expect(signImgAfter.getAttribute("src")).toBe("/signs/sibi/u.webp");
   });
 
-  it("tetap mendukung mode SIBI saja tanpa gambar ilustrasi", () => {
-    const sibiOnlyCards = [
+  it("tetap mengeja seluruh kata dengan SIBI meski keyTerms kartu kosong", () => {
+    const noKeyTermsCard = [
       {
         ...dummyCards[0],
+        text: "Siti menulis cerita",
         imageUrl: null,
         imageSource: "none" as const,
         imageAlt: null,
-        keyTerms: ["apel"],
+        keyTerms: [],
       },
     ];
 
     render(
       <PreferencesProvider>
-        <CardPlayer cards={sibiOnlyCards} backHref="/kelas/123456" />
+        <CardPlayer cards={noKeyTermsCard} backHref="/" />
       </PreferencesProvider>
     );
 
-    expect(screen.getByAltText("Isyarat huruf A dalam SIBI")).toBeDefined();
+    expect(screen.getByAltText("Isyarat huruf S dalam SIBI")).toBeDefined();
     expect(screen.getByText("SIBI")).toBeDefined();
+
+    // Klik kata kedua ("menulis") untuk memeriksa ejaan SIBI-nya
+    fireEvent.click(screen.getByText("menulis"));
+    expect(screen.getByAltText("Isyarat huruf M dalam SIBI")).toBeDefined();
+  });
+
+  it("merender kalimat dengan kata berulang dan tanda baca tepat sekali per kata secara berurutan", () => {
+    const repeatedWordCards = [
+      {
+        ...dummyCards[0],
+        id: "c-rep",
+        text: "Buka buku, baca buku!",
+        keyTerms: [],
+      },
+    ];
+
+    render(
+      <PreferencesProvider>
+        <CardPlayer cards={repeatedWordCards} backHref="/" />
+      </PreferencesProvider>
+    );
+
+    const wordSpans = Array.from(document.querySelectorAll("span.kata"));
+    expect(wordSpans.map((el) => el.textContent)).toEqual([
+      "Buka",
+      "buku,",
+      "baca",
+      "buku!",
+    ]);
+
+    // Klik kata "buku!" yang kedua (indeks 3) mengubah tampilan ke kata tersebut
+    fireEvent.click(wordSpans[3]!);
+    expect(screen.getByAltText("Isyarat huruf B dalam SIBI")).toBeDefined();
   });
 
   it("menampilkan kontrol kecepatan inklusif (Lambat, Sedang, Normal) dengan bawaan Sedang", () => {
     render(
       <PreferencesProvider>
-        <CardPlayer cards={dummyCards} backHref="/kelas/123456" />
+        <CardPlayer cards={dummyCards} backHref="/" />
       </PreferencesProvider>
     );
 
@@ -139,7 +208,7 @@ describe("CardPlayer Component", () => {
     expect(sedang.getAttribute("aria-checked")).toBe("false");
   });
 
-  it("hanya melakukan preload huruf SIBI unik dari kartu aktif", () => {
+  it("hanya melakukan preload huruf SIBI unik dari seluruh kata pada kartu aktif", () => {
     const loadedSrcs: string[] = [];
     const OriginalImage = window.Image;
     class MockImage {
@@ -154,14 +223,27 @@ describe("CardPlayer Component", () => {
     try {
       render(
         <PreferencesProvider>
-          <CardPlayer cards={dummyCards} backHref="/kelas/123456" />
+          <CardPlayer cards={dummyCards} backHref="/" />
         </PreferencesProvider>
       );
 
-      // keyTerms kartu 1 adalah ["buku"] -> huruf unik: b, u, k
+      // Kartu 1 ("Budi membaca buku di perpustakaan") tidak memuat huruf dari kartu 2 ('z', 'w')
+      expect(loadedSrcs).not.toContain("/signs/sibi/z.webp");
+      expect(loadedSrcs).not.toContain("/signs/sibi/w.webp");
       expect(loadedSrcs.sort()).toEqual([
+        "/signs/sibi/a.webp",
         "/signs/sibi/b.webp",
+        "/signs/sibi/c.webp",
+        "/signs/sibi/d.webp",
+        "/signs/sibi/e.webp",
+        "/signs/sibi/i.webp",
         "/signs/sibi/k.webp",
+        "/signs/sibi/m.webp",
+        "/signs/sibi/n.webp",
+        "/signs/sibi/p.webp",
+        "/signs/sibi/r.webp",
+        "/signs/sibi/s.webp",
+        "/signs/sibi/t.webp",
         "/signs/sibi/u.webp",
       ]);
     } finally {

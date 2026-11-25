@@ -61,7 +61,7 @@ function StepperControl({
       >
         {label}
       </span>
-      <div className="inline-flex h-[46px] w-full sm:w-auto sm:min-w-[172px] items-center justify-between gap-1 rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] p-1">
+      <div className="inline-flex h-[46px] w-full items-center justify-between gap-1 rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] p-1">
         <button
           type="button"
           onClick={() => onChange(Math.max(min, value - 1))}
@@ -252,14 +252,12 @@ export function LessonWizard({
         <span className="font-bold text-sm text-[var(--ink)]">
           Kuis Setelah Materi
         </span>
-        {questionCount === 0 && (
-          <span className="text-xs font-semibold text-[var(--muted)]">
-            Tanpa kuis
-          </span>
-        )}
+        <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-0.5 text-xs font-semibold text-[var(--muted)]">
+          {questionCount === 0 ? "Tanpa kuis" : `${questionCount} soal`}
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end">
         <StepperControl
           label="Jumlah Soal"
           value={questionCount}
@@ -270,31 +268,6 @@ export function LessonWizard({
           decreaseAriaLabel="Kurangi jumlah soal kuis"
           increaseAriaLabel="Tambah jumlah soal kuis"
         />
-
-        {questionCount > 0 && (
-          <div className="flex flex-col gap-2">
-            <span className="font-bold text-xs text-[var(--ink-2)]">
-              Jenis Soal
-            </span>
-            <div className="flex flex-wrap gap-1.5 min-h-[46px] items-center">
-              {(
-                [
-                  ["match", "Pilihan"],
-                  ["order", "Urutkan"],
-                  ["both", "Campuran"],
-                ] as const
-              ).map(([val, label]) => (
-                <Chip
-                  key={val}
-                  label={label}
-                  selected={exerciseType === val}
-                  onSelect={() => setExerciseType(val)}
-                  role="radio"
-                />
-              ))}
-            </div>
-          </div>
-        )}
 
         {questionCount > 0 && exerciseType !== "order" && (
           <StepperControl
@@ -308,7 +281,72 @@ export function LessonWizard({
             increaseAriaLabel="Tambah pilihan jawaban"
           />
         )}
+
+        {questionCount > 0 && exerciseType === "order" && (
+          <div className="flex h-[46px] items-center rounded-[var(--r-tombol)] border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-medium text-[var(--muted)]">
+            Soal susun urutan otomatis berisi 3 langkah.
+          </div>
+        )}
       </div>
+
+      {questionCount > 0 && (
+        <div className="flex flex-col gap-2">
+          <span
+            id="quiz-exercise-type-label"
+            className="font-bold text-xs text-[var(--ink-2)]"
+          >
+            Jenis Soal
+          </span>
+          <div
+            role="radiogroup"
+            aria-labelledby="quiz-exercise-type-label"
+            className="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2.5"
+          >
+            {(
+              [
+                ["match", "Pilihan", "Pilih jawaban tepat"],
+                ["order", "Urutkan", "Susun langkah berurutan"],
+                ["both", "Campuran", "Pilihan & susun urutan"],
+              ] as const
+            ).map(([val, label, hint]) => {
+              const isSelected = exerciseType === val;
+              return (
+                <button
+                  key={val}
+                  type="button"
+                  role="radio"
+                  aria-checked={isSelected}
+                  onClick={() => setExerciseType(val)}
+                  className={`flex min-h-[54px] w-full items-center gap-2.5 rounded-[var(--r-tombol)] px-3 py-2.5 text-left transition-all cursor-pointer ${
+                    isSelected
+                      ? "border-2 border-[var(--primary)] bg-[var(--accent-subtle)] text-[var(--ink)] shadow-xs"
+                      : "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--ink)] hover:bg-[var(--surface-2)]"
+                  }`}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                      isSelected
+                        ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--on-primary)]"
+                        : "border-[var(--border-strong)] bg-[var(--surface)] text-transparent"
+                    }`}
+                  >
+                    <Icon name="Check" size={12} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-bold leading-tight text-[var(--ink)]">
+                      {label}
+                    </span>
+                    <span className="block text-[11px] leading-tight text-[var(--muted)] mt-0.5">
+                      {hint}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 

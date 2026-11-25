@@ -352,3 +352,48 @@ body {
 *::-webkit-scrollbar {
   display: none;
 }
+
+/* Aturan cetak global agar Cetak Kartu mencetak halaman A4 penuh tanpa chrome dashboard */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  html,
+  body {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Sembunyikan navigasi dashboard guru & elemen non-cetak */
+  aside[aria-label="Menu navigasi guru"],
+  header,
+  .no-print,
+  [data-print-hide="true"] {
+    display: none !important;
+  }
+
+  /* Buka pembungkus h-[100dvh] dan overflow-hidden dari TeacherLayout */
+  body > div,
+  body > div > div,
+  #main-content,
+  #main-content > div {
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    max-width: none !important;
+    width: 100% !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+  }
+}

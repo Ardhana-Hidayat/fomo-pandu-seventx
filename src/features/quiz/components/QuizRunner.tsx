@@ -22,7 +22,9 @@ interface QuizStep {
 interface QuizRunnerProps {
   lessonTitle: string;
   questions: QuizQuestion[];
-  classroomHref: string;
+  backHref?: string;
+  /** @deprecated Tidak lagi mengarahkan siswa ke halaman kelas; gunakan backHref */
+  classroomHref?: string;
   signSystem?: "SIBI" | "BISINDO";
   studentId?: string;
   lessonId?: string;
@@ -32,10 +34,10 @@ interface QuizRunnerProps {
 export function QuizRunner({
   lessonTitle,
   questions,
-  classroomHref,
-  signSystem = "SIBI",
+  backHref = "/",
   lessonId,
 }: QuizRunnerProps) {
+  const exitHref = backHref || "/";
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<"benar" | "ulang" | null>(null);
@@ -132,7 +134,7 @@ export function QuizRunner({
             <Button
               variant="secondary"
               size="normal"
-              href={classroomHref}
+              href={exitHref}
               icon={<Icon name="CaretLeft" size={18} />}
             >
               Keluar
@@ -152,10 +154,10 @@ export function QuizRunner({
             <Button
               variant="primary"
               size="large"
-              href={classroomHref}
+              href={exitHref}
               className="w-full"
             >
-              Kembali ke Kelas
+              Kembali ke Beranda
             </Button>
           </Card>
         </main>
@@ -236,6 +238,17 @@ export function QuizRunner({
     }
   }
 
+  function handleRestart() {
+    setCurrentIndex(0);
+    setSelectedOptionId(null);
+    setFeedback(null);
+    setAttemptsCount({});
+    setFirstTryCorrectCount(0);
+    setIsFinished(false);
+    setShowHint(false);
+    setShowPromptSign(false);
+  }
+
   function speakPrompt() {
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
@@ -273,15 +286,27 @@ export function QuizRunner({
               </p>
             </div>
 
-            <Button
-              variant="primary"
-              size="large"
-              href={classroomHref}
-              icon={<Icon name="Chalkboard" size={20} />}
-              className="w-full"
-            >
-              Kembali ke Kelas
-            </Button>
+            <div className="flex w-full flex-col gap-2.5">
+              <Button
+                type="button"
+                variant="secondary"
+                size="large"
+                onClick={handleRestart}
+                icon={<Icon name="ArrowCounterClockwise" size={20} />}
+                className="w-full"
+              >
+                Ulangi
+              </Button>
+              <Button
+                variant="primary"
+                size="large"
+                href={exitHref}
+                icon={<Icon name="CaretLeft" size={20} />}
+                className="w-full"
+              >
+                Kembali ke Beranda
+              </Button>
+            </div>
           </Card>
         </main>
       </div>
@@ -309,7 +334,7 @@ export function QuizRunner({
           <Button
             variant="secondary"
             size="normal"
-            href={classroomHref}
+            href={exitHref}
             icon={<Icon name="CaretLeft" size={18} />}
             aria-label="Keluar dari kuis"
             className="shrink-0"

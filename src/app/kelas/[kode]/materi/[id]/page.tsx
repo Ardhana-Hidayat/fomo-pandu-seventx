@@ -37,7 +37,7 @@ export default async function StudentLessonPlayerPage({
       title={lesson.title}
       cards={lesson.cards}
       quizHref={`/kelas/${kode}/kuis/${lesson.id}`}
-      backHref={`/kelas/${kode}`}
+      backHref="/"
     />
   );
 }

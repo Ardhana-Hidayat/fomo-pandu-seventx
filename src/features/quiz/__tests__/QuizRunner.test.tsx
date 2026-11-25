@@ -136,4 +136,53 @@ describe("QuizRunner Component", () => {
     fireEvent.click(screen.getByText("Sabun"));
     expect(screen.getByText(/Tepat! Jawabanmu benar/i)).toBeDefined();
   });
+
+  it("mengarahkan tombol Keluar dan Kembali ke Beranda ke / serta mendukung tombol Ulangi saat selesai", () => {
+    render(
+      <PreferencesProvider>
+        <QuizRunner
+          lessonTitle="Membaca Buku"
+          questions={dummyQuestions}
+          backHref="/"
+        />
+      </PreferencesProvider>
+    );
+
+    const exitLink = screen.getByRole("link", { name: /Keluar dari kuis/i });
+    expect(exitLink.getAttribute("href")).toBe("/");
+
+    // Jawab soal 1
+    fireEvent.click(screen.getByText("Buku"));
+    fireEvent.click(screen.getByRole("button", { name: /Soal Berikutnya/i }));
+
+    // Jawab soal 2
+    fireEvent.click(screen.getByText("Benar"));
+    fireEvent.click(screen.getByRole("button", { name: /Lihat Hasil/i }));
+
+    expect(screen.getByText("Latihan Selesai!")).toBeDefined();
+    expect(screen.queryByText(/Kembali ke Kelas/i)).toBeNull();
+
+    const homeLink = screen.getByRole("link", { name: /Kembali ke Beranda/i });
+    expect(homeLink.getAttribute("href")).toBe("/");
+
+    // Klik Ulangi kembali ke soal pertama
+    fireEvent.click(screen.getByRole("button", { name: /Ulangi/i }));
+    expect(screen.getByText(/Budi membaca apa di perpustakaan\?/i)).toBeDefined();
+  });
+
+  it("menampilkan tombol Kembali ke Beranda menuju / saat soal kosong", () => {
+    render(
+      <PreferencesProvider>
+        <QuizRunner
+          lessonTitle="Kosong"
+          questions={[]}
+          backHref="/"
+        />
+      </PreferencesProvider>
+    );
+
+    const homeLink = screen.getByRole("link", { name: /Kembali ke Beranda/i });
+    expect(homeLink.getAttribute("href")).toBe("/");
+    expect(screen.queryByText(/Kembali ke Kelas/i)).toBeNull();
+  });
 });

@@ -43,7 +43,7 @@ export default function HomePage() {
                 </h2>
               </div>
               <p className="text-sm text-[var(--ink-2)] leading-relaxed max-w-[52ch]">
-                Belajar dengan kartu peraga multi-saluran: teks bersinkron, audio ramah sensorik, gambar visual, dan kartu isyarat SIBI.
+                Belajar mandiri dengan kartu peraga multi-saluran: teks bersinkron, audio ramah sensorik, gambar visual, dan kartu isyarat SIBI.
               </p>
             </div>
 
@@ -51,15 +51,15 @@ export default function HomePage() {
               variant="primary"
               size="large"
               href="/masuk"
-              icon={<Icon name="DoorOpen" size={20} />}
+              icon={<Icon name="Play" size={20} />}
               className="w-full"
             >
-              Masuk Kelas
+              Mulai Belajar
             </Button>
           </Card>
 
           {/* Pintu Guru */}
-          <Card as="section" className="flex flex-col justify-between gap-6">
+          <Card as="section" className="flex flex-col justify-between gap-5 sm:gap-6">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--surface-2)] text-[var(--ink-2)]">
@@ -70,7 +70,7 @@ export default function HomePage() {
                 </h2>
               </div>
               <p className="text-sm text-[var(--ink-2)] leading-relaxed max-w-[52ch]">
-                Kelola ruang kelas, buat materi adaptif, tinjau bahasa isyarat dan suara sistem, serta pantau rekomendasi belajar siswa.
+                Susun materi adaptif, kelola sesi belajar, tinjau bahasa isyarat dan suara sistem, serta pantau rekomendasi belajar siswa.
               </p>
             </div>
 
@@ -88,27 +88,26 @@ export default function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-[var(--border)] bg-[var(--surface)] px-4 py-5 sm:px-6">
-        <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
-          <p className="text-sm leading-relaxed text-[var(--muted)]">
-            PANDU &bull; Dirancang untuk aksesibilitas dan kemandirian belajar SLB
+      <footer className="w-full border-t border-[var(--border)] bg-[var(--surface)] px-4 py-5 sm:px-6 sm:py-6">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:gap-6 sm:text-left">
+          <p className="text-xs sm:text-sm leading-relaxed text-[var(--muted)]">
+            <span className="font-semibold text-[var(--ink-2)]">PANDU</span>
+            {" \u2022 "}
+            Dirancang untuk aksesibilitas dan kemandirian belajar SLB
           </p>
           <nav
             aria-label="Tautan informasi"
-            className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold sm:justify-end"
+            className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs sm:text-sm font-semibold sm:justify-end shrink-0"
           >
             <Link
               href="/bantuan"
-              className="inline-flex min-h-[36px] items-center rounded-md px-2 py-1 text-[var(--link)] hover:underline"
+              className="inline-flex min-h-[40px] items-center rounded-md px-1.5 py-1 text-[var(--link)] hover:text-[var(--primary)] hover:underline underline-offset-4 transition-colors"
             >
               Pusat Bantuan
             </Link>
-            <span className="text-[var(--border-strong)]" aria-hidden="true">
-              &bull;
-            </span>
             <Link
               href="/kredit"
-              className="inline-flex min-h-[36px] items-center rounded-md px-2 py-1 text-[var(--link)] hover:underline"
+              className="inline-flex min-h-[40px] items-center rounded-md px-1.5 py-1 text-[var(--link)] hover:text-[var(--primary)] hover:underline underline-offset-4 transition-colors"
             >
               Kredit &amp; Atribusi Aset Terbuka
             </Link>

@@ -26,7 +26,7 @@ export default function HelpPage() {
         className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 p-4 py-8 sm:p-6 lg:p-8"
       >
         <h1 className="text-2xl sm:text-3xl font-bold tracking-[-0.015em] text-[var(--ink)]">
-          Pusat Bantuan &amp; Panduan PANDU
+          Pusat Bantuan &amp; Panduan PanduIn
         </h1>
 
         {/* 1. Panduan Masuk & Belajar Siswa */}
@@ -50,9 +50,9 @@ export default function HelpPage() {
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--on-primary)]">
                 1
               </span>
-              <h3 className="text-sm font-bold text-[var(--ink)]">Masuk Kelas</h3>
+              <h3 className="text-sm font-bold text-[var(--ink)]">Mulai Belajar</h3>
               <p className="text-xs text-[var(--ink-2)] leading-relaxed">
-                Buka menu Siswa, ketik 6 angka kode kelas dari guru, lalu masukkan nama panggilanmu.
+                Buka menu Mulai Belajar, ketik 6 angka kode materi dari guru (atau pindai QR), lalu masukkan nama panggilanmu.
               </p>
             </div>
 
@@ -89,7 +89,7 @@ export default function HelpPage() {
                 Panduan untuk Guru
               </h2>
               <span className="text-xs text-[var(--muted)]">
-                Manajemen kelas, pembuatan modul adaptif, dan presentasi kelas
+                Penyusunan modul adaptif, berbagi materi, dan mode presentasi TV
               </span>
             </div>
           </div>
@@ -101,17 +101,17 @@ export default function HelpPage() {
                 <span>Penyusunan Materi Adaptif (Manual &amp; Berbantuan AI)</span>
               </div>
               <p className="text-xs leading-relaxed">
-                Guru dapat mengetik materi langsung atau mengunggah foto lembar materi pembelajaran untuk diolah menjadi draf kartu belajar otomatis yang dapat disunting sebelum diterbitkan.
+                Guru dapat mengetik materi langsung atau mengunggah foto/PDF lembar materi pembelajaran untuk diolah menjadi draf kartu belajar otomatis yang dapat disunting sebelum diterbitkan.
               </p>
             </div>
 
             <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3 flex flex-col gap-1">
               <div className="font-semibold text-[var(--ink)] flex items-center gap-2">
                 <Icon name="Television" size={18} className="text-[var(--primary)]" />
-                <span>Mode Presentasi Smart TV Kelas</span>
+                <span>Mode Presentasi Smart TV</span>
               </div>
               <p className="text-xs leading-relaxed">
-                Buka tautan Smart TV kelas pada layar proyektor atau TV pintar agar siswa dapat melihat kartu kata berukuran ekstra besar secara bersamaan selama kegiatan belajar mengajar.
+                Buka tautan presentasi pada layar proyektor atau TV pintar agar siswa dapat melihat kartu kata dan kuis berukuran ekstra besar secara bersamaan selama kegiatan belajar mengajar.
               </p>
             </div>
 
@@ -166,7 +166,7 @@ export default function HelpPage() {
                 Pertanyaan yang Sering Diajukan (FAQ)
               </h2>
               <span className="text-xs text-[var(--muted)]">
-                Solusi cepat untuk kendala umum di kelas
+                Solusi cepat untuk kendala umum saat belajar
               </span>
             </div>
           </div>
@@ -177,7 +177,7 @@ export default function HelpPage() {
                 Apakah siswa perlu membuat akun email?
               </h3>
               <p className="text-xs text-[var(--ink-2)] leading-relaxed">
-                Tidak. Siswa cukup memasukkan 6 angka kode kelas yang dibagikan guru dan mengetik nama panggilan agar langsung dapat belajar.
+                Tidak. Siswa cukup memasukkan 6 angka kode materi atau membuka tautan/QR yang dibagikan guru dan mengetik nama panggilan agar langsung dapat belajar.
               </p>
             </div>
 
@@ -192,10 +192,10 @@ export default function HelpPage() {
 
             <div className="rounded-lg border border-[var(--border)] p-3.5 space-y-1">
               <h3 className="text-sm font-semibold text-[var(--ink)]">
-                Bagaimana cara menghubungkan layar Smart TV kelas?
+                Bagaimana cara menghubungkan layar Smart TV?
               </h3>
               <p className="text-xs text-[var(--ink-2)] leading-relaxed">
-                Di ruang kelas guru, pilih kelas lalu klik &ldquo;Buka Smart TV&rdquo;. Buka peramban di Smart TV lalu akses alamat tautan yang tertera atau pindai QR Code yang ditampilkan.
+                Di menu Materi guru, buka materi lalu klik &ldquo;Tampilkan di TV&rdquo;. Buka peramban di Smart TV lalu akses alamat tautan yang tertera atau pindai QR Code yang ditampilkan.
               </p>
             </div>
           </div>
@@ -205,14 +205,14 @@ export default function HelpPage() {
         <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 text-center flex flex-col items-center gap-3">
           <h2 className="text-base font-bold text-[var(--ink)]">Masih membutuhkan bantuan tambahan?</h2>
           <p className="text-xs text-[var(--ink-2)] max-w-[50ch]">
-            Jika Anda mengalami kendala teknis dalam penggunaan sistem di sekolah, silakan hubungi tim pendukung atau mulai dengan mencoba fitur Ruang Guru demo.
+            Jika Anda mengalami kendala teknis dalam penggunaan sistem di sekolah, silakan hubungi tim pendukung atau mulai mencoba fitur Ruang Guru.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 mt-1">
             <Button variant="primary" size="normal" href="/guru/masuk">
               Masuk Ruang Guru
             </Button>
             <Button variant="secondary" size="normal" href="/masuk">
-              Masuk Kelas Siswa
+              Mulai Belajar Siswa
             </Button>
           </div>
         </div>
@@ -220,7 +220,7 @@ export default function HelpPage() {
 
       {/* Footer */}
       <footer className="w-full border-t border-[var(--border)] bg-[var(--surface)] px-4 py-4 text-center text-sm text-[var(--muted)]">
-        <p>PANDU &bull; Dirancang untuk aksesibilitas dan kemandirian belajar SLB</p>
+        <p>PanduIn &bull; Dirancang untuk aksesibilitas dan kemandirian belajar SLB</p>
       </footer>
     </div>
   );

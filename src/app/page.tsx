@@ -9,7 +9,7 @@ export default function HomePage() {
         <div className="mx-auto flex h-full w-full max-w-5xl items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-lg font-bold tracking-tight text-[var(--ink)]">
-              PANDU
+              PanduIn
             </span>
           </div>
           <DisplayPreferencesTrigger />
@@ -91,7 +91,7 @@ export default function HomePage() {
       <footer className="w-full border-t border-[var(--border)] bg-[var(--surface)] px-4 py-5 sm:px-6 sm:py-6">
         <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:gap-6 sm:text-left">
           <p className="text-xs sm:text-sm leading-relaxed text-[var(--muted)]">
-            <span className="font-semibold text-[var(--ink-2)]">PANDU</span>
+            <span className="font-semibold text-[var(--ink-2)]">PanduIn</span>
             {" \u2022 "}
             Dirancang untuk aksesibilitas dan kemandirian belajar SLB
           </p>

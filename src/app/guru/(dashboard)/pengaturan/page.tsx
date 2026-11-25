@@ -8,5 +8,12 @@ export default async function TeacherSettingsPage() {
   const session = await getCurrentTeacher();
   if (!session) redirect("/guru/masuk");
 
-  return <TeacherSettingsClient />;
+  return (
+    <TeacherSettingsClient
+      teacher={{
+        displayName: session.teacher.displayName,
+        email: session.teacher.email,
+      }}
+    />
+  );
 }

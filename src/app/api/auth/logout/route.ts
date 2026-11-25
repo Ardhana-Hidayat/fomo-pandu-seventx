@@ -12,10 +12,11 @@ export async function POST(request: NextRequest) {
     } catch {}
   }
 
+  const isSecure = origin.startsWith("https://") || process.env.NODE_ENV === "production";
   const response = NextResponse.redirect(new URL("/guru/masuk", origin), 303);
   response.cookies.set(TEACHER_COOKIE_NAME, "", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: isSecure,
     sameSite: "lax",
     path: "/",
     maxAge: 0,

@@ -250,4 +250,66 @@ describe("CardPlayer Component", () => {
       window.Image = OriginalImage;
     }
   });
+
+  it("mengubah tombol Lanjut di bar bawah menjadi Kerjakan Kuis pada kartu terakhir saat quizHref tersedia tanpa banner di dalam kartu", () => {
+    const { container } = render(
+      <PreferencesProvider>
+        <CardPlayer cards={dummyCards} quizHref="/kelas/123456/kuis/l-1" backHref="/" />
+      </PreferencesProvider>
+    );
+
+    // Kartu 1: tombol kanan bawah adalah Lanjut
+    expect(screen.getByRole("button", { name: /Lanjut/i })).toBeDefined();
+    expect(screen.queryByRole("link", { name: /Kerjakan Kuis/i })).toBeNull();
+
+    // Pindah ke kartu terakhir (Kartu 2)
+    fireEvent.click(screen.getByRole("button", { name: /Lanjut/i }));
+    expect(screen.getByText(/Kartu 2 dari 2/i)).toBeDefined();
+
+    // Tombol Lanjut di footer berubah menjadi Kerjakan Kuis (di luar kartu)
+    expect(screen.queryByRole("button", { name: /^Lanjut$/i })).toBeNull();
+    const quizLink = screen.getByRole("link", { name: /Kerjakan Kuis/i });
+    expect(quizLink.getAttribute("href")).toBe("/kelas/123456/kuis/l-1");
+    expect(container.querySelector("footer")?.contains(quizLink)).toBe(true);
+    expect(container.querySelector("main")?.contains(quizLink)).toBe(false);
+    expect(screen.queryByText(/Materi selesai! Mau lanjut latihan kuis\?/i)).toBeNull();
+  });
+
+  it("mendukung callback onStartQuiz pada tombol Kerjakan Kuis di kartu terakhir", () => {
+    const onStartQuiz = vi.fn();
+    render(
+      <PreferencesProvider>
+        <CardPlayer cards={dummyCards} onStartQuiz={onStartQuiz} backHref="/" />
+      </PreferencesProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /Lanjut/i }));
+    const quizBtn = screen.getByRole("button", { name: /Kerjakan Kuis/i });
+    fireEvent.click(quizBtn);
+    expect(onStartQuiz).toHaveBeenCalledTimes(1);
+  });
+
+  it("menampilkan tombol Selesai di bar bawah pada kartu terakhir jika quizHref dan onStartQuiz tidak tersedia", () => {
+    render(
+      <PreferencesProvider>
+        <CardPlayer cards={dummyCards} backHref="/" />
+      </PreferencesProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /Lanjut/i }));
+    const doneLink = screen.getByRole("link", { name: /Selesai/i });
+    expect(doneLink.getAttribute("href")).toBe("/");
+  });
+
+  it("memanggil onExit saat tombol Selesai diklik jika onExit tersedia dan tanpa kuis", () => {
+    const onExit = vi.fn();
+    render(
+      <PreferencesProvider>
+        <CardPlayer cards={[dummyCards[0]!]} onExit={onExit} />
+      </PreferencesProvider>
+    );
+    const doneBtn = screen.getByRole("button", { name: /Selesai/i });
+    fireEvent.click(doneBtn);
+    expect(onExit).toHaveBeenCalledTimes(1);
+  });
 });

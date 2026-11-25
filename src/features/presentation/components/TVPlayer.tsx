@@ -4,6 +4,8 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
 import { SignCard } from "@/features/player";
 import type { LessonWithContent } from "@/server/repos/lessons";
+import type { QuizQuestion } from "@/server/db/schema";
+import { TVQuiz } from "./TVQuiz";
 import {
   tokenize,
   buildTimeline,
@@ -21,11 +23,13 @@ import {
 
 interface TVPlayerProps {
   lesson: LessonWithContent;
+  questions?: QuizQuestion[];
   backHref: string;
   quizHref?: string;
 }
 
-export function TVPlayer({ lesson, backHref, quizHref }: TVPlayerProps) {
+export function TVPlayer({ lesson, questions, backHref, quizHref }: TVPlayerProps) {
+  const [mode, setMode] = useState<"cards" | "quiz">("cards");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pace, setPace] = useState<PacePreset>("sedang");
   const [isPlaying, setIsPlaying] = useState(false);
@@ -45,9 +49,10 @@ export function TVPlayer({ lesson, backHref, quizHref }: TVPlayerProps) {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const playbackRunIdRef = useRef(0);
 
+  const quizQuestions = questions ?? lesson.questions ?? [];
   const currentCard = lesson.cards[currentIndex];
   const totalCards = lesson.cards.length;
-  const isLastCard = currentIndex === totalCards - 1;
+  const isLastCard = totalCards > 0 && currentIndex === totalCards - 1;
   const paceConfig = PACE_CONFIGS[pace];
 
   const cardText = currentCard?.text ?? "";
@@ -253,6 +258,8 @@ export function TVPlayer({ lesson, backHref, quizHref }: TVPlayerProps) {
 
   // Auto-hide hanya saat sedang diputar agar kontrol tetap mudah dijangkau saat jeda
   useEffect(() => {
+    if (mode !== "cards" || !currentCard) return;
+
     const scheduleHide = () => {
       setShowControls(true);
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
@@ -296,7 +303,18 @@ export function TVPlayer({ lesson, backHref, quizHref }: TVPlayerProps) {
       window.removeEventListener("keydown", handleKeyDown);
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
     };
-  }, [handleNext, handlePrev, handleToggleAudio, isPlaying]);
+  }, [currentCard, handleNext, handlePrev, handleToggleAudio, isPlaying, mode]);
+
+  if (mode === "quiz" && quizQuestions.length > 0) {
+    return (
+      <TVQuiz
+        lessonTitle={lesson.title}
+        questions={quizQuestions}
+        backHref={backHref}
+        onBackToMaterial={() => setMode("cards")}
+      />
+    );
+  }
 
   if (!currentCard) {
     return (
@@ -311,9 +329,29 @@ export function TVPlayer({ lesson, backHref, quizHref }: TVPlayerProps) {
             Kembali
           </Button>
           <span className="text-lg font-bold text-[var(--muted)]">{lesson.title}</span>
+          <DisplayPreferencesTrigger />
         </header>
-        <div className="flex-1 flex items-center justify-center p-8 text-2xl font-bold text-[var(--muted)]">
-          Materi ini belum memiliki kartu belajar.
+        <div className="flex-1 flex flex-col items-center justify-center gap-4 p-8 text-2xl font-bold text-[var(--muted)]">
+          <span>Materi ini belum memiliki kartu belajar.</span>
+          {quizQuestions.length > 0 ? (
+            <Button
+              variant="primary"
+              size="large"
+              onClick={() => setMode("quiz")}
+              icon={<Icon name="ListChecks" size={22} />}
+            >
+              Kerjakan Kuis
+            </Button>
+          ) : quizHref ? (
+            <Button
+              variant="primary"
+              size="large"
+              href={quizHref}
+              icon={<Icon name="ListChecks" size={22} />}
+            >
+              Kerjakan Kuis
+            </Button>
+          ) : null}
         </div>
       </div>
     );
@@ -449,21 +487,6 @@ export function TVPlayer({ lesson, backHref, quizHref }: TVPlayerProps) {
           </p>
         </Card>
 
-        {isLastCard && quizHref && (
-          <div className="w-full px-5 py-3 rounded-2xl border-2 border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)] flex flex-wrap items-center justify-between gap-3">
-            <span className="text-base sm:text-xl font-bold">
-              Materi selesai! Siap lanjut ke Kuis TV?
-            </span>
-            <Button
-              variant="primary"
-              size="large"
-              href={quizHref}
-              icon={<Icon name="ListChecks" size={22} />}
-            >
-              Mulai Kuis TV
-            </Button>
-          </div>
-        )}
       </main>
 
       {/* Footer TV */}
@@ -525,16 +548,55 @@ export function TVPlayer({ lesson, backHref, quizHref }: TVPlayerProps) {
             {isPlaying ? "Jeda" : "Putar"}
           </Button>
 
-          <Button
-            variant="primary"
-            size="large"
-            onClick={handleNext}
-            disabled={isLastCard}
-            icon={<Icon name="CaretRight" size={22} />}
-            iconPosition="right"
-          >
-            Lanjut
-          </Button>
+          {!isLastCard ? (
+            <Button
+              variant="primary"
+              size="large"
+              onClick={handleNext}
+              icon={<Icon name="CaretRight" size={22} />}
+              iconPosition="right"
+            >
+              Lanjut
+            </Button>
+          ) : quizQuestions.length > 0 ? (
+            <Button
+              variant="primary"
+              size="large"
+              onClick={() => {
+                stopPlayback();
+                setMode("quiz");
+              }}
+              icon={<Icon name="ListChecks" size={22} />}
+              iconPosition="right"
+              className="font-extrabold shadow-md ring-2 ring-[var(--border-focus)]/30"
+            >
+              Kerjakan Kuis
+            </Button>
+          ) : quizHref ? (
+            <Button
+              variant="primary"
+              size="large"
+              href={quizHref}
+              onClick={stopPlayback}
+              icon={<Icon name="ListChecks" size={22} />}
+              iconPosition="right"
+              className="font-extrabold shadow-md ring-2 ring-[var(--border-focus)]/30"
+            >
+              Kerjakan Kuis
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              size="large"
+              href={backHref}
+              onClick={stopPlayback}
+              icon={<Icon name="CheckCircle" size={22} />}
+              iconPosition="right"
+              className="font-bold"
+            >
+              Selesai
+            </Button>
+          )}
         </div>
       </footer>
     </div>

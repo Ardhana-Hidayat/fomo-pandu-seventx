@@ -19,7 +19,11 @@ export default async function TeacherPresentationPage({
 
   return (
     <div className="fixed inset-0 z-50 bg-[var(--bg)] text-[var(--ink)] overflow-hidden">
-      <TVPlayer lesson={lesson} backHref={`/guru/materi/${lesson.id}/edit`} />
+      <TVPlayer
+        lesson={lesson}
+        questions={lesson.questions}
+        backHref={`/guru/materi/${lesson.id}/edit`}
+      />
     </div>
   );
 }

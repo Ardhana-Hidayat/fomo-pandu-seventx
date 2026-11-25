@@ -30,6 +30,7 @@ export default async function TVLessonPage({
     <div className="fixed inset-0 z-50 bg-[var(--bg)] text-[var(--ink)] overflow-hidden">
       <TVPlayer
         lesson={lesson}
+        questions={lesson.questions}
         backHref={`/tv/${kode}`}
         quizHref={
           lesson.questions.length > 0

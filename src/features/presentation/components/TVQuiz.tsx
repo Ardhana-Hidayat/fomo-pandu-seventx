@@ -9,6 +9,8 @@ interface TVQuizProps {
   lessonTitle: string;
   questions: QuizQuestion[];
   backHref: string;
+  onBackToMaterial?: () => void;
+  materialHref?: string;
 }
 
 interface NormalizedTVOption {
@@ -24,7 +26,13 @@ interface NormalizedTVStep {
   imageUrl?: string;
 }
 
-export function TVQuiz({ lessonTitle, questions, backHref }: TVQuizProps) {
+export function TVQuiz({
+  lessonTitle,
+  questions,
+  backHref,
+  onBackToMaterial,
+  materialHref,
+}: TVQuizProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [revealedIndex, setRevealedIndex] = useState<number | null>(null);
 
@@ -185,14 +193,35 @@ export function TVQuiz({ lessonTitle, questions, backHref }: TVQuizProps) {
   return (
     <div className="flex h-[100dvh] w-screen flex-col justify-between p-4 sm:p-10 bg-[var(--bg)] text-[var(--ink)] select-none overflow-hidden">
       <header className="shrink-0 flex items-center justify-between gap-4 border-b-4 border-[var(--border)] pb-4">
-        <Button
-          variant="secondary"
-          size="normal"
-          href={backHref}
-          icon={<Icon name="CaretLeft" size={20} />}
-        >
-          Keluar TV
-        </Button>
+        <div className="flex items-center gap-2 shrink-0">
+          <Button
+            variant="secondary"
+            size="normal"
+            href={backHref}
+            icon={<Icon name="CaretLeft" size={20} />}
+          >
+            Keluar TV
+          </Button>
+          {onBackToMaterial ? (
+            <Button
+              variant="secondary"
+              size="normal"
+              onClick={onBackToMaterial}
+              icon={<Icon name="Cards" size={20} />}
+            >
+              Lihat Materi
+            </Button>
+          ) : materialHref ? (
+            <Button
+              variant="secondary"
+              size="normal"
+              href={materialHref}
+              icon={<Icon name="Cards" size={20} />}
+            >
+              Lihat Materi
+            </Button>
+          ) : null}
+        </div>
 
         <div className="min-w-0 flex-1 text-center">
           <span className="block truncate text-base sm:text-xl font-bold text-[var(--muted)]">
@@ -314,16 +343,28 @@ export function TVQuiz({ lessonTitle, questions, backHref }: TVQuizProps) {
           >
             Sebelumnya
           </Button>
-          <Button
-            variant="primary"
-            size="large"
-            onClick={handleNext}
-            disabled={currentIndex === total - 1}
-            icon={<Icon name="CaretRight" size={22} />}
-            iconPosition="right"
-          >
-            Berikutnya
-          </Button>
+          {currentIndex === total - 1 ? (
+            <Button
+              variant="primary"
+              size="large"
+              href={backHref}
+              icon={<Icon name="CheckCircle" size={22} />}
+              iconPosition="right"
+              className="font-extrabold"
+            >
+              Selesai
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              size="large"
+              onClick={handleNext}
+              icon={<Icon name="CaretRight" size={22} />}
+              iconPosition="right"
+            >
+              Berikutnya
+            </Button>
+          )}
         </div>
       </footer>
     </div>

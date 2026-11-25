@@ -29,6 +29,7 @@ interface CardPlayerProps {
   title?: string;
   cards: PlayerCard[];
   quizHref?: string;
+  onStartQuiz?: () => void;
   backHref?: string;
   onExit?: () => void;
   signSystem?: "SIBI" | "BISINDO";
@@ -39,6 +40,7 @@ export function CardPlayer({
   title,
   cards,
   quizHref,
+  onStartQuiz,
   backHref = "/",
   onExit,
 }: CardPlayerProps) {
@@ -428,24 +430,6 @@ export function CardPlayer({
             </p>
           </div>
 
-          {/* Banner Tawaran Latihan di Kartu Terakhir */}
-          {isLastCard && quizHref && (
-            <div className="shrink-0 w-full px-3 py-2 rounded-xl border border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)] flex items-center justify-between gap-3">
-              <span className="text-xs sm:text-sm font-bold truncate">
-                Materi selesai! Mau lanjut latihan kuis?
-              </span>
-              <Button
-                variant="primary"
-                size="normal"
-                href={quizHref}
-                icon={<Icon name="ListChecks" size={18} />}
-                className="shrink-0"
-              >
-                Mulai Kuis
-              </Button>
-            </div>
-          )}
-
           {/* Kontrol Kecepatan Inklusif & Indikator Nomor Kartu */}
           <div className="shrink-0 w-full flex flex-wrap items-center justify-center gap-2.5 pt-0.5">
             <div
@@ -507,17 +491,70 @@ export function CardPlayer({
             {isPlaying ? "Jeda" : "Putar"}
           </Button>
 
-          <Button
-            variant="primary"
-            size="large"
-            onClick={handleNext}
-            disabled={isLastCard}
-            icon={<Icon name="CaretRight" size={20} />}
-            iconPosition="right"
-            className="w-full px-2 sm:px-6 text-sm sm:text-base"
-          >
-            Lanjut
-          </Button>
+          {!isLastCard ? (
+            <Button
+              variant="primary"
+              size="large"
+              onClick={handleNext}
+              icon={<Icon name="CaretRight" size={20} />}
+              iconPosition="right"
+              className="w-full px-2 sm:px-6 text-sm sm:text-base"
+            >
+              Lanjut
+            </Button>
+          ) : onStartQuiz ? (
+            <Button
+              variant="primary"
+              size="large"
+              onClick={() => {
+                stopPlayback();
+                onStartQuiz();
+              }}
+              icon={<Icon name="ListChecks" size={20} />}
+              iconPosition="right"
+              className="w-full px-2 sm:px-6 text-sm sm:text-base font-extrabold shadow-md ring-2 ring-[var(--border-focus)]/30"
+            >
+              Kerjakan Kuis
+            </Button>
+          ) : quizHref ? (
+            <Button
+              variant="primary"
+              size="large"
+              href={quizHref}
+              onClick={stopPlayback}
+              icon={<Icon name="ListChecks" size={20} />}
+              iconPosition="right"
+              className="w-full px-2 sm:px-6 text-sm sm:text-base font-extrabold shadow-md ring-2 ring-[var(--border-focus)]/30"
+            >
+              Kerjakan Kuis
+            </Button>
+          ) : onExit ? (
+            <Button
+              variant="primary"
+              size="large"
+              onClick={() => {
+                stopPlayback();
+                onExit();
+              }}
+              icon={<Icon name="CheckCircle" size={20} />}
+              iconPosition="right"
+              className="w-full px-2 sm:px-6 text-sm sm:text-base font-bold"
+            >
+              Selesai
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              size="large"
+              href={resolvedBackHref}
+              onClick={stopPlayback}
+              icon={<Icon name="CheckCircle" size={20} />}
+              iconPosition="right"
+              className="w-full px-2 sm:px-6 text-sm sm:text-base font-bold"
+            >
+              Selesai
+            </Button>
+          )}
         </div>
       </footer>
     </div>

@@ -137,7 +137,7 @@ describe("TVPlayer & TVQuiz", () => {
     // Tidak ada kebocoran kata "Kelas"
     expect(container.textContent).not.toMatch(/\bkelas\b/i);
 
-    // Pindah ke kartu terakhir menampilkan semua kata kartu 2 & CTA Kuis TV
+    // Pindah ke kartu terakhir menampilkan semua kata kartu 2 & tombol Kerjakan Kuis di footer
     fireEvent.click(screen.getByRole("button", { name: /Lanjut/i }));
     expect(screen.getByText("Kartu 2 dari 2")).toBeDefined();
     const card2Spans = Array.from(container.querySelectorAll("span.kata"));
@@ -146,7 +146,51 @@ describe("TVPlayer & TVQuiz", () => {
       "kupu-kupu",
       "terbang!",
     ]);
-    expect(screen.getByRole("link", { name: /Mulai Kuis TV/i })).toBeDefined();
+    const quizLink = screen.getByRole("link", { name: /Kerjakan Kuis/i });
+    expect(quizLink.getAttribute("href")).toBe("/tv/123456/lesson-1/kuis");
+    expect(container.querySelector("footer")?.contains(quizLink)).toBe(true);
+    expect(container.querySelector("main")?.contains(quizLink)).toBe(false);
+  });
+
+  it("beralih mulus ke TVQuiz inline saat Kerjakan Kuis diklik jika soal tersedia dan dapat kembali ke materi", () => {
+    const { container } = render(
+      <PreferencesProvider>
+        <TVPlayer
+          lesson={mockLesson}
+          questions={mockQuestions}
+          backHref="/guru/materi/lesson-1/edit"
+        />
+      </PreferencesProvider>
+    );
+
+    // Kartu 1 -> Lanjut ke Kartu 2
+    fireEvent.click(screen.getByRole("button", { name: /Lanjut/i }));
+    expect(screen.getByText("Kartu 2 dari 2")).toBeDefined();
+
+    // Klik Kerjakan Kuis di bar bawah
+    const quizButton = screen.getByRole("button", { name: /Kerjakan Kuis/i });
+    expect(container.querySelector("footer")?.contains(quizButton)).toBe(true);
+    fireEvent.click(quizButton);
+
+    // Masuk ke tampilan TVQuiz
+    expect(screen.getByText("Soal 1 dari 2")).toBeDefined();
+    expect(screen.getByText("Apa yang kita baca?")).toBeDefined();
+
+    // Klik Lihat Materi kembali ke kartu materi
+    fireEvent.click(screen.getByRole("button", { name: /Lihat Materi/i }));
+    expect(screen.getByText("Kartu 2 dari 2")).toBeDefined();
+  });
+
+  it("menampilkan tombol Selesai pada kartu terakhir TVPlayer jika tidak ada soal kuis maupun quizHref", () => {
+    render(
+      <PreferencesProvider>
+        <TVPlayer lesson={mockLesson} backHref="/guru/materi/lesson-1/edit" />
+      </PreferencesProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /Lanjut/i }));
+    const doneLink = screen.getByRole("link", { name: /Selesai/i });
+    expect(doneLink.getAttribute("href")).toBe("/guru/materi/lesson-1/edit");
   });
 
   it("TVQuiz menangani soal kosong dengan tombol kembali yang bersih", () => {
@@ -169,6 +213,7 @@ describe("TVPlayer & TVQuiz", () => {
           lessonTitle="Membaca"
           questions={mockQuestions}
           backHref="/tv/123456"
+          materialHref="/tv/123456/lesson-1"
         />
       </PreferencesProvider>
     );
@@ -176,6 +221,9 @@ describe("TVPlayer & TVQuiz", () => {
     expect(screen.getByText("Soal 1 dari 2")).toBeDefined();
     expect(screen.getByText("Buku")).toBeDefined();
     expect(screen.getByText("Batu")).toBeDefined();
+    expect(screen.getByRole("link", { name: /Lihat Materi/i }).getAttribute("href")).toBe(
+      "/tv/123456/lesson-1"
+    );
 
     fireEvent.click(screen.getByRole("button", { name: /Tampilkan Kunci Jawaban/i }));
     expect(screen.getByRole("button", { name: /Sembunyikan Kunci/i })).toBeDefined();
@@ -184,6 +232,7 @@ describe("TVPlayer & TVQuiz", () => {
     expect(screen.getByText("Soal 2 dari 2")).toBeDefined();
     expect(screen.getByText("Benar")).toBeDefined();
     expect(screen.getByText("Salah")).toBeDefined();
+    expect(screen.getByRole("link", { name: /Selesai/i }).getAttribute("href")).toBe("/tv/123456");
     expect(container.textContent).not.toMatch(/\bkelas\b/i);
   });
 });

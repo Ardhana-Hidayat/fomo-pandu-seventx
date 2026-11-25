@@ -36,7 +36,11 @@ export default async function StudentLessonPlayerPage({
     <CardPlayer
       title={lesson.title}
       cards={lesson.cards}
-      quizHref={`/kelas/${kode}/kuis/${lesson.id}`}
+      quizHref={
+        lesson.questions.length > 0
+          ? `/kelas/${kode}/kuis/${lesson.id}`
+          : undefined
+      }
       backHref="/"
     />
   );

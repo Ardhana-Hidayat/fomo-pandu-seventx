@@ -32,10 +32,10 @@ export default async function TVClassroomMenuPage({
           </Button>
           <div>
             <span className="text-sm sm:text-xl font-bold text-[var(--muted)] uppercase block">
-              Mode Presentasi Layar TV
+              PanduIn &bull; Layar TV
             </span>
             <h1 className="text-3xl sm:text-5xl font-extrabold text-[var(--ink)]">
-              {classroom.name}
+              Materi Pembelajaran
             </h1>
           </div>
         </div>
@@ -104,7 +104,7 @@ export default async function TVClassroomMenuPage({
       </main>
 
       <footer className="text-center text-sm font-bold text-[var(--muted)] border-t-2 border-[var(--border)] pt-4">
-        PANDU &bull; Layar TV untuk pembelajaran bersama
+        PanduIn &bull; Layar TV untuk pembelajaran bersama
       </footer>
     </div>
   );

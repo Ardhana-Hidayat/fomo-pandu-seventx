@@ -279,7 +279,7 @@ export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
   }
 
   return (
-    <div className="flex flex-col gap-6 max-w-4xl">
+    <div className="flex flex-col gap-6 w-full max-w-6xl">
       {/* Header Editor */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b-2 border-[var(--border)] pb-4">
         <div>

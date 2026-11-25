@@ -32,7 +32,7 @@ export function LessonWizard({
   onSuccess,
 }: LessonWizardProps) {
   const router = useRouter();
-  const [mode, setMode] = useState<CreationMode | null>(null);
+  const [mode, setMode] = useState<CreationMode>("manual");
 
   // State Buat Manual
   const [title, setTitle] = useState("");
@@ -44,7 +44,6 @@ export function LessonWizard({
   // State Upload PDF
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [pdfTitle, setPdfTitle] = useState("");
-  const [pdfNotes, setPdfNotes] = useState("");
   const [cardCount, setCardCount] = useState<number>(6);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -111,7 +110,6 @@ export function LessonWizard({
         "topic",
         pdfTitle.trim() || pdfFile.name.replace(/\.pdf$/i, "")
       );
-      formData.append("teacherNotes", pdfNotes.trim());
       formData.append("cardCount", String(cardCount));
       formData.append("level", "sdlb");
 
@@ -146,14 +144,14 @@ export function LessonWizard({
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       {errorMessage && (
         <StatusMessage type="galat">{errorMessage}</StatusMessage>
       )}
 
-      {/* Pilihan 2 Mode Utama: Buat Manual & Upload PDF */}
+      {/* Pilihan 2 Mode Utama: Buat Manual & Upload PDF (Ringkas & Bersih) */}
       <div
-        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+        className="grid grid-cols-2 gap-3"
         role="radiogroup"
         aria-label="Pilih cara membuat materi"
       >
@@ -165,27 +163,22 @@ export function LessonWizard({
             setMode("manual");
             setErrorMessage(null);
           }}
-          className={`text-left p-5 rounded-[var(--r-kartu)] border-2 transition-all cursor-pointer flex flex-col gap-3 ${
+          className={`flex items-center gap-3 p-3.5 sm:p-4 rounded-[var(--r-kartu)] border-2 text-left transition-all cursor-pointer ${
             mode === "manual"
-              ? "border-[var(--primary)] bg-[var(--accent-subtle)] shadow-sm"
+              ? "border-[var(--primary)] bg-[var(--accent-subtle)]"
               : "border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-2)]"
           }`}
         >
-          <div className="flex items-center justify-between">
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--primary)] text-[var(--on-primary)]">
-              <Icon name="NotePencil" size={26} />
+          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--primary)] text-[var(--on-primary)]">
+            <Icon name="NotePencil" size={20} />
+          </span>
+          <div className="min-w-0">
+            <span className="block font-bold text-sm sm:text-base text-[var(--ink)]">
+              Buat Manual
             </span>
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[var(--surface-2)] text-[var(--ink-2)] border border-[var(--border)]">
-              Opsi 1
+            <span className="hidden sm:block text-xs text-[var(--ink-2)] truncate">
+              Susun kartu &amp; kuis sendiri
             </span>
-          </div>
-          <div>
-            <h3 className="text-lg font-bold text-[var(--ink)]">
-              1. Buat Manual
-            </h3>
-            <p className="text-sm text-[var(--ink-2)] mt-1">
-              Tulis judul, susun kartu belajar, gambar piktogram, suara, dan soal kuis sendiri.
-            </p>
           </div>
         </button>
 
@@ -197,220 +190,175 @@ export function LessonWizard({
             setMode("pdf");
             setErrorMessage(null);
           }}
-          className={`text-left p-5 rounded-[var(--r-kartu)] border-2 transition-all cursor-pointer flex flex-col gap-3 ${
+          className={`flex items-center gap-3 p-3.5 sm:p-4 rounded-[var(--r-kartu)] border-2 text-left transition-all cursor-pointer ${
             mode === "pdf"
-              ? "border-[var(--primary)] bg-[var(--accent-subtle)] shadow-sm"
+              ? "border-[var(--primary)] bg-[var(--accent-subtle)]"
               : "border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-2)]"
           }`}
         >
-          <div className="flex items-center justify-between">
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[#0284C7] text-white">
-              <Icon name="FilePdf" size={26} />
+          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#0284C7] text-white">
+            <Icon name="FilePdf" size={20} />
+          </span>
+          <div className="min-w-0">
+            <span className="block font-bold text-sm sm:text-base text-[var(--ink)]">
+              Upload PDF
             </span>
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[var(--surface-2)] text-[var(--ink-2)] border border-[var(--border)]">
-              Opsi 2
+            <span className="hidden sm:block text-xs text-[var(--ink-2)] truncate">
+              Ekstrak otomatis dari file PDF
             </span>
-          </div>
-          <div>
-            <h3 className="text-lg font-bold text-[var(--ink)]">
-              2. Upload PDF
-            </h3>
-            <p className="text-sm text-[var(--ink-2)] mt-1">
-              Unggah dokumen PDF modul/LKS untuk diubah menjadi kartu belajar adaptif &amp; kuis.
-            </p>
           </div>
         </button>
       </div>
 
       {/* Form 1: Buat Manual */}
       {mode === "manual" && (
-        <Card>
+        <Card className="p-5 sm:p-6">
           <form onSubmit={handleManualSubmit} className="flex flex-col gap-5">
-          <div>
-            <h3 className="text-lg font-bold text-[var(--ink)]">
-              Detail Materi Manual
-            </h3>
-            <p className="text-sm text-[var(--ink-2)]">
-              Isi judul materi, lalu lanjutkan ke editor kartu dan kuis.
-            </p>
-          </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Field
+                id="manual-lesson-title"
+                label="Judul Materi"
+                placeholder="Contoh: Mengenal Anggota Tubuh"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
 
-          <Field
-            id="manual-lesson-title"
-            label="Judul Materi"
-            placeholder="Contoh: Mengenal Anggota Tubuh"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-
-          <div className="flex flex-col gap-1.5">
-            <label
-              htmlFor="manual-lesson-topic"
-              className="font-bold text-sm text-[var(--ink)]"
-            >
-              Ringkasan / Topik (Opsional)
-            </label>
-            <textarea
-              id="manual-lesson-topic"
-              rows={3}
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
-              placeholder="Contoh: Mengenalkan mata, telinga, hidung, dan tangan untuk siswa SDLB."
-              className="w-full p-3.5 rounded-[var(--r-input)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] text-base"
-            />
-          </div>
-
-          {classrooms.length > 0 && (
-            <div className="flex flex-col gap-2">
-              <span className="font-bold text-sm text-[var(--ink)]">
-                Terbitkan Langsung ke Kelas (Opsional)
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {classrooms.map((c) => {
-                  const isSelected = selectedClassrooms.includes(c.id);
-                  return (
-                    <Chip
-                      key={c.id}
-                      label={`${c.name} (${c.joinCode})`}
-                      selected={isSelected}
-                      onSelect={() =>
-                        setSelectedClassrooms((prev) =>
-                          isSelected
-                            ? prev.filter((id) => id !== c.id)
-                            : [...prev, c.id]
-                        )
-                      }
-                      role="checkbox"
-                    />
-                  );
-                })}
-              </div>
+              <Field
+                id="manual-lesson-topic"
+                label="Topik Singkat (Opsional)"
+                placeholder="Contoh: Kebersihan Diri"
+                value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+              />
             </div>
-          )}
 
-          <div className="flex justify-end pt-3 border-t border-[var(--border)]">
-            <Button
-              type="submit"
-              variant="primary"
-              size="large"
-              loading={isSubmitting}
-              icon={<Icon name="CaretRight" size={20} />}
-              iconPosition="right"
-            >
-              {isSubmitting ? "Menyimpan..." : "Buat & Lanjut Sunting"}
-            </Button>
-          </div>
+            {classrooms.length > 0 && (
+              <div className="flex flex-col gap-2">
+                <span className="font-bold text-sm text-[var(--ink)]">
+                  Bagikan ke Kelas (Opsional)
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {classrooms.map((c) => {
+                    const isSelected = selectedClassrooms.includes(c.id);
+                    return (
+                      <Chip
+                        key={c.id}
+                        label={`${c.name} (${c.joinCode})`}
+                        selected={isSelected}
+                        onSelect={() =>
+                          setSelectedClassrooms((prev) =>
+                            isSelected
+                              ? prev.filter((id) => id !== c.id)
+                              : [...prev, c.id]
+                          )
+                        }
+                        role="checkbox"
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-end pt-3 border-t border-[var(--border)]">
+              <Button
+                type="submit"
+                variant="primary"
+                size="normal"
+                loading={isSubmitting}
+                icon={<Icon name="CaretRight" size={18} />}
+                iconPosition="right"
+              >
+                {isSubmitting ? "Menyimpan..." : "Buat & Lanjut Sunting"}
+              </Button>
+            </div>
           </form>
         </Card>
       )}
 
       {/* Form 2: Upload PDF */}
       {mode === "pdf" && (
-        <Card>
+        <Card className="p-5 sm:p-6">
           <form onSubmit={handlePdfSubmit} className="flex flex-col gap-5">
-          <div>
-            <h3 className="text-lg font-bold text-[var(--ink)]">
-              Unggah Dokumen PDF
-            </h3>
-            <p className="text-sm text-[var(--ink-2)]">
-              Sistem akan mengekstrak isi PDF menjadi kartu belajar dan latihan soal.
-            </p>
-          </div>
-
-          <label
-            htmlFor="pdf-file-input"
-            className="flex flex-col items-center justify-center gap-2 p-6 rounded-2xl border-2 border-dashed border-[var(--border-strong)] bg-[var(--surface-2)] hover:border-[var(--primary)] cursor-pointer text-center transition-colors"
-          >
-            <Icon name="UploadSimple" size={32} className="text-[var(--primary)]" />
-            {pdfFile ? (
-              <div>
-                <p className="font-bold text-base text-[var(--ink)]">
-                  {pdfFile.name}
-                </p>
-                <p className="text-xs text-[var(--muted)] mt-0.5">
-                  {(pdfFile.size / 1024).toFixed(0)} KB &bull; Klik untuk ganti file
-                </p>
-              </div>
-            ) : (
-              <div>
-                <p className="font-bold text-base text-[var(--ink)]">
-                  Pilih file PDF dari perangkat
-                </p>
-                <p className="text-xs text-[var(--muted)] mt-0.5">
-                  Format .pdf (modul ajar, LKS, atau bacaan siswa)
-                </p>
-              </div>
-            )}
-            <input
-              id="pdf-file-input"
-              type="file"
-              accept=".pdf,application/pdf"
-              className="sr-only"
-              onChange={(e) => {
-                const file = e.target.files?.[0] ?? null;
-                setPdfFile(file);
-                if (file && !pdfTitle) {
-                  setPdfTitle(file.name.replace(/\.pdf$/i, ""));
-                }
-              }}
-            />
-          </label>
-
-          <Field
-            id="pdf-lesson-title"
-            label="Judul Materi (Opsional)"
-            placeholder="Otomatis dari nama file PDF jika dikosongkan"
-            value={pdfTitle}
-            onChange={(e) => setPdfTitle(e.target.value)}
-          />
-
-          <div className="flex flex-col gap-2">
-            <span className="font-bold text-sm text-[var(--ink)]">
-              Target Jumlah Kartu
-            </span>
-            <div className="flex gap-2">
-              {[5, 6, 8, 12].map((num) => (
-                <Chip
-                  key={num}
-                  label={`${num} Kartu`}
-                  selected={cardCount === num}
-                  onSelect={() => setCardCount(num)}
-                  role="radio"
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-1.5">
             <label
-              htmlFor="pdf-teacher-notes"
-              className="font-bold text-sm text-[var(--ink)]"
+              htmlFor="pdf-file-input"
+              className="flex flex-col items-center justify-center gap-2 p-6 rounded-2xl border-2 border-dashed border-[var(--border-strong)] bg-[var(--surface-2)] hover:border-[var(--primary)] cursor-pointer text-center transition-colors"
             >
-              Catatan Fokus untuk Penyusunan (Opsional)
+              <Icon name="UploadSimple" size={30} className="text-[var(--primary)]" />
+              {pdfFile ? (
+                <div>
+                  <p className="font-bold text-base text-[var(--ink)]">
+                    {pdfFile.name}
+                  </p>
+                  <p className="text-xs text-[var(--muted)] mt-0.5">
+                    {(pdfFile.size / 1024).toFixed(0)} KB &bull; Klik untuk ganti file
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p className="font-bold text-base text-[var(--ink)]">
+                    Pilih file PDF dari perangkat
+                  </p>
+                  <p className="text-xs text-[var(--muted)] mt-0.5">
+                    Format .pdf (modul ajar, LKS, atau bacaan siswa)
+                  </p>
+                </div>
+              )}
+              <input
+                id="pdf-file-input"
+                type="file"
+                accept=".pdf,application/pdf"
+                className="sr-only"
+                onChange={(e) => {
+                  const file = e.target.files?.[0] ?? null;
+                  setPdfFile(file);
+                  if (file && !pdfTitle) {
+                    setPdfTitle(file.name.replace(/\.pdf$/i, ""));
+                  }
+                }}
+              />
             </label>
-            <textarea
-              id="pdf-teacher-notes"
-              rows={2}
-              value={pdfNotes}
-              onChange={(e) => setPdfNotes(e.target.value)}
-              placeholder="Contoh: Fokuskan pada kosakata sederhana untuk siswa tunarungu."
-              className="w-full p-3.5 rounded-[var(--r-input)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] text-base"
-            />
-          </div>
 
-          <div className="flex justify-end pt-3 border-t border-[var(--border)]">
-            <Button
-              type="submit"
-              variant="primary"
-              size="large"
-              loading={isSubmitting}
-              disabled={!pdfFile}
-              icon={<Icon name="Sparkle" size={20} />}
-            >
-              {isSubmitting ? "Memproses PDF..." : "Proses PDF & Buat Materi"}
-            </Button>
-          </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+              <Field
+                id="pdf-lesson-title"
+                label="Judul Materi (Opsional)"
+                placeholder="Otomatis dari nama file PDF"
+                value={pdfTitle}
+                onChange={(e) => setPdfTitle(e.target.value)}
+              />
+
+              <div className="flex flex-col gap-2">
+                <span className="font-bold text-sm text-[var(--ink)]">
+                  Jumlah Kartu
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {[5, 6, 8, 12].map((num) => (
+                    <Chip
+                      key={num}
+                      label={`${num} Kartu`}
+                      selected={cardCount === num}
+                      onSelect={() => setCardCount(num)}
+                      role="radio"
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end pt-3 border-t border-[var(--border)]">
+              <Button
+                type="submit"
+                variant="primary"
+                size="normal"
+                loading={isSubmitting}
+                disabled={!pdfFile}
+                icon={<Icon name="Sparkle" size={18} />}
+              >
+                {isSubmitting ? "Memproses PDF..." : "Proses PDF & Buat Materi"}
+              </Button>
+            </div>
           </form>
         </Card>
       )}

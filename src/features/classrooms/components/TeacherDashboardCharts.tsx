@@ -21,10 +21,10 @@ export function TeacherDashboardCharts({
   needsDistribution,
   totalStudents,
 }: TeacherDashboardChartsProps) {
-  const donutSize = 200;
+  const donutSize = 172;
   const center = donutSize / 2;
-  const radius = 72;
-  const strokeWidth = 28;
+  const radius = 62;
+  const strokeWidth = 24;
   const circumference = 2 * Math.PI * radius;
 
   // Hitung segmen donut SVG
@@ -53,19 +53,14 @@ export function TeacherDashboardCharts({
       className="grid grid-cols-1 lg:grid-cols-12 gap-6"
     >
       {/* 1. Ringkasan Hasil Belajar & Ketuntasan */}
-      <Card className="lg:col-span-7 flex flex-col gap-5 p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <div>
-            <h2 className="text-xl font-bold text-[var(--ink)]">
-              Ringkasan Hasil Belajar &amp; Ketuntasan
-            </h2>
-            <p className="text-sm text-[var(--ink-2)] mt-0.5">
-              Persentase penyelesaian materi per ruang kelas aktif
-            </p>
-          </div>
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-[var(--surface-2)] text-[var(--ink-2)] border border-[var(--border)] self-start sm:self-auto">
-            {classrooms.length} Kelas
-          </span>
+      <Card className="lg:col-span-7 flex flex-col gap-5 p-6 min-w-0">
+        <div>
+          <h2 className="text-xl font-bold text-[var(--ink)]">
+            Ringkasan Hasil Belajar &amp; Ketuntasan
+          </h2>
+          <p className="text-sm text-[var(--ink-2)] mt-0.5">
+            Persentase penyelesaian materi per ruang kelas aktif
+          </p>
         </div>
 
         {classrooms.length === 0 ? (
@@ -132,7 +127,7 @@ export function TeacherDashboardCharts({
       </Card>
 
       {/* 2. Sebaran Profil Kebutuhan Siswa SLB */}
-      <Card className="lg:col-span-5 flex flex-col gap-5 p-6">
+      <Card className="lg:col-span-5 flex flex-col gap-5 p-6 min-w-0 overflow-hidden">
         <div>
           <h2 className="text-xl font-bold text-[var(--ink)]">
             Sebaran Profil Kebutuhan Siswa SLB
@@ -142,7 +137,7 @@ export function TeacherDashboardCharts({
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-center gap-6 flex-1 justify-center">
+        <div className="flex flex-col sm:flex-row lg:flex-col 2xl:flex-row items-center gap-5 flex-1 justify-center min-w-0">
           <div className="relative shrink-0">
             <svg
               width={donutSize}
@@ -204,11 +199,11 @@ export function TeacherDashboardCharts({
             </svg>
           </div>
 
-          <ul className="w-full flex flex-col gap-3" aria-label="Rincian profil kebutuhan siswa">
+          <ul className="w-full min-w-0 flex-1 flex flex-col gap-2.5" aria-label="Rincian profil kebutuhan siswa">
             {needsDistribution.map((item) => (
               <li
                 key={item.key}
-                className="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-[var(--surface-2)] border border-[var(--border)]"
+                className="flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-[var(--surface-2)] border border-[var(--border)] min-w-0"
               >
                 <div className="flex items-center gap-2.5 min-w-0">
                   <span

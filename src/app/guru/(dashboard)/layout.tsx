@@ -56,9 +56,11 @@ export default async function TeacherLayout({
         <TeacherSidebar />
         <main
           id="main-content"
-          className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-5xl overflow-y-auto pb-24 md:pb-8"
+          className="flex-1 min-w-0 w-full p-5 sm:p-7 lg:p-10 overflow-y-auto pb-24 md:pb-10"
         >
-          {children}
+          <div className="mx-auto w-full max-w-7xl">
+            {children}
+          </div>
         </main>
       </div>
 

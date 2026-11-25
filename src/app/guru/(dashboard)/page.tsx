@@ -3,7 +3,6 @@ import {
   getTeacherDashboardOverview,
   TeacherDashboardCharts,
 } from "@/features/classrooms";
-import { CreateLessonButton } from "@/features/authoring";
 import { Card, Button, Icon } from "@/shared/ui";
 
 export const instant = false;
@@ -14,12 +13,6 @@ export default async function TeacherDashboardPage() {
 
   const overview = await getTeacherDashboardOverview(session.teacher.id);
   const { classrooms, kpis, needsDistribution } = overview;
-
-  const classroomOptions = classrooms.map((c) => ({
-    id: c.id,
-    name: c.name,
-    joinCode: c.joinCode,
-  }));
 
   return (
     <div className="flex flex-col gap-8">
@@ -34,13 +27,7 @@ export default async function TeacherDashboardPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          <CreateLessonButton
-            classrooms={classroomOptions}
-            label="Buat Materi"
-            variant="secondary"
-            size="normal"
-          />
+        <div className="flex flex-wrap items-center gap-3 shrink-0">
           <Button
             variant="primary"
             size="normal"

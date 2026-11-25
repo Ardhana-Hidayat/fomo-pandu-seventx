@@ -457,22 +457,22 @@ export async function getLessonWithContent(
       return err(makeAppError("NOT_FOUND", "Materi tidak ditemukan"));
     }
 
-    const rawCards = await db
-      .select()
-      .from(lessonCards)
-      .where(eq(lessonCards.lessonId, lesson.id))
-      .orderBy(asc(lessonCards.position));
-
-    const rawQuestions = await db
-      .select()
-      .from(quizQuestions)
-      .where(eq(quizQuestions.lessonId, lesson.id))
-      .orderBy(asc(quizQuestions.position));
-
-    const pubList = await db
-      .select()
-      .from(publications)
-      .where(eq(publications.lessonId, lesson.id));
+    const [rawCards, rawQuestions, pubList] = await Promise.all([
+      db
+        .select()
+        .from(lessonCards)
+        .where(eq(lessonCards.lessonId, lesson.id))
+        .orderBy(asc(lessonCards.position)),
+      db
+        .select()
+        .from(quizQuestions)
+        .where(eq(quizQuestions.lessonId, lesson.id))
+        .orderBy(asc(quizQuestions.position)),
+      db
+        .select()
+        .from(publications)
+        .where(eq(publications.lessonId, lesson.id)),
+    ]);
 
     const cards = await enrichCardsWithMedia(rawCards);
     const questions = enrichQuestionsWithMedia(rawQuestions, cards);
@@ -507,18 +507,27 @@ export async function getLessonForStudent(
       return err(makeAppError("FORBIDDEN", "Siswa tidak valid"));
     }
 
-    const pub = await db
-      .select({ id: publications.id })
-      .from(publications)
-      .where(
-        and(
-          eq(publications.lessonId, lessonId),
-          eq(publications.classroomId, student.classroomId),
-          eq(publications.visible, true)
+    const [pub, lessonRows] = await Promise.all([
+      db
+        .select({ id: publications.id })
+        .from(publications)
+        .where(
+          and(
+            eq(publications.lessonId, lessonId),
+            eq(publications.classroomId, student.classroomId),
+            eq(publications.visible, true)
+          )
         )
-      )
-      .limit(1)
-      .then((rows) => rows[0]);
+        .limit(1)
+        .then((rows) => rows[0]),
+      db
+        .select()
+        .from(lessons)
+        .where(
+          and(eq(lessons.id, lessonId), eq(lessons.status, "published"))
+        )
+        .limit(1),
+    ]);
 
     if (!pub) {
       return err(
@@ -526,35 +535,27 @@ export async function getLessonForStudent(
       );
     }
 
-    const lessonRows = await db
-      .select()
-      .from(lessons)
-      .where(
-        and(eq(lessons.id, lessonId), eq(lessons.status, "published"))
-      )
-      .limit(1);
-
     const lesson = lessonRows[0];
     if (!lesson) {
       return err(makeAppError("NOT_FOUND", "Materi tidak ditemukan"));
     }
 
-    const rawCards = await db
-      .select()
-      .from(lessonCards)
-      .where(eq(lessonCards.lessonId, lesson.id))
-      .orderBy(asc(lessonCards.position));
-
-    const rawQuestions = await db
-      .select()
-      .from(quizQuestions)
-      .where(eq(quizQuestions.lessonId, lesson.id))
-      .orderBy(asc(quizQuestions.position));
-
-    const pubList = await db
-      .select()
-      .from(publications)
-      .where(eq(publications.lessonId, lesson.id));
+    const [rawCards, rawQuestions, pubList] = await Promise.all([
+      db
+        .select()
+        .from(lessonCards)
+        .where(eq(lessonCards.lessonId, lesson.id))
+        .orderBy(asc(lessonCards.position)),
+      db
+        .select()
+        .from(quizQuestions)
+        .where(eq(quizQuestions.lessonId, lesson.id))
+        .orderBy(asc(quizQuestions.position)),
+      db
+        .select()
+        .from(publications)
+        .where(eq(publications.lessonId, lesson.id)),
+    ]);
 
     const cards = await enrichCardsWithMedia(rawCards);
     const questions = enrichQuestionsWithMedia(rawQuestions, cards);

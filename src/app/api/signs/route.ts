@@ -4,7 +4,14 @@ import { listSigns, verifySignItem } from "@/server/services/signs";
 export async function GET() {
   try {
     const items = await listSigns("SIBI");
-    return NextResponse.json({ success: true, items });
+    return NextResponse.json(
+      { success: true, items },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+        },
+      }
+    );
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Gagal memuat pustaka isyarat" },

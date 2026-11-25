@@ -27,18 +27,25 @@ export async function GET(request: Request) {
     const asset = picRes.data;
     const url = storage.url(asset.storageKey, "card-images");
 
-    return NextResponse.json({
-      success: true,
-      pictogram: {
-        id: asset.id,
-        storageKey: asset.storageKey,
-        url,
-        keyword: asset.keyword,
-        alt: asset.alt,
-        attribution: asset.attribution,
-        license: asset.license,
+    return NextResponse.json(
+      {
+        success: true,
+        pictogram: {
+          id: asset.id,
+          storageKey: asset.storageKey,
+          url,
+          keyword: asset.keyword,
+          alt: asset.alt,
+          attribution: asset.attribution,
+          license: asset.license,
+        },
       },
-    });
+      {
+        headers: {
+          "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+        },
+      }
+    );
   } catch (error) {
     return NextResponse.json(
       {

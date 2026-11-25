@@ -12,10 +12,17 @@ export async function GET(
 
     const resolved = await resolveSign(system, key, { allowDraft });
 
-    return NextResponse.json({
-      success: true,
-      item: resolved,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        item: resolved,
+      },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=300, stale-while-revalidate=3600",
+        },
+      }
+    );
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Gagal menyelesaikan isyarat" },

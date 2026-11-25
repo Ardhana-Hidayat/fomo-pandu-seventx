@@ -62,29 +62,34 @@ export async function listClassroomsWithStats(
     return [];
   }
 
-  const results: ClassroomSummary[] = [];
-
-  for (const c of teacherClassrooms) {
-    const studentCountRes = await db
-      .select({ count: sql<number>`count(*)::int` })
+  const classroomIds = teacherClassrooms.map((c) => c.id);
+  const [studentCounts, lessonCounts] = await Promise.all([
+    db
+      .select({
+        classroomId: students.classroomId,
+        count: sql<number>`count(*)::int`,
+      })
       .from(students)
-      .where(eq(students.classroomId, c.id))
-      .then((rows) => rows[0]?.count ?? 0);
-
-    const lessonCountRes = await db
-      .select({ count: sql<number>`count(*)::int` })
+      .where(inArray(students.classroomId, classroomIds))
+      .groupBy(students.classroomId),
+    db
+      .select({
+        classroomId: publications.classroomId,
+        count: sql<number>`count(*)::int`,
+      })
       .from(publications)
-      .where(eq(publications.classroomId, c.id))
-      .then((rows) => rows[0]?.count ?? 0);
+      .where(inArray(publications.classroomId, classroomIds))
+      .groupBy(publications.classroomId),
+  ]);
 
-    results.push({
-      ...c,
-      studentCount: studentCountRes,
-      lessonCount: lessonCountRes,
-    });
-  }
+  const studentCountMap = new Map(studentCounts.map((r) => [r.classroomId, r.count]));
+  const lessonCountMap = new Map(lessonCounts.map((r) => [r.classroomId, r.count]));
 
-  return results;
+  return teacherClassrooms.map((c) => ({
+    ...c,
+    studentCount: studentCountMap.get(c.id) ?? 0,
+    lessonCount: lessonCountMap.get(c.id) ?? 0,
+  }));
 }
 
 export async function getClassroomDetail(
@@ -133,17 +138,18 @@ export async function getClassroomDetail(
     return null;
   }
 
-  const classroomStudents = await db
-    .select()
-    .from(students)
-    .where(eq(students.classroomId, classroom.id))
-    .orderBy(students.displayName);
-
-  const pubs = await db
-    .select()
-    .from(publications)
-    .where(eq(publications.classroomId, classroom.id))
-    .innerJoin(lessons, eq(publications.lessonId, lessons.id));
+  const [classroomStudents, pubs] = await Promise.all([
+    db
+      .select()
+      .from(students)
+      .where(eq(students.classroomId, classroom.id))
+      .orderBy(students.displayName),
+    db
+      .select()
+      .from(publications)
+      .where(eq(publications.classroomId, classroom.id))
+      .innerJoin(lessons, eq(publications.lessonId, lessons.id)),
+  ]);
 
   const formattedPubs = pubs.map((row) => ({
     ...row.publications,
@@ -196,13 +202,14 @@ function normalizeNeedsCategory(
 export async function getTeacherDashboardOverview(
   teacherId: string
 ): Promise<TeacherDashboardOverview> {
-  const baseClassrooms = await listClassroomsWithStats(teacherId);
-
-  const publishedLessonsCount = await db
-    .select({ count: sql<number>`count(*)::int` })
-    .from(lessons)
-    .where(and(eq(lessons.teacherId, teacherId), eq(lessons.status, "published")))
-    .then((rows) => rows[0]?.count ?? 0);
+  const [baseClassrooms, publishedLessonsCount] = await Promise.all([
+    listClassroomsWithStats(teacherId),
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(lessons)
+      .where(and(eq(lessons.teacherId, teacherId), eq(lessons.status, "published")))
+      .then((rows) => rows[0]?.count ?? 0),
+  ]);
 
   if (baseClassrooms.length === 0) {
     return {
@@ -455,28 +462,29 @@ export async function getClassroomStudentAnalytics(
   classroomId: string,
   teacherId: string
 ): Promise<ClassroomStudentAnalytics | null> {
-  const classroom = await db
-    .select({ id: classrooms.id })
-    .from(classrooms)
-    .where(
-      and(
-        eq(classrooms.id, classroomId),
-        eq(classrooms.teacherId, teacherId),
-        isNull(classrooms.archivedAt)
+  const [classroom, classStudents] = await Promise.all([
+    db
+      .select({ id: classrooms.id })
+      .from(classrooms)
+      .where(
+        and(
+          eq(classrooms.id, classroomId),
+          eq(classrooms.teacherId, teacherId),
+          isNull(classrooms.archivedAt)
+        )
       )
-    )
-    .limit(1)
-    .then((rows) => rows[0]);
+      .limit(1)
+      .then((rows) => rows[0]),
+    db
+      .select()
+      .from(students)
+      .where(eq(students.classroomId, classroomId))
+      .orderBy(students.displayName),
+  ]);
 
   if (!classroom) {
     return null;
   }
-
-  const classStudents = await db
-    .select()
-    .from(students)
-    .where(eq(students.classroomId, classroomId))
-    .orderBy(students.displayName);
 
   const emptyCounts: Record<StudentEvaluationStatus, number> = {
     "Perlu Perhatian Lebih": 0,

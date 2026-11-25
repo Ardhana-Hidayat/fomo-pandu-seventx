@@ -1,15 +1,28 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { Card, Button, Chip, Field, Icon, type IconName, StatusMessage } from "@/shared/ui";
-import { approveAndPublishAction } from "../actions";
-import { PictogramModal } from "./PictogramModal";
-import { ImageUploader } from "./ImageUploader";
-import { AudioRecorder } from "./AudioRecorder";
-import { SignVoiceReviewPanel } from "./SignVoiceReviewPanel";
-import { updatePresentationAction } from "../actions";
+import { approveAndPublishAction, updatePresentationAction } from "../actions";
 import type { LessonWithContent } from "@/server/repos/lessons";
+
+const PictogramModal = dynamic(
+  () => import("./PictogramModal").then((m) => m.PictogramModal),
+  { ssr: false }
+);
+const ImageUploader = dynamic(
+  () => import("./ImageUploader").then((m) => m.ImageUploader),
+  { ssr: false }
+);
+const AudioRecorder = dynamic(
+  () => import("./AudioRecorder").then((m) => m.AudioRecorder),
+  { ssr: false }
+);
+const SignVoiceReviewPanel = dynamic(
+  () => import("./SignVoiceReviewPanel").then((m) => m.SignVoiceReviewPanel),
+  { ssr: false }
+);
 
 interface LessonEditorProps {
   lesson: LessonWithContent;
@@ -787,68 +800,74 @@ export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
       )}
 
       {/* MODAL PIKTOGRAM */}
-      <PictogramModal
-        isOpen={isPictoModalOpen}
-        onClose={() => {
-          setIsPictoModalOpen(false);
-          setActiveCardIndexForMedia(null);
-        }}
-        initialKeyword={
-          activeCardIndexForMedia !== null ? cards[activeCardIndexForMedia]?.text.slice(0, 10) : ""
-        }
-        onSelect={({ imageUrl, imageAlt }) => {
-          if (activeCardIndexForMedia !== null) {
-            setCards((prev) =>
-              prev.map((c, i) =>
-                i === activeCardIndexForMedia
-                  ? { ...c, imageUrl, imageAlt, imageSource: "piktogram" }
-                  : c
-              )
-            );
+      {isPictoModalOpen && (
+        <PictogramModal
+          isOpen={isPictoModalOpen}
+          onClose={() => {
+            setIsPictoModalOpen(false);
+            setActiveCardIndexForMedia(null);
+          }}
+          initialKeyword={
+            activeCardIndexForMedia !== null ? cards[activeCardIndexForMedia]?.text.slice(0, 10) : ""
           }
-        }}
-      />
+          onSelect={({ imageUrl, imageAlt }) => {
+            if (activeCardIndexForMedia !== null) {
+              setCards((prev) =>
+                prev.map((c, i) =>
+                  i === activeCardIndexForMedia
+                    ? { ...c, imageUrl, imageAlt, imageSource: "piktogram" }
+                    : c
+                )
+              );
+            }
+          }}
+        />
+      )}
 
       {/* MODAL UNGGAH FOTO */}
-      <ImageUploader
-        isOpen={isUploadModalOpen}
-        onClose={() => {
-          setIsUploadModalOpen(false);
-          setActiveCardIndexForMedia(null);
-        }}
-        onUploadComplete={({ imageUrl, imageAlt }) => {
-          if (activeCardIndexForMedia !== null) {
-            setCards((prev) =>
-              prev.map((c, i) =>
-                i === activeCardIndexForMedia
-                  ? { ...c, imageUrl, imageAlt, imageSource: "upload" }
-                  : c
-              )
-            );
-          }
-        }}
-      />
+      {isUploadModalOpen && (
+        <ImageUploader
+          isOpen={isUploadModalOpen}
+          onClose={() => {
+            setIsUploadModalOpen(false);
+            setActiveCardIndexForMedia(null);
+          }}
+          onUploadComplete={({ imageUrl, imageAlt }) => {
+            if (activeCardIndexForMedia !== null) {
+              setCards((prev) =>
+                prev.map((c, i) =>
+                  i === activeCardIndexForMedia
+                    ? { ...c, imageUrl, imageAlt, imageSource: "upload" }
+                    : c
+                )
+              );
+            }
+          }}
+        />
+      )}
 
       {/* MODAL REKAM AUDIO */}
-      <AudioRecorder
-        isOpen={isAudioModalOpen}
-        onClose={() => {
-          setIsAudioModalOpen(false);
-          setActiveCardIndexForMedia(null);
-        }}
-        cardText={activeCardIndexForMedia !== null ? cards[activeCardIndexForMedia]?.text ?? "" : ""}
-        onAudioSaved={(audioUrl) => {
-          if (activeCardIndexForMedia !== null) {
-            setCards((prev) =>
-              prev.map((c, i) =>
-                i === activeCardIndexForMedia
-                  ? { ...c, audioRef: audioUrl, audioSource: "recording" }
-                  : c
-              )
-            );
-          }
-        }}
-      />
+      {isAudioModalOpen && (
+        <AudioRecorder
+          isOpen={isAudioModalOpen}
+          onClose={() => {
+            setIsAudioModalOpen(false);
+            setActiveCardIndexForMedia(null);
+          }}
+          cardText={activeCardIndexForMedia !== null ? cards[activeCardIndexForMedia]?.text ?? "" : ""}
+          onAudioSaved={(audioUrl) => {
+            if (activeCardIndexForMedia !== null) {
+              setCards((prev) =>
+                prev.map((c, i) =>
+                  i === activeCardIndexForMedia
+                    ? { ...c, audioRef: audioUrl, audioSource: "recording" }
+                    : c
+                )
+              );
+            }
+          }}
+        />
+      )}
     </div>
   );
 }

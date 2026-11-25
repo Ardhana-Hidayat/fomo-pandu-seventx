@@ -1,5 +1,48 @@
-import type { ComponentType } from 'react';
-import * as PhosphorIcons from '@phosphor-icons/react';
+import {
+  type Icon as PhosphorIcon,
+  ArrowCounterClockwise,
+  ArrowsClockwise,
+  ArrowSquareOut,
+  Cards,
+  CaretLeft,
+  CaretRight,
+  Chalkboard,
+  ChartBar,
+  Check,
+  CheckCircle,
+  Copy,
+  DoorOpen,
+  FilePdf,
+  FileText,
+  GearSix,
+  Hand,
+  Hash,
+  Image,
+  Info,
+  Key,
+  Link,
+  ListChecks,
+  ListPlus,
+  Microphone,
+  NotePencil,
+  Pause,
+  Play,
+  Plus,
+  QrCode,
+  Question,
+  Sparkle,
+  SpeakerHigh,
+  SpeakerSlash,
+  Stop,
+  Television,
+  TextAa,
+  TextT,
+  Trash,
+  UploadSimple,
+  UsersThree,
+  Warning,
+  X,
+} from '@phosphor-icons/react';
 
 export type IconName =
   | 'DoorOpen'
@@ -53,6 +96,51 @@ export interface IconProps {
   color?: string;
 }
 
+const ICON_MAP: Record<IconName, PhosphorIcon> = {
+  DoorOpen,
+  Chalkboard,
+  NotePencil,
+  FileText,
+  ListPlus,
+  FilePdf,
+  Cards,
+  ListChecks,
+  TextAa,
+  SpeakerHigh,
+  SpeakerSlash,
+  Image,
+  Hand,
+  Play,
+  Pause,
+  ArrowCounterClockwise,
+  CaretLeft,
+  CaretRight,
+  Television,
+  Hash,
+  UsersThree,
+  ChartBar,
+  GearSix,
+  CheckCircle,
+  ArrowsClockwise,
+  Warning,
+  Copy,
+  Trash,
+  Question,
+  Check,
+  Microphone,
+  Stop,
+  UploadSimple,
+  Sparkle,
+  Info,
+  Plus,
+  TextT,
+  QrCode,
+  Link,
+  ArrowSquareOut,
+  Key,
+  X,
+};
+
 export function Icon({
   name,
   size = 28,
@@ -60,19 +148,7 @@ export function Icon({
   className = '',
   color,
 }: IconProps) {
-  const Component = (
-    PhosphorIcons as unknown as Record<
-      string,
-      ComponentType<{
-        size?: number | string;
-        weight?: string;
-        className?: string;
-        color?: string;
-        'aria-hidden'?: boolean | 'true' | 'false';
-        focusable?: boolean | 'true' | 'false';
-      }>
-    >
-  )[name];
+  const Component = ICON_MAP[name];
 
   if (!Component) {
     return null;

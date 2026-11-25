@@ -19,9 +19,9 @@ export default function HomePage() {
       {/* Konten Utama: Dua Pintu Seimbang */}
       <main
         id="main-content"
-        className="mx-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center px-4 py-12 sm:px-8"
+        className="mx-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12"
       >
-        <div className="w-full max-w-xl text-center mb-10">
+        <div className="w-full max-w-xl text-center mb-8 sm:mb-10">
           <h1 className="text-[1.75rem] font-bold leading-tight tracking-[-0.015em] text-[var(--ink)] sm:text-[2.25rem]">
             Papan Belajar Inklusif
           </h1>
@@ -30,9 +30,9 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="grid w-full max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="grid w-full max-w-3xl grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
           {/* Pintu Siswa */}
-          <Card as="section" className="flex flex-col justify-between gap-6">
+          <Card as="section" className="flex flex-col justify-between gap-5 sm:gap-6">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--accent-subtle)] text-[var(--primary)]">
@@ -88,16 +88,31 @@ export default function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-[var(--border)] bg-[var(--surface)] px-4 py-4 text-center text-sm text-[var(--muted)]">
-        <p>PANDU &bull; Dirancang untuk aksesibilitas dan kemandirian belajar SLB</p>
-        <div className="mt-2 flex items-center justify-center gap-6 text-xs font-semibold">
-          <Link href="/bantuan" className="text-[var(--link)] hover:underline inline-flex items-center gap-1">
-            <span>Pusat Bantuan</span>
-          </Link>
-          <span className="text-[var(--border-strong)]" aria-hidden="true">&bull;</span>
-          <Link href="/kredit" className="text-[var(--link)] hover:underline inline-flex items-center gap-1">
-            <span>Kredit &amp; Atribusi Aset Terbuka</span>
-          </Link>
+      <footer className="w-full border-t border-[var(--border)] bg-[var(--surface)] px-4 py-5 sm:px-6">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
+          <p className="text-sm leading-relaxed text-[var(--muted)]">
+            PANDU &bull; Dirancang untuk aksesibilitas dan kemandirian belajar SLB
+          </p>
+          <nav
+            aria-label="Tautan informasi"
+            className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold sm:justify-end"
+          >
+            <Link
+              href="/bantuan"
+              className="inline-flex min-h-[36px] items-center rounded-md px-2 py-1 text-[var(--link)] hover:underline"
+            >
+              Pusat Bantuan
+            </Link>
+            <span className="text-[var(--border-strong)]" aria-hidden="true">
+              &bull;
+            </span>
+            <Link
+              href="/kredit"
+              className="inline-flex min-h-[36px] items-center rounded-md px-2 py-1 text-[var(--link)] hover:underline"
+            >
+              Kredit &amp; Atribusi Aset Terbuka
+            </Link>
+          </nav>
         </div>
       </footer>
     </div>

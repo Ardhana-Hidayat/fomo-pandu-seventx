@@ -5,6 +5,7 @@ import {
   getClassroomDetail,
   getClassroomStudentAnalytics,
   StudentEvaluationPanel,
+  ShareClassroomButton,
 } from "@/features/classrooms";
 import { Card, Button, Icon } from "@/shared/ui";
 
@@ -50,6 +51,11 @@ export default async function ClassroomDetailPage({
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          <ShareClassroomButton
+            classroomName={classroom.name}
+            joinCode={classroom.joinCode}
+            signSystem={classroom.defaultSignSystem}
+          />
           <Button
             variant="secondary"
             size="normal"

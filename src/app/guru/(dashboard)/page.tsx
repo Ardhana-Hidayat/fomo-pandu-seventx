@@ -2,6 +2,7 @@ import { getCurrentTeacher } from "@/features/auth";
 import {
   getTeacherDashboardOverview,
   TeacherDashboardCharts,
+  ShareClassroomButton,
 } from "@/features/classrooms";
 import { Card, Button, Icon } from "@/shared/ui";
 
@@ -165,7 +166,7 @@ export default async function TeacherDashboardPage() {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3 pt-3 border-t border-[var(--border)]">
+                <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-[var(--border)]">
                   <Button
                     variant="primary"
                     size="normal"
@@ -175,6 +176,11 @@ export default async function TeacherDashboardPage() {
                   >
                     Buka kelas &amp; Analisis
                   </Button>
+                  <ShareClassroomButton
+                    classroomName={c.name}
+                    joinCode={c.joinCode}
+                    signSystem={c.defaultSignSystem}
+                  />
                   <Button
                     variant="secondary"
                     size="normal"

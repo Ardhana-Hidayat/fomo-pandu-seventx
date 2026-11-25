@@ -39,6 +39,10 @@ export type IconName =
   | 'Info'
   | 'Plus'
   | 'TextT'
+  | 'QrCode'
+  | 'Link'
+  | 'ArrowSquareOut'
+  | 'Key'
   | 'X';
 
 export interface IconProps {

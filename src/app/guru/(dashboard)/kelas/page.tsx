@@ -1,5 +1,8 @@
 import { getCurrentTeacher } from "@/features/auth";
-import { getTeacherDashboardOverview } from "@/features/classrooms";
+import {
+  getTeacherDashboardOverview,
+  ShareClassroomButton,
+} from "@/features/classrooms";
 import { Card, Button, Icon } from "@/shared/ui";
 
 export const instant = false;
@@ -126,7 +129,7 @@ export default async function GuruKelasIndexPage() {
               </div>
 
               {/* Tombol Aksi Seragam */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 border-t border-[var(--border)]">
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-4 border-t border-[var(--border)]">
                 <Button
                   variant="primary"
                   size="normal"
@@ -134,8 +137,14 @@ export default async function GuruKelasIndexPage() {
                   icon={<Icon name="ChartBar" size={18} />}
                   className="col-span-2 sm:col-span-1 w-full justify-center text-xs sm:text-sm px-2.5"
                 >
-                  Kelola &amp; Analisis
+                  Analisis
                 </Button>
+                <ShareClassroomButton
+                  classroomName={c.name}
+                  joinCode={c.joinCode}
+                  signSystem={c.defaultSignSystem}
+                  className="w-full justify-center text-xs sm:text-sm px-2.5"
+                />
                 <Button
                   variant="secondary"
                   size="normal"

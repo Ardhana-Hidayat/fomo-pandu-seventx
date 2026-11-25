@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { getCurrentStudent } from "@/features/auth";
 import { getClassroomByJoinCode } from "@/server/repos/classrooms";
 import { getLessonWithContent } from "@/server/repos/lessons";
+import { isLessonPublishedToClassroom } from "@/server/repos/publications";
 import { QuizRunner } from "@/features/quiz";
 
 export const instant = false;
@@ -21,6 +22,10 @@ export default async function StudentQuizPage({
     redirect(`/masuk?kode=${kode}`);
   }
 
+  // Verifikasi bahwa materi benar-benar diterbitkan aktif di kelas ini (Cegah kebocoran materi draf)
+  const isPublished = await isLessonPublishedToClassroom(id, classroom.id);
+  if (!isPublished) notFound();
+
   const lessonRes = await getLessonWithContent(classroom.teacherId, id);
   if (!lessonRes.ok) notFound();
 
@@ -31,6 +36,9 @@ export default async function StudentQuizPage({
       lessonTitle={lesson.title}
       questions={lesson.questions}
       classroomHref={`/kelas/${kode}`}
+      studentId={studentSession.student.id}
+      lessonId={lesson.id}
+      classroomId={classroom.id}
     />
   );
 }

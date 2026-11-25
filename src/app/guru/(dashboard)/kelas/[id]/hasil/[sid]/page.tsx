@@ -1,20 +1,18 @@
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
+import { eq, desc, inArray } from "drizzle-orm";
 import { getCurrentTeacher } from "@/features/auth";
 import { getClassroomDetail } from "@/features/classrooms";
 import { getStudentById } from "@/server/repos/students";
+import { db } from "@/server/db/client";
+import { sessions, questionAttempts, lessons } from "@/server/db/schema";
+import {
+  evaluateStudentLessonRecommendations,
+  getRecommendationsByStudent,
+} from "@/server/repos/recommendations";
 import { Card, Icon } from "@/shared/ui";
 
 export const instant = false;
-
-interface RecommendationItem {
-  id: string;
-  ruleCode: "R1" | "R2" | "R3" | "R4" | "R7";
-  priority: "Tinggi" | "Sedang";
-  title: string;
-  advice: string;
-  evidence: string;
-}
 
 export default async function StudentDetailPage({
   params,
@@ -34,33 +32,112 @@ export default async function StudentDetailPage({
   const { classroom } = classroomData;
   const student = studentRes.data;
 
-  // Evaluasi aturan rekomendasi deterministik sesuai 06-ANALISIS-DAN-REKOMENDASI.md
-  const recommendations: RecommendationItem[] = [
+  // 1. Ambil seluruh sesi dan materi yang dikerjakan siswa
+  const studentSessions = await db
+    .select({
+      id: sessions.id,
+      lessonId: sessions.lessonId,
+      lessonTitle: lessons.title,
+      startedAt: sessions.startedAt,
+      finishedAt: sessions.finishedAt,
+    })
+    .from(sessions)
+    .innerJoin(lessons, eq(sessions.lessonId, lessons.id))
+    .where(eq(sessions.studentId, sid))
+    .orderBy(desc(sessions.startedAt));
+
+  const sessionIds = studentSessions.map((s) => s.id);
+  const uniqueLessonIds = Array.from(new Set(studentSessions.map((s) => s.lessonId)));
+
+  // 2. Evaluasi rekomendasi untuk tiap materi yang dikerjakan
+  for (const lId of uniqueLessonIds) {
+    try {
+      await evaluateStudentLessonRecommendations(sid, lId);
+    } catch {
+      // Abaikan jika evaluasi parsial gagal
+    }
+  }
+
+  // Ambil rekomendasi hasil evaluasi sistem
+  const recsResult = await getRecommendationsByStudent(session.teacher.id, sid);
+  const recommendations = recsResult.ok ? recsResult.data : [];
+
+  // 3. Ambil seluruh attempts kuis siswa
+  const attempts =
+    sessionIds.length > 0
+      ? await db
+          .select()
+          .from(questionAttempts)
+          .where(inArray(questionAttempts.sessionId, sessionIds))
+          .orderBy(questionAttempts.createdAt)
+      : [];
+
+  // 4. Hitung metrik agregat
+  const firstTryAttempts = attempts.filter((a) => a.attemptNo === 1);
+  const firstTryCorrectCount = firstTryAttempts.filter((a) => a.isCorrect).length;
+  const hintsCount = attempts.filter((a) => a.hintUsed).length;
+
+  const totalEvaluatedQuestions = firstTryAttempts.length;
+  const firstTryAccuracy =
+    totalEvaluatedQuestions > 0
+      ? Math.round((firstTryCorrectCount / totalEvaluatedQuestions) * 100)
+      : null;
+
+  let masteryStatus = "Belum Ada Aktivitas";
+  let masteryClass = "text-[var(--muted)]";
+  if (firstTryAccuracy !== null) {
+    if (firstTryAccuracy >= 80) {
+      masteryStatus = "Menguasai Baik";
+      masteryClass = "text-emerald-700";
+    } else if (firstTryAccuracy >= 60) {
+      masteryStatus = "Berkembang Baik";
+      masteryClass = "text-blue-700";
+    } else {
+      masteryStatus = "Perlu Bimbingan";
+      masteryClass = "text-amber-700";
+    }
+  }
+
+  // 5. Kelompokkan riwayat per materi
+  const lessonSummaryMap = new Map<
+    string,
     {
-      id: "rec-r1",
-      ruleCode: "R1",
-      priority: "Tinggi",
-      title: "Penguatan Konsep dengan Benda Nyata",
-      advice: "Ulangi kata atau konsep materi dengan benda atau gambar nyata. Libatkan siswa menyentuh atau menirukan gerakan isyarat.",
-      evidence: "Dasar data: Tercatat 2 kali percobaan berulang sebelum menjawab tepat pada latihan kata kunci.",
-    },
-    {
-      id: "rec-r2",
-      ruleCode: "R2",
-      priority: "Tinggi",
-      title: "Penyederhanaan Pilihan Jawaban",
-      advice: "Siswa sering memanfaatkan petunjuk bantuan. Coba atur latihan dengan 2 pilihan jawaban atau perbesar gambar peraga.",
-      evidence: "Dasar data: Menggunakan tombol petunjuk pada lebih dari separuh latihan yang dikerjakan.",
-    },
-    {
-      id: "rec-r4",
-      ruleCode: "R4",
-      priority: "Sedang",
-      title: "Dukungan Waktu Tambahan",
-      advice: "Siswa memutar audio atau isyarat kartu beberapa kali sebelum menjawab dengan benar. Berikan waktu jeda lebih leluasa saat belajar mandiri.",
-      evidence: "Dasar data: Pemutaran audio diulang 3 kali pada materi kosakata pengenalan.",
-    },
-  ];
+      title: string;
+      firstTryCorrect: number;
+      totalQuestions: number;
+      hintsUsed: number;
+    }
+  >();
+
+  for (const s of studentSessions) {
+    if (!lessonSummaryMap.has(s.lessonId)) {
+      lessonSummaryMap.set(s.lessonId, {
+        title: s.lessonTitle,
+        firstTryCorrect: 0,
+        totalQuestions: 0,
+        hintsUsed: 0,
+      });
+    }
+  }
+
+  // Hitung attempt per materi
+  const sessionToLesson = new Map(studentSessions.map((s) => [s.id, s.lessonId]));
+  for (const a of attempts) {
+    const lId = sessionToLesson.get(a.sessionId);
+    if (!lId) continue;
+    const item = lessonSummaryMap.get(lId);
+    if (!item) continue;
+
+    if (a.attemptNo === 1) {
+      item.totalQuestions += 1;
+      if (a.isCorrect) item.firstTryCorrect += 1;
+    }
+    if (a.hintUsed) {
+      item.hintsUsed += 1;
+    }
+  }
+
+  const lessonSummaries = Array.from(lessonSummaryMap.values());
 
   return (
     <div className="flex flex-col gap-6 max-w-4xl">
@@ -93,20 +170,36 @@ export default async function StudentDetailPage({
       {/* Ringkasan Kemajuan */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <Card className="p-4 text-center">
-          <span className="text-xs font-bold text-[var(--muted)] uppercase block">Akurasi Pertama</span>
-          <span className="text-3xl font-mono font-black text-[var(--ink)] mt-1 block">75%</span>
+          <span className="text-xs font-bold text-[var(--muted)] uppercase block">
+            Akurasi Pertama
+          </span>
+          <span className="text-3xl font-mono font-black text-[var(--ink)] mt-1 block">
+            {firstTryAccuracy !== null ? `${firstTryAccuracy}%` : "-"}
+          </span>
         </Card>
         <Card className="p-4 text-center">
-          <span className="text-xs font-bold text-[var(--muted)] uppercase block">Soal Dikerjakan</span>
-          <span className="text-3xl font-mono font-black text-[var(--ink)] mt-1 block">12</span>
+          <span className="text-xs font-bold text-[var(--muted)] uppercase block">
+            Soal Dikerjakan
+          </span>
+          <span className="text-3xl font-mono font-black text-[var(--ink)] mt-1 block">
+            {totalEvaluatedQuestions}
+          </span>
         </Card>
         <Card className="p-4 text-center">
-          <span className="text-xs font-bold text-[var(--muted)] uppercase block">Petunjuk Dibuka</span>
-          <span className="text-3xl font-mono font-black text-[var(--ink)] mt-1 block">3x</span>
+          <span className="text-xs font-bold text-[var(--muted)] uppercase block">
+            Petunjuk Dibuka
+          </span>
+          <span className="text-3xl font-mono font-black text-[var(--ink)] mt-1 block">
+            {hintsCount}x
+          </span>
         </Card>
         <Card className="p-4 text-center">
-          <span className="text-xs font-bold text-[var(--muted)] uppercase block">Status Penguasaan</span>
-          <span className="text-base font-bold text-emerald-800 mt-2 block">Berkembang Baik</span>
+          <span className="text-xs font-bold text-[var(--muted)] uppercase block">
+            Status Penguasaan
+          </span>
+          <span className={`text-base font-bold mt-2 block ${masteryClass}`}>
+            {masteryStatus}
+          </span>
         </Card>
       </div>
 
@@ -121,69 +214,113 @@ export default async function StudentDetailPage({
           </p>
         </div>
 
-        <div className="flex flex-col gap-3">
-          {recommendations.map((rec) => {
-            const isHigh = rec.priority === "Tinggi";
-            return (
-              <Card key={rec.id} className="flex flex-col gap-3 p-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${
-                        isHigh
-                          ? "bg-amber-100 text-amber-900 border-amber-400"
-                          : "bg-blue-100 text-blue-900 border-blue-400"
-                      }`}
-                    >
-                      {rec.priority === "Tinggi" ? "Prioritas Tinggi" : "Prioritas Sedang"}
-                    </span>
-                    <span className="text-xs font-mono font-bold text-[var(--muted)]">
-                      Aturan {rec.ruleCode}
-                    </span>
+        {recommendations.length === 0 ? (
+          <Card className="p-6 text-center text-sm text-[var(--muted)]">
+            Belum ada rekomendasi khusus untuk saat ini. Siswa dapat melanjutkan pembelajaran dengan baik
+            atau data aktivitas masih terlalu sedikit untuk evaluasi.
+          </Card>
+        ) : (
+          <div className="flex flex-col gap-3">
+            {recommendations.map((rec) => {
+              const isHigh = rec.priority === "tinggi";
+              return (
+                <Card key={rec.id} className="flex flex-col gap-3 p-5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${
+                          isHigh
+                            ? "bg-amber-100 text-amber-900 border-amber-400"
+                            : "bg-blue-100 text-blue-900 border-blue-400"
+                        }`}
+                      >
+                        {isHigh ? "Prioritas Tinggi" : "Prioritas Sedang"}
+                      </span>
+                      <span className="text-xs font-mono font-bold text-[var(--muted)]">
+                        Aturan {rec.ruleId}
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                <h3 className="text-lg font-bold text-[var(--ink)]">{rec.title}</h3>
-                <p className="text-base text-[var(--ink)] leading-relaxed">{rec.advice}</p>
+                  <p className="text-base text-[var(--ink)] leading-relaxed font-medium">
+                    {rec.message}
+                  </p>
 
-                <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-2.5 text-xs text-[var(--muted)] font-mono">
-                  {rec.evidence}
-                </div>
-              </Card>
-            );
-          })}
-        </div>
+                  {rec.evidence && (
+                    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-2.5 text-xs text-[var(--muted)] font-mono">
+                      Dasar Data: {JSON.stringify(rec.evidence)}
+                    </div>
+                  )}
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* Rincian Riwayat Materi */}
       <section className="flex flex-col gap-3">
         <h2 className="text-xl font-bold text-[var(--ink)]">Riwayat Penguasaan Materi</h2>
-        <div className="overflow-x-auto rounded-[var(--r-kartu)] border-2 border-[var(--border)] bg-[var(--surface)]">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b-2 border-[var(--border)] bg-[var(--surface-2)]">
-                <th scope="col" className="p-4 font-bold text-sm text-[var(--ink)]">Materi</th>
-                <th scope="col" className="p-4 font-bold text-sm text-[var(--ink)]">Skor Pertama</th>
-                <th scope="col" className="p-4 font-bold text-sm text-[var(--ink)]">Petunjuk</th>
-                <th scope="col" className="p-4 font-bold text-sm text-[var(--ink)]">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-[var(--border)]">
-                <td className="p-4 font-bold text-base text-[var(--ink)]">Mengenal Hewan di Sekitar</td>
-                <td className="p-4 font-mono font-bold text-sm">80% (4/5)</td>
-                <td className="p-4 font-mono text-sm text-[var(--muted)]">1 kali</td>
-                <td className="p-4 text-sm font-bold text-emerald-800">Kuasai</td>
-              </tr>
-              <tr className="border-b border-[var(--border)]">
-                <td className="p-4 font-bold text-base text-[var(--ink)]">Kosakata Buah &amp; Warna</td>
-                <td className="p-4 font-mono font-bold text-sm">70% (7/10)</td>
-                <td className="p-4 font-mono text-sm text-[var(--muted)]">2 kali</td>
-                <td className="p-4 text-sm font-bold text-amber-800">Perlu Penguatan</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {lessonSummaries.length === 0 ? (
+          <Card className="p-6 text-center text-sm text-[var(--muted)]">
+            Siswa belum menyelesaikan atau memulai materi pembelajaran apapun.
+          </Card>
+        ) : (
+          <div className="overflow-x-auto rounded-[var(--r-kartu)] border-2 border-[var(--border)] bg-[var(--surface)]">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b-2 border-[var(--border)] bg-[var(--surface-2)]">
+                  <th scope="col" className="p-4 font-bold text-sm text-[var(--ink)]">
+                    Materi
+                  </th>
+                  <th scope="col" className="p-4 font-bold text-sm text-[var(--ink)]">
+                    Skor Pertama
+                  </th>
+                  <th scope="col" className="p-4 font-bold text-sm text-[var(--ink)]">
+                    Petunjuk
+                  </th>
+                  <th scope="col" className="p-4 font-bold text-sm text-[var(--ink)]">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {lessonSummaries.map((ls, idx) => {
+                  const rate =
+                    ls.totalQuestions > 0
+                      ? Math.round((ls.firstTryCorrect / ls.totalQuestions) * 100)
+                      : null;
+                  const isMastered = rate !== null && rate >= 70;
+
+                  return (
+                    <tr key={idx} className="border-b border-[var(--border)]">
+                      <td className="p-4 font-bold text-base text-[var(--ink)]">
+                        {ls.title}
+                      </td>
+                      <td className="p-4 font-mono font-bold text-sm">
+                        {rate !== null
+                          ? `${rate}% (${ls.firstTryCorrect}/${ls.totalQuestions})`
+                          : "-"}
+                      </td>
+                      <td className="p-4 font-mono text-sm text-[var(--muted)]">
+                        {ls.hintsUsed} kali
+                      </td>
+                      <td className="p-4 text-sm font-bold">
+                        {rate === null ? (
+                          <span className="text-[var(--muted)]">Belum Mengerjakan Soal</span>
+                        ) : isMastered ? (
+                          <span className="text-emerald-800">Kuasai</span>
+                        ) : (
+                          <span className="text-amber-800">Perlu Penguatan</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
     </div>
   );

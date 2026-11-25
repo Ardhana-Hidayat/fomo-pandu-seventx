@@ -149,7 +149,7 @@ export async function updatePresentationAction(
     return err(makeAppError("UNAUTHORIZED", "Sesi guru tidak valid."));
   }
 
-  const res = await updatePresentation(lessonId, patch);
+  const res = await updatePresentation(teacherSession.teacher.id, lessonId, patch);
   if (!res.ok) return res;
 
   revalidatePath(`/guru/materi/${lessonId}`);

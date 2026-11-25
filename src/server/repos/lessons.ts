@@ -596,9 +596,30 @@ export interface UpdateCardMediaInput {
 
 export async function updateCardMedia(
   cardId: string,
-  input: UpdateCardMediaInput
+  input: UpdateCardMediaInput,
+  teacherId?: string
 ): Promise<Result<LessonCard>> {
   try {
+    if (teacherId) {
+      const cardWithLesson = await db
+        .select({ id: lessonCards.id })
+        .from(lessonCards)
+        .innerJoin(lessons, eq(lessonCards.lessonId, lessons.id))
+        .where(
+          and(
+            eq(lessonCards.id, cardId),
+            eq(lessons.teacherId, teacherId)
+          )
+        )
+        .limit(1);
+
+      if (cardWithLesson.length === 0) {
+        return err(
+          makeAppError("FORBIDDEN", "Anda tidak berhak mengubah kartu materi ini")
+        );
+      }
+    }
+
     const updated = await db
       .update(lessonCards)
       .set(input)
@@ -662,6 +683,7 @@ export interface UpdatePresentationPatch {
 }
 
 export async function updatePresentation(
+  teacherId: string,
   lessonId: string,
   patch: UpdatePresentationPatch
 ): Promise<Result<Lesson>> {
@@ -672,11 +694,16 @@ export async function updatePresentation(
         ...patch,
         audioVersion: sql`${lessons.audioVersion} + 1`,
       })
-      .where(eq(lessons.id, lessonId))
+      .where(
+        and(
+          eq(lessons.id, lessonId),
+          eq(lessons.teacherId, teacherId)
+        )
+      )
       .returning();
 
     if (!updated) {
-      return err(makeAppError("NOT_FOUND", "Materi tidak ditemukan"));
+      return err(makeAppError("NOT_FOUND", "Materi tidak ditemukan atau bukan milik Anda"));
     }
     return ok(updated);
   } catch (error) {

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button, Card, Icon, StatusMessage, DisplayPreferencesTrigger } from "@/shared/ui";
 import { SignCard } from "@/features/player";
 import type { QuizQuestion } from "@/server/db/schema";
+import { submitQuizAnswerAction } from "../actions";
 
 interface QuizOption {
   id: string;
@@ -24,6 +25,9 @@ interface QuizRunnerProps {
   questions: QuizQuestion[];
   classroomHref: string;
   signSystem?: "SIBI" | "BISINDO";
+  studentId?: string;
+  lessonId?: string;
+  classroomId?: string;
 }
 
 export function QuizRunner({
@@ -31,6 +35,7 @@ export function QuizRunner({
   questions,
   classroomHref,
   signSystem = "SIBI",
+  lessonId,
 }: QuizRunnerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
@@ -83,9 +88,9 @@ export function QuizRunner({
         typeof opt.correct === "boolean"
           ? opt.correct
           : payload?.answer !== undefined
-          ? String(payload.answer).trim().toLowerCase() === text.trim().toLowerCase() ||
+            ? String(payload.answer).trim().toLowerCase() === text.trim().toLowerCase() ||
             String(payload.answer).trim().toLowerCase() === id.toLowerCase()
-          : idx === 0;
+            : idx === 0;
 
       return {
         id,
@@ -129,7 +134,19 @@ export function QuizRunner({
 
     setSelectedOptionId(opt.id);
     const prevAttempts = attemptsCount[currentIndex] ?? 0;
-    setAttemptsCount((prev) => ({ ...prev, [currentIndex]: prevAttempts + 1 }));
+    const attemptNo = prevAttempts + 1;
+    setAttemptsCount((prev) => ({ ...prev, [currentIndex]: attemptNo }));
+
+    if (lessonId && currentQ.id) {
+      submitQuizAnswerAction({
+        lessonId,
+        questionId: currentQ.id,
+        isCorrect: !!opt.correct,
+        attemptNo,
+        hintUsed: showHint,
+        chosen: { optionId: opt.id, text: opt.text },
+      }).catch(() => { });
+    }
 
     if (opt.correct) {
       setFeedback("benar");
@@ -147,7 +164,19 @@ export function QuizRunner({
     const correctAns = payload?.answer ?? true;
     const isCorrect = val === correctAns;
     const prevAttempts = attemptsCount[currentIndex] ?? 0;
-    setAttemptsCount((prev) => ({ ...prev, [currentIndex]: prevAttempts + 1 }));
+    const attemptNo = prevAttempts + 1;
+    setAttemptsCount((prev) => ({ ...prev, [currentIndex]: attemptNo }));
+
+    if (lessonId && currentQ.id) {
+      submitQuizAnswerAction({
+        lessonId,
+        questionId: currentQ.id,
+        isCorrect,
+        attemptNo,
+        hintUsed: showHint,
+        chosen: { value: val },
+      }).catch(() => { });
+    }
 
     if (isCorrect) {
       setFeedback("benar");
@@ -328,13 +357,12 @@ export function QuizRunner({
           {options.length > 0 && !isTrueFalse && !isOrder && (
             <div className="flex-1 min-h-0 flex flex-col justify-center my-2">
               <div
-                className={`grid gap-2 sm:gap-3 ${
-                  options.length === 2
-                    ? "grid-cols-2"
-                    : options.length === 3
+                className={`grid gap-2 sm:gap-3 ${options.length === 2
+                  ? "grid-cols-2"
+                  : options.length === 3
                     ? "grid-cols-1 sm:grid-cols-3"
                     : "grid-cols-2"
-                }`}
+                  }`}
               >
                 {options.map((opt) => {
                   const isSelected = selectedOptionId === opt.id;

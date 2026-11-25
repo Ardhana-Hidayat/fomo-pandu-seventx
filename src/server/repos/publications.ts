@@ -258,6 +258,31 @@ export async function getPublicationByShareCode(
   }
 }
 
+export async function isLessonPublishedToClassroom(
+  lessonId: string,
+  classroomId: string
+): Promise<boolean> {
+  try {
+    const pub = await db
+      .select({ id: publications.id })
+      .from(publications)
+      .innerJoin(lessons, eq(publications.lessonId, lessons.id))
+      .where(
+        and(
+          eq(publications.lessonId, lessonId),
+          eq(publications.classroomId, classroomId),
+          eq(publications.visible, true),
+          eq(lessons.status, "published")
+        )
+      )
+      .limit(1);
+
+    return pub.length > 0;
+  } catch {
+    return false;
+  }
+}
+
 export async function listPublishedLessonsByJoinCode(
   joinCode: string
 ): Promise<Result<PublicationWithLesson[]>> {

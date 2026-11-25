@@ -9,7 +9,7 @@ interface SignCardProps {
   activeLetter?: string;
   activeLetterIndex?: number;
   className?: string;
-  size?: "compact" | "normal" | "large" | "tv";
+  size?: "compact" | "normal" | "large" | "tv" | "match";
   completedWord?: string | null;
   motion?: boolean;
   onSelectLetter?: (letterIndex: number) => void;
@@ -33,6 +33,7 @@ export function SignCard({
   const isCompact = size === "compact";
   const isLarge = size === "large";
   const isTv = size === "tv";
+  const isMatch = size === "match";
 
   const isMoving = motion || currentLetter === "J" || currentLetter === "Z";
 
@@ -56,7 +57,11 @@ export function SignCard({
       {/* Kartu Isyarat Utama (1:1 Aspect Ratio) */}
       <div
         className={`relative flex flex-col items-center justify-center rounded-2xl border-2 border-[var(--border)] bg-[var(--surface)] overflow-hidden shadow-sm aspect-square text-center transition-all ${
-          isTv
+          isMatch
+            ? letters.length > 1
+              ? "flex-1 min-h-0 aspect-square p-2"
+              : "h-full aspect-square p-2"
+            : isTv
             ? "w-48 sm:w-64 p-4 border-4"
             : isLarge
             ? "w-36 sm:w-44 p-3"
@@ -68,7 +73,7 @@ export function SignCard({
         {/* Badge Sistem Isyarat (SIBI / BISINDO) */}
         <span
           className={`absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded font-mono font-extrabold border border-[var(--border)] bg-[var(--surface-2)] text-[var(--ink)] select-none z-10 ${
-            isTv ? "text-xs" : "text-[9px]"
+            isTv ? "text-xs" : isMatch ? "text-[10px]" : "text-[9px]"
           }`}
         >
           {system}
@@ -131,7 +136,9 @@ export function SignCard({
       {/* Pita Huruf (Letter Ribbon) */}
       {letters.length > 1 && (
         <div
-          className="flex items-center justify-center gap-1 mt-2 flex-wrap max-w-[280px] sm:max-w-xs"
+          className={`flex items-center justify-center gap-1.5 mt-2 flex-wrap shrink-0 ${
+            isMatch ? "w-full max-w-full" : "max-w-[280px] sm:max-w-xs"
+          }`}
           role="tablist"
           aria-label="Pita ejaan huruf isyarat"
         >
@@ -145,9 +152,9 @@ export function SignCard({
                 onClick={() => onSelectLetter?.(idx)}
                 aria-label={`Pilih huruf isyarat ${char}`}
                 aria-pressed={isActive}
-                className={`min-h-[32px] min-w-[32px] sm:min-h-[36px] sm:min-w-[36px] px-1.5 py-0.5 rounded-lg font-mono font-black text-xs sm:text-sm border-2 transition-all cursor-pointer ${
+                className={`min-h-[30px] min-w-[30px] sm:min-h-[36px] sm:min-w-[36px] px-1.5 py-0.5 rounded-lg font-mono font-black text-xs sm:text-sm border-2 transition-all cursor-pointer ${
                   isActive
-                    ? "bg-[var(--sorot)] text-[var(--on-sorot)] border-[var(--border-strong)] scale-110 shadow-sm"
+                    ? "bg-[var(--sorot)] text-[var(--on-sorot)] border-[var(--border-strong)] scale-105 shadow-sm"
                     : isPassed
                     ? "bg-[var(--sorot-lembut)] text-[var(--on-sorot)] border-[var(--border)]"
                     : "bg-[var(--surface)] text-[var(--ink)] border-[var(--border)] hover:bg-[var(--surface-2)]"

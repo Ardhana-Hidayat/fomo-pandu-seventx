@@ -395,7 +395,7 @@ export function CardPlayer({
           <div className="flex-1 min-h-0 w-full flex flex-row items-center justify-center gap-3 sm:gap-6 overflow-hidden py-1">
             {/* Kartu Gambar / Piktogram */}
             {currentCard.imageUrl ? (
-              <div className="h-full max-h-[140px] sm:max-h-[190px] md:max-h-[220px] aspect-square rounded-2xl border-2 border-[var(--border)] overflow-hidden bg-[var(--surface-2)] flex items-center justify-center p-1.5 shadow-xs shrink-0">
+              <div className="h-full max-h-[160px] sm:max-h-[220px] md:max-h-[260px] aspect-square rounded-2xl border-2 border-[var(--border)] overflow-hidden bg-[var(--surface-2)] flex items-center justify-center p-2 shadow-xs shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={currentCard.imageUrl}
@@ -404,7 +404,7 @@ export function CardPlayer({
                 />
               </div>
             ) : currentCard.imageAlt ? (
-              <div className="h-full max-h-[140px] sm:max-h-[190px] md:max-h-[220px] aspect-square rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-2 text-center shrink-0">
+              <div className="h-full max-h-[160px] sm:max-h-[220px] md:max-h-[260px] aspect-square rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-2 text-center shrink-0">
                 <Icon name="Image" size={30} className="text-[var(--muted)] mb-1" />
                 <span className="text-[11px] sm:text-xs font-bold text-[var(--ink)] line-clamp-3">
                   {currentCard.imageAlt}
@@ -414,14 +414,15 @@ export function CardPlayer({
 
             {/* Kartu Peraga Bahasa Isyarat (SIBI / BISINDO) */}
             {activeKeyTerm ? (
-              <div className="h-full max-h-[140px] sm:max-h-[190px] md:max-h-[220px] flex flex-col items-center justify-center shrink-0">
+              <div className="h-full max-h-[160px] sm:max-h-[220px] md:max-h-[260px] flex flex-col items-center justify-center shrink-0">
                 <SignCard
                   system={signSystem}
                   term={activeKeyTerm}
                   activeLetter={activeSignSlot?.ch}
                   activeLetterIndex={activeSignSlot?.letterIndex ?? 0}
                   completedWord={completedWordText}
-                  size="compact"
+                  size="match"
+                  className="h-full w-full"
                 />
               </div>
             ) : null}

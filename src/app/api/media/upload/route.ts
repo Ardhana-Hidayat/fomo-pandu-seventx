@@ -33,17 +33,25 @@ export async function POST(request: Request) {
       );
     }
 
-    // Ambil sesi guru jika ada
+    // 0. Autentikasi Guru (Mencegah upload anonim & penyalahgunaan kuota server)
     const cookieStore = await cookies();
     const teacherToken = cookieStore.get(TEACHER_COOKIE_NAME)?.value;
-    let teacherId: string | undefined;
-
-    if (teacherToken) {
-      const teacher = await getTeacherBySessionToken(teacherToken);
-      if (teacher) {
-        teacherId = teacher.id;
-      }
+    if (!teacherToken) {
+      return NextResponse.json(
+        { error: "Akses ditolak. Sesi guru tidak ditemukan." },
+        { status: 401 }
+      );
     }
+
+    const teacher = await getTeacherBySessionToken(teacherToken);
+    if (!teacher) {
+      return NextResponse.json(
+        { error: "Akses ditolak. Sesi guru tidak valid atau telah kedaluwarsa." },
+        { status: 401 }
+      );
+    }
+
+    const teacherId = teacher.id;
 
     const mimeType = file.type;
     const isAudio =
@@ -98,12 +106,22 @@ export async function POST(request: Request) {
 
       const asset = assetRes.data;
 
-      // Hubungkan kartu jika cardId tersedia
+      // Hubungkan kartu jika cardId tersedia (dengan verifikasi kepemilikan guru)
       if (cardId) {
-        await updateCardMedia(cardId, {
-          audioAssetId: asset.id,
-          audioSource: "recording",
-        });
+        const updateRes = await updateCardMedia(
+          cardId,
+          {
+            audioAssetId: asset.id,
+            audioSource: "recording",
+          },
+          teacherId
+        );
+        if (!updateRes.ok) {
+          return NextResponse.json(
+            { error: updateRes.error.message },
+            { status: 403 }
+          );
+        }
       }
 
       return NextResponse.json({
@@ -184,13 +202,23 @@ export async function POST(request: Request) {
 
     const asset = assetRes.data;
 
-    // Hubungkan kartu jika cardId tersedia
+    // Hubungkan kartu jika cardId tersedia (dengan verifikasi kepemilikan guru)
     if (cardId) {
-      await updateCardMedia(cardId, {
-        imageAssetId: asset.id,
-        imageAlt: alt,
-        imageSource: "upload",
-      });
+      const updateRes = await updateCardMedia(
+        cardId,
+        {
+          imageAssetId: asset.id,
+          imageAlt: alt,
+          imageSource: "upload",
+        },
+        teacherId
+      );
+      if (!updateRes.ok) {
+        return NextResponse.json(
+          { error: updateRes.error.message },
+          { status: 403 }
+        );
+      }
     }
 
     return NextResponse.json({

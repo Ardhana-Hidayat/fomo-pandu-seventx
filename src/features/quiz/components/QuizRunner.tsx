@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { Button, Card, Icon, StatusMessage, DisplayPreferencesTrigger } from "@/shared/ui";
 import { SignCard } from "@/features/player";
 import type { QuizQuestion } from "@/server/db/schema";
@@ -89,7 +88,7 @@ export function QuizRunner({
           ? opt.correct
           : payload?.answer !== undefined
             ? String(payload.answer).trim().toLowerCase() === text.trim().toLowerCase() ||
-            String(payload.answer).trim().toLowerCase() === id.toLowerCase()
+              String(payload.answer).trim().toLowerCase() === id.toLowerCase()
             : idx === 0;
 
       return {
@@ -123,8 +122,39 @@ export function QuizRunner({
 
   if (totalQuestions === 0) {
     return (
-      <div className="flex min-h-[100dvh] items-center justify-center p-8 text-center text-sm font-bold text-[var(--muted)]">
-        Materi ini belum memiliki latihan soal kuis.
+      <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
+        <header className="sticky top-0 z-20 h-16 shrink-0 border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
+          <div className="mx-auto flex h-full max-w-2xl items-center justify-between gap-3">
+            <Button
+              variant="secondary"
+              size="normal"
+              href={classroomHref}
+              icon={<Icon name="CaretLeft" size={18} />}
+            >
+              Keluar
+            </Button>
+            <DisplayPreferencesTrigger />
+          </div>
+        </header>
+        <main
+          id="main-content"
+          className="mx-auto flex w-full max-w-md flex-1 items-center justify-center p-4"
+        >
+          <Card className="w-full flex flex-col items-center gap-4 text-center">
+            <Icon name="ListChecks" size={40} className="text-[var(--muted)]" />
+            <p className="text-base font-bold text-[var(--ink)]">
+              Materi ini belum memiliki latihan soal kuis.
+            </p>
+            <Button
+              variant="primary"
+              size="large"
+              href={classroomHref}
+              className="w-full"
+            >
+              Kembali ke Kelas
+            </Button>
+          </Card>
+        </main>
       </div>
     );
   }
@@ -145,7 +175,7 @@ export function QuizRunner({
         attemptNo,
         hintUsed: showHint,
         chosen: { optionId: opt.id, text: opt.text },
-      }).catch(() => { });
+      }).catch(() => {});
     }
 
     if (opt.correct) {
@@ -161,6 +191,7 @@ export function QuizRunner({
   function handleTrueFalse(val: boolean) {
     if (feedback === "benar") return;
 
+    setSelectedOptionId(val ? "tf-true" : "tf-false");
     const correctAns = payload?.answer ?? true;
     const isCorrect = val === correctAns;
     const prevAttempts = attemptsCount[currentIndex] ?? 0;
@@ -175,7 +206,7 @@ export function QuizRunner({
         attemptNo,
         hintUsed: showHint,
         chosen: { value: val },
-      }).catch(() => { });
+      }).catch(() => {});
     }
 
     if (isCorrect) {
@@ -210,27 +241,30 @@ export function QuizRunner({
     }
   }
 
-  // Ringkasan Selesai (100dvh single-screen fit)
   if (isFinished) {
     return (
-      <div className="flex h-[100dvh] max-h-[100dvh] flex-col justify-between overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
-        <header className="shrink-0 h-14 border-b-2 border-[var(--border)] bg-[var(--surface)] px-4 flex items-center justify-between">
-          <span className="font-extrabold text-base text-[var(--ink)]">Hasil Latihan Kuis</span>
-          <DisplayPreferencesTrigger />
+      <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
+        <header className="sticky top-0 z-20 h-16 shrink-0 border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
+          <div className="mx-auto flex h-full max-w-2xl items-center justify-between gap-3">
+            <span className="font-bold text-base text-[var(--ink)]">Hasil Latihan Kuis</span>
+            <DisplayPreferencesTrigger />
+          </div>
         </header>
 
         <main
           id="main-content"
-          className="flex-1 min-h-0 mx-auto flex w-full max-w-md flex-col items-center justify-center p-4 text-center overflow-hidden"
+          className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center p-4 text-center"
         >
-          <Card className="w-full flex flex-col items-center gap-4 p-6 border-2 border-[var(--border)] shadow-md">
-            <div className="h-16 w-16 rounded-full bg-[var(--benar-bg)] border-2 border-[var(--benar-edge)] flex items-center justify-center text-[var(--benar-ink)]">
-              <Icon name="CheckCircle" size={40} />
+          <Card padding="large" className="w-full flex flex-col items-center gap-5 border border-[var(--border)] shadow-sm">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)]">
+              <Icon name="CheckCircle" size={36} />
             </div>
 
             <div>
-              <h1 className="text-2xl sm:text-3xl font-black text-[var(--ink)]">Latihan Selesai!</h1>
-              <p className="mt-2 text-sm sm:text-base text-[var(--ink-2)]">
+              <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)]">
+                Latihan Selesai!
+              </h1>
+              <p className="mt-2 text-sm sm:text-base text-[var(--ink-2)] leading-relaxed">
                 Kamu menjawab <strong>{firstTryCorrectCount} dari {totalQuestions}</strong> soal dengan tepat di percobaan pertama.
               </p>
             </div>
@@ -240,9 +274,9 @@ export function QuizRunner({
               size="large"
               href={classroomHref}
               icon={<Icon name="Chalkboard" size={20} />}
-              className="w-full min-h-[48px]"
+              className="w-full"
             >
-              Kembali ke Ruang Kelas
+              Kembali ke Kelas
             </Button>
           </Card>
         </main>
@@ -255,98 +289,125 @@ export function QuizRunner({
   const isTrueFalse = currentQ.type === "benar_salah";
   const signTargetWord =
     payload?.signWord ??
-    (payload as Record<string, unknown> | undefined)?.sign_word as string ??
+    ((payload as Record<string, unknown> | undefined)?.sign_word as string | undefined) ??
     currentQ.keyTerms?.[0] ??
     "";
 
+  const hasPromptSign = Array.isArray(currentQ.keyTerms) && currentQ.keyTerms.length > 0 && !isSignMatch;
+  const hasHint = Boolean(payload?.showTextHint || payload?.hint);
+  const progressPercent = Math.round(((currentIndex + 1) / totalQuestions) * 100);
+
   return (
-    <div className="flex h-[100dvh] max-h-[100dvh] flex-col justify-between overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
+    <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* 1. Header Kuis Kompak */}
-      <header className="shrink-0 h-14 border-b-2 border-[var(--border)] bg-[var(--surface)] px-3 sm:px-6 flex items-center justify-between z-20">
-        <Link
-          href={classroomHref}
-          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[var(--r-tombol)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] font-bold text-xs sm:text-sm px-2.5 hover:bg-[var(--surface-2)]"
-        >
-          <Icon name="CaretLeft" size={18} />
-          <span className="hidden sm:inline ml-1">Keluar</span>
-        </Link>
+      <header className="sticky top-0 z-20 h-16 shrink-0 border-b border-[var(--border)] bg-[var(--surface)] px-3 sm:px-6">
+        <div className="mx-auto flex h-full max-w-2xl items-center justify-between gap-3">
+          <Button
+            variant="secondary"
+            size="normal"
+            href={classroomHref}
+            icon={<Icon name="CaretLeft" size={18} />}
+            aria-label="Keluar dari kuis"
+            className="shrink-0"
+          >
+            <span className="hidden sm:inline">Keluar</span>
+          </Button>
 
-        <span className="font-extrabold text-sm sm:text-base text-[var(--ink)]">
-          Soal {currentIndex + 1} dari {totalQuestions}
-        </span>
+          <span className="min-w-0 truncate text-center text-sm sm:text-base font-bold text-[var(--ink)]">
+            {lessonTitle}
+          </span>
 
-        <DisplayPreferencesTrigger />
+          <DisplayPreferencesTrigger className="shrink-0" />
+        </div>
       </header>
 
-      {/* 2. Konten Soal (Strictly Single Screen Viewport Fit) */}
+      {/* 2. Konten Soal */}
       <main
         id="main-content"
-        className="flex-1 min-h-0 mx-auto flex w-full max-w-2xl flex-col justify-between px-3 py-2 sm:px-6 sm:py-3 overflow-hidden"
+        className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-3 py-4 sm:px-6 sm:py-6"
       >
-        <Card className="w-full flex-1 min-h-0 flex flex-col justify-between p-3 sm:p-5 border-2 border-[var(--border)] shadow-md overflow-hidden">
-          {/* Bagian Pertanyaan & Kontrol Suara/Isyarat */}
-          <div className="shrink-0 text-center flex flex-col items-center">
-            <span className="text-[11px] font-bold text-[var(--muted)] uppercase block mb-1">
-              {lessonTitle}
-            </span>
-            <div className="flex items-center justify-center gap-2">
-              <h2 className="text-lg sm:text-2xl font-black text-[var(--ink)] leading-snug">
-                {currentQ.prompt}
-              </h2>
-              <button
-                type="button"
-                onClick={speakPrompt}
-                aria-label="Dengar pertanyaan"
-                className="p-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] text-[var(--ink)] hover:bg-[var(--surface)] cursor-pointer"
+        <Card className="w-full flex flex-col gap-5 p-4 sm:p-6 border border-[var(--border)] shadow-sm">
+          {/* Baris Progres & Audio Pertanyaan */}
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-1 items-center gap-3 min-w-0">
+              <span className="shrink-0 rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1 text-xs sm:text-sm font-bold text-[var(--ink)]">
+                Soal {currentIndex + 1} dari {totalQuestions}
+              </span>
+              <div
+                role="progressbar"
+                aria-label="Progres kuis"
+                aria-valuenow={currentIndex + 1}
+                aria-valuemin={1}
+                aria-valuemax={totalQuestions}
+                className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--surface-2)]"
               >
-                <Icon name="SpeakerHigh" size={18} />
-              </button>
+                <div
+                  className="h-full rounded-full bg-[var(--primary)] transition-all duration-300"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
             </div>
 
-            {/* Isyarat Pertanyaan bila diaktifkan */}
-            {Array.isArray(currentQ.keyTerms) && currentQ.keyTerms.length > 0 && !isSignMatch && (
-              <div className="mt-1">
-                <button
-                  type="button"
-                  onClick={() => setShowPromptSign((prev) => !prev)}
-                  className="text-xs font-bold text-[var(--link)] hover:underline inline-flex items-center gap-1 cursor-pointer"
-                >
-                  <Icon name="Hand" size={14} />
-                  <span>{showPromptSign ? "Sembunyikan isyarat" : "Lihat isyarat pertanyaan"}</span>
-                </button>
-                {showPromptSign && (
-                  <div className="mt-2 flex justify-center">
-                    <SignCard term={currentQ.keyTerms[0]} system={signSystem} size="compact" />
-                  </div>
+            <Button
+              variant="secondary"
+              size="normal"
+              onClick={speakPrompt}
+              icon={<Icon name="SpeakerHigh" size={18} />}
+              aria-label="Dengar pertanyaan"
+              className="shrink-0"
+            >
+              <span className="hidden sm:inline">Dengar</span>
+            </Button>
+          </div>
+
+          {/* Pertanyaan & Tombol Bantu (Isyarat / Petunjuk) */}
+          <div className="flex flex-col items-center gap-3 text-center">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[var(--ink)] leading-snug max-w-[36ch]">
+              {currentQ.prompt}
+            </h2>
+
+            {(hasPromptSign || hasHint) && (
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                {hasPromptSign && (
+                  <Button
+                    variant="secondary"
+                    size="compact"
+                    onClick={() => setShowPromptSign((prev) => !prev)}
+                    icon={<Icon name="Hand" size={16} />}
+                  >
+                    {showPromptSign ? "Tutup isyarat" : "Lihat isyarat"}
+                  </Button>
+                )}
+                {hasHint && (
+                  <Button
+                    variant="secondary"
+                    size="compact"
+                    onClick={() => setShowHint((prev) => !prev)}
+                    icon={<Icon name="Info" size={16} />}
+                  >
+                    {showHint ? "Tutup petunjuk" : "Lihat petunjuk"}
+                  </Button>
                 )}
               </div>
             )}
 
-            {/* Petunjuk / Hint */}
-            {(payload?.showTextHint || payload?.hint) && (
-              <div className="mt-1">
-                {!showHint ? (
-                  <button
-                    type="button"
-                    onClick={() => setShowHint(true)}
-                    className="text-xs font-bold text-[var(--link)] hover:underline inline-flex items-center gap-1 cursor-pointer"
-                  >
-                    <Icon name="Info" size={14} />
-                    <span>Lihat petunjuk</span>
-                  </button>
-                ) : (
-                  <p className="text-xs text-[var(--ink-2)] bg-[var(--surface-2)] p-2 rounded-lg border border-[var(--border)] max-w-md mx-auto mt-1">
-                    {payload.hint || "Ingat kembali kata dan isyarat yang dipelajari pada kartu materi."}
-                  </p>
-                )}
+            {showPromptSign && hasPromptSign && (
+              <div className="mt-1 flex justify-center">
+                <SignCard term={currentQ.keyTerms![0]} system={signSystem} size="compact" />
               </div>
+            )}
+
+            {showHint && hasHint && (
+              <p className="w-full max-w-md rounded-[var(--r-kartu)] border border-[var(--info-edge)] bg-[var(--info-bg)] px-4 py-2.5 text-sm font-medium text-[var(--info-ink)]">
+                {payload?.hint || "Ingat kembali kata dan isyarat yang dipelajari pada kartu materi."}
+              </p>
             )}
           </div>
 
-          {/* Tipe Soal: cocokkan_isyarat (Mengeja Kata Sasaran) */}
+          {/* Tipe Soal: cocokkan_isyarat */}
           {isSignMatch && signTargetWord && (
-            <div className="flex-1 min-h-0 flex flex-col items-center justify-center py-1">
-              <span className="text-xs font-bold text-[var(--muted)] mb-1">
+            <div className="flex flex-col items-center justify-center gap-2 py-1">
+              <span className="text-xs sm:text-sm font-semibold text-[var(--ink-2)]">
                 Perhatikan ejaan isyarat kata berikut:
               </span>
               <SignCard term={signTargetWord} system={signSystem} size="compact" />
@@ -355,63 +416,84 @@ export function QuizRunner({
 
           {/* Pilihan Jawaban Biasa (2, 3, atau 4 Pilihan) */}
           {options.length > 0 && !isTrueFalse && !isOrder && (
-            <div className="flex-1 min-h-0 flex flex-col justify-center my-2">
-              <div
-                className={`grid gap-2 sm:gap-3 ${options.length === 2
+            <div
+              className={`grid gap-3 ${
+                options.length === 2
                   ? "grid-cols-2"
                   : options.length === 3
                     ? "grid-cols-1 sm:grid-cols-3"
-                    : "grid-cols-2"
-                  }`}
-              >
-                {options.map((opt) => {
-                  const isSelected = selectedOptionId === opt.id;
-                  let optStyle = "bg-[var(--surface)] border-[var(--border)] text-[var(--ink)]";
+                    : "grid-cols-1 sm:grid-cols-2"
+              }`}
+            >
+              {options.map((opt) => {
+                const isSelected = selectedOptionId === opt.id;
+                let optStyle =
+                  "bg-[var(--surface)] border-[var(--border-strong)] text-[var(--ink)] hover:bg-[var(--surface-2)]";
 
-                  if (isSelected && feedback === "benar") {
-                    optStyle = "bg-[var(--benar-bg)] border-[var(--benar-edge)] text-[var(--benar-ink)]";
-                  } else if (isSelected && feedback === "ulang") {
-                    optStyle = "bg-[var(--ulang-bg)] border-[var(--ulang-edge)] text-[var(--ulang-ink)]";
-                  }
+                if (isSelected && feedback === "benar") {
+                  optStyle =
+                    "bg-[var(--benar-bg)] border-[var(--benar-edge)] text-[var(--benar-ink)]";
+                } else if (isSelected && feedback === "ulang") {
+                  optStyle =
+                    "bg-[var(--ulang-bg)] border-[var(--ulang-edge)] text-[var(--ulang-ink)]";
+                }
 
-                  return (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      onClick={() => handleSelectOption(opt)}
-                      className={`flex flex-col items-center justify-center p-2.5 sm:p-3 min-h-[48px] rounded-xl border-2 font-bold text-sm sm:text-base cursor-pointer transition-all active:scale-98 shadow-xs ${optStyle}`}
-                    >
-                      {opt.imageUrl && (
-                        <div className="h-10 w-10 sm:h-12 sm:w-12 overflow-hidden rounded-md bg-[var(--surface-2)] flex items-center justify-center mb-1">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={opt.imageUrl} alt={opt.text} className="h-full w-full object-contain" />
-                        </div>
-                      )}
-                      <span>{opt.text}</span>
-                    </button>
-                  );
-                })}
-              </div>
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => handleSelectOption(opt)}
+                    className={`flex min-h-[60px] sm:min-h-[68px] w-full flex-col items-center justify-center gap-1.5 rounded-[var(--r-kartu)] border-2 px-4 py-3 text-center text-base font-bold cursor-pointer select-none transition-all duration-[120ms] active:scale-[0.98] ${optStyle}`}
+                  >
+                    {opt.imageUrl && (
+                      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-md bg-[var(--surface-2)]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={opt.imageUrl}
+                          alt={opt.text}
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                    )}
+                    <span>{opt.text}</span>
+                  </button>
+                );
+              })}
             </div>
           )}
 
           {/* Opsi Benar / Salah */}
           {isTrueFalse && (
-            <div className="flex-1 min-h-0 flex items-center justify-center gap-3 my-2">
+            <div className="mx-auto grid w-full max-w-md grid-cols-2 gap-3">
               <button
                 type="button"
+                aria-pressed={selectedOptionId === "tf-true"}
                 onClick={() => handleTrueFalse(true)}
-                className="flex-1 flex items-center justify-center gap-2 p-3 min-h-[48px] rounded-xl border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] font-black text-lg cursor-pointer active:scale-98 shadow-xs hover:bg-[var(--surface-2)]"
+                className={`flex min-h-[60px] sm:min-h-[68px] w-full items-center justify-center gap-2 rounded-[var(--r-kartu)] border-2 px-4 py-3 text-base sm:text-lg font-bold cursor-pointer select-none transition-all duration-[120ms] active:scale-[0.98] ${
+                  selectedOptionId === "tf-true" && feedback === "benar"
+                    ? "bg-[var(--benar-bg)] border-[var(--benar-edge)] text-[var(--benar-ink)]"
+                    : selectedOptionId === "tf-true" && feedback === "ulang"
+                      ? "bg-[var(--ulang-bg)] border-[var(--ulang-edge)] text-[var(--ulang-ink)]"
+                      : "bg-[var(--surface)] border-[var(--border-strong)] text-[var(--ink)] hover:bg-[var(--surface-2)]"
+                }`}
               >
-                <Icon name="CheckCircle" size={22} className="text-[var(--primary)]" />
+                <Icon name="CheckCircle" size={22} className="shrink-0 text-[var(--primary)]" />
                 <span>Benar</span>
               </button>
               <button
                 type="button"
+                aria-pressed={selectedOptionId === "tf-false"}
                 onClick={() => handleTrueFalse(false)}
-                className="flex-1 flex items-center justify-center gap-2 p-3 min-h-[48px] rounded-xl border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] font-black text-lg cursor-pointer active:scale-98 shadow-xs hover:bg-[var(--surface-2)]"
+                className={`flex min-h-[60px] sm:min-h-[68px] w-full items-center justify-center gap-2 rounded-[var(--r-kartu)] border-2 px-4 py-3 text-base sm:text-lg font-bold cursor-pointer select-none transition-all duration-[120ms] active:scale-[0.98] ${
+                  selectedOptionId === "tf-false" && feedback === "benar"
+                    ? "bg-[var(--benar-bg)] border-[var(--benar-edge)] text-[var(--benar-ink)]"
+                    : selectedOptionId === "tf-false" && feedback === "ulang"
+                      ? "bg-[var(--ulang-bg)] border-[var(--ulang-edge)] text-[var(--ulang-ink)]"
+                      : "bg-[var(--surface)] border-[var(--border-strong)] text-[var(--ink)] hover:bg-[var(--surface-2)]"
+                }`}
               >
-                <Icon name="X" size={22} className="text-[var(--ulang-ink)]" />
+                <Icon name="X" size={22} className="shrink-0 text-[var(--ulang-ink)]" />
                 <span>Salah</span>
               </button>
             </div>
@@ -419,26 +501,28 @@ export function QuizRunner({
 
           {/* Opsi Urutan (Steps Ordering) */}
           {isOrder && steps.length > 0 && (
-            <div className="flex-1 min-h-0 flex flex-col justify-center gap-1.5 my-1 overflow-y-auto">
-              <p className="text-xs font-bold text-[var(--muted)] text-center">Urutan langkah yang tepat:</p>
+            <div className="flex flex-col gap-2">
+              <p className="text-center text-xs sm:text-sm font-semibold text-[var(--ink-2)]">
+                Urutan langkah yang tepat:
+              </p>
               {steps.map((st, sIdx) => (
                 <div
                   key={st.id ?? sIdx}
-                  className="flex items-center gap-2 p-2 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] text-xs sm:text-sm font-bold text-[var(--ink)]"
+                  className="flex min-h-[44px] items-center gap-3 rounded-[var(--r-tombol)] border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-sm font-bold text-[var(--ink)]"
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-white text-xs">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--on-primary)]">
                     {sIdx + 1}
                   </span>
-                  <span className="truncate">{st.text}</span>
+                  <span>{st.text}</span>
                 </div>
               ))}
               {feedback !== "benar" && (
                 <Button
                   type="button"
                   variant="primary"
-                  size="normal"
+                  size="large"
                   onClick={() => setFeedback("benar")}
-                  className="w-full mt-1 min-h-[44px]"
+                  className="mt-1 w-full"
                 >
                   Periksa Urutan
                 </Button>
@@ -447,7 +531,7 @@ export function QuizRunner({
           )}
 
           {/* Umpan Balik Singkat */}
-          <div className="shrink-0 min-h-[36px] flex items-center justify-center">
+          <div aria-live="polite" className="flex min-h-[44px] items-center justify-center">
             {feedback === "benar" && (
               <StatusMessage type="benar">Tepat! Jawabanmu benar.</StatusMessage>
             )}
@@ -458,9 +542,9 @@ export function QuizRunner({
         </Card>
       </main>
 
-      {/* 3. Bar Bawah Tombol Lanjut Soal (In-Flow, Never Overlaps Content) */}
-      <footer className="shrink-0 h-16 sm:h-18 border-t-2 border-[var(--border)] bg-[var(--surface)] px-3 sm:px-6 py-2 z-20">
-        <div className="mx-auto flex max-w-xl items-center justify-end h-full">
+      {/* 3. Bar Bawah Tombol Lanjut Soal */}
+      <footer className="sticky bottom-0 z-20 shrink-0 border-t border-[var(--border)] bg-[var(--surface)] px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-2xl items-center justify-end">
           <Button
             variant="primary"
             size="large"
@@ -468,7 +552,7 @@ export function QuizRunner({
             disabled={feedback !== "benar"}
             icon={<Icon name="CaretRight" size={20} />}
             iconPosition="right"
-            className="w-full sm:w-auto min-h-[48px] px-8 font-black"
+            className="w-full sm:w-auto sm:min-w-[200px]"
           >
             {currentIndex === totalQuestions - 1 ? "Lihat Hasil" : "Soal Berikutnya"}
           </Button>

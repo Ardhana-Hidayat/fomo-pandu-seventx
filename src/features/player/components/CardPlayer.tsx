@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import Link from "next/link";
 import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
 import { SignCard } from "./SignCard";
 import type { LessonCard } from "@/server/db/schema";
@@ -47,17 +46,26 @@ export function CardPlayer({
   const [activeWordProgress, setActiveWordProgress] = useState<number>(0);
   const [activeSignSlot, setActiveSignSlot] = useState<SignSlot | null>(null);
   const [completedWordIndex, setCompletedWordIndex] = useState<number | null>(null);
+  const [manualTermIndex, setManualTermIndex] = useState(0);
+  const [manualLetterIndex, setManualLetterIndex] = useState(0);
 
   const currentCard = cards[currentIndex];
   const totalCards = cards.length;
   const isLastCard = currentIndex === totalCards - 1;
 
-  // Key terms & Tokens
+  // Key terms & Tokens (pecah frasa multi-kata agar tiap kata kunci tersinkron penuh)
   const keyTerms = useMemo(() => {
     return Array.isArray(currentCard?.keyTerms) ? currentCard.keyTerms : [];
   }, [currentCard]);
+  const expandedKeyWords = useMemo(() => {
+    const words = keyTerms
+      .flatMap((t) => t.trim().split(/[\s-]+/))
+      .map((w) => w.replace(/[^a-zA-Z0-9]/g, "").toLowerCase())
+      .filter(Boolean);
+    return Array.from(new Set(words));
+  }, [keyTerms]);
   const cardText = currentCard?.text ?? "";
-  const tokens = useMemo(() => tokenize(cardText, keyTerms), [cardText, keyTerms]);
+  const tokens = useMemo(() => tokenize(cardText, expandedKeyWords), [cardText, expandedKeyWords]);
 
   // Speech-only timeline for natural karaoke highlighting (word durations match spoken syllables)
   const speechTimeline = useMemo(() => {
@@ -76,16 +84,6 @@ export function CardPlayer({
       signEnabled: true,
     });
   }, [tokens, playbackRate]);
-
-  // Scaled Timeline and Sign Schedule
-  const [audioDurationMs, setAudioDurationMs] = useState<number | null>(null);
-
-  const scaledSpeechTimeline = useMemo(() => {
-    if (audioDurationMs && audioDurationMs > 0) {
-      return scaleTimeline(speechTimeline, audioDurationMs);
-    }
-    return speechTimeline;
-  }, [speechTimeline, audioDurationMs]);
 
   const signSchedule = useMemo(() => {
     return buildSignSchedule(signBaseTimeline, 450);
@@ -214,7 +212,6 @@ export function CardPlayer({
 
       const handleLoadedMetadata = () => {
         const durMs = (audio.duration || 2.5) * 1000;
-        setAudioDurationMs(durMs);
         const scaledSpeech = scaleTimeline(speechTimeline, durMs);
         const sched = buildSignSchedule(signBaseTimeline, 450);
 
@@ -228,24 +225,28 @@ export function CardPlayer({
           .catch(() => {
             runSpeechOrSilentFallback();
           });
-      };
 
-      audio.onended = () => {
-        // Audio finished: if sign schedule still has slots, enter free clock mode
-        const currentMs = audio.currentTime * 1000;
-        if (currentMs < signSchedule.signEnd) {
-          freeClockStartRef.current = {
-            startPerf: performance.now(),
-            startAudioMs: currentMs,
-          };
-          runPlaybackLoop(null, signSchedule, scaledSpeechTimeline);
-        } else {
-          setActiveWordIdx(scaledSpeechTimeline.words.length);
-          setActiveWordProgress(1);
-          setTimeout(() => {
-            stopPlayback();
-          }, 300);
-        }
+        audio.onended = () => {
+          // Audio finished: if sign schedule still has slots, cancel old RAF and enter free clock mode
+          const currentMs = audio.currentTime * 1000;
+          if (currentMs < sched.signEnd) {
+            if (animFrameRef.current !== null) {
+              cancelAnimationFrame(animFrameRef.current);
+              animFrameRef.current = null;
+            }
+            freeClockStartRef.current = {
+              startPerf: performance.now(),
+              startAudioMs: currentMs,
+            };
+            runPlaybackLoop(null, sched, scaledSpeech);
+          } else {
+            setActiveWordIdx(scaledSpeech.words.length);
+            setActiveWordProgress(1);
+            setTimeout(() => {
+              stopPlayback();
+            }, 300);
+          }
+        };
       };
 
       audio.onerror = () => {
@@ -293,15 +294,15 @@ export function CardPlayer({
 
       utt.onend = () => {
         const elapsed = performance.now() - startTime;
-        if (elapsed < maxDur && signSchedule.signEnd > elapsed) {
-          // Free clock until signEnd
-        } else {
-          setActiveWordIdx(tokens.length);
-          setActiveWordProgress(1);
-          setTimeout(() => {
-            stopPlayback();
-          }, 300);
+        // Biarkan timerLoop melanjutkan ejaan isyarat sampai signSchedule.signEnd selesai
+        if (elapsed < maxDur || signSchedule.signEnd > elapsed) {
+          return;
         }
+        setActiveWordIdx(tokens.length);
+        setActiveWordProgress(1);
+        setTimeout(() => {
+          stopPlayback();
+        }, 300);
       };
 
       utt.onerror = () => {
@@ -332,6 +333,11 @@ export function CardPlayer({
   function handleNext() {
     if (currentIndex < totalCards - 1) {
       stopPlayback();
+      setManualTermIndex(0);
+      setManualLetterIndex(0);
+      setActiveWordIdx(-1);
+      setActiveSignSlot(null);
+      setCompletedWordIndex(null);
       setCurrentIndex((prev) => prev + 1);
     }
   }
@@ -339,6 +345,11 @@ export function CardPlayer({
   function handlePrev() {
     if (currentIndex > 0) {
       stopPlayback();
+      setManualTermIndex(0);
+      setManualLetterIndex(0);
+      setActiveWordIdx(-1);
+      setActiveSignSlot(null);
+      setCompletedWordIndex(null);
       setCurrentIndex((prev) => prev - 1);
     }
   }
@@ -351,85 +362,92 @@ export function CardPlayer({
     );
   }
 
-  // Active key term for sign card
-  const activeKeyTerm = keyTerms[0] ?? "";
+  // Kata kunci aktif untuk kartu isyarat: ikuti kata yang sedang dieja saat pemutaran, atau kata terpilih saat jeda
+  const activeKeyTerm = activeSignSlot
+    ? (tokens[activeSignSlot.wordIndex]?.core ?? expandedKeyWords[manualTermIndex] ?? keyTerms[0] ?? "")
+    : (expandedKeyWords[manualTermIndex] ?? keyTerms[0] ?? "");
+  const activeLetterIndex = activeSignSlot ? activeSignSlot.letterIndex : manualLetterIndex;
   const completedWordText =
     completedWordIndex !== null && tokens[completedWordIndex]?.isKey
       ? tokens[completedWordIndex]?.text
       : null;
 
   return (
-    <div className="flex h-[100dvh] max-h-[100dvh] flex-col justify-between overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
-      {/* 1. Header Kompak (Tetap & Presisi) */}
-      <header className="shrink-0 h-13 sm:h-14 border-b-2 border-[var(--border)] bg-[var(--surface)] px-3 sm:px-6 flex items-center justify-between z-20">
-        <Link
+    <div className="flex min-h-[100dvh] sm:h-[100dvh] sm:max-h-[100dvh] flex-col justify-between sm:overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
+      {/* 1. Header Kompak & Bersih */}
+      <header className="shrink-0 border-b border-[var(--border)] bg-[var(--surface)] px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2 z-20">
+        <Button
+          variant="secondary"
+          size="normal"
           href={backHref}
-          className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-[var(--r-tombol)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] font-bold text-xs sm:text-sm px-2.5 hover:bg-[var(--surface-2)]"
+          icon={<Icon name="CaretLeft" size={18} />}
+          className="shrink-0 px-3 sm:px-4"
           aria-label="Kembali"
         >
-          <Icon name="CaretLeft" size={18} />
-          <span className="hidden sm:inline ml-1">Kembali</span>
-        </Link>
+          Kembali
+        </Button>
 
-        <div className="text-center truncate px-2">
-          {title && (
-            <span className="text-[11px] font-bold text-[var(--muted)] block truncate">
-              {title}
-            </span>
-          )}
-          <span className="font-extrabold text-sm sm:text-base text-[var(--ink)]">
-            Kartu {currentIndex + 1} dari {totalCards}
-          </span>
-        </div>
+        {title ? (
+          <h1 className="min-w-0 flex-1 text-center font-extrabold text-sm sm:text-base text-[var(--ink)] truncate px-2">
+            {title}
+          </h1>
+        ) : (
+          <div className="flex-1" />
+        )}
 
-        <DisplayPreferencesTrigger />
+        <DisplayPreferencesTrigger className="shrink-0 px-3 sm:px-4" />
       </header>
 
-      {/* 2. Kontainer Utama Satu Layar (Fit Viewport, NO Vertical Scroll, NO Overlap) */}
+      {/* 2. Kontainer Utama */}
       <main
         id="main-content"
-        className="flex-1 min-h-0 w-full max-w-4xl mx-auto p-2 sm:p-4 flex flex-col justify-between items-center overflow-hidden"
+        className="flex-1 min-h-0 w-full max-w-4xl mx-auto p-3 sm:p-4 flex flex-col justify-center items-center sm:overflow-hidden"
       >
-        <Card className="w-full flex-1 min-h-0 flex flex-col justify-between items-center p-2.5 sm:p-5 overflow-hidden border-2 border-[var(--border)] bg-[var(--surface)] shadow-md">
-          {/* Bagian Peraga Visual & Isyarat (Bersebelahan Horizontal Agar Rapi dan Pas di Layar) */}
-          <div className="flex-1 min-h-0 w-full flex flex-row items-center justify-center gap-3 sm:gap-6 overflow-hidden py-1">
-            {/* Kartu Gambar / Piktogram */}
-            {currentCard.imageUrl ? (
-              <div className="h-full max-h-[160px] sm:max-h-[220px] md:max-h-[260px] aspect-square rounded-2xl border-2 border-[var(--border)] overflow-hidden bg-[var(--surface-2)] flex items-center justify-center p-2 shadow-xs shrink-0">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={currentCard.imageUrl}
-                  alt={currentCard.imageAlt ?? currentCard.text}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            ) : currentCard.imageAlt ? (
-              <div className="h-full max-h-[160px] sm:max-h-[220px] md:max-h-[260px] aspect-square rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-2 text-center shrink-0">
-                <Icon name="Image" size={30} className="text-[var(--muted)] mb-1" />
-                <span className="text-[11px] sm:text-xs font-bold text-[var(--ink)] line-clamp-3">
-                  {currentCard.imageAlt}
-                </span>
-              </div>
-            ) : null}
+        <Card className="w-full flex-1 min-h-0 flex flex-col justify-between items-center gap-3 sm:gap-4 p-4 sm:p-6 border-2 border-[var(--border)] bg-[var(--surface)] shadow-md sm:overflow-hidden">
+          {/* Bagian Peraga Visual & Isyarat (Bersebelahan di Tablet/Desktop, Bertumpuk Rapi di Mobile) */}
+          {(currentCard.imageUrl || currentCard.imageAlt || activeKeyTerm) && (
+            <div className="w-full flex-1 min-h-0 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+              {/* Kartu Gambar / Piktogram */}
+              {currentCard.imageUrl ? (
+                <div className="w-44 h-44 sm:w-[230px] sm:h-[230px] md:w-[268px] md:h-[268px] rounded-2xl border-2 border-[var(--border)] overflow-hidden bg-[var(--surface-2)] flex items-center justify-center p-2 shadow-xs shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={currentCard.imageUrl}
+                    alt={currentCard.imageAlt ?? currentCard.text}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              ) : currentCard.imageAlt ? (
+                <div className="w-44 h-44 sm:w-[230px] sm:h-[230px] md:w-[268px] md:h-[268px] rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-3 text-center shrink-0">
+                  <Icon name="Image" size={30} className="text-[var(--muted)] mb-1.5" />
+                  <span className="text-xs font-bold text-[var(--ink)] line-clamp-3">
+                    {currentCard.imageAlt}
+                  </span>
+                </div>
+              ) : null}
 
-            {/* Kartu Peraga Bahasa Isyarat (SIBI / BISINDO) */}
-            {activeKeyTerm ? (
-              <div className="h-full max-h-[160px] sm:max-h-[220px] md:max-h-[260px] flex flex-col items-center justify-center shrink-0">
-                <SignCard
-                  system={signSystem}
-                  term={activeKeyTerm}
-                  activeLetter={activeSignSlot?.ch}
-                  activeLetterIndex={activeSignSlot?.letterIndex ?? 0}
-                  completedWord={completedWordText}
-                  size="match"
-                  className="h-full w-full"
-                />
-              </div>
-            ) : null}
-          </div>
+              {/* Paket Peraga Bahasa Isyarat (Gambar Isyarat + Pita Ejaan Setinggi Gambar Visual) */}
+              {activeKeyTerm ? (
+                <div className="w-full max-w-[320px] min-h-[200px] sm:w-auto sm:min-w-[230px] md:min-w-[268px] sm:max-w-[380px] sm:h-[230px] md:h-[268px] flex flex-col items-center justify-center shrink-0">
+                  <SignCard
+                    system={signSystem}
+                    term={activeKeyTerm}
+                    activeLetter={activeSignSlot?.ch}
+                    activeLetterIndex={activeLetterIndex}
+                    completedWord={completedWordText}
+                    size="match"
+                    onSelectLetter={(idx) => {
+                      if (!isPlaying) setManualLetterIndex(idx);
+                    }}
+                    className="h-full w-full"
+                  />
+                </div>
+              ) : null}
+            </div>
+          )}
 
           {/* Bagian Teks Materi dengan Sorotan Karaoke Berjalan Halus (--progres) */}
-          <div className="shrink-0 w-full my-1.5 sm:my-2.5 py-2 px-3 sm:py-3 sm:px-4 rounded-xl border-2 border-[var(--border)] bg-[var(--surface-2)] text-center flex items-center justify-center min-h-[50px]">
+          <div className="shrink-0 w-full py-2.5 px-3 sm:py-3 sm:px-5 rounded-xl border-2 border-[var(--border)] bg-[var(--surface-2)] text-center flex items-center justify-center min-h-[54px]">
             <p className="text-base sm:text-xl md:text-2xl font-extrabold leading-snug text-[var(--ink)]">
               {tokens.map((tok, idx) => {
                 const isCurrent = idx === activeWordIdx;
@@ -452,7 +470,7 @@ export function CardPlayer({
 
           {/* Banner Tawaran Latihan di Kartu Terakhir */}
           {isLastCard && quizHref && (
-            <div className="shrink-0 w-full p-2 rounded-xl border border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)] flex items-center justify-between gap-2">
+            <div className="shrink-0 w-full px-3 py-2 rounded-xl border border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)] flex items-center justify-between gap-3">
               <span className="text-xs sm:text-sm font-bold truncate">
                 Materi selesai! Mau lanjut latihan kuis?
               </span>
@@ -461,25 +479,32 @@ export function CardPlayer({
                 size="normal"
                 href={quizHref}
                 icon={<Icon name="ListChecks" size={18} />}
-                className="shrink-0 text-xs py-1 px-3"
+                className="shrink-0"
               >
                 Mulai Kuis
               </Button>
             </div>
           )}
+
+          {/* Indikator Nomor Kartu di Bagian Bawah Tengah Kartu */}
+          <div className="shrink-0 w-full flex justify-center pt-0.5">
+            <span className="inline-flex items-center px-3 py-1 rounded-full border border-[var(--border)] bg-[var(--surface-2)] text-xs sm:text-sm font-extrabold text-[var(--muted)]">
+              Kartu {currentIndex + 1} dari {totalCards}
+            </span>
+          </div>
         </Card>
       </main>
 
-      {/* 3. Bar Bawah Navigasi Pemutar (In-Flow, Tidak Pernah Menutupi Konten) */}
-      <footer className="shrink-0 h-15 sm:h-17 border-t-2 border-[var(--border)] bg-[var(--surface)] px-3 sm:px-6 py-2 z-20">
-        <div className="mx-auto flex max-w-xl items-center justify-between gap-2 sm:gap-4 h-full">
+      {/* 3. Bar Bawah Navigasi Pemutar (Seragam & Responsif) */}
+      <footer className="shrink-0 border-t border-[var(--border)] bg-[var(--surface)] px-3 sm:px-6 py-2.5 sm:py-3 z-20">
+        <div className="mx-auto grid max-w-xl grid-cols-3 gap-2 sm:gap-4">
           <Button
             variant="secondary"
             size="large"
             onClick={handlePrev}
             disabled={currentIndex === 0}
             icon={<Icon name="CaretLeft" size={20} />}
-            className="flex-1 min-h-[46px]"
+            className="w-full px-2 sm:px-6 text-sm sm:text-base"
           >
             Kembali
           </Button>
@@ -488,8 +513,8 @@ export function CardPlayer({
             variant={isPlaying ? "secondary" : "primary"}
             size="large"
             onClick={handleToggleAudio}
-            icon={<Icon name={isPlaying ? "Pause" : "SpeakerHigh"} size={22} />}
-            className="flex-1 min-h-[46px] font-black"
+            icon={<Icon name={isPlaying ? "Pause" : "SpeakerHigh"} size={20} />}
+            className="w-full px-2 sm:px-6 text-sm sm:text-base font-bold"
             aria-label={isPlaying ? "Jeda suara materi" : "Putar suara materi"}
           >
             {isPlaying ? "Jeda" : "Putar"}
@@ -502,7 +527,7 @@ export function CardPlayer({
             disabled={isLastCard}
             icon={<Icon name="CaretRight" size={20} />}
             iconPosition="right"
-            className="flex-1 min-h-[46px]"
+            className="w-full px-2 sm:px-6 text-sm sm:text-base"
           >
             Lanjut
           </Button>

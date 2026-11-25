@@ -24,9 +24,9 @@ export function TeacherSidebar() {
   return (
     <aside
       aria-label="Menu navigasi guru"
-      className="hidden md:flex w-64 shrink-0 flex-col border-r-2 border-[var(--border)] bg-[var(--surface)] p-4 min-h-[calc(100dvh-65px)]"
+      className="hidden md:flex w-64 shrink-0 flex-col border-r border-[var(--border)] bg-[var(--surface)] p-4 h-full overflow-hidden select-none"
     >
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-1.5">
         {NAV_ITEMS.map((item) => {
           const isActive =
             item.href === "/guru"
@@ -37,13 +37,13 @@ export function TeacherSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-[var(--r-tombol)] font-bold text-base transition-colors ${
+              className={`flex min-h-[44px] items-center gap-3 px-3.5 py-2.5 rounded-[var(--r-tombol)] font-semibold text-sm sm:text-base transition-colors duration-[120ms] ${
                 isActive
-                  ? "bg-[var(--primary)] text-[var(--on-primary)] shadow-[0_4px_0_0_var(--primary-edge)]"
+                  ? "bg-[var(--primary)] text-[var(--on-primary)]"
                   : "text-[var(--ink)] hover:bg-[var(--surface-2)]"
               }`}
             >
-              <Icon name={item.icon} size={24} />
+              <Icon name={item.icon} size={20} />
               <span>{item.label}</span>
             </Link>
           );
@@ -59,7 +59,7 @@ export function TeacherBottomNav() {
   return (
     <nav
       aria-label="Menu navigasi cepat"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t-2 border-[var(--border)] bg-[var(--surface)] p-2 shadow-lg"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 grid grid-cols-5 gap-1 border-t border-[var(--border)] bg-[var(--surface)] px-2 py-1.5 shadow-lg"
     >
       {NAV_ITEMS.map((item) => {
         const isActive =
@@ -71,14 +71,14 @@ export function TeacherBottomNav() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex flex-col items-center gap-1 p-2 rounded-lg font-bold text-xs ${
+            className={`flex min-h-[48px] flex-col items-center justify-center gap-1 px-1 py-1.5 rounded-[var(--r-tombol)] font-semibold text-[11px] leading-tight text-center transition-colors duration-[120ms] ${
               isActive
-                ? "text-[var(--link)] font-extrabold"
-                : "text-[var(--muted)]"
+                ? "bg-[var(--accent-subtle)] text-[var(--primary)] font-bold"
+                : "text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--ink)]"
             }`}
           >
-            <Icon name={item.icon} size={24} />
-            <span>{item.label}</span>
+            <Icon name={item.icon} size={22} />
+            <span className="truncate max-w-full">{item.label}</span>
           </Link>
         );
       })}

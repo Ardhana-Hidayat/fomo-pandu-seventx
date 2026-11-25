@@ -29,18 +29,18 @@ export default async function StudentClassroomPage({
   return (
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* Header Siswa */}
-      <header className="sticky top-0 z-30 w-full border-b-2 border-[var(--border)] bg-[var(--surface)] px-4 py-3 sm:px-6">
-        <div className="mx-auto flex max-w-4xl items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-[var(--ink)]">
+      <header className="sticky top-0 z-30 min-h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 sm:px-6">
+        <div className="mx-auto flex max-w-4xl items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="text-lg sm:text-xl font-bold tracking-tight text-[var(--ink)] truncate">
               {classroom.name}
             </h1>
-            <p className="text-xs text-[var(--muted)]">
+            <p className="text-xs text-[var(--muted)] truncate">
               Siswa: <strong>{studentSession.student.displayName}</strong>
             </p>
           </div>
 
-          <DisplayPreferencesTrigger />
+          <DisplayPreferencesTrigger className="shrink-0" />
         </div>
       </header>
 
@@ -94,13 +94,13 @@ export default async function StudentClassroomPage({
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center gap-2 pt-3 border-t border-[var(--border)]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-3 border-t border-[var(--border)]">
                   <Button
                     variant="primary"
                     size="large"
                     href={`/kelas/${kode}/materi/${pub.lesson.id}`}
                     icon={<Icon name="Play" size={20} />}
-                    className="w-full sm:flex-1"
+                    className="w-full"
                   >
                     Belajar
                   </Button>
@@ -109,7 +109,7 @@ export default async function StudentClassroomPage({
                     size="large"
                     href={`/kelas/${kode}/kuis/${pub.lesson.id}`}
                     icon={<Icon name="ListChecks" size={20} />}
-                    className="w-full sm:w-auto"
+                    className="w-full"
                     aria-label="Kerjakan latihan kuis"
                   >
                     Kuis

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Card, Icon, DisplayPreferencesTrigger, Button } from "@/shared/ui";
 
 export const instant = false;
@@ -8,14 +7,15 @@ export default function HelpPage() {
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* Header */}
       <header className="sticky top-0 z-30 h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
-        <div className="mx-auto flex h-full max-w-4xl items-center justify-between">
-          <Link
+        <div className="mx-auto flex h-full max-w-4xl items-center justify-between gap-3">
+          <Button
+            variant="ghost"
+            size="normal"
             href="/"
-            className="inline-flex h-10 items-center gap-2 rounded-[var(--r-tombol)] px-3 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--surface-2)] transition-colors duration-[120ms]"
+            icon={<Icon name="CaretLeft" size={18} />}
           >
-            <Icon name="CaretLeft" size={18} />
-            <span>Kembali ke Beranda</span>
-          </Link>
+            Kembali ke Beranda
+          </Button>
           <DisplayPreferencesTrigger />
         </div>
       </header>

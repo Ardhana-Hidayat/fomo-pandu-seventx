@@ -49,12 +49,12 @@ export function Button({
   // Size styles — 36px compact, 40px normal, 48px large, 48px tv (DESIGN.md §6)
   const sizeClass =
     size === 'tv'
-      ? 'h-12 px-8 text-xl min-w-12'
+      ? 'min-h-12 px-8 py-2 text-xl min-w-12'
       : size === 'large'
-        ? 'h-12 px-6 text-base min-w-12'
+        ? 'min-h-12 px-6 py-2 text-base min-w-12'
         : size === 'compact'
-          ? 'h-9 px-3 text-sm min-w-9'
-          : 'h-10 px-4 text-sm min-w-10';
+          ? 'min-h-9 px-3 py-1.5 text-sm min-w-9'
+          : 'min-h-10 px-4 py-1.5 text-sm min-w-10';
 
   const baseClass = [
     'inline-flex items-center justify-center gap-2 font-semibold',

@@ -20,9 +20,9 @@ export default async function TeacherLayout({
   }
 
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
+    <div className="flex min-h-[100dvh] md:h-[100dvh] md:overflow-hidden flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* Header Guru — 64px, 1px bottom border (DESIGN.md §6 Teacher Navigation) */}
-      <header className="sticky top-0 z-30 h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
+      <header className="sticky top-0 z-30 h-16 shrink-0 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
         <div className="mx-auto flex h-full max-w-7xl items-center justify-between">
           <div className="flex items-center gap-4">
             <a
@@ -36,14 +36,15 @@ export default async function TeacherLayout({
             </a>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <Button
               variant="primary"
               size="normal"
               href="/guru/materi/baru"
               icon={<Icon name="NotePencil" size={18} />}
             >
-              Buat Materi
+              <span className="hidden sm:inline">Buat Materi</span>
+              <span className="sm:hidden">Buat</span>
             </Button>
             <DisplayPreferencesTrigger />
           </div>
@@ -51,11 +52,11 @@ export default async function TeacherLayout({
       </header>
 
       {/* Konten Utama Guru */}
-      <div className="flex flex-1 mx-auto w-full max-w-7xl">
+      <div className="flex flex-1 min-h-0 mx-auto w-full max-w-7xl">
         <TeacherSidebar />
         <main
           id="main-content"
-          className="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl overflow-y-auto pb-24 md:pb-8"
+          className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-5xl overflow-y-auto pb-24 md:pb-8"
         >
           {children}
         </main>

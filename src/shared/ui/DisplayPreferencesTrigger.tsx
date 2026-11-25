@@ -12,7 +12,7 @@ export function DisplayPreferencesTrigger({ className = '' }: { className?: stri
       variant="secondary"
       size="normal"
       onClick={openSheet}
-      icon={<Icon name="TextAa" size={24} />}
+      icon={<Icon name="TextAa" size={20} />}
       className={className}
       aria-label="Buka pengaturan tampilan"
     >

@@ -15,13 +15,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "A/A_0.jpg",
-        "sha256": "3b94b733e8f6df89b7ea10fcce9a4675a4d6f6753093bc69451395a945c0aca7",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "A.jpg",
+        "sha256": "af8d7dc9117e409e5102ff8f9d68d7b71a9402d2e4f516f1a1ffd88cb20b4824",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -31,17 +31,17 @@
       "src": "/signs/sibi/b.webp",
       "alt": "Isyarat huruf B dalam SIBI",
       "motion": false,
-      "status": "draft",
+      "status": "verified",
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "B/B_0.jpg",
-        "sha256": "95f2bbd0a9d5ccb09fd971ba66f8ec767c8c84e6e356a0d3fb87b2d8a75c3857",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "B.jpg",
+        "sha256": "2e74179193bb3acaafcb41f23ae7292c99d98955358ca00c4e051cf2fd1893b8",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": null,
-      "verifiedAt": null
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -55,13 +55,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "C/C_0.jpg",
-        "sha256": "cf0a8cd1909870bf811eeac01f7de70587f49664ceb27bf4c25ccdeae078e4fc",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "C.jpg",
+        "sha256": "86b5beb81e136a6233286682744fa3a282638ed654bafcd74ae753565b85f119",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -75,13 +75,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "D/D_0.jpg",
-        "sha256": "bf3d65dc2b6adc0f38517091724cd139bcd9ab2a744dda203f2079ea0c82892a",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "D.jpg",
+        "sha256": "fda68595d2bfcebb12eda4a772b5fc0ea70bef33cd7153e74197cd1b9211691d",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -95,13 +95,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "E/E_0.jpg",
-        "sha256": "a42036102292966dc11279a12dfbc0e60a3d440a77f998c6e33f01d24201e6c8",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "E.jpg",
+        "sha256": "a287918a144c2343a44ed6ea9cc00181340f0f3768ecae8902268fc6f8e624a3",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -115,13 +115,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "F/F_0.jpg",
-        "sha256": "fc7156fa36e7dacd8f01d0eb3a9173fbcb46ab151b103fbbf7ade4d63c2e3128",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "F.jpg",
+        "sha256": "456bc960449d2c513e2bb3fecff1df453c56d5e84f4b5d3c045f86c1cc028598",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -135,13 +135,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "G/G_0.jpg",
-        "sha256": "cb3055fe258fa4929b690181aba5d2433f0853b4aee2dac70961919bd9dad2d6",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "G.png",
+        "sha256": "e324de02ad2414681cd390eb27a1c2ee8370c9e9a453deaf9e2902d96b3a669f",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -155,13 +155,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "H/H_0.jpg",
-        "sha256": "3ddb51859ed76d1f76d158b1c3e2937593b646ca570ad617ffe5646848df03f2",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "H.png",
+        "sha256": "2c57d5a2e52d284951678e7ef164aad3696b82a7e4bb6918ad0524d8553ba2dd",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -175,13 +175,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "I/I_0.jpg",
-        "sha256": "d5ede1b57e454e0c9237b708b0b50eb75c9a763cced7e92a9e6c0f4691a715e3",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "I.jpg",
+        "sha256": "ef5d5da780d38c6506154252550ff460a444ee1a665dc0fa8a82f34a5f3ce5d9",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -195,13 +195,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "K/K_0.jpg",
-        "sha256": "060eea8919d33b980c842f1d67164f49ab5f69320112b53e1b7ddb5e8c7991cd",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "K.jpg",
+        "sha256": "40ad5f7e34f4a3f38257eb2f66702c724e4081a79ac0f370a50ce865c51f2bab",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -215,13 +215,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "L/L_0.jpg",
-        "sha256": "0af3f1708b051509d42ad2ef7e4cf5353decec8bb31beaefc9c5b5ac2fbb710a",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "L.jpg",
+        "sha256": "c1814a05ba0dabe24729a57e621e37383fbe82698608c0c77d8092dae00e5938",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -235,13 +235,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "M/M_0.jpg",
-        "sha256": "f8938e26a76a7b04a1f95f92a092e7b5e3bd92d553d6fc392b930cc3ad2afe02",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "M.jpg",
+        "sha256": "31afde0e9f524cdbbe2d721cceeb9e794e8e552aed2ca76d816f4a71a5244018",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -255,13 +255,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "N/N_0.jpg",
-        "sha256": "8bcf2aa9e500fe6aebaeedac798e36e272a4f6c5d4fec23ecec94f73d41230d1",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "N.png",
+        "sha256": "3f3e7d652dff007cc44aa302e71417da27693033d957fc1d7087253bb7c9cef8",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -275,13 +275,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "O/O_0.jpg",
-        "sha256": "83e3785fc473da46ab625dc11bd0f9571ab0bf42ef5d5d3d8645b78c216ad26e",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "O.jpg",
+        "sha256": "dee82fcdac95bdbe142eb49517f49ee619fa1e75956f2e618bda9c8d018d104e",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -295,13 +295,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "P/P_0.jpg",
-        "sha256": "acf4c2fb5d524334d27517d49488515ed6f7076112d010420e16fb45057bee58",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "P.jpg",
+        "sha256": "d9054ff2bd0699b8f2772e4cb95774867c05871e6420b246e458e77ea4c0d5aa",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -315,13 +315,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "Q/Q_0.jpg",
-        "sha256": "6c7e68982dda933b6aae0af2d477451070b71c1eb02696414f1b2d9a5771527b",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "Q.jpg",
+        "sha256": "70965c6bfa6618681e0e28b177d0fe06ae52695bb28f5409ad2e59b8c9ea287d",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -335,13 +335,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "R/R_0.jpg",
-        "sha256": "9fafeb1704d13dedddb86357e2e23194b7584d841a37082d71fe9f226870638a",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "R.jpg",
+        "sha256": "ff2315acecc1a609228aed3c73399923f6019826846c2634ff362ea38816c0b8",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -355,13 +355,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "S/S_100.jpg",
-        "sha256": "a39f43b04b28eeb6b2156d8c05b83a5d1d7dfe129cd70e1757c3774a8e6f9e6d",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "S.jpg",
+        "sha256": "06e1e24bcd4e70d43214fc4f2b0925eae14ef4eae97610e595e78311cab9c80a",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -375,13 +375,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "T/T_0.jpg",
-        "sha256": "decdc3c6275ec717738014f2ea09b62b42a2c59f856ce6e78b5cde1b29db3160",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "T.jpg",
+        "sha256": "3237f569d2b0917ff821d30b44f6b07b9fd7af0207263eee3fcffb9dddded7be",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -395,13 +395,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "U/U_0.jpg",
-        "sha256": "7e30d856d78d2404f29b53636d090a9a6051824f8980f1e36cc3415ae7004085",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "U.jpg",
+        "sha256": "e1de668a199f1bb9bf2c018a6163b3542cc26ce45aa20dabd04512b4a301ebbf",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -415,13 +415,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "V/V_0.jpg",
-        "sha256": "7545f781d8a2d47ff2686c0289af11846f29c6b3b2bd63110da154c263e4529f",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "V.jpg",
+        "sha256": "13e36c50fc83f9df0be69918ac618f44c10b5d58cbffded166f01125936246e4",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -435,13 +435,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "W/W_0.jpg",
-        "sha256": "dc1fdee56a7b3ebc57c083c5eb1504dae8ffd21451f7106557a98e3e8aebe5d3",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "W.jpg",
+        "sha256": "69a7c4fcfdf97b618b59f98d22515c46f1152b0bd7a22fe75c75844a1b642503",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -455,13 +455,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "X/X_100.jpg",
-        "sha256": "38a2e34c013f3641034ed7647da788eace82ad4e7fde0432d9377e5be4cfd04a",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "X.jpg",
+        "sha256": "88cb4284fb25200b7ba4466df8082fc02a7247f189f98aeb6886543296133ecb",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -475,13 +475,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "Y/Y_0.jpg",
-        "sha256": "4476f3e5374abb31d6757b353601abcb4d3f050d3ae1124c6c298a69f181902a",
-        "transform": "mendeley-download,crop-hand,resize-512,flatten-white,webp-q80"
+        "originalFile": "Y.jpg",
+        "sha256": "67eec2f548442dab5c17390ffdb6a639ba7ec822ccb999fde0b5b75ff54a9720",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "State University of Malang (Research Dataset)",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "BISINDO",
@@ -1015,13 +1015,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "J/motion_start.jpg",
-        "sha256": "sha256-sibi-j",
-        "transform": "kemdikbud-ref,motion-indicator,resize-512,webp-q80"
+        "originalFile": "J.jpg",
+        "sha256": "1cd141c5897eee9eddca04c95d418da2d8ad91b644ac5d4e76dc92f8d9ae115a",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "Guru SLBN Manisrejo",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     },
     {
       "system": "SIBI",
@@ -1035,13 +1035,13 @@
       "origin": {
         "sourceId": "sibi-azizah-2026",
         "doi": "10.17632/xdn2gj38xf.1",
-        "originalFile": "Z/motion_start.jpg",
-        "sha256": "sha256-sibi-z",
-        "transform": "kemdikbud-ref,motion-indicator,resize-512,webp-q80"
+        "originalFile": "Z.jpg",
+        "sha256": "55fa92a9362090dfa57b98d38d690b963b78ca47f0bc928f88829d70128fe968",
+        "transform": "resize-512-contain,flatten-white,webp-q85"
       },
       "reference": "Kamus SIBI Kemdikbud",
-      "verifiedBy": "Guru SLBN Manisrejo",
-      "verifiedAt": "2026-11-23"
+      "verifiedBy": "Kamus SIBI Kemdikbud (Ilustrasi Resmi)",
+      "verifiedAt": "2026-11-25"
     }
   ]
 }

@@ -10,7 +10,7 @@ import {
 
 export type PacePreset = "lambat" | "sedang" | "normal";
 
-export interface PaceConfig {
+interface PaceConfig {
   id: PacePreset;
   label: string;
   speechRate: number;

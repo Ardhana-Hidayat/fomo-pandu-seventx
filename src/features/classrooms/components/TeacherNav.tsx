@@ -103,6 +103,7 @@ export function TeacherMobileNav() {
       <div className="flex h-16 items-center justify-between gap-3 px-4 sm:px-6">
         <Link
           href="/guru"
+          prefetch={true}
           onClick={() => setOpen(false)}
           className="flex items-center gap-2 text-base font-bold tracking-tight text-[var(--ink)] hover:text-[var(--primary)] transition-colors duration-[120ms]"
         >
@@ -149,6 +150,7 @@ export function TeacherMobileNav() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    prefetch={true}
                     onClick={() => setOpen(false)}
                     aria-current={isActive ? "page" : undefined}
                     className={`flex min-h-[44px] items-center gap-3 px-3.5 py-2.5 rounded-[var(--r-tombol)] font-semibold text-sm transition-colors duration-[120ms] ${

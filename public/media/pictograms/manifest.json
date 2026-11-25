@@ -1003,6 +1003,56 @@
       "id": 2858,
       "name": "toothpaste",
       "alt": "Pasta gigi atau odol"
+    },
+    "minyak": {
+      "id": 9181,
+      "name": "cooking oil",
+      "alt": "Botol minyak goreng"
+    },
+    "pasir": {
+      "id": 4565,
+      "name": "sand",
+      "alt": "Tumpukan pasir"
+    },
+    "koran": {
+      "id": 2845,
+      "name": "newspaper",
+      "alt": "Kertas koran"
+    },
+    "cabai": {
+      "id": 4661,
+      "name": "chili pepper",
+      "alt": "Buah cabai"
+    },
+    "batu": {
+      "id": 6594,
+      "name": "stone",
+      "alt": "Batu keras"
+    },
+    "zebra-cross": {
+      "id": 7197,
+      "name": "crosswalk",
+      "alt": "Zebra cross untuk menyeberang"
+    },
+    "tikungan": {
+      "id": 4681,
+      "name": "curve",
+      "alt": "Tikungan jalan"
+    },
+    "ponsel": {
+      "id": 25269,
+      "name": "smartphone",
+      "alt": "Ponsel genggam"
+    },
+    "tanah": {
+      "id": 37339,
+      "name": "soil",
+      "alt": "Tanah kering"
+    },
+    "tengok": {
+      "id": 6564,
+      "name": "look",
+      "alt": "Menengok kanan dan kiri"
     }
   }
 }

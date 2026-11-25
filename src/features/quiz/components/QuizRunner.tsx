@@ -56,7 +56,11 @@ export function QuizRunner({
     showTextHint?: boolean;
     imageOnly?: boolean;
     signWord?: string;
+    promptImageUrl?: string;
+    imageUrl?: string;
   } | undefined;
+
+  const promptImageUrl = payload?.promptImageUrl ?? payload?.imageUrl;
 
   const rawOptions = payload?.options;
   const options: QuizOption[] = (Array.isArray(rawOptions) ? rawOptions : []).map(
@@ -360,8 +364,19 @@ export function QuizRunner({
             </Button>
           </div>
 
-          {/* Pertanyaan & Tombol Bantu (Isyarat / Petunjuk) */}
+          {/* Pertanyaan & Gambar Soal + Tombol Bantu (Isyarat / Petunjuk) */}
           <div className="flex flex-col items-center gap-3 text-center">
+            {promptImageUrl && (
+              <div className="flex h-32 w-32 sm:h-40 sm:w-40 items-center justify-center overflow-hidden rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] p-2 shadow-xs">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={promptImageUrl}
+                  alt={currentQ.prompt}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            )}
+
             <h2 className="text-xl sm:text-2xl font-extrabold text-[var(--ink)] leading-snug max-w-[36ch]">
               {currentQ.prompt}
             </h2>
@@ -444,10 +459,10 @@ export function QuizRunner({
                     type="button"
                     aria-pressed={isSelected}
                     onClick={() => handleSelectOption(opt)}
-                    className={`flex min-h-[60px] sm:min-h-[68px] w-full flex-col items-center justify-center gap-1.5 rounded-[var(--r-kartu)] border-2 px-4 py-3 text-center text-base font-bold cursor-pointer select-none transition-all duration-[120ms] active:scale-[0.98] ${optStyle}`}
+                    className={`flex min-h-[140px] sm:min-h-[164px] w-full flex-col items-center justify-center gap-2.5 rounded-[var(--r-kartu)] border-2 px-3 py-4 text-center text-base sm:text-lg font-bold cursor-pointer select-none transition-all duration-[120ms] active:scale-[0.98] ${optStyle}`}
                   >
                     {opt.imageUrl && (
-                      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-md bg-[var(--surface-2)]">
+                      <div className="flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center overflow-hidden rounded-xl bg-[var(--surface-2)] p-1.5">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={opt.imageUrl}

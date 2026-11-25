@@ -208,17 +208,44 @@ const DEMO_PICTO_MAP: Record<number, string> = {
 const DEMO_QUESTION_PICTO_MAP: Record<string, string> = {
   sabun: getPictoUrl("sabun"),
   soap: getPictoUrl("sabun"),
+  minyak: getPictoUrl("minyak"),
+  "minyak goreng": getPictoUrl("minyak"),
+  pasir: getPictoUrl("pasir"),
   handuk: getPictoUrl("handuk"),
+  "handuk bersih": getPictoUrl("handuk"),
   towel: getPictoUrl("handuk"),
+  "baju kotor": getPictoUrl("baju"),
+  "kertas koran": getPictoUrl("koran"),
+  koran: getPictoUrl("koran"),
   "sikat gigi": getPictoUrl("sikat-gigi"),
   toothbrush: getPictoUrl("sikat-gigi"),
   "cuci tangan": getPictoUrl("cuci-tangan"),
+  "cuci tangan bersih": getPictoUrl("cuci-tangan"),
   "wash hands": getPictoUrl("cuci-tangan"),
   "basahi tangan": getPictoUrl("cuci-tangan"),
   air: getPictoUrl("air"),
+  "air mengalir": getPictoUrl("air"),
+  "air kotor": getPictoUrl("air"),
   water: getPictoUrl("air"),
   bilas: getPictoUrl("bilas"),
   rinse: getPictoUrl("bilas"),
+  "pagi dan malam": getPictoUrl("pagi"),
+  "hanya hari minggu": getPictoUrl("matahari"),
+  "saat tidur": getPictoUrl("tidur"),
+  "tanah kering": getPictoUrl("tanah"),
+  "zebra cross": getPictoUrl("zebra-cross"),
+  "tengah jalan raya": getPictoUrl("jalan"),
+  "tikungan tajam": getPictoUrl("tikungan"),
+  "tengok kanan dan kiri": getPictoUrl("tengok"),
+  "langsung lari kencang": getPictoUrl("lari"),
+  "bermain ponsel": getPictoUrl("ponsel"),
+  "oleskan pasta gigi ke sikat": getPictoUrl("pasta-gigi"),
+  "sikat seluruh permukaan gigi": getPictoUrl("sikat-gigi"),
+  "berkumur dengan air bersih": getPictoUrl("air"),
+  "kupas kulit pisang": getPictoUrl("pisang"),
+  "makan buah pisang": getPictoUrl("pisang"),
+  "berhenti di pinggir trotoar": getPictoUrl("jalan"),
+  "menyeberang di zebra cross": getPictoUrl("zebra-cross"),
 };
 
 function loadPictoMap(): Record<string, string> {
@@ -303,9 +330,41 @@ async function enrichCardsWithMedia(cards: LessonCard[]): Promise<LessonCardWith
   });
 }
 
-function enrichQuestionsWithMedia(questions: QuizQuestion[]): QuizQuestion[] {
+function resolveQuizVisualUrl(textKey: string, enKey: string): string | undefined {
+  const direct =
+    EXTENDED_PICTO_MAP[textKey] ||
+    EXTENDED_PICTO_MAP[enKey] ||
+    DEMO_QUESTION_PICTO_MAP[textKey] ||
+    DEMO_QUESTION_PICTO_MAP[enKey];
+  if (direct) return direct;
+
+  const words = textKey.replace(/[^a-z0-9\s-]/g, "").split(/[\s-]+/).filter(Boolean);
+  for (const w of words) {
+    if (EXTENDED_PICTO_MAP[w]) return EXTENDED_PICTO_MAP[w];
+    if (DEMO_QUESTION_PICTO_MAP[w]) return DEMO_QUESTION_PICTO_MAP[w];
+  }
+  return undefined;
+}
+
+function enrichQuestionsWithMedia(
+  questions: QuizQuestion[],
+  cards: LessonCardWithMedia[] = []
+): QuizQuestion[] {
+  const cardById = new Map(cards.map((c) => [c.id, c]));
   return questions.map((q) => {
-    const payload = { ...q.payload };
+    const payload: Record<string, unknown> = { ...q.payload };
+    if (!payload.promptImageUrl) {
+      const rawPromptImg = payload.prompt_image;
+      if (typeof rawPromptImg === "string" && rawPromptImg) {
+        const slug = rawPromptImg.replace(/^\/media\/pictograms\//, "").replace(/\.webp$/, "");
+        payload.promptImageUrl = getPictoUrl(slug);
+      } else if (q.linkedCardId && cardById.has(q.linkedCardId)) {
+        const linked = cardById.get(q.linkedCardId);
+        if (linked?.imageUrl) {
+          payload.promptImageUrl = linked.imageUrl;
+        }
+      }
+    }
     if (payload.options && Array.isArray(payload.options)) {
       payload.options = payload.options.map((rawOpt: unknown, idx: number) => {
         const isString = typeof rawOpt === "string";
@@ -321,11 +380,7 @@ function enrichQuestionsWithMedia(questions: QuizQuestion[]): QuizQuestion[] {
         const text = opt.text ?? opt.label ?? (isString ? rawOpt : "");
         const textKey = text.toLowerCase().trim();
         const enKey = opt.image?.keyword_en?.toLowerCase().trim() || "";
-        const picUrl =
-          EXTENDED_PICTO_MAP[textKey] ||
-          EXTENDED_PICTO_MAP[enKey] ||
-          DEMO_QUESTION_PICTO_MAP[textKey] ||
-          DEMO_QUESTION_PICTO_MAP[enKey];
+        const picUrl = resolveQuizVisualUrl(textKey, enKey);
 
         const id = opt.id ?? `opt-${idx}`;
         const isCorrect =
@@ -362,11 +417,7 @@ function enrichQuestionsWithMedia(questions: QuizQuestion[]): QuizQuestion[] {
         const text = st.text ?? (isString ? rawSt : "");
         const textKey = text.toLowerCase().trim();
         const enKey = st.image?.keyword_en?.toLowerCase().trim() || "";
-        const picUrl =
-          EXTENDED_PICTO_MAP[textKey] ||
-          EXTENDED_PICTO_MAP[enKey] ||
-          DEMO_QUESTION_PICTO_MAP[textKey] ||
-          DEMO_QUESTION_PICTO_MAP[enKey];
+        const picUrl = resolveQuizVisualUrl(textKey, enKey);
 
         const id = st.id ?? `step-${sIdx}`;
         const imageUrl = picUrl || st.imageUrl || st.image?.url;
@@ -424,7 +475,7 @@ export async function getLessonWithContent(
       .where(eq(publications.lessonId, lesson.id));
 
     const cards = await enrichCardsWithMedia(rawCards);
-    const questions = enrichQuestionsWithMedia(rawQuestions);
+    const questions = enrichQuestionsWithMedia(rawQuestions, cards);
 
     return ok({
       ...lesson,
@@ -506,7 +557,7 @@ export async function getLessonForStudent(
       .where(eq(publications.lessonId, lesson.id));
 
     const cards = await enrichCardsWithMedia(rawCards);
-    const questions = enrichQuestionsWithMedia(rawQuestions);
+    const questions = enrichQuestionsWithMedia(rawQuestions, cards);
 
     return ok({
       ...lesson,

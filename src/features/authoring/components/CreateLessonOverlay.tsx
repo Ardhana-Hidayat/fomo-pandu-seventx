@@ -67,24 +67,15 @@ export function CreateLessonOverlay({
         role="dialog"
         aria-modal="true"
         aria-labelledby="create-lesson-overlay-title"
-        aria-describedby="create-lesson-overlay-desc"
         className="w-full max-w-3xl lg:max-w-4xl max-h-[90dvh] overflow-y-auto rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] p-5 sm:p-8 text-[var(--ink)] shadow-2xl"
       >
-        <div className="flex items-start justify-between gap-4 pb-4 border-b border-[var(--border)]">
-          <div>
-            <h2
-              id="create-lesson-overlay-title"
-              className="text-xl sm:text-2xl font-bold text-[var(--ink)]"
-            >
-              Tambah Materi Baru
-            </h2>
-            <p
-              id="create-lesson-overlay-desc"
-              className="mt-1 text-sm text-[var(--ink-2)]"
-            >
-              Pilih Buat Manual atau Upload PDF.
-            </p>
-          </div>
+        <div className="flex items-center justify-between gap-4 pb-4 border-b border-[var(--border)]">
+          <h2
+            id="create-lesson-overlay-title"
+            className="text-xl sm:text-2xl font-bold text-[var(--ink)]"
+          >
+            Tambah Materi
+          </h2>
           <button
             type="button"
             onClick={onClose}

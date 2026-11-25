@@ -176,9 +176,6 @@ export function LessonWizard({
             <span className="block font-bold text-sm sm:text-base text-[var(--ink)]">
               Buat Manual
             </span>
-            <span className="hidden sm:block text-xs text-[var(--ink-2)] truncate">
-              Susun kartu &amp; kuis sendiri
-            </span>
           </div>
         </button>
 
@@ -202,9 +199,6 @@ export function LessonWizard({
           <div className="min-w-0">
             <span className="block font-bold text-sm sm:text-base text-[var(--ink)]">
               Upload PDF
-            </span>
-            <span className="hidden sm:block text-xs text-[var(--ink-2)] truncate">
-              Ekstrak otomatis dari file PDF
             </span>
           </div>
         </button>
@@ -333,16 +327,32 @@ export function LessonWizard({
                 <span className="font-bold text-sm text-[var(--ink)]">
                   Jumlah Kartu
                 </span>
-                <div className="flex flex-wrap gap-2">
-                  {[5, 6, 8, 12].map((num) => (
-                    <Chip
-                      key={num}
-                      label={`${num} Kartu`}
-                      selected={cardCount === num}
-                      onSelect={() => setCardCount(num)}
-                      role="radio"
-                    />
-                  ))}
+                <div className="inline-flex items-center gap-3 self-start rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface-2)] p-1">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="normal"
+                    onClick={() => setCardCount((c) => Math.max(3, c - 1))}
+                    disabled={cardCount <= 3}
+                    aria-label="Kurangi jumlah kartu"
+                    className="min-w-[44px] px-3"
+                  >
+                    −
+                  </Button>
+                  <span className="min-w-[84px] text-center font-mono text-base font-extrabold text-[var(--ink)]">
+                    {cardCount} Kartu
+                  </span>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="normal"
+                    onClick={() => setCardCount((c) => Math.min(15, c + 1))}
+                    disabled={cardCount >= 15}
+                    aria-label="Tambah jumlah kartu"
+                    className="min-w-[44px] px-3"
+                  >
+                    +
+                  </Button>
                 </div>
               </div>
             </div>

@@ -24,14 +24,9 @@ export default async function LessonLibraryPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-[var(--ink)]">
-            Pustaka Materi
-          </h1>
-          <p className="text-sm text-[var(--muted)]">
-            Kumpulan seluruh materi belajar adaptif yang Anda susun.
-          </p>
-        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--ink)]">
+          Pustaka Materi
+        </h1>
 
         <CreateLessonButton
           classrooms={classrooms}

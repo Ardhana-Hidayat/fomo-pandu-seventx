@@ -54,14 +54,9 @@ export function TeacherDashboardCharts({
     >
       {/* 1. Ringkasan Hasil Belajar & Ketuntasan */}
       <Card className="lg:col-span-7 flex flex-col gap-5 p-6 min-w-0">
-        <div>
-          <h2 className="text-xl font-bold text-[var(--ink)]">
-            Ringkasan Hasil Belajar &amp; Ketuntasan
-          </h2>
-          <p className="text-sm text-[var(--ink-2)] mt-0.5">
-            Persentase penyelesaian materi per ruang kelas aktif
-          </p>
-        </div>
+        <h2 className="text-xl font-bold text-[var(--ink)]">
+          Hasil Belajar &amp; Ketuntasan
+        </h2>
 
         {classrooms.length === 0 ? (
           <div className="flex-1 flex items-center justify-center py-10 text-sm text-[var(--muted)] border-2 border-dashed border-[var(--border)] rounded-xl">
@@ -92,33 +87,19 @@ export function TeacherDashboardCharts({
                     </span>
                   </div>
 
-                  <svg
-                    viewBox="0 0 400 20"
-                    className="w-full h-5 overflow-visible"
-                    role="img"
+                  <div
+                    role="progressbar"
+                    aria-valuenow={c.ketuntasanPercent}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
                     aria-label={`Ketuntasan ${c.name}: ${c.ketuntasanPercent}%`}
+                    className="w-full h-4 rounded-full bg-[var(--surface-2)] border border-[var(--border)] overflow-hidden"
                   >
-                    <rect
-                      x="0"
-                      y="2"
-                      width="400"
-                      height="16"
-                      rx="8"
-                      fill="var(--surface-2)"
-                      stroke="var(--border)"
-                      strokeWidth="1"
+                    <div
+                      className="h-full rounded-full transition-all duration-300"
+                      style={{ width: `${barWidth}%`, backgroundColor: barColor }}
                     />
-                    {barWidth > 0 && (
-                      <rect
-                        x="0"
-                        y="2"
-                        width={(barWidth / 100) * 400}
-                        height="16"
-                        rx="8"
-                        fill={barColor}
-                      />
-                    )}
-                  </svg>
+                  </div>
                 </div>
               );
             })}
@@ -128,14 +109,9 @@ export function TeacherDashboardCharts({
 
       {/* 2. Sebaran Profil Kebutuhan Siswa SLB */}
       <Card className="lg:col-span-5 flex flex-col gap-5 p-6 min-w-0 overflow-hidden">
-        <div>
-          <h2 className="text-xl font-bold text-[var(--ink)]">
-            Sebaran Profil Kebutuhan Siswa SLB
-          </h2>
-          <p className="text-sm text-[var(--ink-2)] mt-0.5">
-            Komposisi kebutuhan khusus seluruh siswa terdaftar
-          </p>
-        </div>
+        <h2 className="text-xl font-bold text-[var(--ink)]">
+          Profil Kebutuhan Siswa
+        </h2>
 
         <div className="flex flex-col sm:flex-row lg:flex-col 2xl:flex-row items-center gap-5 flex-1 justify-center min-w-0">
           <div className="relative shrink-0">

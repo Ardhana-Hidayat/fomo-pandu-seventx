@@ -24,7 +24,6 @@ interface PresetInstruction {
   id: string;
   label: string;
   text: string;
-  keyTerms: string[];
 }
 
 const PRESET_INSTRUCTIONS: PresetInstruction[] = [
@@ -32,56 +31,50 @@ const PRESET_INSTRUCTIONS: PresetInstruction[] = [
     id: "buka-buku",
     label: "Buka buku",
     text: "Buka buku pelajaranmu halaman lima",
-    keyTerms: ["BUKA", "BUKU"],
   },
   {
     id: "duduk-rapi",
     label: "Duduk rapi",
     text: "Duduk dengan tenang dan rapi",
-    keyTerms: ["DUDUK", "TENANG", "RAPI"],
   },
   {
     id: "ambil-pensil",
     label: "Ambil pensil",
     text: "Ambil pensil dan kertas tulis",
-    keyTerms: ["AMBIL", "PENSIL", "KERTAS"],
   },
   {
     id: "waktu-istirahat",
     label: "Waktu istirahat",
     text: "Waktunya istirahat dan mencuci tangan",
-    keyTerms: ["ISTIRAHAT", "TANGAN"],
   },
   {
     id: "angkat-tangan",
     label: "Angkat tangan",
     text: "Angkat tangan sebelum bertanya",
-    keyTerms: ["ANGKAT", "TANGAN", "BERTANYA"],
   },
   {
     id: "perhatikan-papan",
     label: "Perhatikan papan",
     text: "Perhatikan papan tulis di depan",
-    keyTerms: ["PAPAN", "TULIS"],
   },
 ];
 
-function extractKeyTermsFromSentence(sentence: string): string[] {
-  const words = sentence
+function extractAllTermsFromSentence(sentence: string): string[] {
+  return sentence
     .trim()
     .split(/[\s-]+/)
     .map((w) => w.replace(/[^a-zA-Z0-9]/g, "").toUpperCase())
     .filter(Boolean);
-  const meaningful = words.filter((w) => w.length >= 2);
-  const chosen = meaningful.length > 0 ? meaningful : words;
-  return Array.from(new Set(chosen));
 }
 
 export function QuickInstructionsClient() {
   const [customText, setCustomText] = useState("");
   const [activePresetId, setActivePresetId] = useState<string | null>(PRESET_INSTRUCTIONS[0].id);
   const [activeText, setActiveText] = useState<string>(PRESET_INSTRUCTIONS[0].text);
-  const [activeKeyTerms, setActiveKeyTerms] = useState<string[]>(PRESET_INSTRUCTIONS[0].keyTerms);
+  const activeKeyTerms = useMemo(
+    () => extractAllTermsFromSentence(activeText),
+    [activeText]
+  );
   const [pace, setPace] = useState<PacePreset>("sedang");
   const [isTvMode, setIsTvMode] = useState(false);
 
@@ -299,7 +292,6 @@ export function QuickInstructionsClient() {
     resetSyncState();
     setActivePresetId(preset.id);
     setActiveText(preset.text);
-    setActiveKeyTerms(preset.keyTerms);
   }
 
   function handleGenerateCustom(e: React.FormEvent) {
@@ -310,7 +302,6 @@ export function QuickInstructionsClient() {
     resetSyncState();
     setActivePresetId(null);
     setActiveText(clean);
-    setActiveKeyTerms(extractKeyTermsFromSentence(clean));
   }
 
   function handleSelectPace(nextPace: PacePreset) {

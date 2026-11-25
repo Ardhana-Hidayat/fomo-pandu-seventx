@@ -27,6 +27,17 @@ export function TeacherSidebar() {
       aria-label="Menu navigasi guru"
       className="hidden md:flex w-64 shrink-0 flex-col border-r border-[var(--border)] bg-[var(--surface)] p-4 h-full overflow-hidden select-none"
     >
+      <div className="mb-4 pb-3 border-b border-[var(--border)]">
+        <Link
+          href="/guru"
+          className="text-base font-bold tracking-tight text-[var(--ink)] flex items-center gap-2 hover:text-[var(--primary)] transition-colors duration-[120ms]"
+        >
+          <span>PANDU</span>
+          <span className="text-xs px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--surface-2)] text-[var(--muted)] font-semibold">
+            Ruang Guru
+          </span>
+        </Link>
+      </div>
       <nav className="flex flex-col gap-1.5">
         {NAV_ITEMS.map((item) => {
           const isActive =

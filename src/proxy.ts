@@ -12,7 +12,9 @@ export function proxy(request: NextRequest) {
 
   // Jika mengakses /guru/* (selain /guru/masuk) tanpa cookie sesi, redirect ke /guru/masuk
   if (isGuruRoute && !isGuruLoginRoute && !teacherCookie) {
-    const loginUrl = new URL("/guru/masuk", request.url);
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/guru/masuk";
+    loginUrl.search = "";
     return NextResponse.redirect(loginUrl);
   }
 

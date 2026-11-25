@@ -28,7 +28,7 @@ export async function GET(request: Request) {
   const response = NextResponse.redirect(authUrl);
   response.cookies.set(OAUTH_STATE_COOKIE_NAME, state, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: origin.startsWith("https://"),
     sameSite: "lax",
     path: "/",
     maxAge: 600,

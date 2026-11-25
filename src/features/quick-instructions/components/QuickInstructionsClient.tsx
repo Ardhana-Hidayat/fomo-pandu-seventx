@@ -5,10 +5,6 @@ import { Card, Button, Field, Icon } from "@/shared/ui";
 import { SignCard } from "@/features/player";
 import {
   tokenize,
-  slotAt,
-  completedSignWord,
-  wordIndexAt,
-  progressInWord,
   type SignSlot,
 } from "@/shared/lib/sync";
 import {
@@ -16,7 +12,11 @@ import {
   buildQuickInstructionPlan,
   type PacePreset,
   type PlaybackSegment,
-} from "../lib/playback-plan";
+} from "@/shared/lib/sync/playback-plan";
+import {
+  preloadSignImagesForWords,
+  runSegmentedPlayback,
+} from "@/shared/lib/sync/segmented-playback";
 
 const SIBI_SYSTEM = "SIBI" as const;
 
@@ -112,16 +112,9 @@ export function QuickInstructionsClient() {
     [tokens, paceConfig]
   );
 
-  // Preload semua gambar huruf SIBI agar pergantian huruf instan tanpa kedipan/keterlambatan
+  // Preload hanya huruf unik SIBI yang muncul pada kalimat aktif
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const uniqueLetters = new Set(
-      expandedKeyWords.join("").toLowerCase().replace(/[^a-z]/g, "").split("")
-    );
-    uniqueLetters.forEach((ch) => {
-      const img = new Image();
-      img.src = `/signs/sibi/${ch}.webp`;
-    });
+    return preloadSignImagesForWords(expandedKeyWords);
   }, [expandedKeyWords]);
 
   const stopPlayback = useCallback(() => {
@@ -172,104 +165,23 @@ export function QuickInstructionsClient() {
 
   const startSegmentedPlayback = useCallback(
     (plan: PlaybackSegment[], runId: number) => {
-      const stepSegment = (segIndex: number) => {
-        if (playbackRunIdRef.current !== runId) return;
-
-        if (segIndex >= plan.length) {
-          setActiveWordIdx(tokens.length);
-          setActiveWordProgress(1);
-          setActiveSignSlot(null);
-          setActiveSegmentWordIdx(null);
-          timeoutRef.current = setTimeout(() => {
-            if (playbackRunIdRef.current === runId) {
-              stopPlayback();
-            }
-          }, 400);
-          return;
-        }
-
-        const seg = plan[segIndex]!;
-        const segStartPerf = performance.now();
-        let speechDone = false;
-
-        const hasSpeech =
-          typeof window !== "undefined" &&
-          "speechSynthesis" in window &&
-          seg.speechText.trim().length > 0;
-
-        if (hasSpeech) {
-          try {
-            window.speechSynthesis.cancel();
-            const utt = new SpeechSynthesisUtterance(seg.speechText);
-            utt.lang = "id-ID";
-            utt.rate = paceConfig.speechRate;
-            utt.onend = () => {
-              speechDone = true;
-            };
-            utt.onerror = () => {
-              speechDone = true;
-            };
-            window.speechSynthesis.speak(utt);
-          } catch {
-            speechDone = true;
-          }
-        } else {
-          speechDone = true;
-        }
-
-        // Batas pengaman jika speechSynthesis browser tidak memicu onend
-        const safetyTimeoutMs = seg.minDurationMs + 2200;
-
-        const tick = () => {
-          if (playbackRunIdRef.current !== runId) return;
-
-          const elapsed = performance.now() - segStartPerf;
-          if (elapsed >= safetyTimeoutMs) {
-            speechDone = true;
-          }
-
-          if (seg.isKey) {
-            const prog = Math.min(1, Math.max(0, elapsed / Math.max(1, seg.minDurationMs)));
-            const slot = slotAt(seg.schedule.slots, elapsed);
-            const doneLocal = completedSignWord(seg.schedule.slots, elapsed);
-
-            setActiveWordIdx(seg.startTokenIdx);
-            setActiveWordProgress(prog);
-            setActiveSegmentWordIdx(seg.startTokenIdx);
-            setActiveSignSlot(slot);
-            setCompletedWordIndex(doneLocal !== null ? seg.startTokenIdx : null);
-          } else {
-            const clampedElapsed = Math.min(elapsed, seg.timeline.total);
-            const localWIdx = Math.max(
-              0,
-              Math.min(seg.tokens.length - 1, wordIndexAt(seg.timeline, clampedElapsed))
-            );
-            const prog =
-              elapsed >= seg.timeline.total
-                ? 1
-                : progressInWord(seg.timeline, clampedElapsed);
-
-            setActiveWordIdx(seg.startTokenIdx + localWIdx);
-            setActiveWordProgress(prog);
-            setActiveSignSlot(null);
-            setCompletedWordIndex(null);
-          }
-
-          if (elapsed >= seg.minDurationMs && speechDone) {
-            // Jeda singkat antar segmen agar ritme tetap nyaman dan jelas
-            timeoutRef.current = setTimeout(() => {
-              stepSegment(segIndex + 1);
-            }, 140);
-            return;
-          }
-
-          animFrameRef.current = requestAnimationFrame(tick);
-        };
-
-        animFrameRef.current = requestAnimationFrame(tick);
-      };
-
-      stepSegment(0);
+      runSegmentedPlayback(plan, tokens.length, paceConfig.speechRate, {
+        isActive: () => playbackRunIdRef.current === runId,
+        onSync: (state) => {
+          setActiveWordIdx(state.activeWordIdx);
+          setActiveWordProgress(state.activeWordProgress);
+          setActiveSegmentWordIdx(state.activeSegmentWordIdx);
+          setActiveSignSlot(state.activeSignSlot);
+          setCompletedWordIndex(state.completedWordIndex);
+        },
+        onComplete: stopPlayback,
+        setFrame: (id) => {
+          animFrameRef.current = id;
+        },
+        setTimer: (id) => {
+          timeoutRef.current = id;
+        },
+      });
     },
     [paceConfig.speechRate, stopPlayback, tokens.length]
   );

@@ -6,7 +6,7 @@ import {
   progressInWord,
   type Token,
   type Timeline,
-} from "./index";
+} from "./timeline";
 import {
   buildSignSchedule,
   slotAt,

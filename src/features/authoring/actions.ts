@@ -5,10 +5,15 @@ import { getCurrentTeacher } from "@/features/auth";
 import {
   createLesson,
   updateLesson,
+  deleteLesson,
   updatePresentation,
+  saveCard,
+  saveQuizQuestion,
   type CreateCardInput,
   type CreateQuestionInput,
   type UpdatePresentationPatch,
+  type SaveCardInput,
+  type SaveQuestionInput,
 } from "@/server/repos/lessons";
 import { publishLesson } from "@/server/repos/publications";
 import {
@@ -93,6 +98,8 @@ export async function createLessonAction(
 
   revalidatePath("/guru");
   revalidatePath("/guru/materi");
+  revalidatePath(`/guru/materi/${lesson.id}`);
+  revalidatePath(`/guru/materi/${lesson.id}/edit`);
 
   return ok({ id: lesson.id });
 }
@@ -207,7 +214,10 @@ export async function updateLessonAction(
     return res;
   }
 
+  revalidatePath("/guru");
+  revalidatePath("/guru/materi");
   revalidatePath(`/guru/materi/${lessonId}`);
+  revalidatePath(`/guru/materi/${lessonId}/edit`);
   return ok(undefined);
 }
 
@@ -226,8 +236,61 @@ export async function updatePresentationAction(
   });
   if (!res.ok) return res;
 
+  revalidatePath("/guru");
+  revalidatePath("/guru/materi");
   revalidatePath(`/guru/materi/${lessonId}`);
   revalidatePath(`/guru/materi/${lessonId}/edit`);
   return ok({ id: res.data.id });
+}
+
+export async function saveCardAction(
+  lessonId: string,
+  input: SaveCardInput
+): Promise<Result<{ id: string }>> {
+  const teacherSession = await getCurrentTeacher();
+  if (!teacherSession) {
+    return err(makeAppError("UNAUTHORIZED", "Sesi guru tidak valid."));
+  }
+
+  const res = await saveCard(teacherSession.teacher.id, lessonId, input);
+  if (!res.ok) return res;
+
+  revalidatePath(`/guru/materi/${lessonId}`);
+  revalidatePath(`/guru/materi/${lessonId}/edit`);
+  return ok({ id: res.data.id });
+}
+
+export async function saveQuizQuestionAction(
+  lessonId: string,
+  input: SaveQuestionInput
+): Promise<Result<{ id: string }>> {
+  const teacherSession = await getCurrentTeacher();
+  if (!teacherSession) {
+    return err(makeAppError("UNAUTHORIZED", "Sesi guru tidak valid."));
+  }
+
+  const res = await saveQuizQuestion(teacherSession.teacher.id, lessonId, input);
+  if (!res.ok) return res;
+
+  revalidatePath(`/guru/materi/${lessonId}`);
+  revalidatePath(`/guru/materi/${lessonId}/edit`);
+  return ok({ id: res.data.id });
+}
+
+export async function deleteLessonAction(
+  lessonId: string
+): Promise<Result<void>> {
+  const teacherSession = await getCurrentTeacher();
+  if (!teacherSession) {
+    return err(makeAppError("UNAUTHORIZED", "Sesi guru tidak valid."));
+  }
+
+  const res = await deleteLesson(teacherSession.teacher.id, lessonId);
+  if (!res.ok) return res;
+
+  revalidatePath("/guru");
+  revalidatePath("/guru/materi");
+  revalidatePath(`/guru/materi/${lessonId}`);
+  return ok(undefined);
 }
 

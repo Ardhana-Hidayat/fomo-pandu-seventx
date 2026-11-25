@@ -169,7 +169,6 @@ export function LessonWizard({
     if (result.ok) {
       onSuccess?.();
       router.push(`/guru/materi/${result.data.id}/edit`);
-      router.refresh();
     } else {
       setIsSubmitting(false);
       setErrorMessage(result.error.message);
@@ -219,7 +218,6 @@ export function LessonWizard({
       if (createdId) {
         onSuccess?.();
         router.push(`/guru/materi/${createdId}/edit`);
-        router.refresh();
       } else {
         setIsSubmitting(false);
         setErrorMessage("Materi berhasil diproses tetapi ID tidak ditemukan.");

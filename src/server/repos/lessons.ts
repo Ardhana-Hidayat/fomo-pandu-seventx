@@ -1,7 +1,7 @@
 import "server-only";
 import fs from "node:fs";
 import path from "node:path";
-import { eq, and, asc, sql, inArray } from "drizzle-orm";
+import { eq, and, asc, desc, sql, inArray } from "drizzle-orm";
 import { db } from "../db/client";
 import {
   lessons,
@@ -580,7 +580,8 @@ export async function listLessonsByTeacher(
     const rows = await db
       .select()
       .from(lessons)
-      .where(eq(lessons.teacherId, teacherId));
+      .where(eq(lessons.teacherId, teacherId))
+      .orderBy(desc(lessons.createdAt));
     return ok(rows);
   } catch (error) {
     return err(
@@ -719,6 +720,152 @@ export function effectiveCardSettings(
     voiceSpeed,
     keyTerms,
   };
+}
+
+export interface SaveCardInput {
+  id?: string;
+  position: number;
+  text: string;
+  keyTerms?: string[];
+  cardType?: "vocabulary" | "instruction" | "step";
+  imageSource?: "upload" | "pictogram" | "ai";
+  imageAlt?: string | null;
+  imageAssetId?: string | null;
+  audioSource?: "tts" | "recording" | "none";
+  audioAssetId?: string | null;
+}
+
+export async function saveCard(
+  teacherId: string,
+  lessonId: string,
+  input: SaveCardInput
+): Promise<Result<LessonCard>> {
+  try {
+    const owned = await db
+      .select({ id: lessons.id })
+      .from(lessons)
+      .where(and(eq(lessons.id, lessonId), eq(lessons.teacherId, teacherId)))
+      .limit(1);
+
+    if (owned.length === 0) {
+      return err(makeAppError("FORBIDDEN", "Materi tidak ditemukan atau bukan milik Anda"));
+    }
+
+    if (input.id && !input.id.startsWith("card-new-")) {
+      const updated = await db
+        .update(lessonCards)
+        .set({
+          position: input.position,
+          text: input.text,
+          keyTerms: input.keyTerms ?? [],
+          ...(input.cardType ? { cardType: input.cardType } : {}),
+          ...(input.imageSource ? { imageSource: input.imageSource } : {}),
+          ...(input.imageAlt !== undefined ? { imageAlt: input.imageAlt } : {}),
+          ...(input.imageAssetId !== undefined ? { imageAssetId: input.imageAssetId } : {}),
+          ...(input.audioSource ? { audioSource: input.audioSource } : {}),
+          ...(input.audioAssetId !== undefined ? { audioAssetId: input.audioAssetId } : {}),
+        })
+        .where(and(eq(lessonCards.id, input.id), eq(lessonCards.lessonId, lessonId)))
+        .returning();
+
+      if (updated[0]) {
+        return ok(updated[0]);
+      }
+    }
+
+    const inserted = await db
+      .insert(lessonCards)
+      .values({
+        lessonId,
+        position: input.position,
+        text: input.text,
+        keyTerms: input.keyTerms ?? [],
+        cardType: input.cardType ?? "instruction",
+        imageSource: input.imageSource ?? "pictogram",
+        imageAlt: input.imageAlt ?? undefined,
+        imageAssetId: input.imageAssetId ?? undefined,
+        audioSource: input.audioSource ?? "none",
+        audioAssetId: input.audioAssetId ?? undefined,
+      })
+      .returning();
+
+    if (!inserted[0]) {
+      return err(makeAppError("CREATE_FAILED", "Gagal menyimpan kartu materi"));
+    }
+    return ok(inserted[0]);
+  } catch (error) {
+    return err(makeAppError("DB_ERROR", "Gagal menyimpan kartu materi", error));
+  }
+}
+
+export interface SaveQuestionInput {
+  id?: string;
+  position: number;
+  type: string;
+  prompt: string;
+  payload: QuizQuestionPayload;
+  keyTerms?: string[];
+  linkedCardId?: string | null;
+  explanation?: string | null;
+}
+
+export async function saveQuizQuestion(
+  teacherId: string,
+  lessonId: string,
+  input: SaveQuestionInput
+): Promise<Result<QuizQuestion>> {
+  try {
+    const owned = await db
+      .select({ id: lessons.id })
+      .from(lessons)
+      .where(and(eq(lessons.id, lessonId), eq(lessons.teacherId, teacherId)))
+      .limit(1);
+
+    if (owned.length === 0) {
+      return err(makeAppError("FORBIDDEN", "Materi tidak ditemukan atau bukan milik Anda"));
+    }
+
+    if (input.id && !input.id.startsWith("q-new-")) {
+      const updated = await db
+        .update(quizQuestions)
+        .set({
+          position: input.position,
+          type: input.type,
+          prompt: input.prompt,
+          payload: input.payload,
+          ...(input.keyTerms !== undefined ? { keyTerms: input.keyTerms } : {}),
+          ...(input.linkedCardId !== undefined ? { linkedCardId: input.linkedCardId } : {}),
+          ...(input.explanation !== undefined ? { explanation: input.explanation } : {}),
+        })
+        .where(and(eq(quizQuestions.id, input.id), eq(quizQuestions.lessonId, lessonId)))
+        .returning();
+
+      if (updated[0]) {
+        return ok(updated[0]);
+      }
+    }
+
+    const inserted = await db
+      .insert(quizQuestions)
+      .values({
+        lessonId,
+        position: input.position,
+        type: input.type,
+        prompt: input.prompt,
+        payload: input.payload,
+        keyTerms: input.keyTerms ?? [],
+        linkedCardId: input.linkedCardId ?? undefined,
+        explanation: input.explanation ?? undefined,
+      })
+      .returning();
+
+    if (!inserted[0]) {
+      return err(makeAppError("CREATE_FAILED", "Gagal menyimpan soal kuis"));
+    }
+    return ok(inserted[0]);
+  } catch (error) {
+    return err(makeAppError("DB_ERROR", "Gagal menyimpan soal kuis", error));
+  }
 }
 
 export interface UpdatePresentationPatch {

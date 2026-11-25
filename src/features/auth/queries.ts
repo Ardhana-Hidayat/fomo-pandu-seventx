@@ -6,7 +6,6 @@ import { cookies } from "next/headers";
 import {
   TEACHER_COOKIE_NAME,
   STUDENT_COOKIE_NAME,
-  TEACHER_SESSION_TTL_MS,
   validateSession,
   verifyTeacherCookieStateless,
   parseTeacherCookiePayload,
@@ -44,27 +43,63 @@ const getCurrentTeacherCached = cache(async (): Promise<CurrentTeacherSession | 
       return null;
     }
 
-    // Fast path: verifikasi stateless HMAC v1 cookie tanpa roundtrip DB berulang saat navigasi
+    // Fast path: verifikasi stateless HMAC v1 cookie, lalu pastikan baris guru ada di DB
     const stateless = verifyTeacherCookieStateless(rawCookie);
     if (stateless) {
       if (!stateless.teacherId || stateless.teacherId === DEMO_TEACHER_ID) {
         return null;
       }
 
-      const createdAtMs =
-        typeof stateless.expiresAt === "number"
-          ? stateless.expiresAt - TEACHER_SESSION_TTL_MS
-          : Date.now();
+      const normalizedEmail = stateless.email?.trim().toLowerCase() || null;
 
-      const teacher: Teacher = {
-        id: stateless.teacherId,
-        email: stateless.email ?? null,
-        displayName: stateless.displayName || "Guru",
-        schoolName: null,
-        authProvider: "google",
-        settings: null,
-        createdAt: new Date(createdAtMs),
-      };
+      let teacher = await db
+        .select()
+        .from(teachers)
+        .where(eq(teachers.id, stateless.teacherId))
+        .limit(1)
+        .then((rows) => rows[0]);
+
+      if (!teacher && normalizedEmail) {
+        teacher = await db
+          .select()
+          .from(teachers)
+          .where(eq(teachers.email, normalizedEmail))
+          .limit(1)
+          .then((rows) => rows[0]);
+      }
+
+      if (!teacher) {
+        const displayName = stateless.displayName?.trim() || "Guru";
+        await db
+          .insert(teachers)
+          .values({
+            id: stateless.teacherId,
+            email: normalizedEmail,
+            displayName,
+            authProvider: "google",
+          })
+          .onConflictDoNothing();
+
+        teacher =
+          (await db
+            .select()
+            .from(teachers)
+            .where(eq(teachers.id, stateless.teacherId))
+            .limit(1)
+            .then((rows) => rows[0])) ??
+          (normalizedEmail
+            ? await db
+                .select()
+                .from(teachers)
+                .where(eq(teachers.email, normalizedEmail))
+                .limit(1)
+                .then((rows) => rows[0])
+            : undefined);
+      }
+
+      if (!teacher || teacher.id === DEMO_TEACHER_ID) {
+        return null;
+      }
 
       return {
         teacher,

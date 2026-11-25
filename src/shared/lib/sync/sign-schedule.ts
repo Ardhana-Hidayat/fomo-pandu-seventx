@@ -2,7 +2,7 @@
  * Penjadwal huruf isyarat dan penyelaras garis waktu dengan audio berkas (acuan, fungsi murni).
  * Bergantung pada tipe di ./index.
  */
-import type { Timeline, TimedWord } from "./index";
+import type { Timeline, TimedWord } from "./timeline";
 
 export interface SignSlot {
   ch: string;          // huruf A-Z

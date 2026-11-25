@@ -1,15 +1,22 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
-import { signInDemoAction, getCurrentTeacher } from "@/features/auth";
+import { Card, DisplayPreferencesTrigger } from "@/shared/ui";
+import { getCurrentTeacher } from "@/features/auth";
+import { TeacherGoogleLoginButton } from "@/features/auth/components/TeacherGoogleLoginButton";
 
 export const instant = false;
 
-export default async function TeacherLoginPage() {
+export default async function TeacherLoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
   const session = await getCurrentTeacher();
   if (session) {
     redirect("/guru");
   }
+  const { error } = await searchParams;
+
   return (
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
       <header className="h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
@@ -31,21 +38,11 @@ export default async function TeacherLoginPage() {
               Masuk Ruang Guru
             </h1>
             <p className="mt-1 text-sm text-[var(--ink-2)]">
-              Gunakan mode demo untuk mengakses ruang kelas, menyusun materi adaptif, dan melihat hasil belajar siswa.
+              Masuk dengan akun Google untuk mengakses ruang kelas, menyusun materi adaptif, dan melihat hasil belajar siswa.
             </p>
           </div>
 
-          <form action={signInDemoAction} className="flex flex-col gap-4">
-            <Button
-              type="submit"
-              variant="primary"
-              size="large"
-              icon={<Icon name="DoorOpen" size={24} />}
-              className="w-full"
-            >
-              Masuk sebagai guru demo
-            </Button>
-          </form>
+          <TeacherGoogleLoginButton errorCode={error} />
 
           <div className="border-t-2 border-[var(--border)] pt-4 text-center">
             <Link

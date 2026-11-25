@@ -62,7 +62,7 @@ export default function HelpPage() {
               </span>
               <h3 className="text-sm font-bold text-[var(--ink)]">Belajar Kartu Multi-Saluran</h3>
               <p className="text-xs text-[var(--ink-2)] leading-relaxed">
-                Pelajari kartu kata dengan teks tersinkron, audio lafal kata, gambar piktogram, dan peraga isyarat tangan SIBI/BISINDO.
+                Pelajari kartu kata dengan teks tersinkron, audio lafal kata, gambar piktogram, dan peraga isyarat tangan SIBI.
               </p>
             </div>
 

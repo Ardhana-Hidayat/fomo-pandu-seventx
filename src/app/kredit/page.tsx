@@ -60,7 +60,7 @@ export default function CreditPage() {
             </div>
             <div>
               <h2 className="text-xl font-bold text-[var(--ink)]">
-                Dataset Bahasa Isyarat Terbuka (SIBI &amp; BISINDO)
+                Dataset Bahasa Isyarat Terbuka (SIBI)
               </h2>
               <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[var(--surface-2)] border border-[var(--border)] text-[var(--muted)]">
                 Lisensi Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -97,34 +97,6 @@ export default function CreditPage() {
               </p>
               <p className="text-xs text-[var(--muted)]">
                 Rujukan kebenaran: Kamus Sistem Isyarat Bahasa Indonesia (SIBI), Kemdikbud RI.
-              </p>
-            </div>
-
-            <div className="rounded-lg border-2 border-[var(--border)] bg-[var(--surface-2)] p-4 space-y-2">
-              <div className="font-bold text-[var(--ink)]">BISINDO (Bahasa Isyarat Indonesia)</div>
-              <p>
-                Arya Raden, Muhammad Asshafi (2026). <em>BISINDO DATASET</em>. Mendeley Data, V1.{" "}
-                <a
-                  href="https://doi.org/10.17632/4xnkvr88tk.1"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[var(--link)] underline font-mono"
-                >
-                  doi:10.17632/4xnkvr88tk.1
-                </a>
-                . Lisensi{" "}
-                <a
-                  href="https://creativecommons.org/licenses/by/4.0/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[var(--link)] underline"
-                >
-                  CC BY 4.0
-                </a>
-                .
-              </p>
-              <p className="text-xs text-[var(--muted)]">
-                Rujukan kebenaran: Lembar Abjad BISINDO Resmi Kementerian Pendidikan Dasar dan Menengah RI.
               </p>
             </div>
 

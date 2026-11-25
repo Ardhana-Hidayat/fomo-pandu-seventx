@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import { listSigns, verifySignItem } from "@/server/services/signs";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
-    const system = searchParams.get("system") || "SIBI";
-    const items = await listSigns(system);
+    const items = await listSigns("SIBI");
     return NextResponse.json({ success: true, items });
   } catch (error) {
     return NextResponse.json(
@@ -18,7 +16,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const system = body.system || "SIBI";
+    const system = "SIBI";
     const key = body.key || "";
     const verifiedBy = body.verifiedBy || "Guru SLB";
 

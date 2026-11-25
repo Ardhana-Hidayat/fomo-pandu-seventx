@@ -46,7 +46,7 @@ export default async function ClassroomDetailPage({
             {classroom.name}
           </h1>
           <p className="text-sm text-[var(--muted)]">
-            Jenjang {classroom.level.toUpperCase()} &bull; Sistem isyarat: {classroom.defaultSignSystem}
+            Jenjang {classroom.level.toUpperCase()} &bull; Sistem isyarat: SIBI
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export default async function ClassroomDetailPage({
           <ShareClassroomButton
             classroomName={classroom.name}
             joinCode={classroom.joinCode}
-            signSystem={classroom.defaultSignSystem}
+            signSystem="SIBI"
           />
           <Button
             variant="secondary"

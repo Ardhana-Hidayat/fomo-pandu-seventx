@@ -37,12 +37,15 @@ export function SignCard({
 
   const isMoving = motion || currentLetter === "J" || currentLetter === "Z";
 
+  // Selalu kunci ke SIBI
+  const lockedSystem = "SIBI" as const;
+
   // Prioritas: Supabase Storage CDN jika dikonfigurasi, dengan fallback mulus ke lokal /signs/
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const remoteSrc = supabaseUrl
-    ? `${supabaseUrl.replace(/\/+$/, "")}/storage/v1/object/public/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`
+    ? `${supabaseUrl.replace(/\/+$/, "")}/storage/v1/object/public/signs/${lockedSystem.toLowerCase()}/${currentLetter.toLowerCase()}.webp`
     : null;
-  const localSrc = `/signs/${system.toLowerCase()}/${currentLetter.toLowerCase()}.webp`;
+  const localSrc = `/signs/${lockedSystem.toLowerCase()}/${currentLetter.toLowerCase()}.webp`;
 
   const [failedUrls, setFailedUrls] = useState<Record<string, boolean>>({});
 
@@ -72,13 +75,13 @@ export function SignCard({
             : "aspect-square w-32 sm:w-36 p-2.5"
         }`}
       >
-        {/* Badge Sistem Isyarat (SIBI / BISINDO) */}
+        {/* Badge Sistem Isyarat (SIBI) */}
         <span
           className={`absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded font-mono font-extrabold border border-[var(--border)] bg-[var(--surface-2)] text-[var(--ink)] select-none z-10 ${
             isTv ? "text-xs" : isMatch ? "text-[10px]" : "text-[9px]"
           }`}
         >
-          {system}
+          {lockedSystem}
         </span>
 
         {/* Gambar Isyarat Nyata dari Dataset Terbuka */}
@@ -86,7 +89,7 @@ export function SignCard({
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={activeSrc}
-            alt={`Isyarat huruf ${currentLetter} dalam ${system}`}
+            alt={`Isyarat huruf ${currentLetter} dalam ${lockedSystem}`}
             onError={() => {
               setFailedUrls((prev) => ({ ...prev, [activeSrc]: true }));
             }}

@@ -82,7 +82,7 @@ export default async function GuruKelasIndexPage() {
                   </div>
 
                   <span className="shrink-0 text-xs px-2.5 py-1 rounded-full border border-[var(--border)] font-bold bg-[var(--surface-2)] text-[var(--ink)]">
-                    {c.defaultSignSystem}
+                    SIBI
                   </span>
                 </div>
 
@@ -142,7 +142,7 @@ export default async function GuruKelasIndexPage() {
                 <ShareClassroomButton
                   classroomName={c.name}
                   joinCode={c.joinCode}
-                  signSystem={c.defaultSignSystem}
+                  signSystem="SIBI"
                   className="w-full justify-center text-xs sm:text-sm px-2.5"
                 />
                 <Button

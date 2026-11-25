@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Card, Chip, Button, Icon, StatusMessage } from "@/shared/ui";
+import { Card, Button, Icon, StatusMessage } from "@/shared/ui";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const DEMO_VERIFIED_SIBI = new Set(["A", "B", "D", "E", "G", "H", "I", "K", "L", "N", "O", "R", "S", "T", "U"]);
@@ -15,7 +15,7 @@ interface SignItemState {
 }
 
 export function SignLibraryClient() {
-  const [activeTab, setActiveTab] = useState<"SIBI" | "BISINDO">("SIBI");
+  const activeTab = "SIBI" as const;
   const [sibiSigns, setSibiSigns] = useState<Record<string, SignItemState>>(() => {
     const initial: Record<string, SignItemState> = {};
     ALPHABET.forEach((l) => {
@@ -30,24 +30,13 @@ export function SignLibraryClient() {
     return initial;
   });
 
-  const [bisindoSigns, setBisindoSigns] = useState<Record<string, SignItemState>>(() => {
-    const initial: Record<string, SignItemState> = {};
-    ALPHABET.forEach((l) => {
-      initial[l] = {
-        letter: l,
-        status: "source",
-      };
-    });
-    return initial;
-  });
-
   const [notification, setNotification] = useState<string | null>(null);
   const [selectedSourceDetail, setSelectedSourceDetail] = useState<{
     letter: string;
-    system: "SIBI" | "BISINDO";
+    system: "SIBI";
   } | null>(null);
 
-  const currentSigns = activeTab === "SIBI" ? sibiSigns : bisindoSigns;
+  const currentSigns = sibiSigns;
   const verifiedCount = Object.values(currentSigns).filter((s) => s.status === "verified").length;
   const sourceCount = Object.values(currentSigns).filter((s) => s.status === "source").length;
 
@@ -58,27 +47,15 @@ export function SignLibraryClient() {
     );
     if (!examinerName) return;
 
-    if (activeTab === "SIBI") {
-      setSibiSigns((prev) => ({
-        ...prev,
-        [letter]: {
-          ...prev[letter],
-          status: "verified",
-          verifiedBy: examinerName,
-          verifiedAt: new Date().toISOString().split("T")[0],
-        },
-      }));
-    } else {
-      setBisindoSigns((prev) => ({
-        ...prev,
-        [letter]: {
-          ...prev[letter],
-          status: "verified",
-          verifiedBy: examinerName,
-          verifiedAt: new Date().toISOString().split("T")[0],
-        },
-      }));
-    }
+    setSibiSigns((prev) => ({
+      ...prev,
+      [letter]: {
+        ...prev[letter],
+        status: "verified",
+        verifiedBy: examinerName,
+        verifiedAt: new Date().toISOString().split("T")[0],
+      },
+    }));
     setNotification(`Huruf ${letter} (${activeTab}) berhasil ditandai terverifikasi oleh ${examinerName}.`);
   }
 
@@ -141,41 +118,24 @@ export function SignLibraryClient() {
           </div>
         </div>
 
-        {/* Tab Pemilih Sistem */}
-        <div className="flex gap-2">
-          <Chip
-            label="SIBI"
-            selected={activeTab === "SIBI"}
-            onSelect={() => setActiveTab("SIBI")}
-            role="radio"
-          />
-          <Chip
-            label="BISINDO"
-            selected={activeTab === "BISINDO"}
-            onSelect={() => setActiveTab("BISINDO")}
-            role="radio"
-          />
-        </div>
+        {/* Sistem Isyarat Aktif (Terkunci ke SIBI) */}
+        <span className="px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-xs font-extrabold text-[var(--ink)]">
+          SIBI (Resmi Sekolah)
+        </span>
       </Card>
 
       {/* Rujukan Sistem */}
       <div className="text-xs text-[var(--muted)] flex flex-wrap items-center justify-between gap-2">
         <span>
           Rujukan kebenaran:{" "}
-          {activeTab === "SIBI" ? (
-            <a
-              href="https://pmpk.kemdikbud.go.id/sibi/"
-              target="_blank"
-              rel="noreferrer"
-              className="font-bold underline text-[var(--link)]"
-            >
-              Kamus SIBI Resmi Kemdikbudristek &rarr;
-            </a>
-          ) : (
-            <span className="font-bold text-[var(--ink)]">
-              Lembar Abjad BISINDO Resmi Kemendikdasmen
-            </span>
-          )}
+          <a
+            href="https://pmpk.kemdikbud.go.id/sibi/"
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold underline text-[var(--link)]"
+          >
+            Kamus SIBI Resmi Kemdikbudristek &rarr;
+          </a>
         </span>
         <span className="font-mono font-bold">
           {verifiedCount} / 26 Terverifikasi
@@ -200,25 +160,17 @@ export function SignLibraryClient() {
           <div className="text-sm space-y-1 text-[var(--ink-2)]">
             <p>
               <strong>Dataset:</strong>{" "}
-              {selectedSourceDetail.system === "SIBI"
-                ? "SIBI Indonesian Sign Language Alphabet Image Dataset for Hand Gesture Recognition (Handayani & Azizah, 2026)"
-                : "BISINDO DATASET (Raden & Asshafi, 2026)"}
+              SIBI Indonesian Sign Language Alphabet Image Dataset for Hand Gesture Recognition (Handayani &amp; Azizah, 2026)
             </p>
             <p>
               <strong>DOI:</strong>{" "}
               <a
-                href={
-                  selectedSourceDetail.system === "SIBI"
-                    ? "https://doi.org/10.17632/xdn2gj38xf.1"
-                    : "https://doi.org/10.17632/4xnkvr88tk.1"
-                }
+                href="https://doi.org/10.17632/xdn2gj38xf.1"
                 target="_blank"
                 rel="noreferrer"
                 className="text-[var(--link)] underline font-mono"
               >
-                {selectedSourceDetail.system === "SIBI"
-                  ? "10.17632/xdn2gj38xf.1"
-                  : "10.17632/4xnkvr88tk.1"}
+                10.17632/xdn2gj38xf.1
               </a>
             </p>
             <p>

@@ -5,7 +5,6 @@ import { Card, Button, Chip, Icon, StatusMessage, usePreferences } from "@/share
 
 export function TeacherSettingsClient() {
   const { preferences, setPreference } = usePreferences();
-  const [signSystem, setSignSystem] = useState<"SIBI" | "BISINDO">("SIBI");
   const [audioSpeed, setAudioSpeed] = useState<"0.8" | "0.9" | "1.0">("0.9");
 
   // Healthcheck state
@@ -96,25 +95,15 @@ export function TeacherSettingsClient() {
       {/* 2. Sistem Isyarat Bawaan & Tautan Pustaka */}
       <Card as="section" className="flex flex-col gap-4">
         <div>
-          <h2 className="text-xl font-bold text-[var(--ink)]">Sistem Isyarat Bawaan</h2>
+          <h2 className="text-xl font-bold text-[var(--ink)]">Sistem Isyarat</h2>
           <p className="text-sm text-[var(--ink-2)]">
-            Pilih sistem isyarat standar yang otomatis dipakai saat membuat materi baru.
+            PANDU menggunakan SIBI (Sistem Isyarat Bahasa Indonesia) sebagai sistem isyarat standar.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          <Chip
-            label="SIBI (Sistem Isyarat Bahasa Indonesia)"
-            selected={signSystem === "SIBI"}
-            onSelect={() => setSignSystem("SIBI")}
-            role="radio"
-          />
-          <Chip
-            label="BISINDO (Bahasa Isyarat Indonesia)"
-            selected={signSystem === "BISINDO"}
-            onSelect={() => setSignSystem("BISINDO")}
-            role="radio"
-          />
+        <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] text-sm font-bold text-[var(--ink)] w-fit">
+          <Icon name="Hand" size={18} className="text-[var(--primary)]" />
+          <span>SIBI (Sistem Isyarat Bahasa Indonesia)</span>
         </div>
 
         <div className="pt-3 border-t border-[var(--border)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">

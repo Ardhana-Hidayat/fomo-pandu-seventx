@@ -7,8 +7,7 @@ import { SYSTEM_VOICES, SPEED_OPTIONS } from "@/server/config/voices";
 import { SignCard } from "@/features/player";
 
 interface SignVoiceReviewPanelProps {
-  signSystem: "SIBI" | "BISINDO";
-  onChangeSignSystem: (sys: "SIBI" | "BISINDO") => void;
+  signSystem?: "SIBI";
   signScope?: "key_terms" | "all";
   onChangeSignScope?: (scope: "key_terms" | "all") => void;
   signSpeed?: number;
@@ -25,8 +24,6 @@ interface SignVoiceReviewPanelProps {
 }
 
 export function SignVoiceReviewPanel({
-  signSystem,
-  onChangeSignSystem,
   signScope = "key_terms",
   onChangeSignScope,
   signSpeed = 1.0,
@@ -40,24 +37,9 @@ export function SignVoiceReviewPanel({
     keyTerms: ["tangan", "air"],
   },
 }: SignVoiceReviewPanelProps) {
+  const signSystem = "SIBI" as const;
   const [isPlayingSample, setIsPlayingSample] = useState(false);
-  const [showBisindoWarning, setShowBisindoWarning] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
-
-  function handleSelectSignSystem(sys: "SIBI" | "BISINDO") {
-    if (sys === "BISINDO" && signSystem !== "BISINDO") {
-      setShowBisindoWarning(true);
-      return;
-    }
-    onChangeSignSystem(sys);
-    setNotification(`Sistem isyarat diatur ke ${sys}.`);
-  }
-
-  function confirmSwitchToBisindo() {
-    setShowBisindoWarning(false);
-    onChangeSignSystem("BISINDO");
-    setNotification("Isyarat diganti ke BISINDO. Huruf yang belum tersedia akan menampilkan kotak huruf.");
-  }
 
   function handlePlaySampleVoice() {
     if (isPlayingSample) {
@@ -104,60 +86,21 @@ export function SignVoiceReviewPanel({
         <StatusMessage type="info">{notification}</StatusMessage>
       )}
 
-      {/* Peringatan Ganti BISINDO */}
-      {showBisindoWarning && (
-        <div className="p-4 rounded-xl border-2 border-[var(--ulang-edge)] bg-[var(--ulang-bg)] text-[var(--ulang-ink)] flex flex-col gap-3">
-          <div className="flex items-start gap-2">
-            <Icon name="Info" size={20} className="shrink-0 mt-0.5" />
-            <div className="text-sm">
-              <strong className="block">Perhatian Ganti ke BISINDO:</strong>
-              Beberapa huruf isyarat BISINDO bergerak (seperti J dan Z) belum diverifikasi penuh oleh guru. Kartu akan menampilkan kotak huruf untuk huruf yang belum tersedia. Tetap ganti?
-            </div>
-          </div>
-          <div className="flex items-center gap-2 justify-end">
-            <Button
-              variant="secondary"
-              size="normal"
-              onClick={() => setShowBisindoWarning(false)}
-            >
-              Batal
-            </Button>
-            <Button
-              variant="primary"
-              size="normal"
-              onClick={confirmSwitchToBisindo}
-            >
-              Tetap Ganti ke BISINDO
-            </Button>
-          </div>
-        </div>
-      )}
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Kolom 1: Pengaturan Isyarat */}
         <div className="flex flex-col gap-4">
-          <fieldset className="flex flex-col gap-2">
-            <legend className="text-sm font-extrabold text-[var(--ink)] mb-1">
-              Sistem Isyarat Bawaan
-            </legend>
-            <div className="flex items-center gap-2" role="radiogroup">
-              <Chip
-                label="SIBI (Resmi Sekolah)"
-                selected={signSystem === "SIBI"}
-                onSelect={() => handleSelectSignSystem("SIBI")}
-                role="radio"
-              />
-              <Chip
-                label="BISINDO"
-                selected={signSystem === "BISINDO"}
-                onSelect={() => handleSelectSignSystem("BISINDO")}
-                role="radio"
-              />
+          <div className="flex flex-col gap-2">
+            <span className="text-sm font-extrabold text-[var(--ink)]">
+              Sistem Isyarat
+            </span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] text-xs font-bold text-[var(--ink)] w-fit">
+              <Icon name="Hand" size={16} className="text-[var(--primary)]" />
+              <span>SIBI (Resmi Sekolah)</span>
             </div>
             <span className="text-[11px] text-[var(--muted)]">
               Berlaku untuk seluruh kartu belajar dan kuis materi ini.
             </span>
-          </fieldset>
+          </div>
 
           <fieldset className="flex flex-col gap-2">
             <legend className="text-sm font-extrabold text-[var(--ink)] mb-1">

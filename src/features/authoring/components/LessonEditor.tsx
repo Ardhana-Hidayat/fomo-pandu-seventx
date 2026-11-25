@@ -24,8 +24,8 @@ export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
   const [cards, setCards] = useState(lesson.cards);
   const [questions, setQuestions] = useState(lesson.questions);
 
-  // Pack 2: State Pengaturan Isyarat & Suara
-  const [signSystem, setSignSystem] = useState<"SIBI" | "BISINDO">((lesson.signSystem as "SIBI" | "BISINDO") ?? "SIBI");
+  // Pack 2: State Pengaturan Isyarat & Suara (dikunci ke SIBI)
+  const signSystem = "SIBI" as const;
   const [signScope, setSignScope] = useState<"key_terms" | "all">((lesson.signScope as "key_terms" | "all") ?? "key_terms");
   const [signSpeed, setSignSpeed] = useState<number>(lesson.signSpeed ?? 1.0);
   const [voiceKey, setVoiceKey] = useState<string>(lesson.voiceKey ?? "A");
@@ -694,7 +694,6 @@ export function LessonEditor({ lesson, classrooms }: LessonEditorProps) {
         <section className="flex flex-col gap-6">
           <SignVoiceReviewPanel
             signSystem={signSystem}
-            onChangeSignSystem={setSignSystem}
             signScope={signScope}
             onChangeSignScope={setSignScope}
             signSpeed={signSpeed}

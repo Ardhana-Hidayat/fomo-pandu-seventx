@@ -408,7 +408,7 @@ export function QuizRunner({
 
             {showPromptSign && hasPromptSign && (
               <div className="mt-1 flex justify-center">
-                <SignCard term={currentQ.keyTerms![0]} system={signSystem} size="compact" />
+                <SignCard term={currentQ.keyTerms![0]} system="SIBI" size="compact" />
               </div>
             )}
 
@@ -425,7 +425,7 @@ export function QuizRunner({
               <span className="text-xs sm:text-sm font-semibold text-[var(--ink-2)]">
                 Perhatikan ejaan isyarat kata berikut:
               </span>
-              <SignCard term={signTargetWord} system={signSystem} size="compact" />
+              <SignCard term={signTargetWord} system="SIBI" size="compact" />
             </div>
           )}
 

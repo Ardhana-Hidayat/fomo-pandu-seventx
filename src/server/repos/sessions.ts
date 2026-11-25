@@ -67,7 +67,7 @@ export async function startSession(
         publicationId: input.publicationId,
         device: input.device ?? "ponsel",
         channelsOn: input.channelsOn ?? [],
-        signSystem: input.signSystem ?? "SIBI",
+        signSystem: "SIBI",
         speechRate: input.speechRate ?? 1.0,
         signSpeed: input.signSpeed ?? 1.0,
       })

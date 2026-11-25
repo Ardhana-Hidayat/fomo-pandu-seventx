@@ -26,7 +26,7 @@ export interface CreateLessonPayload {
   exerciseType?: "match" | "order" | "both";
   optionCount?: number;
   classroomIdsToPublish?: string[];
-  signSystem?: "SIBI" | "BISINDO";
+  signSystem?: "SIBI";
   signScope?: "key_terms" | "all";
   signSpeed?: number;
   voiceKey?: string;
@@ -52,7 +52,6 @@ export async function createLessonAction(
     exerciseType,
     optionCount,
     classroomIdsToPublish,
-    signSystem,
     signScope,
     signSpeed,
     voiceKey,
@@ -69,7 +68,7 @@ export async function createLessonAction(
     questions,
     exerciseType,
     optionCount,
-    signSystem,
+    signSystem: "SIBI",
     signScope,
     signSpeed,
     voiceKey,
@@ -155,7 +154,10 @@ export async function updatePresentationAction(
     return err(makeAppError("UNAUTHORIZED", "Sesi guru tidak valid."));
   }
 
-  const res = await updatePresentation(teacherSession.teacher.id, lessonId, patch);
+  const res = await updatePresentation(teacherSession.teacher.id, lessonId, {
+    ...patch,
+    signSystem: "SIBI",
+  });
   if (!res.ok) return res;
 
   revalidatePath(`/guru/materi/${lessonId}`);

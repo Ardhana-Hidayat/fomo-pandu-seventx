@@ -119,7 +119,7 @@ export async function createLesson(
         exerciseType: input.exerciseType ?? "both",
         optionCount: input.optionCount ?? 3,
         showTextHint: input.showTextHint ?? true,
-        signSystem: input.signSystem ?? "SIBI",
+        signSystem: "SIBI",
         signScope: input.signScope ?? "key_terms",
         signSpeed: input.signSpeed ?? 1.0,
         voiceKey: input.voiceKey ?? "A",
@@ -702,12 +702,7 @@ export function effectiveCardSettings(
   lesson: Pick<Lesson, "signSystem" | "signScope" | "signSpeed" | "voiceKey" | "voiceSpeed">,
   card: Pick<LessonCard, "signOverride" | "voiceOverride" | "keyTerms">
 ): EffectiveCardSettings {
-  let effectiveSign: "SIBI" | "BISINDO" | null = (lesson.signSystem as "SIBI" | "BISINDO") ?? "SIBI";
-  if (card.signOverride === "NONE") {
-    effectiveSign = null;
-  } else if (card.signOverride === "SIBI" || card.signOverride === "BISINDO") {
-    effectiveSign = card.signOverride;
-  }
+  const effectiveSign: "SIBI" | null = card.signOverride === "NONE" ? null : "SIBI";
 
   const voiceKey = card.voiceOverride ?? lesson.voiceKey ?? "A";
   const signScope = lesson.signScope ?? "key_terms";
@@ -743,6 +738,7 @@ export async function updatePresentation(
       .update(lessons)
       .set({
         ...patch,
+        signSystem: "SIBI",
         audioVersion: sql`${lessons.audioVersion} + 1`,
       })
       .where(

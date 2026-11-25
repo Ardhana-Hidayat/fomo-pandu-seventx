@@ -1,12 +1,69 @@
 import "server-only";
 
+import { eq, and, isNull } from "drizzle-orm";
+import { db } from "@/server/db/client";
 import {
   listLessonsByTeacher,
   getLessonWithContent,
   type LessonWithContent,
 } from "@/server/repos/lessons";
-import { type Lesson } from "@/server/db/schema";
+import {
+  lessons,
+  publications,
+  classrooms,
+  type Lesson,
+} from "@/server/db/schema";
 import { DEMO_TEACHER_ID } from "@/server/db/demo-lesson-data";
+
+export interface LessonShareInfo {
+  shareCode: string;
+  classroomId: string;
+  classroomName: string;
+  classroomJoinCode: string;
+}
+
+export async function listTeacherLessonShares(
+  teacherId: string
+): Promise<Record<string, LessonShareInfo[]>> {
+  try {
+    const rows = await db
+      .select({
+        lessonId: publications.lessonId,
+        shareCode: publications.shareCode,
+        classroomId: classrooms.id,
+        classroomName: classrooms.name,
+        classroomJoinCode: classrooms.joinCode,
+      })
+      .from(publications)
+      .innerJoin(lessons, eq(publications.lessonId, lessons.id))
+      .innerJoin(classrooms, eq(publications.classroomId, classrooms.id))
+      .where(
+        and(
+          eq(lessons.teacherId, teacherId),
+          eq(publications.visible, true),
+          isNull(classrooms.archivedAt)
+        )
+      );
+
+    const map: Record<string, LessonShareInfo[]> = {};
+    for (const row of rows) {
+      if (!row.shareCode) continue;
+      if (!map[row.lessonId]) {
+        map[row.lessonId] = [];
+      }
+      map[row.lessonId].push({
+        shareCode: row.shareCode,
+        classroomId: row.classroomId,
+        classroomName: row.classroomName,
+        classroomJoinCode: row.classroomJoinCode,
+      });
+    }
+    return map;
+  } catch (error) {
+    console.error("Gagal memuat info bagikan materi:", error);
+    return {};
+  }
+}
 
 export async function listTeacherLessons(
   teacherId: string

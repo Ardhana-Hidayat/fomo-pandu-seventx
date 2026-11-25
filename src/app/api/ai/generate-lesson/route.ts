@@ -17,6 +17,8 @@ export async function POST(request: Request) {
     let languageComplexity: "sangat_sederhana" | "sederhana" | "biasa" = "sederhana";
     let cardCount = 6;
     let questionCount = 4;
+    let exerciseType: "match" | "order" | "both" = "both";
+    let optionCount = 3;
     let teacherNotes = "";
     let fileBuffer: Buffer | undefined;
     let mimeType: string | undefined;
@@ -28,6 +30,18 @@ export async function POST(request: Request) {
       sourceType = ((formData.get("sourceType") as string) || "topik") as typeof sourceType;
       level = ((formData.get("level") as string) || "sdlb") as typeof level;
       teacherNotes = (formData.get("teacherNotes") as string) || "";
+      const rawCardCount = formData.get("cardCount");
+      if (rawCardCount) cardCount = Math.min(15, Math.max(3, Number(rawCardCount) || 6));
+      const rawQuestionCount = formData.get("questionCount");
+      if (rawQuestionCount !== null && rawQuestionCount !== "") {
+        questionCount = Math.min(10, Math.max(0, Number(rawQuestionCount)));
+      }
+      const rawExerciseType = formData.get("exerciseType") as string | null;
+      if (rawExerciseType === "match" || rawExerciseType === "order" || rawExerciseType === "both") {
+        exerciseType = rawExerciseType;
+      }
+      const rawOptionCount = formData.get("optionCount");
+      if (rawOptionCount) optionCount = Math.min(4, Math.max(2, Number(rawOptionCount) || 3));
 
       const file = formData.get("file") as File | null;
       if (file && file.size > 0) {
@@ -89,26 +103,29 @@ export async function POST(request: Request) {
           audioSource: "none",
         }));
 
-        const questionsToInsert: CreateQuestionInput[] = aiResult.lesson.questions.map((q, i) => ({
-          position: i + 1,
-          type: q.type,
-          prompt: q.prompt,
-          payload: {
-            options: q.options?.map((opt, optIdx) => ({
-              id: opt.id || String.fromCharCode(97 + optIdx),
-              text: opt.text,
-              correct: opt.correct,
-              image: opt.image,
-            })),
-            steps: q.steps?.map((step, stepIdx) => ({
-              id: step.id || `step-${stepIdx + 1}`,
-              text: step.text,
-              image: step.image,
-            })),
-            answer: q.answer,
-          },
-          linkedCardId: undefined,
-        }));
+        const questionsToInsert: CreateQuestionInput[] =
+          questionCount === 0
+            ? []
+            : aiResult.lesson.questions.slice(0, questionCount).map((q, i) => ({
+                position: i + 1,
+                type: q.type,
+                prompt: q.prompt,
+                payload: {
+                  options: q.options?.slice(0, optionCount).map((opt, optIdx) => ({
+                    id: opt.id || String.fromCharCode(97 + optIdx),
+                    text: opt.text,
+                    correct: opt.correct,
+                    image: opt.image,
+                  })),
+                  steps: q.steps?.map((step, stepIdx) => ({
+                    id: step.id || `step-${stepIdx + 1}`,
+                    text: step.text,
+                    image: step.image,
+                  })),
+                  answer: q.answer,
+                },
+                linkedCardId: undefined,
+              }));
 
         const dbRes = await createLesson(teacher.id, {
           title: aiResult.lesson.title || topic || "Materi Baru",
@@ -116,6 +133,8 @@ export async function POST(request: Request) {
           level,
           sourceType,
           status: "draft",
+          exerciseType,
+          optionCount,
           generatedBy: aiResult.generatedBy,
           cards: cardsToInsert,
           questions: questionsToInsert,

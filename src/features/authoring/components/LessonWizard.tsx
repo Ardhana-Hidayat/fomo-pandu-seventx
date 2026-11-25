@@ -46,6 +46,11 @@ export function LessonWizard({
   const [pdfTitle, setPdfTitle] = useState("");
   const [cardCount, setCardCount] = useState<number>(6);
 
+  // Pengaturan Kuis Setelah Materi (untuk Manual & PDF)
+  const [questionCount, setQuestionCount] = useState<number>(3);
+  const [exerciseType, setExerciseType] = useState<"match" | "order" | "both">("both");
+  const [optionCount, setOptionCount] = useState<number>(3);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -60,12 +65,44 @@ export function LessonWizard({
     setIsSubmitting(true);
     setErrorMessage(null);
 
+    const starterQuestions = Array.from({ length: questionCount }, (_, idx) => {
+      const pos = idx + 1;
+      const isOrderQ = exerciseType === "order" || (exerciseType === "both" && pos % 2 === 0);
+      if (isOrderQ) {
+        return {
+          position: pos,
+          type: "arrange_steps" as const,
+          prompt: `Urutkan langkah ${cleanTitle} (Soal ${pos})`,
+          payload: {
+            steps: ["Langkah 1", "Langkah 2", "Langkah 3"],
+          },
+        };
+      }
+      const opts = Array.from({ length: optionCount }, (__, oIdx) => ({
+        id: `q${pos}-opt-${oIdx + 1}`,
+        text: oIdx === 0 ? "Jawaban Benar" : `Pilihan ${oIdx + 1}`,
+        correct: oIdx === 0,
+      }));
+      return {
+        position: pos,
+        type: "choice_word" as const,
+        prompt: `Latihan ${pos}: ${cleanTitle}`,
+        payload: {
+          options: opts,
+          answer: "Jawaban Benar",
+          showTextHint: true,
+        },
+      };
+    });
+
     const result = await createLessonAction({
       title: cleanTitle,
       topic: topic.trim() || cleanTitle,
       level: "sdlb",
       sourceType: "teks",
       generatedBy: "manual",
+      exerciseType,
+      optionCount,
       cards: [
         {
           position: 1,
@@ -77,7 +114,7 @@ export function LessonWizard({
           audioSource: "tts",
         },
       ],
-      questions: [],
+      questions: starterQuestions,
       classroomIdsToPublish:
         selectedClassrooms.length > 0 ? selectedClassrooms : undefined,
     });
@@ -111,6 +148,9 @@ export function LessonWizard({
         pdfTitle.trim() || pdfFile.name.replace(/\.pdf$/i, "")
       );
       formData.append("cardCount", String(cardCount));
+      formData.append("questionCount", String(questionCount));
+      formData.append("exerciseType", exerciseType);
+      formData.append("optionCount", String(optionCount));
       formData.append("level", "sdlb");
 
       const response = await fetch("/api/ai/generate-lesson", {
@@ -142,6 +182,112 @@ export function LessonWizard({
       setErrorMessage("Terjadi gangguan jaringan saat mengunggah PDF.");
     }
   }
+
+  const quizSettingsSection = (
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-4 flex flex-col gap-4">
+      <span className="font-bold text-sm text-[var(--ink)]">
+        Kuis Setelah Materi
+      </span>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+        {/* Jumlah Soal Kuis (- / +) */}
+        <div className="flex flex-col gap-2">
+          <span className="font-bold text-xs text-[var(--ink-2)]">
+            Jumlah Soal
+          </span>
+          <div className="inline-flex items-center gap-2 self-start rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] p-1">
+            <Button
+              type="button"
+              variant="secondary"
+              size="compact"
+              onClick={() => setQuestionCount((q) => Math.max(0, q - 1))}
+              disabled={questionCount <= 0}
+              aria-label="Kurangi jumlah soal kuis"
+              className="min-w-[38px] px-2.5"
+            >
+              −
+            </Button>
+            <span className="min-w-[72px] text-center font-mono text-sm font-extrabold text-[var(--ink)]">
+              {questionCount} Soal
+            </span>
+            <Button
+              type="button"
+              variant="secondary"
+              size="compact"
+              onClick={() => setQuestionCount((q) => Math.min(10, q + 1))}
+              disabled={questionCount >= 10}
+              aria-label="Tambah jumlah soal kuis"
+              className="min-w-[38px] px-2.5"
+            >
+              +
+            </Button>
+          </div>
+        </div>
+
+        {/* Tipe Latihan */}
+        {questionCount > 0 && (
+          <div className="flex flex-col gap-2">
+            <span className="font-bold text-xs text-[var(--ink-2)]">
+              Jenis Soal
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              {(
+                [
+                  ["match", "Pilihan"],
+                  ["order", "Urutkan"],
+                  ["both", "Campuran"],
+                ] as const
+              ).map(([val, label]) => (
+                <Chip
+                  key={val}
+                  label={label}
+                  selected={exerciseType === val}
+                  onSelect={() => setExerciseType(val)}
+                  role="radio"
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Jumlah Pilihan Jawaban */}
+        {questionCount > 0 && exerciseType !== "order" && (
+          <div className="flex flex-col gap-2">
+            <span className="font-bold text-xs text-[var(--ink-2)]">
+              Pilihan Jawaban
+            </span>
+            <div className="inline-flex items-center gap-2 self-start rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] p-1">
+              <Button
+                type="button"
+                variant="secondary"
+                size="compact"
+                onClick={() => setOptionCount((o) => Math.max(2, o - 1))}
+                disabled={optionCount <= 2}
+                aria-label="Kurangi pilihan jawaban"
+                className="min-w-[38px] px-2.5"
+              >
+                −
+              </Button>
+              <span className="min-w-[72px] text-center font-mono text-sm font-extrabold text-[var(--ink)]">
+                {optionCount} Opsi
+              </span>
+              <Button
+                type="button"
+                variant="secondary"
+                size="compact"
+                onClick={() => setOptionCount((o) => Math.min(4, o + 1))}
+                disabled={optionCount >= 4}
+                aria-label="Tambah pilihan jawaban"
+                className="min-w-[38px] px-2.5"
+              >
+                +
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex flex-col gap-5">
@@ -255,6 +401,8 @@ export function LessonWizard({
               </div>
             )}
 
+            {quizSettingsSection}
+
             <div className="flex justify-end pt-3 border-t border-[var(--border)]">
               <Button
                 type="submit"
@@ -356,6 +504,8 @@ export function LessonWizard({
                 </div>
               </div>
             </div>
+
+            {quizSettingsSection}
 
             <div className="flex justify-end pt-3 border-t border-[var(--border)]">
               <Button

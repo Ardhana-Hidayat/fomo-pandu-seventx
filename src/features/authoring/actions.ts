@@ -23,6 +23,8 @@ export interface CreateLessonPayload {
   generationBadge?: string;
   cards: CreateCardInput[];
   questions: CreateQuestionInput[];
+  exerciseType?: "match" | "order" | "both";
+  optionCount?: number;
   classroomIdsToPublish?: string[];
   signSystem?: "SIBI" | "BISINDO";
   signScope?: "key_terms" | "all";
@@ -47,6 +49,8 @@ export async function createLessonAction(
     generatedBy,
     cards,
     questions,
+    exerciseType,
+    optionCount,
     classroomIdsToPublish,
     signSystem,
     signScope,
@@ -63,6 +67,8 @@ export async function createLessonAction(
     generatedBy: generatedBy ?? "fallback",
     cards,
     questions,
+    exerciseType,
+    optionCount,
     signSystem,
     signScope,
     signSpeed,

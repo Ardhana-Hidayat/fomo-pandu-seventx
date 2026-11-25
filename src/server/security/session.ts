@@ -26,6 +26,72 @@ export function getDemoTeacherToken(): string {
   return createHmac("sha256", env.SESSION_SECRET).update("guru-demo-v1").digest("hex");
 }
 
+export function signTeacherCookiePayload(
+  token: string,
+  teacherId: string,
+  email?: string,
+  displayName?: string
+): string {
+  const safeEmail = email ? encodeURIComponent(email) : "";
+  const safeName = displayName ? encodeURIComponent(displayName) : "";
+  const payload =
+    safeEmail || safeName
+      ? `${token}:${teacherId}:${safeEmail}:${safeName}`
+      : `${token}:${teacherId}`;
+  const sig = createHmac("sha256", env.SESSION_SECRET).update(payload).digest("hex");
+  return `${payload}:${sig}`;
+}
+
+export function parseTeacherCookiePayload(
+  rawCookie: string
+): { token: string; teacherId: string; email?: string; displayName?: string } | null {
+  if (!rawCookie) return null;
+  let decoded = rawCookie;
+  try {
+    decoded = decodeURIComponent(rawCookie);
+  } catch {}
+
+  if (!decoded.includes(":")) {
+    return { token: decoded, teacherId: "" };
+  }
+  const parts = decoded.split(":");
+  if (parts.length === 3) {
+    const [token, teacherId, sig] = parts;
+    if (!token || !teacherId || !sig) return null;
+    const expectedSig = createHmac("sha256", env.SESSION_SECRET)
+      .update(`${token}:${teacherId}`)
+      .digest("hex");
+    if (sig !== expectedSig) return null;
+    return { token, teacherId };
+  }
+  if (parts.length === 5) {
+    const [token, teacherId, safeEmail, safeName, sig] = parts;
+    if (!token || !teacherId || !sig) return null;
+    const expectedSig = createHmac("sha256", env.SESSION_SECRET)
+      .update(`${token}:${teacherId}:${safeEmail}:${safeName}`)
+      .digest("hex");
+    if (sig !== expectedSig) return null;
+    let email: string | undefined;
+    let displayName: string | undefined;
+    try {
+      if (safeEmail) email = decodeURIComponent(safeEmail);
+    } catch {
+      if (safeEmail) email = safeEmail;
+    }
+    try {
+      if (safeName) displayName = decodeURIComponent(safeName);
+    } catch {
+      if (safeName) displayName = safeName;
+    }
+    return { token, teacherId, email, displayName };
+  }
+  return null;
+}
+
+export function isSessionRevoked(token: string): boolean {
+  return revokedHashes.has(hashToken(token));
+}
+
 export function signStudentCookiePayload(
   token: string,
   studentId: string,

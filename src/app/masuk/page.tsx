@@ -9,6 +9,7 @@ import { joinClassroomAction } from "@/features/auth/actions";
 function StudentLoginForm() {
   const searchParams = useSearchParams();
   const codeParam = searchParams.get("kode")?.trim() ?? "";
+  const materiParam = searchParams.get("materi")?.trim() ?? "";
   const hasValidCodeParam = codeParam.length === 6 && /^\d{6}$/.test(codeParam);
 
   const [joinCode, setJoinCode] = useState(hasValidCodeParam ? codeParam : "");
@@ -52,8 +53,10 @@ function StudentLoginForm() {
       // Hard navigation memastikan cookie ik_siswa yang baru saja diset
       // terbawa secara segar di HTTP request header ke /kelas/[kode]
       // dan menghindari masalah router.refresh() yang membatalkan navigasi client.
-      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
-      window.location.assign(`/kelas/${cleanCode}`);
+      const targetUrl = materiParam
+        ? `/kelas/${cleanCode}/materi/${encodeURIComponent(materiParam)}`
+        : `/kelas/${cleanCode}`;
+      window.location.assign(targetUrl);
     } catch {
       setErrorMsg("Gagal menyambungkan ke kelas. Coba lagi.");
       setIsSubmitting(false);

@@ -1,6 +1,11 @@
 import { redirect } from "next/navigation";
 import { getCurrentTeacher } from "@/features/auth";
-import { listTeacherLessons, CreateLessonButton } from "@/features/authoring";
+import {
+  listTeacherLessons,
+  listTeacherLessonShares,
+  CreateLessonButton,
+  ShareLessonButton,
+} from "@/features/authoring";
 import { listClassroomsWithStats } from "@/features/classrooms";
 import { Card, Button, Icon } from "@/shared/ui";
 
@@ -10,9 +15,10 @@ export default async function LessonLibraryPage() {
   const session = await getCurrentTeacher();
   if (!session) redirect("/guru/masuk");
 
-  const [lessons, rawClassrooms] = await Promise.all([
+  const [lessons, rawClassrooms, lessonShares] = await Promise.all([
     listTeacherLessons(session.teacher.id),
     listClassroomsWithStats(session.teacher.id),
+    listTeacherLessonShares(session.teacher.id),
   ]);
 
   const classrooms = rawClassrooms.map((c) => ({
@@ -54,50 +60,63 @@ export default async function LessonLibraryPage() {
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {lessons.map((l) => (
-            <Card key={l.id} className="flex flex-col justify-between gap-4">
-              <div>
-                <div className="flex items-start justify-between gap-2">
-                  <h2 className="text-xl font-bold text-[var(--ink)]">{l.title}</h2>
-                  <span
-                    className={`text-xs px-2.5 py-1 rounded-full font-bold border ${
-                      l.status === "published"
-                        ? "bg-emerald-100 text-emerald-900 border-emerald-500"
-                        : "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)]"
-                    }`}
-                  >
-                    {l.status === "published" ? "Terbit" : "Draf"}
-                  </span>
-                </div>
-                {l.topic && (
-                  <p className="mt-1 text-sm text-[var(--muted)] line-clamp-2">
-                    Topik: {l.topic}
-                  </p>
-                )}
-              </div>
+          {lessons.map((l) => {
+            const shareInfo =
+              l.status === "published" ? lessonShares[l.id] : undefined;
 
-              <div className="flex items-center gap-2 pt-3 border-t border-[var(--border)]">
-                <Button
-                  variant="primary"
-                  size="normal"
-                  href={`/guru/materi/${l.id}/edit`}
-                  icon={<Icon name="NotePencil" size={18} />}
-                  className="flex-1"
-                >
-                  Sunting
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="normal"
-                  href={`/guru/materi/${l.id}/hasil`}
-                  icon={<Icon name="ChartBar" size={18} />}
-                  aria-label="Rekap hasil belajar"
-                >
-                  Hasil
-                </Button>
-              </div>
-            </Card>
-          ))}
+            return (
+              <Card key={l.id} className="flex flex-col justify-between gap-4">
+                <div>
+                  <div className="flex items-start justify-between gap-2">
+                    <h2 className="text-xl font-bold text-[var(--ink)]">{l.title}</h2>
+                    <span
+                      className={`text-xs px-2.5 py-1 rounded-full font-bold border ${
+                        l.status === "published"
+                          ? "bg-emerald-100 text-emerald-900 border-emerald-500"
+                          : "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)]"
+                      }`}
+                    >
+                      {l.status === "published" ? "Terbit" : "Draf"}
+                    </span>
+                  </div>
+                  {l.topic && (
+                    <p className="mt-1 text-sm text-[var(--muted)] line-clamp-2">
+                      Topik: {l.topic}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-[var(--border)]">
+                  <Button
+                    variant="primary"
+                    size="normal"
+                    href={`/guru/materi/${l.id}/edit`}
+                    icon={<Icon name="NotePencil" size={18} />}
+                    className="flex-1"
+                  >
+                    Sunting
+                  </Button>
+                  {shareInfo && (
+                    <ShareLessonButton
+                      lessonTitle={l.title}
+                      shareCode={shareInfo.shareCode}
+                      joinCode={shareInfo.joinCode}
+                      classroomName={shareInfo.classroomName}
+                    />
+                  )}
+                  <Button
+                    variant="secondary"
+                    size="normal"
+                    href={`/guru/materi/${l.id}/hasil`}
+                    icon={<Icon name="ChartBar" size={18} />}
+                    aria-label="Rekap hasil belajar"
+                  >
+                    Hasil
+                  </Button>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>

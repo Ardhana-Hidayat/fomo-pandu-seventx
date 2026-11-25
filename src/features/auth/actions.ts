@@ -11,6 +11,8 @@ import {
   createStudentSession,
   invalidateSession,
   getDemoTeacherToken,
+  parseTeacherCookiePayload,
+  parseStudentCookiePayload,
   signStudentCookiePayload,
 } from "@/server/security/session";
 import { db } from "@/server/db/client";
@@ -140,12 +142,14 @@ export async function signOutAction(): Promise<void> {
   const studentToken = cookieStore.get(STUDENT_COOKIE_NAME)?.value;
 
   if (teacherToken) {
-    await invalidateSession(teacherToken);
+    const parsedTeacher = parseTeacherCookiePayload(teacherToken);
+    await invalidateSession(parsedTeacher ? parsedTeacher.token : teacherToken);
     cookieStore.delete(TEACHER_COOKIE_NAME);
   }
 
   if (studentToken) {
-    await invalidateSession(studentToken);
+    const parsedStudent = parseStudentCookiePayload(studentToken);
+    await invalidateSession(parsedStudent ? parsedStudent.token : studentToken);
     cookieStore.delete(STUDENT_COOKIE_NAME);
   }
 

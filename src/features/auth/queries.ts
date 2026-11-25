@@ -6,6 +6,9 @@ import {
   TEACHER_COOKIE_NAME,
   STUDENT_COOKIE_NAME,
   validateSession,
+  parseTeacherCookiePayload,
+  createTeacherSession,
+  isSessionRevoked,
   parseStudentCookiePayload,
   createStudentSession,
 } from "@/server/security/session";
@@ -34,13 +37,62 @@ export async function getCurrentTeacher(): Promise<CurrentTeacherSession | null>
   await connection();
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get(TEACHER_COOKIE_NAME)?.value;
+    const rawCookie = cookieStore.get(TEACHER_COOKIE_NAME)?.value;
 
-    if (!token) {
+    if (!rawCookie) {
       return null;
     }
 
-    const session = await validateSession(token, "guru");
+    let decoded = rawCookie;
+    try {
+      decoded = decodeURIComponent(rawCookie);
+    } catch {}
+
+    const parsed = parseTeacherCookiePayload(decoded);
+    if (!parsed) {
+      return null;
+    }
+    const token = parsed.token;
+
+    if (isSessionRevoked(token)) {
+      return null;
+    }
+
+    let session = await validateSession(token, "guru");
+    if (!session && parsed.teacherId) {
+      try {
+        let existingTeacher = await db
+          .select()
+          .from(teachers)
+          .where(eq(teachers.id, parsed.teacherId))
+          .limit(1)
+          .then((rows) => rows[0]);
+
+        if (!existingTeacher) {
+          if (parsed.teacherId === DEMO_TEACHER_ID) {
+            existingTeacher = await getOrCreateDemoTeacher();
+          } else {
+            const inserted = await db
+              .insert(teachers)
+              .values({
+                id: parsed.teacherId,
+                email: parsed.email || null,
+                displayName: parsed.displayName || "Guru",
+                authProvider: "google",
+              })
+              .onConflictDoNothing()
+              .returning();
+            existingTeacher = inserted[0];
+          }
+        }
+
+        if (existingTeacher) {
+          const restored = await createTeacherSession(existingTeacher.id);
+          session = restored.session;
+        }
+      } catch {}
+    }
+
     if (!session || session.role !== "guru" || !session.teacherId) {
       return null;
     }

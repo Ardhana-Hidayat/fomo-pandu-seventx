@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
 import { signInDemoAction, getCurrentTeacher } from "@/features/auth";
+import { TeacherGoogleLoginButton } from "@/features/auth/components/TeacherGoogleLoginButton";
 
 export const instant = false;
 
@@ -31,21 +32,33 @@ export default async function TeacherLoginPage() {
               Masuk Ruang Guru
             </h1>
             <p className="mt-1 text-sm text-[var(--ink-2)]">
-              Gunakan mode demo untuk mengakses ruang kelas, menyusun materi adaptif, dan melihat hasil belajar siswa.
+              Masuk dengan akun Google atau gunakan mode demo untuk mengakses ruang kelas, menyusun materi adaptif, dan melihat hasil belajar siswa.
             </p>
           </div>
 
-          <form action={signInDemoAction} className="flex flex-col gap-4">
-            <Button
-              type="submit"
-              variant="primary"
-              size="large"
-              icon={<Icon name="DoorOpen" size={24} />}
-              className="w-full"
-            >
-              Masuk sebagai guru demo
-            </Button>
-          </form>
+          <div className="flex flex-col gap-4">
+            <TeacherGoogleLoginButton />
+
+            <div className="relative flex items-center py-1">
+              <div className="flex-grow border-t border-[var(--border)]" />
+              <span className="mx-3 shrink-0 text-xs font-semibold uppercase tracking-wider text-[var(--ink-2)]">
+                atau
+              </span>
+              <div className="flex-grow border-t border-[var(--border)]" />
+            </div>
+
+            <form action={signInDemoAction} className="flex flex-col gap-4">
+              <Button
+                type="submit"
+                variant="secondary"
+                size="large"
+                icon={<Icon name="DoorOpen" size={24} />}
+                className="w-full"
+              >
+                Masuk sebagai guru demo
+              </Button>
+            </form>
+          </div>
 
           <div className="border-t-2 border-[var(--border)] pt-4 text-center">
             <Link

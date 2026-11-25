@@ -120,6 +120,22 @@ export function CardPlayer({
     };
   }, [currentIndex, stopPlayback]);
 
+  // Preload all A-Z SIBI sign images so switching letters is instant with zero blank frames
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.Image === "undefined") return;
+    const preloaded: HTMLImageElement[] = [];
+    for (let code = 97; code <= 122; code++) {
+      const letter = String.fromCharCode(code);
+      const img = new window.Image();
+      img.decoding = "async";
+      img.src = `/signs/sibi/${letter}.webp`;
+      preloaded.push(img);
+    }
+    return () => {
+      preloaded.length = 0;
+    };
+  }, []);
+
   // Update real-time sync state at time `t` (ms)
   const updateSyncAtTime = useCallback(
     (tMs: number, schedule: { slots: SignSlot[]; signEnd: number }, speechTl: Timeline) => {
@@ -372,6 +388,8 @@ export function CardPlayer({
       ? tokens[completedWordIndex]?.text
       : null;
 
+  const hasVisualCard = Boolean(currentCard.imageUrl || currentCard.imageAlt);
+
   return (
     <div className="flex min-h-[100dvh] sm:h-[100dvh] sm:max-h-[100dvh] flex-col justify-between sm:overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
       {/* 1. Header Kompak & Bersih */}
@@ -401,15 +419,15 @@ export function CardPlayer({
       {/* 2. Kontainer Utama */}
       <main
         id="main-content"
-        className="flex-1 min-h-0 w-full max-w-4xl mx-auto p-3 sm:p-4 flex flex-col justify-center items-center sm:overflow-hidden"
+        className="flex-1 min-h-0 w-full max-w-4xl mx-auto p-2.5 sm:p-4 flex flex-col justify-center items-center sm:overflow-hidden"
       >
-        <Card className="w-full flex-1 min-h-0 flex flex-col justify-between items-center gap-3 sm:gap-4 p-4 sm:p-6 border-2 border-[var(--border)] bg-[var(--surface)] shadow-md sm:overflow-hidden">
-          {/* Bagian Peraga Visual & Isyarat (Bersebelahan di Tablet/Desktop, Bertumpuk Rapi di Mobile) */}
-          {(currentCard.imageUrl || currentCard.imageAlt || activeKeyTerm) && (
-            <div className="w-full flex-1 min-h-0 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+        <Card className="w-full flex-1 min-h-0 flex flex-col justify-between items-center gap-2.5 sm:gap-4 p-3.5 sm:p-6 border-2 border-[var(--border)] bg-[var(--surface)] shadow-md sm:overflow-hidden">
+          {/* Bagian Peraga Visual & Isyarat (Bersebelahan di Tablet/Desktop, Bertumpuk Rapi & Seimbang di Mobile) */}
+          {(hasVisualCard || activeKeyTerm) && (
+            <div className="w-full flex-1 min-h-0 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
               {/* Kartu Gambar / Piktogram */}
               {currentCard.imageUrl ? (
-                <div className="w-44 h-44 sm:w-[230px] sm:h-[230px] md:w-[268px] md:h-[268px] rounded-2xl border-2 border-[var(--border)] overflow-hidden bg-[var(--surface-2)] flex items-center justify-center p-2 shadow-xs shrink-0">
+                <div className="w-48 h-48 sm:w-[230px] sm:h-[230px] md:w-[268px] md:h-[268px] rounded-2xl border-2 border-[var(--border)] overflow-hidden bg-[var(--surface-2)] flex items-center justify-center p-2 shadow-xs shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={currentCard.imageUrl}
@@ -418,7 +436,7 @@ export function CardPlayer({
                   />
                 </div>
               ) : currentCard.imageAlt ? (
-                <div className="w-44 h-44 sm:w-[230px] sm:h-[230px] md:w-[268px] md:h-[268px] rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-3 text-center shrink-0">
+                <div className="w-48 h-48 sm:w-[230px] sm:h-[230px] md:w-[268px] md:h-[268px] rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-3 text-center shrink-0">
                   <Icon name="Image" size={30} className="text-[var(--muted)] mb-1.5" />
                   <span className="text-xs font-bold text-[var(--ink)] line-clamp-3">
                     {currentCard.imageAlt}
@@ -428,7 +446,11 @@ export function CardPlayer({
 
               {/* Paket Peraga Bahasa Isyarat (Gambar Isyarat + Pita Ejaan Setinggi Gambar Visual) */}
               {activeKeyTerm ? (
-                <div className="w-full max-w-[320px] min-h-[200px] sm:w-auto sm:min-w-[230px] md:min-w-[268px] sm:max-w-[380px] sm:h-[230px] md:h-[268px] flex flex-col items-center justify-center shrink-0">
+                <div
+                  className={`${
+                    hasVisualCard ? "w-48" : "w-56"
+                  } sm:w-auto sm:min-w-[230px] md:min-w-[268px] sm:max-w-[380px] sm:h-[230px] md:h-[268px] flex flex-col items-center justify-center shrink-0`}
+                >
                   <SignCard
                     system="SIBI"
                     term={activeKeyTerm}

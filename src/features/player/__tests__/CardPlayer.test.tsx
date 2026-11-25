@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { PreferencesProvider } from "@/shared/ui";
 import { CardPlayer } from "../components/CardPlayer";
 
@@ -78,5 +78,44 @@ describe("CardPlayer Component", () => {
     expect(screen.getByRole("button", { name: /Kembali/i })).toBeDefined();
     expect(screen.getByRole("button", { name: /Putar|Suara/i })).toBeDefined();
     expect(screen.getByRole("button", { name: /Lanjut/i })).toBeDefined();
+  });
+
+  it("mempertahankan elemen img SIBI yang sama saat berpindah huruf agar tidak berkedip", () => {
+    render(
+      <PreferencesProvider>
+        <CardPlayer cards={dummyCards} backHref="/kelas/123456" />
+      </PreferencesProvider>
+    );
+
+    const signImgBefore = screen.getByAltText("Isyarat huruf B dalam SIBI") as HTMLImageElement;
+    expect(signImgBefore.getAttribute("src")).toBe("/signs/sibi/b.webp");
+
+    const letterUButton = screen.getAllByRole("button", { name: "Pilih huruf isyarat U" })[0];
+    fireEvent.click(letterUButton);
+
+    const signImgAfter = screen.getByAltText("Isyarat huruf U dalam SIBI") as HTMLImageElement;
+    expect(signImgAfter).toBe(signImgBefore);
+    expect(signImgAfter.getAttribute("src")).toBe("/signs/sibi/u.webp");
+  });
+
+  it("tetap mendukung mode SIBI saja tanpa gambar ilustrasi", () => {
+    const sibiOnlyCards = [
+      {
+        ...dummyCards[0],
+        imageUrl: null,
+        imageSource: "none" as const,
+        imageAlt: null,
+        keyTerms: ["apel"],
+      },
+    ];
+
+    render(
+      <PreferencesProvider>
+        <CardPlayer cards={sibiOnlyCards} backHref="/kelas/123456" />
+      </PreferencesProvider>
+    );
+
+    expect(screen.getByAltText("Isyarat huruf A dalam SIBI")).toBeDefined();
+    expect(screen.getByText("SIBI")).toBeDefined();
   });
 });

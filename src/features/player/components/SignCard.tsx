@@ -72,7 +72,7 @@ export function SignCard({
       <div
         className={`relative flex flex-col items-center justify-center rounded-2xl border-2 border-[var(--border)] bg-[var(--surface)] overflow-hidden shadow-sm text-center transition-all ${
           isMatch
-            ? "flex-1 min-h-0 w-full p-2"
+            ? "aspect-square sm:aspect-auto sm:flex-1 sm:min-h-0 w-full p-2"
             : isTv
             ? "aspect-square w-48 sm:w-64 p-4 border-4"
             : isLarge
@@ -104,7 +104,6 @@ export function SignCard({
         {activeSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            key={activeSrc}
             src={activeSrc}
             alt={`Isyarat huruf ${currentLetter} dalam ${lockedSystem}`}
             onError={() => {

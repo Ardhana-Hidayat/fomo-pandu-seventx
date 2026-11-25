@@ -22,32 +22,50 @@ export interface LessonShareInfo {
   classroomJoinCode: string;
 }
 
+async function queryLessonShares(
+  teacherId: string,
+  lessonId?: string
+): Promise<Array<LessonShareInfo & { lessonId: string }>> {
+  const conditions = [
+    eq(lessons.teacherId, teacherId),
+    eq(publications.visible, true),
+    isNull(classrooms.archivedAt),
+  ];
+  if (lessonId) {
+    conditions.push(eq(publications.lessonId, lessonId));
+  }
+
+  const rows = await db
+    .select({
+      lessonId: publications.lessonId,
+      shareCode: publications.shareCode,
+      classroomId: classrooms.id,
+      classroomName: classrooms.name,
+      classroomJoinCode: classrooms.joinCode,
+    })
+    .from(publications)
+    .innerJoin(lessons, eq(publications.lessonId, lessons.id))
+    .innerJoin(classrooms, eq(publications.classroomId, classrooms.id))
+    .where(and(...conditions));
+
+  return rows
+    .filter((row): row is typeof row & { shareCode: string } => Boolean(row.shareCode))
+    .map((row) => ({
+      lessonId: row.lessonId,
+      shareCode: row.shareCode,
+      classroomId: row.classroomId,
+      classroomName: row.classroomName,
+      classroomJoinCode: row.classroomJoinCode,
+    }));
+}
+
 export async function listTeacherLessonShares(
   teacherId: string
 ): Promise<Record<string, LessonShareInfo[]>> {
   try {
-    const rows = await db
-      .select({
-        lessonId: publications.lessonId,
-        shareCode: publications.shareCode,
-        classroomId: classrooms.id,
-        classroomName: classrooms.name,
-        classroomJoinCode: classrooms.joinCode,
-      })
-      .from(publications)
-      .innerJoin(lessons, eq(publications.lessonId, lessons.id))
-      .innerJoin(classrooms, eq(publications.classroomId, classrooms.id))
-      .where(
-        and(
-          eq(lessons.teacherId, teacherId),
-          eq(publications.visible, true),
-          isNull(classrooms.archivedAt)
-        )
-      );
-
+    const rows = await queryLessonShares(teacherId);
     const map: Record<string, LessonShareInfo[]> = {};
     for (const row of rows) {
-      if (!row.shareCode) continue;
       if (!map[row.lessonId]) {
         map[row.lessonId] = [];
       }
@@ -62,6 +80,24 @@ export async function listTeacherLessonShares(
   } catch (error) {
     console.error("Gagal memuat info bagikan materi:", error);
     return {};
+  }
+}
+
+export async function getLessonShares(
+  lessonId: string,
+  teacherId: string
+): Promise<LessonShareInfo[]> {
+  try {
+    const rows = await queryLessonShares(teacherId, lessonId);
+    return rows.map(({ shareCode, classroomId, classroomName, classroomJoinCode }) => ({
+      shareCode,
+      classroomId,
+      classroomName,
+      classroomJoinCode,
+    }));
+  } catch (error) {
+    console.error("Gagal memuat info bagikan materi:", error);
+    return [];
   }
 }
 

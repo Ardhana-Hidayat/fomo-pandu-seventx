@@ -7,23 +7,16 @@ import {
   type ButtonSize,
   type ButtonVariant,
 } from "@/shared/ui";
-import {
-  LessonWizard,
-  type LessonCreatorClassroomOption,
-} from "./LessonWizard";
+import { LessonWizard } from "./LessonWizard";
 
 interface CreateLessonOverlayProps {
   isOpen: boolean;
   onClose: () => void;
-  classrooms: LessonCreatorClassroomOption[];
-  preselectedClassroomId?: string;
 }
 
 export function CreateLessonOverlay({
   isOpen,
   onClose,
-  classrooms,
-  preselectedClassroomId,
 }: CreateLessonOverlayProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -93,8 +86,6 @@ export function CreateLessonOverlay({
 
         <div className="overflow-y-auto overscroll-contain p-5 sm:p-7">
           <LessonWizard
-            classrooms={classrooms}
-            preselectedClassroomId={preselectedClassroomId}
             onSuccess={onClose}
             embedded
           />
@@ -105,8 +96,6 @@ export function CreateLessonOverlay({
 }
 
 interface CreateLessonButtonProps {
-  classrooms: LessonCreatorClassroomOption[];
-  preselectedClassroomId?: string;
   label?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
@@ -114,8 +103,6 @@ interface CreateLessonButtonProps {
 }
 
 export function CreateLessonButton({
-  classrooms,
-  preselectedClassroomId,
   label = "Buat materi baru",
   variant = "primary",
   size = "normal",
@@ -139,8 +126,6 @@ export function CreateLessonButton({
       <CreateLessonOverlay
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        classrooms={classrooms}
-        preselectedClassroomId={preselectedClassroomId}
       />
     </>
   );

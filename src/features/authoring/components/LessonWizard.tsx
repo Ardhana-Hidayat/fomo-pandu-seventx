@@ -6,21 +6,12 @@ import {
   Card,
   Button,
   Field,
-  Chip,
   Icon,
   StatusMessage,
 } from "@/shared/ui";
 import { createLessonAction } from "../actions";
 
-export interface LessonCreatorClassroomOption {
-  id: string;
-  name: string;
-  joinCode: string;
-}
-
 interface LessonWizardProps {
-  classrooms: LessonCreatorClassroomOption[];
-  preselectedClassroomId?: string;
   onSuccess?: () => void;
   embedded?: boolean;
 }
@@ -89,8 +80,6 @@ function StepperControl({
 }
 
 export function LessonWizard({
-  classrooms,
-  preselectedClassroomId,
   onSuccess,
   embedded = false,
 }: LessonWizardProps) {
@@ -100,9 +89,6 @@ export function LessonWizard({
   // State Buat Manual
   const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("");
-  const [selectedClassrooms, setSelectedClassrooms] = useState<string[]>(
-    preselectedClassroomId ? [preselectedClassroomId] : []
-  );
 
   // State Upload PDF
   const [pdfFile, setPdfFile] = useState<File | null>(null);
@@ -178,8 +164,6 @@ export function LessonWizard({
         },
       ],
       questions: starterQuestions,
-      classroomIdsToPublish:
-        selectedClassrooms.length > 0 ? selectedClassrooms : undefined,
     });
 
     if (result.ok) {
@@ -446,34 +430,6 @@ export function LessonWizard({
                 onChange={(e) => setTopic(e.target.value)}
               />
             </div>
-
-            {classrooms.length > 0 && (
-              <div className="flex flex-col gap-2">
-                <span className="font-bold text-sm text-[var(--ink)]">
-                  Bagikan ke Kelas (Opsional)
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {classrooms.map((c) => {
-                    const isSelected = selectedClassrooms.includes(c.id);
-                    return (
-                      <Chip
-                        key={c.id}
-                        label={`${c.name} (${c.joinCode})`}
-                        selected={isSelected}
-                        onSelect={() =>
-                          setSelectedClassrooms((prev) =>
-                            isSelected
-                              ? prev.filter((id) => id !== c.id)
-                              : [...prev, c.id]
-                          )
-                        }
-                        role="checkbox"
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            )}
 
             {quizSettingsSection}
 

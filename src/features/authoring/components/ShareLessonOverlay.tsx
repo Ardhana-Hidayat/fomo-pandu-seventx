@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
 import {
   Button,
-  Chip,
   Icon,
   StatusMessage,
   type ButtonSize,
@@ -13,7 +12,6 @@ import {
 } from "@/shared/ui";
 import { approveAndPublishAction } from "../actions";
 import type { LessonShareInfo } from "../queries";
-import type { LessonCreatorClassroomOption } from "./LessonWizard";
 
 interface ShareLessonOverlayProps {
   isOpen: boolean;
@@ -21,7 +19,7 @@ interface ShareLessonOverlayProps {
   lessonId: string;
   lessonTitle: string;
   shares: LessonShareInfo[];
-  classrooms: LessonCreatorClassroomOption[];
+  onPublished?: (share: LessonShareInfo) => void;
 }
 
 export function ShareLessonOverlay({
@@ -30,32 +28,47 @@ export function ShareLessonOverlay({
   lessonId,
   lessonTitle,
   shares,
-  classrooms,
+  onPublished,
 }: ShareLessonOverlayProps) {
   const router = useRouter();
-  const [selectedShareIdx, setSelectedShareIdx] = useState(0);
   const [copied, setCopied] = useState<"url" | "code" | null>(null);
-  const [selectedClassroomIds, setSelectedClassroomIds] = useState<string[]>(
-    classrooms[0] ? [classrooms[0].id] : []
-  );
+  const [localShare, setLocalShare] = useState<LessonShareInfo | null>(null);
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishError, setPublishError] = useState<string | null>(null);
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const autoPublishAttemptedRef = useRef(false);
 
-  const activeShare = shares[selectedShareIdx] ?? shares[0] ?? null;
+  const activeShare = localShare ?? shares[0] ?? null;
 
   const origin =
     typeof window !== "undefined"
       ? window.location.origin
-      : process.env.NEXT_PUBLIC_APP_URL || "https://pandu-edu.vercel.app";
+      : process.env.NEXT_PUBLIC_APP_URL || "https://panduin.vercel.app";
   const shareUrl = activeShare
     ? `${origin.replace(/\/+$/, "")}/m/${activeShare.shareCode}`
     : "";
 
+  const handlePublishNow = useCallback(async () => {
+    setIsPublishing(true);
+    setPublishError(null);
+    const res = await approveAndPublishAction(lessonId);
+    setIsPublishing(false);
+    if (res.ok) {
+      setLocalShare(res.data);
+      onPublished?.(res.data);
+      router.refresh();
+    } else {
+      setPublishError(res.error.message);
+    }
+  }, [lessonId, onPublished, router]);
+
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      autoPublishAttemptedRef.current = false;
+      return;
+    }
 
     previousFocusRef.current = document.activeElement as HTMLElement | null;
     const firstFocusable = dialogRef.current?.querySelector<HTMLElement>(
@@ -76,6 +89,14 @@ export function ShareLessonOverlay({
     };
   }, [isOpen, onClose]);
 
+  useEffect(() => {
+    if (!isOpen || activeShare || isPublishing || autoPublishAttemptedRef.current) {
+      return;
+    }
+    autoPublishAttemptedRef.current = true;
+    void handlePublishNow();
+  }, [isOpen, activeShare, isPublishing, handlePublishNow]);
+
   async function handleCopy(value: string, type: "url" | "code") {
     try {
       await navigator.clipboard.writeText(value);
@@ -83,22 +104,6 @@ export function ShareLessonOverlay({
       setTimeout(() => setCopied(null), 2000);
     } catch {
       // Abaikan jika clipboard API tidak tersedia
-    }
-  }
-
-  async function handlePublishNow() {
-    if (selectedClassroomIds.length === 0) {
-      setPublishError("Pilih minimal satu kelas tujuan.");
-      return;
-    }
-    setIsPublishing(true);
-    setPublishError(null);
-    const res = await approveAndPublishAction(lessonId, selectedClassroomIds);
-    setIsPublishing(false);
-    if (res.ok) {
-      router.refresh();
-    } else {
-      setPublishError(res.error.message);
     }
   }
 
@@ -146,20 +151,6 @@ export function ShareLessonOverlay({
 
         {activeShare ? (
           <div className="mt-5 flex flex-col gap-4">
-            {shares.length > 1 && (
-              <div className="flex flex-wrap items-center gap-2">
-                {shares.map((s, idx) => (
-                  <Chip
-                    key={s.classroomId}
-                    label={s.classroomName}
-                    selected={idx === selectedShareIdx}
-                    onSelect={() => setSelectedShareIdx(idx)}
-                    role="radio"
-                  />
-                ))}
-              </div>
-            )}
-
             {/* Dua panel berdampingan: QR Code & Tautan URL */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {/* Panel Kiri: QR Code */}
@@ -224,10 +215,13 @@ export function ShareLessonOverlay({
                 </span>
                 <div className="min-w-0">
                   <span className="block text-[11px] font-bold uppercase tracking-wide text-[var(--muted)]">
-                    Kode Materi ({activeShare.classroomName})
+                    Kode Materi
                   </span>
                   <span className="font-mono text-xl sm:text-2xl font-extrabold tracking-[0.18em] text-[var(--link)] select-all">
                     {activeShare.shareCode}
+                  </span>
+                  <span className="block text-[11px] text-[var(--muted)] mt-0.5">
+                    Kode akses 6 angka: <strong className="font-mono text-[var(--ink-2)]">{activeShare.classroomJoinCode}</strong>
                   </span>
                 </div>
               </div>
@@ -254,51 +248,24 @@ export function ShareLessonOverlay({
             {publishError && (
               <StatusMessage type="galat">{publishError}</StatusMessage>
             )}
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-4 flex flex-col gap-3">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-5 flex flex-col items-center text-center gap-3">
               <p className="text-sm font-medium text-[var(--ink-2)]">
-                Materi ini belum diterbitkan ke kelas. Pilih kelas tujuan untuk membuat Kode QR, tautan URL, dan Kode Materi:
+                {isPublishing
+                  ? "Menyiapkan Kode QR, tautan URL, dan Kode Materi..."
+                  : "Buat tautan langsung, Kode QR, dan Kode Materi agar siswa dapat segera belajar."}
               </p>
-              {classrooms.length === 0 ? (
-                <p className="text-xs text-[var(--muted)]">
-                  Belum ada ruang kelas aktif. Buat ruang kelas terlebih dahulu di menu Ruang Kelas.
-                </p>
-              ) : (
-                <div className="flex flex-wrap gap-2">
-                  {classrooms.map((c) => {
-                    const isSelected = selectedClassroomIds.includes(c.id);
-                    return (
-                      <Chip
-                        key={c.id}
-                        label={`${c.name} (${c.joinCode})`}
-                        selected={isSelected}
-                        onSelect={() =>
-                          setSelectedClassroomIds((prev) =>
-                            isSelected
-                              ? prev.filter((id) => id !== c.id)
-                              : [...prev, c.id]
-                          )
-                        }
-                        role="checkbox"
-                      />
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            {classrooms.length > 0 && (
               <Button
                 type="button"
                 variant="primary"
                 size="normal"
                 loading={isPublishing}
                 onClick={handlePublishNow}
-                icon={<Icon name="CheckCircle" size={18} />}
-                className="w-full"
+                icon={<Icon name="QrCode" size={18} />}
+                className="w-full sm:w-auto"
               >
-                {isPublishing ? "Menerbitkan..." : "Terbitkan & Buat Tautan"}
+                {isPublishing ? "Menyiapkan..." : "Buat Link & QR Bagikan"}
               </Button>
-            )}
+            </div>
           </div>
         )}
       </div>
@@ -310,22 +277,22 @@ interface ShareLessonButtonProps {
   lessonId: string;
   lessonTitle: string;
   shares: LessonShareInfo[];
-  classrooms: LessonCreatorClassroomOption[];
   label?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
   className?: string;
+  onPublished?: (share: LessonShareInfo) => void;
 }
 
 export function ShareLessonButton({
   lessonId,
   lessonTitle,
   shares,
-  classrooms,
   label = "Bagikan",
   variant = "secondary",
   size = "normal",
   className = "",
+  onPublished,
 }: ShareLessonButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -347,7 +314,7 @@ export function ShareLessonButton({
         lessonId={lessonId}
         lessonTitle={lessonTitle}
         shares={shares}
-        classrooms={classrooms}
+        onPublished={onPublished}
       />
     </>
   );

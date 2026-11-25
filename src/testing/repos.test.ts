@@ -27,6 +27,8 @@ import {
   listLessonsByTeacher,
   updateLesson,
   deleteLesson,
+  saveCard,
+  saveQuizQuestion,
 } from "@/server/repos/lessons";
 import {
   publishLesson,
@@ -62,7 +64,12 @@ import {
   createStudentSession,
   validateSession,
   hashToken,
+  generateToken,
+  signTeacherCookiePayload,
+  verifyTeacherCookieStateless,
 } from "@/server/security/session";
+import { teachers } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 import { seedDatabase } from "@/server/db/seed";
 
 describe("Database Repositories & Data Layer (S0-03, S0-04, S0-07)", () => {
@@ -720,6 +727,117 @@ describe("Database Repositories & Data Layer (S0-03, S0-04, S0-07)", () => {
       expect(result2.teacherId).toBe(result1.teacherId);
       expect(result2.classroomId).toBe(result1.classroomId);
       expect(result2.lessonId).toBe(result1.lessonId);
+    });
+  });
+
+  describe("Google Teacher Lesson Persistence & Card/Question Saves", () => {
+    it("materi guru Google baru tetap tersimpan dan terbaca setelah sesi dibaca ulang", async () => {
+      const email = "guru.google.baru@sekolah.id";
+      const upserted = await db
+        .insert(teachers)
+        .values({
+          email,
+          displayName: "Guru Google Baru",
+          authProvider: "google",
+        })
+        .onConflictDoUpdate({
+          target: teachers.email,
+          set: { displayName: "Guru Google Baru", authProvider: "google" },
+        })
+        .returning();
+
+      const teacher = upserted[0]!;
+      const token = generateToken();
+      const signedCookie = signTeacherCookiePayload(
+        token,
+        teacher.id,
+        teacher.email ?? email,
+        teacher.displayName
+      );
+
+      // Simulasi pembacaan ulang cookie saat browser refresh
+      const stateless = verifyTeacherCookieStateless(signedCookie);
+      expect(stateless).not.toBeNull();
+      expect(stateless?.teacherId).toBe(teacher.id);
+
+      const lessonRes = await createLesson(stateless!.teacherId, {
+        title: "Mengenal Buah-Buahan",
+        topic: "Buah segar",
+        level: "sdlb",
+        generatedBy: "manual",
+        cards: [{ position: 1, text: "Ini buah apel merah.", keyTerms: ["apel"] }],
+        questions: [
+          {
+            position: 1,
+            type: "choice_word",
+            prompt: "Mana yang buah apel?",
+            payload: {
+              options: [
+                { id: "opt-1", text: "Apel", correct: true },
+                { id: "opt-2", text: "Batu", correct: false },
+              ],
+            },
+          },
+        ],
+      });
+      expect(lessonRes.ok).toBe(true);
+      if (!lessonRes.ok) return;
+
+      // Simulasi refresh halaman /guru/materi dan /guru/materi/[id]/edit
+      const dbTeacher = await db
+        .select()
+        .from(teachers)
+        .where(eq(teachers.email, email))
+        .limit(1)
+        .then((rows) => rows[0]);
+      expect(dbTeacher?.id).toBe(teacher.id);
+
+      const listRes = await listLessonsByTeacher(dbTeacher!.id);
+      expect(listRes.ok).toBe(true);
+      if (listRes.ok) {
+        expect(listRes.data.some((l) => l.id === lessonRes.data.id)).toBe(true);
+      }
+
+      const detailRes = await getLessonWithContent(dbTeacher!.id, lessonRes.data.id);
+      expect(detailRes.ok).toBe(true);
+      if (detailRes.ok) {
+        expect(detailRes.data.title).toBe("Mengenal Buah-Buahan");
+        expect(detailRes.data.cards.length).toBe(1);
+        expect(detailRes.data.questions.length).toBe(1);
+      }
+
+      // Simpan perubahan kartu & soal dan verifikasi kepemilikan guru lain ditolak
+      const cardId = lessonRes.data.cards[0]!.id;
+      const savedCard = await saveCard(dbTeacher!.id, lessonRes.data.id, {
+        id: cardId,
+        position: 1,
+        text: "Apel berwarna merah cerah.",
+        keyTerms: ["apel", "merah"],
+      });
+      expect(savedCard.ok).toBe(true);
+
+      const questionId = lessonRes.data.questions[0]!.id;
+      const savedQuestion = await saveQuizQuestion(dbTeacher!.id, lessonRes.data.id, {
+        id: questionId,
+        position: 1,
+        type: "choice_word",
+        prompt: "Buah apa yang berwarna merah?",
+        payload: {
+          options: [
+            { id: "opt-1", text: "Apel", correct: true },
+            { id: "opt-2", text: "Batu", correct: false },
+          ],
+        },
+      });
+      expect(savedQuestion.ok).toBe(true);
+
+      const otherTeacherId = "00000000-0000-0000-0000-000000000088";
+      const forbiddenCard = await saveCard(otherTeacherId, lessonRes.data.id, {
+        id: cardId,
+        position: 1,
+        text: "Disusupi",
+      });
+      expect(forbiddenCard.ok).toBe(false);
     });
   });
 });

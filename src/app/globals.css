@@ -353,11 +353,11 @@ body {
   display: none;
 }
 
-/* Aturan cetak global agar Cetak Kartu mencetak halaman A4 penuh tanpa chrome dashboard */
+/* Aturan cetak global agar Cetak Kartu & Lembar Kuis mencetak halaman A4 Potrait penuh tanpa chrome dashboard */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 10mm;
+    margin: 12mm;
   }
 
   html,
@@ -370,12 +370,15 @@ body {
     color: #000000 !important;
     margin: 0 !important;
     padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   /* Sembunyikan navigasi dashboard guru & elemen non-cetak */
   aside[aria-label="Menu navigasi guru"],
-  header,
+  header:not(.print-header),
   .no-print,
+  .print\:hidden,
   [data-print-hide="true"] {
     display: none !important;
   }

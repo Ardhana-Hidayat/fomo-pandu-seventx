@@ -122,31 +122,59 @@ describe("Story S4-01: Accessibility & Visual Audit", () => {
     });
 
     // ----------------------------------------------------
-    // Tema Kuning-Hitam (High Contrast Low Vision Scheme)
+    // Tema Kontras Tinggi Multi-Tone (WCAG AAA)
     // ----------------------------------------------------
-    describe("Tema Kuning-Hitam (High Contrast)", () => {
-      const surface = "#000000";
+    describe("Tema Kontras Tinggi (Multi-Tone High Contrast)", () => {
+      const bg = "#0B1220";
+      const surface = "#111B2E";
+      const surface2 = "#1A2740";
 
-      it("memiliki kontras teks kuning (--ink) >= 7:1 (WCAG AAA)", () => {
-        const ink = "#FFD400";
-        const ratio = calculateContrastRatio(ink, surface);
-        expect(ratio).toBeGreaterThanOrEqual(7.0);
-        expect(ratio).toBeGreaterThanOrEqual(14.0);
+      it("menghindari hitam pekat (#000000) dan kuning neon (#FFFF00)", () => {
+        const palette = [bg, surface, surface2, "#F8FAFC", "#E2E8F0", "#CBD5E1", "#38BDF8", "#FCD34D"];
+        expect(palette).not.toContain("#000000");
+        expect(palette).not.toContain("#FFFF00");
       });
 
-      it("memiliki kontras teks putih (--ink-2 / --muted) >= 7:1 (WCAG AAA)", () => {
-        const white = "#FFFFFF";
-        const ratio = calculateContrastRatio(white, surface);
-        expect(ratio).toBeGreaterThanOrEqual(7.0);
-        expect(ratio).toBeGreaterThanOrEqual(20.0);
+      it("memiliki kontras teks utama (--ink) >= 7:1 di atas bg dan surface (WCAG AAA)", () => {
+        const ink = "#F8FAFC";
+        expect(calculateContrastRatio(ink, bg)).toBeGreaterThanOrEqual(16.0);
+        expect(calculateContrastRatio(ink, surface)).toBeGreaterThanOrEqual(16.0);
+        expect(calculateContrastRatio(ink, surface2)).toBeGreaterThanOrEqual(7.0);
       });
 
-      it("memiliki kontras tombol utama (--on-primary di atas --primary) >= 7:1", () => {
-        const primary = "#FFD400";
-        const onPrimary = "#000000";
-        const ratio = calculateContrastRatio(onPrimary, primary);
-        expect(ratio).toBeGreaterThanOrEqual(7.0);
-        expect(ratio).toBeGreaterThanOrEqual(14.0);
+      it("memiliki kontras teks pendukung (--ink-2) dan sekunder (--muted) >= 7:1 (WCAG AAA)", () => {
+        const ink2 = "#E2E8F0";
+        const muted = "#CBD5E1";
+        expect(calculateContrastRatio(ink2, surface)).toBeGreaterThanOrEqual(7.0);
+        expect(calculateContrastRatio(muted, surface)).toBeGreaterThanOrEqual(7.0);
+        expect(calculateContrastRatio(muted, surface2)).toBeGreaterThanOrEqual(7.0);
+      });
+
+      it("memiliki kontras tombol utama (--on-primary di atas --primary) & tautan >= 7:1", () => {
+        const primary = "#38BDF8";
+        const onPrimary = "#06121F";
+        const link = "#7DD3FC";
+        expect(calculateContrastRatio(onPrimary, primary)).toBeGreaterThanOrEqual(7.0);
+        expect(calculateContrastRatio(primary, surface)).toBeGreaterThanOrEqual(7.0);
+        expect(calculateContrastRatio(link, surface)).toBeGreaterThanOrEqual(7.0);
+      });
+
+      it("memiliki kontras sorotan kata (--on-sorot di atas --sorot) dan status >= 7:1", () => {
+        const sorot = "#FCD34D";
+        const onSorot = "#0B1220";
+        expect(calculateContrastRatio(onSorot, sorot)).toBeGreaterThanOrEqual(7.0);
+        expect(calculateContrastRatio(sorot, surface)).toBeGreaterThanOrEqual(7.0);
+
+        expect(calculateContrastRatio("#6EE7B7", "#052E16")).toBeGreaterThanOrEqual(7.0);
+        expect(calculateContrastRatio("#FDE68A", "#422006")).toBeGreaterThanOrEqual(7.0);
+        expect(calculateContrastRatio("#BAE6FD", "#0C2D48")).toBeGreaterThanOrEqual(7.0);
+        expect(calculateContrastRatio("#FECACA", "#450A0A")).toBeGreaterThanOrEqual(7.0);
+      });
+
+      it("memiliki kontras batas UI (--border) >= 3:1 (WCAG AA UI)", () => {
+        const border = "#64748B";
+        expect(calculateContrastRatio(border, bg)).toBeGreaterThanOrEqual(3.0);
+        expect(calculateContrastRatio(border, surface)).toBeGreaterThanOrEqual(3.0);
       });
     });
   });

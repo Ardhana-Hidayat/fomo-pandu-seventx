@@ -3,7 +3,7 @@
 /*
   Token desain PANDU — Panduan Dukungan Inklusif.
   Atribut di <html>:
-    data-tema="terang" | "gelap" | "kuning-hitam"
+    data-tema="terang" | "gelap" | "kuning-hitam" (atau "kontras")
     data-huruf="normal" | "besar" | "sangat-besar" | "raksasa"
     data-jenis-huruf="atkinson" | "lexend" | "plus-jakarta"
     data-jarak="normal" | "lebar"
@@ -105,37 +105,43 @@
   --accent-primary: var(--primary);
 }
 
-/* Hitam dengan kuning: skema klasik untuk low vision. */
-[data-tema="kuning-hitam"] {
-  --bg: #000000;
-  --surface: #000000;
-  --surface-2: #1A1A00;
-  --ink: #FFD400;            /* 14,7:1 */
-  --ink-2: #FFFFFF;          /* 21:1 */
-  --muted: #FFFFFF;
-  --unread: #FFFFFF;
-  --border: #FFD400;
-  --border-strong: #FFD400;
-  --primary: #FFD400;
-  --on-primary: #000000;     /* 14,7:1 */
-  --primary-edge: #FFFFFF;
-  --link: #7FD0FF;           /* 12,4:1 */
-  --focus: #FFFFFF;
-  --sorot: #FFD400;
-  --sorot-lembut: #FFD400;   /* kata yang sudah dibaca: teks kuning, bukan latar */
-  --on-sorot: #000000;
+/* Kontras tinggi multi-tone (WCAG AAA >= 7:1) yang nyaman untuk low vision tanpa hitam pekat / kuning neon. */
+[data-tema="kuning-hitam"],
+[data-tema="kontras"],
+[data-theme="kontras"] {
+  --bg: #0B1220;              /* midnight navy canvas */
+  --surface: #111B2E;         /* elevated midnight card */
+  --surface-2: #1A2740;       /* subtle secondary surface */
+  --elevated: #162238;        /* dropdown, popover, toast */
 
-  --benar-bg: #000000;  --benar-ink: #7CFFB0;  --benar-edge: #7CFFB0;
-  --ulang-bg: #000000;  --ulang-ink: #FFB347;  --ulang-edge: #FFB347;
-  --info-bg:  #000000;  --info-ink:  #7FD0FF;  --info-edge:  #7FD0FF;
-  --galat-bg: #000000;  --galat-ink: #FF9A9A;  --galat-edge: #FF9A9A;
+  --border: #64748B;          /* clear slate border (>= 3.6:1 UI contrast) */
+  --border-strong: #94A3B8;   /* strong border for inputs & secondary buttons */
+  --border-focus: #38BDF8;    /* high-contrast sky-cyan focus ring */
 
-  --primary-edge: #FFFFFF;
-  --link: #7FD0FF;
-  --focus: #FFFFFF;
-  --sorot: #FFD400;
-  --sorot-lembut: #FFD400;
-  --on-sorot: #000000;
+  --ink: #F8FAFC;             /* crisp warm-white (17.89:1 on bg, 16.45:1 on surface) */
+  --ink-2: #E2E8F0;           /* soft slate-white (13.96:1 on surface) */
+  --muted: #CBD5E1;           /* muted slate (11.59:1 on surface) */
+  --unread: #E2E8F0;          /* kata yang belum dibaca */
+
+  --primary: #38BDF8;         /* calm sky-cyan CTA (8.03:1 on surface) */
+  --on-primary: #06121F;      /* deep navy ink on primary (8.80:1) */
+  --primary-hover: #7DD3FC;   /* lighter sky-cyan hover (11.31:1 with on-primary) */
+  --accent-subtle: #0A2239;   /* deep ocean tint for selected cards */
+
+  --benar-bg: #052E16;  --benar-ink: #6EE7B7;  --benar-edge: #34D399;
+  --ulang-bg: #422006;  --ulang-ink: #FDE68A;  --ulang-edge: #FBBF24;
+  --info-bg:  #0C2D48;  --info-ink:  #BAE6FD;  --info-edge:  #38BDF8;
+  --galat-bg: #450A0A;  --galat-ink: #FECACA;  --galat-edge: #F87171;
+  --ok: #6EE7B7;
+  --err: #FECACA;
+
+  --border-strong-compat: var(--border-strong);
+  --primary-edge: var(--primary-hover);
+  --link: #7DD3FC;            /* 10.32:1 on surface */
+  --focus: var(--border-focus);
+  --sorot: #FCD34D;           /* soft warm-amber highlight */
+  --sorot-lembut: #FDE68A;
+  --on-sorot: #0B1220;        /* 12.98:1 on sorot */
 
   --bg-canvas: var(--bg);
   --bg-surface: var(--surface);
@@ -212,6 +218,14 @@ html { font-size: calc(16px * var(--skala-huruf)); }
 [data-tema="gelap"] :focus-visible {
   box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.2);
 }
+[data-tema="kuning-hitam"]:focus-visible,
+[data-tema="kuning-hitam"] :focus-visible,
+[data-tema="kontras"]:focus-visible,
+[data-tema="kontras"] :focus-visible,
+[data-theme="kontras"]:focus-visible,
+[data-theme="kontras"] :focus-visible {
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.28);
+}
 
 /* Tombol — flat modern, hover bg shift, active scale(0.98) (DESIGN.md §6) */
 .tombol {
@@ -281,9 +295,20 @@ html { font-size: calc(16px * var(--skala-huruf)); }
   text-decoration-thickness: 0.09em;
   text-underline-offset: 0.12em;
 }
-/* Kuning-hitam: kata yang sudah dibaca berupa teks kuning di latar hitam, kata yang sedang dibaca berlatar kuning. */
-[data-tema="kuning-hitam"] .kata[data-state="sudah"] { background: transparent; color: var(--sorot); text-decoration: underline; text-decoration-thickness: 0.05em; }
-[data-tema="kuning-hitam"] .kata[data-state="sedang"] { background: var(--sorot); }
+/* Kontras tinggi: kata yang sudah dibaca berupa teks sorot bergaris bawah di latar transparan, kata yang sedang dibaca berlatar sorot penuh. */
+[data-tema="kuning-hitam"] .kata[data-state="sudah"],
+[data-tema="kontras"] .kata[data-state="sudah"],
+[data-theme="kontras"] .kata[data-state="sudah"] {
+  background: transparent;
+  color: var(--sorot);
+  text-decoration: underline;
+  text-decoration-thickness: 0.05em;
+}
+[data-tema="kuning-hitam"] .kata[data-state="sedang"],
+[data-tema="kontras"] .kata[data-state="sedang"],
+[data-theme="kontras"] .kata[data-state="sedang"] {
+  background: var(--sorot);
+}
 
 /* Kurangi gerak: ikut sistem, atau dipaksa lewat data-gerak="kurang". Tanpa sapuan, kata langsung penuh. */
 @media (prefers-reduced-motion: reduce) {

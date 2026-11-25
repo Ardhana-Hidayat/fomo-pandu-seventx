@@ -5,14 +5,12 @@ import { Card, Button, Field, Icon } from "@/shared/ui";
 import { SignCard } from "@/features/player";
 import {
   tokenize,
-  type SignSlot,
-} from "@/shared/lib/sync";
-import {
   PACE_CONFIGS,
   buildQuickInstructionPlan,
   type PacePreset,
   type PlaybackSegment,
-} from "@/shared/lib/sync/playback-plan";
+  type SignSlot,
+} from "@/shared/lib/sync";
 import {
   preloadSignImagesForWords,
   runSegmentedPlayback,

@@ -13,14 +13,12 @@ import {
   completedSignWord,
   wordIndexAt,
   progressInWord,
-  type Timeline,
-  type SignSlot,
-} from "@/shared/lib/sync";
-import {
   PACE_CONFIGS,
   buildQuickInstructionPlan,
   type PacePreset,
-} from "@/shared/lib/sync/playback-plan";
+  type Timeline,
+  type SignSlot,
+} from "@/shared/lib/sync";
 import {
   preloadSignImagesForWords,
   runSegmentedPlayback,

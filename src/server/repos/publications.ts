@@ -33,15 +33,26 @@ export async function publishLesson(
   }
 
   try {
-    // 1. Verifikasi materi milik guru dan berstatus published
-    const lesson = await db
-      .select()
-      .from(lessons)
-      .where(
-        and(eq(lessons.id, lessonId), eq(lessons.teacherId, teacherId))
-      )
-      .limit(1)
-      .then((rows) => rows[0]);
+    // 1. Verifikasi materi & kelas tujuan milik guru secara paralel
+    const [lesson, ownedClasses] = await Promise.all([
+      db
+        .select()
+        .from(lessons)
+        .where(
+          and(eq(lessons.id, lessonId), eq(lessons.teacherId, teacherId))
+        )
+        .limit(1)
+        .then((rows) => rows[0]),
+      db
+        .select({ id: classrooms.id })
+        .from(classrooms)
+        .where(
+          and(
+            inArray(classrooms.id, classroomIds),
+            eq(classrooms.teacherId, teacherId)
+          )
+        ),
+    ]);
 
     if (!lesson) {
       return err(
@@ -49,69 +60,71 @@ export async function publishLesson(
       );
     }
 
-    // Pastikan status materi menjadi 'published'
-    if (lesson.status !== "published") {
-      await db
-        .update(lessons)
-        .set({ status: "published" })
-        .where(eq(lessons.id, lessonId));
-    }
-
-    // 2. Verifikasi seluruh kelas tujuan milik guru
-    const ownedClasses = await db
-      .select({ id: classrooms.id })
-      .from(classrooms)
-      .where(
-        and(
-          inArray(classrooms.id, classroomIds),
-          eq(classrooms.teacherId, teacherId)
-        )
-      );
-
     if (ownedClasses.length !== classroomIds.length) {
       return err(
         makeAppError("FORBIDDEN", "Sebagian kelas tujuan tidak valid atau bukan milik Anda")
       );
     }
 
-    // 3. Simpan publikasi untuk setiap kelas
-    const publishedRecords: Publication[] = [];
-    for (const cId of classroomIds) {
-      const existing = await db
+    // 2. Pastikan status materi menjadi 'published' dan ambil publikasi yang sudah ada
+    const [, existingPubs] = await Promise.all([
+      lesson.status !== "published"
+        ? db
+            .update(lessons)
+            .set({ status: "published" })
+            .where(and(eq(lessons.id, lessonId), eq(lessons.teacherId, teacherId)))
+        : Promise.resolve(),
+      db
         .select()
         .from(publications)
         .where(
           and(
             eq(publications.lessonId, lessonId),
-            eq(publications.classroomId, cId)
+            inArray(publications.classroomId, classroomIds)
           )
-        )
-        .limit(1)
-        .then((rows) => rows[0]);
+        ),
+    ]);
 
+    const existingByClassroom = new Map(
+      existingPubs.map((p) => [p.classroomId, p])
+    );
+    const existingIdsToUpdate: string[] = [];
+    const newPubValues: Array<{
+      lessonId: string;
+      classroomId: string;
+      shareCode: string;
+      visible: boolean;
+    }> = [];
+
+    for (const cId of classroomIds) {
+      const existing = existingByClassroom.get(cId);
       if (existing) {
-        const updated = await db
-          .update(publications)
-          .set({ visible: true, publishedAt: new Date() })
-          .where(eq(publications.id, existing.id))
-          .returning();
-        if (updated[0]) publishedRecords.push(updated[0]);
+        existingIdsToUpdate.push(existing.id);
       } else {
-        const shareCode = generateShareCode();
-        const inserted = await db
-          .insert(publications)
-          .values({
-            lessonId,
-            classroomId: cId,
-            shareCode,
-            visible: true,
-          })
-          .returning();
-        if (inserted[0]) publishedRecords.push(inserted[0]);
+        newPubValues.push({
+          lessonId,
+          classroomId: cId,
+          shareCode: generateShareCode(),
+          visible: true,
+        });
       }
     }
 
-    return ok(publishedRecords);
+    // 3. Perbarui & sisipkan publikasi secara batch paralel
+    const [updatedRecords, insertedRecords] = await Promise.all([
+      existingIdsToUpdate.length > 0
+        ? db
+            .update(publications)
+            .set({ visible: true, publishedAt: new Date() })
+            .where(inArray(publications.id, existingIdsToUpdate))
+            .returning()
+        : Promise.resolve([]),
+      newPubValues.length > 0
+        ? db.insert(publications).values(newPubValues).returning()
+        : Promise.resolve([]),
+    ]);
+
+    return ok([...updatedRecords, ...insertedRecords]);
   } catch (error) {
     return err(
       makeAppError("DB_ERROR", "Gagal menerbitkan materi ke kelas", error)

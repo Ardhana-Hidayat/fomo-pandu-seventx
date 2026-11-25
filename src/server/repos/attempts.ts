@@ -1,5 +1,5 @@
 import "server-only";
-import { eq, and } from "drizzle-orm";
+import { eq, and, inArray } from "drizzle-orm";
 import { db } from "../db/client";
 import {
   sessions,
@@ -94,15 +94,92 @@ export async function recordBatchAttempts(
   sessionId: string,
   attempts: AttemptInput[]
 ): Promise<Result<QuestionAttempt[]>> {
-  const saved: QuestionAttempt[] = [];
-  for (const item of attempts) {
-    const res = await recordAttempt(studentId, sessionId, item);
-    if (!res.ok) {
-      return res;
-    }
-    saved.push(res.data);
+  if (attempts.length === 0) {
+    return ok([]);
   }
-  return ok(saved);
+
+  try {
+    const session = await db
+      .select({ id: sessions.id })
+      .from(sessions)
+      .where(and(eq(sessions.id, sessionId), eq(sessions.studentId, studentId)))
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (!session) {
+      return err(
+        makeAppError("FORBIDDEN", "Sesi tidak ditemukan atau bukan milik Anda")
+      );
+    }
+
+    const eventIds = attempts
+      .map((a) => a.eventId)
+      .filter((id): id is string => Boolean(id));
+
+    const existingRows =
+      eventIds.length > 0
+        ? await db
+            .select()
+            .from(questionAttempts)
+            .where(inArray(questionAttempts.eventId, eventIds))
+        : [];
+
+    const existingByEventId = new Map<string, QuestionAttempt>();
+    for (const row of existingRows) {
+      if (row.eventId) existingByEventId.set(row.eventId, row);
+    }
+
+    const seenBatchEventIds = new Set<string>();
+    const saved: QuestionAttempt[] = [];
+    const toInsert: Array<{
+      eventId?: string;
+      sessionId: string;
+      questionId: string;
+      attemptNo: number;
+      chosen?: Record<string, unknown>;
+      isCorrect: boolean;
+      hintUsed: boolean;
+      msToAnswer: number;
+      channelsOn: string[];
+    }> = [];
+
+    for (const item of attempts) {
+      if (item.eventId) {
+        const existing = existingByEventId.get(item.eventId);
+        if (existing) {
+          saved.push(existing);
+          continue;
+        }
+        if (seenBatchEventIds.has(item.eventId)) {
+          continue;
+        }
+        seenBatchEventIds.add(item.eventId);
+      }
+
+      toInsert.push({
+        eventId: item.eventId,
+        sessionId,
+        questionId: item.questionId,
+        attemptNo: item.attemptNo ?? 1,
+        chosen: item.chosen,
+        isCorrect: item.isCorrect,
+        hintUsed: item.hintUsed ?? false,
+        msToAnswer: item.msToAnswer ?? 0,
+        channelsOn: item.channelsOn ?? [],
+      });
+    }
+
+    const inserted =
+      toInsert.length > 0
+        ? await db.insert(questionAttempts).values(toInsert).returning()
+        : [];
+
+    return ok([...saved, ...inserted]);
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal mencatat percobaan soal", error)
+    );
+  }
 }
 
 export async function listAttemptsBySession(
@@ -160,37 +237,63 @@ export async function recordCardEvents(
       );
     }
 
+    const eventIds = events
+      .map((ev) => ev.eventId)
+      .filter((id): id is string => Boolean(id));
+
+    const existingRows =
+      eventIds.length > 0
+        ? await db
+            .select()
+            .from(cardEvents)
+            .where(inArray(cardEvents.eventId, eventIds))
+        : [];
+
+    const existingByEventId = new Map<string, CardEvent>();
+    for (const row of existingRows) {
+      if (row.eventId) existingByEventId.set(row.eventId, row);
+    }
+
+    const seenBatchEventIds = new Set<string>();
     const saved: CardEvent[] = [];
+    const toInsert: Array<{
+      eventId?: string;
+      sessionId: string;
+      cardId: string;
+      kind: "view" | "replay_audio" | "replay_sign";
+      atMs: number;
+      dwellMs: number;
+    }> = [];
+
     for (const ev of events) {
       if (ev.eventId) {
-        const existing = await db
-          .select()
-          .from(cardEvents)
-          .where(eq(cardEvents.eventId, ev.eventId))
-          .limit(1)
-          .then((rows) => rows[0]);
+        const existing = existingByEventId.get(ev.eventId);
         if (existing) {
           saved.push(existing);
           continue;
         }
+        if (seenBatchEventIds.has(ev.eventId)) {
+          continue;
+        }
+        seenBatchEventIds.add(ev.eventId);
       }
 
-      const inserted = await db
-        .insert(cardEvents)
-        .values({
-          eventId: ev.eventId,
-          sessionId,
-          cardId: ev.cardId,
-          kind: ev.kind,
-          atMs: ev.atMs,
-          dwellMs: ev.dwellMs ?? 0,
-        })
-        .returning();
-
-      if (inserted[0]) saved.push(inserted[0]);
+      toInsert.push({
+        eventId: ev.eventId,
+        sessionId,
+        cardId: ev.cardId,
+        kind: ev.kind,
+        atMs: ev.atMs,
+        dwellMs: ev.dwellMs ?? 0,
+      });
     }
 
-    return ok(saved);
+    const inserted =
+      toInsert.length > 0
+        ? await db.insert(cardEvents).values(toInsert).returning()
+        : [];
+
+    return ok([...saved, ...inserted]);
   } catch (error) {
     return err(
       makeAppError("DB_ERROR", "Gagal menyimpan peristiwa kartu", error)

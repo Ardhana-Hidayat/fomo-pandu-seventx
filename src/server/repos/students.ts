@@ -1,5 +1,5 @@
 import "server-only";
-import { eq, and, sql } from "drizzle-orm";
+import { eq, and, sql, inArray } from "drizzle-orm";
 import { db } from "../db/client";
 import { students, classrooms, type Student } from "../db/schema";
 import { ok, err, type Result, makeAppError } from "@/shared/lib/result";
@@ -162,21 +162,26 @@ export async function mergeStudent(
   sourceStudentId: string,
   targetStudentId: string
 ): Promise<Result<Student>> {
+  if (sourceStudentId === targetStudentId) {
+    return err(
+      makeAppError("INVALID_MERGE", "Siswa sumber dan tujuan tidak boleh sama")
+    );
+  }
+
   try {
-    // Verifikasi kedua siswa berada di kelas yang dimiliki guru
+    // Verifikasi kedua siswa berada di kelas yang dimiliki guru (mencegah IDOR lintas guru)
     const verified = await db
       .select({ id: students.id })
       .from(students)
       .innerJoin(classrooms, eq(students.classroomId, classrooms.id))
       .where(
         and(
-          eq(students.id, sourceStudentId),
+          inArray(students.id, [sourceStudentId, targetStudentId]),
           eq(classrooms.teacherId, teacherId)
         )
-      )
-      .limit(1);
+      );
 
-    if (verified.length === 0) {
+    if (verified.length < 2) {
       return err(
         makeAppError("FORBIDDEN", "Anda tidak berhak menggabungkan siswa ini")
       );
@@ -240,39 +245,45 @@ export async function bulkAddStudents(
       }
     }
 
-    const added: Student[] = [];
+    if (cleanNames.length === 0) {
+      return ok({ added: [], existing: [] });
+    }
+
+    // 3. Ambil siswa yang sudah ada dalam satu query lalu sisipkan sisanya secara batch
+    const existingRows = await db
+      .select()
+      .from(students)
+      .where(eq(students.classroomId, classroomId));
+
+    const existingByLower = new Map<string, Student>();
+    for (const row of existingRows) {
+      existingByLower.set(row.displayName.trim().toLowerCase(), row);
+    }
+
     const existing: Student[] = [];
+    const toInsert: Array<{
+      classroomId: string;
+      displayName: string;
+      needsPreset: string;
+    }> = [];
 
-    // 3. Tambahkan satu per satu atau temukan yang sudah ada
     for (const name of cleanNames) {
-      const found = await db
-        .select()
-        .from(students)
-        .where(
-          and(
-            eq(students.classroomId, classroomId),
-            sql`lower(${students.displayName}) = lower(${name})`
-          )
-        )
-        .limit(1)
-        .then((rows) => rows[0]);
-
+      const found = existingByLower.get(name.toLowerCase());
       if (found) {
         existing.push(found);
       } else {
-        const inserted = await db
-          .insert(students)
-          .values({
-            classroomId,
-            displayName: name,
-            needsPreset: defaultPreset ?? "campuran",
-          })
-          .returning();
-        if (inserted[0]) {
-          added.push(inserted[0]);
-        }
+        toInsert.push({
+          classroomId,
+          displayName: name,
+          needsPreset: defaultPreset ?? "campuran",
+        });
       }
     }
+
+    const added =
+      toInsert.length > 0
+        ? await db.insert(students).values(toInsert).returning()
+        : [];
 
     return ok({ added, existing });
   } catch (error) {

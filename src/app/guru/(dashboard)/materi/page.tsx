@@ -7,7 +7,6 @@ import {
   CreateLessonButton,
   ShareLessonButton,
 } from "@/features/authoring";
-import { listClassroomsWithStats } from "@/features/classrooms";
 import { Card, Button, Icon } from "@/shared/ui";
 
 export const instant = false;
@@ -16,17 +15,10 @@ export default async function LessonLibraryPage() {
   const session = await getCurrentTeacher();
   if (!session) redirect("/guru/masuk");
 
-  const [lessons, sharesByLesson, rawClassrooms] = await Promise.all([
+  const [lessons, sharesByLesson] = await Promise.all([
     listTeacherLessons(session.teacher.id),
     listTeacherLessonShares(session.teacher.id),
-    listClassroomsWithStats(session.teacher.id),
   ]);
-
-  const classrooms = rawClassrooms.map((c) => ({
-    id: c.id,
-    name: c.name,
-    joinCode: c.joinCode,
-  }));
 
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -36,7 +28,6 @@ export default async function LessonLibraryPage() {
         </h1>
 
         <CreateLessonButton
-          classrooms={classrooms}
           label="Buat materi baru"
           variant="primary"
           size="normal"
@@ -53,7 +44,6 @@ export default async function LessonLibraryPage() {
             Mulai susun materi pertama secara manual atau unggah dokumen PDF modul belajar.
           </p>
           <CreateLessonButton
-            classrooms={classrooms}
             label="Mulai susun materi"
             variant="primary"
             size="normal"
@@ -113,7 +103,6 @@ export default async function LessonLibraryPage() {
                       lessonId={l.id}
                       lessonTitle={l.title}
                       shares={lessonShares}
-                      classrooms={classrooms}
                       size="normal"
                       className="w-full justify-center"
                     />

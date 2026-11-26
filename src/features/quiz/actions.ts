@@ -1,7 +1,12 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { getCurrentStudent } from "@/features/auth";
-import { startSession, recordAttempt } from "@/server/repos/sessions";
+import {
+  getOrCreateActiveSession,
+  finishActiveLessonSession,
+  recordAttempt,
+} from "@/server/repos/sessions";
 import type { Result } from "@/shared/lib/result";
 import { ok, err, makeAppError } from "@/shared/lib/result";
 
@@ -23,8 +28,8 @@ export async function submitQuizAnswerAction(
     return err(makeAppError("UNAUTHORIZED", "Sesi siswa tidak valid."));
   }
 
-  // Buat sesi pengerjaan kuis siswa
-  const sessionRes = await startSession(studentSession.student.id, {
+  // Gunakan sesi aktif (atau buat 1 sesi untuk seluruh kuis ini)
+  const sessionRes = await getOrCreateActiveSession(studentSession.student.id, {
     lessonId: input.lessonId,
     device: "ponsel",
   });
@@ -46,5 +51,23 @@ export async function submitQuizAnswerAction(
     return attemptRes;
   }
 
+  revalidatePath(`/guru/materi/${input.lessonId}/hasil`);
   return ok({ attemptId: String(attemptRes.data.id) });
+}
+
+export async function finishQuizSessionAction(
+  lessonId: string
+): Promise<Result<{ finished: boolean }>> {
+  const studentSession = await getCurrentStudent();
+  if (!studentSession) {
+    return err(makeAppError("UNAUTHORIZED", "Sesi siswa tidak valid."));
+  }
+
+  const res = await finishActiveLessonSession(studentSession.student.id, lessonId);
+  if (!res.ok) {
+    return res;
+  }
+
+  revalidatePath(`/guru/materi/${lessonId}/hasil`);
+  return ok({ finished: Boolean(res.data) });
 }

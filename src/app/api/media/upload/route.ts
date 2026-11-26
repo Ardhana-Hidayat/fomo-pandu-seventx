@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { sanitizeImage } from "@/server/services/media/image";
 import { storage } from "@/server/services/storage";
 import { saveAsset } from "@/server/repos/assets";
 import { updateCardMedia } from "@/server/repos/lessons";
-import { getTeacherBySessionToken } from "@/server/services/auth/demo";
-import { TEACHER_COOKIE_NAME } from "@/server/security/session";
+import { getCurrentTeacher } from "@/features/auth";
 
 const MAX_IMAGE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
 const MAX_AUDIO_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
@@ -34,24 +32,15 @@ export async function POST(request: Request) {
     }
 
     // 0. Autentikasi Guru (Mencegah upload anonim & penyalahgunaan kuota server)
-    const cookieStore = await cookies();
-    const teacherToken = cookieStore.get(TEACHER_COOKIE_NAME)?.value;
-    if (!teacherToken) {
-      return NextResponse.json(
-        { error: "Akses ditolak. Sesi guru tidak ditemukan." },
-        { status: 401 }
-      );
-    }
-
-    const teacher = await getTeacherBySessionToken(teacherToken);
-    if (!teacher) {
+    const teacherSession = await getCurrentTeacher();
+    if (!teacherSession) {
       return NextResponse.json(
         { error: "Akses ditolak. Sesi guru tidak valid atau telah kedaluwarsa." },
         { status: 401 }
       );
     }
 
-    const teacherId = teacher.id;
+    const teacherId = teacherSession.teacher.id;
 
     const mimeType = file.type;
     const isAudio =

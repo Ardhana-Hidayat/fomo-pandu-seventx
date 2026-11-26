@@ -7,7 +7,10 @@ import {
   saveAsset,
   findPictogram,
   findAssetByKeyword,
+  getAssetByStorageKey,
 } from "../../repos/assets";
+import { getAssetById } from "../assets/catalog";
+import { searchAssets } from "../assets/retrieval";
 import { ok, err, type Result, makeAppError } from "@/shared/lib/result";
 import type { Asset } from "../../db/schema";
 
@@ -233,6 +236,75 @@ const CURATED_ARASAAC_IDS: Record<string, number> = {
   "clean hands": 26172,
 };
 
+export async function resolveCatalogAssetToDb(
+  assetId: string,
+  customAlt?: string
+): Promise<Result<Asset>> {
+  try {
+    const record = getAssetById(assetId);
+    if (!record || !record.available) {
+      return err(
+        makeAppError("NOT_FOUND", `Aset katalog '${assetId}' tidak ditemukan`)
+      );
+    }
+
+    const storageKey =
+      record.visual_type === "illustration"
+        ? `custom-${record.filename}`
+        : record.filename;
+
+    const existing = await getAssetByStorageKey(storageKey);
+    if (existing.ok && existing.data) {
+      return ok(existing.data);
+    }
+
+    const diskPath = path.join(
+      process.cwd(),
+      "public",
+      record.file_path.replace(/^\/+/, "")
+    );
+    if (!fs.existsSync(diskPath)) {
+      return err(
+        makeAppError("NOT_FOUND", `Berkas aset '${record.file_path}' tidak ada di disk`)
+      );
+    }
+
+    const fileBuffer = fs.readFileSync(diskPath);
+    const ext = path.extname(record.filename).toLowerCase();
+    const mime =
+      ext === ".png"
+        ? "image/png"
+        : ext === ".jpg" || ext === ".jpeg"
+          ? "image/jpeg"
+          : ext === ".svg"
+            ? "image/svg+xml"
+            : "image/webp";
+
+    await storage.put(storageKey, fileBuffer, mime, "card-images");
+
+    const keyword = Array.from(
+      new Set([record.display_name.toLowerCase(), ...record.keywords_id.slice(0, 3)])
+    ).join(" | ");
+
+    return saveAsset({
+      kind: record.visual_type === "illustration" ? "gambar" : "piktogram",
+      storageKey,
+      mime,
+      bytes: fileBuffer.length,
+      keyword,
+      alt: customAlt?.trim() || record.display_name,
+      source: record.source,
+      license: record.license,
+      attribution: record.attribution,
+      verified: true,
+    });
+  } catch (error) {
+    return err(
+      makeAppError("PROCESSING_ERROR", "Gagal menyimpan aset katalog ke DB", error)
+    );
+  }
+}
+
 export async function findOrFetchPictogram(
   keywordId: string,
   keywordEn?: string
@@ -240,7 +312,13 @@ export async function findOrFetchPictogram(
   const cleanId = keywordId.trim().toLowerCase();
   const cleanEn = keywordEn?.trim().toLowerCase();
 
-  // 1. Cek cache lokal di tabel assets
+  // 0. Jika langsung berupa asset_id katalog lokal, resolusikan langsung
+  if (cleanId.startsWith("picto:") || cleanId.startsWith("custom:")) {
+    const resolved = await resolveCatalogAssetToDb(keywordId.trim());
+    if (resolved.ok) return resolved;
+  }
+
+  // 1. Cek cache lokal di tabel assets (idempoten)
   const cached = await findPictogram(cleanId);
   if (cached.ok && cached.data) {
     return ok(cached.data);
@@ -251,6 +329,17 @@ export async function findOrFetchPictogram(
     if (cachedEn.ok && cachedEn.data) {
       return ok(cachedEn.data);
     }
+  }
+
+  // 1a. Cari di katalog lokal sebelum memanggil ARASAAC API
+  const catalogHits = searchAssets(cleanId || cleanEn || "", {
+    limit: 1,
+    minScore: 18,
+    onlyAvailable: true,
+  });
+  if (catalogHits[0]) {
+    const resolved = await resolveCatalogAssetToDb(catalogHits[0].asset.asset_id);
+    if (resolved.ok) return resolved;
   }
 
   // 1b. Cek curated mapping agar ID akurat dan tidak tertukar (misal cuci tangan tidak tertukar cuci mobil)

@@ -26,6 +26,29 @@ interface NormalizedTVStep {
   imageUrl?: string;
 }
 
+function deterministicShuffle<T extends { id: string }>(items: T[], seed: string): T[] {
+  if (items.length <= 1) return items;
+  const copy = [...items];
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = (hash * 31 + seed.charCodeAt(i)) | 0;
+  }
+  for (let i = copy.length - 1; i > 0; i--) {
+    hash = (hash * 1664525 + 1013904223) | 0;
+    const j = Math.abs(hash) % (i + 1);
+    const tmp = copy[i]!;
+    copy[i] = copy[j]!;
+    copy[j] = tmp;
+  }
+  const sameOrder = copy.every((item, idx) => item.id === items[idx]?.id);
+  if (sameOrder && copy.length >= 2) {
+    const first = copy[0]!;
+    copy[0] = copy[1]!;
+    copy[1] = first;
+  }
+  return copy;
+}
+
 export function TVQuiz({
   lessonTitle,
   questions,
@@ -34,11 +57,26 @@ export function TVQuiz({
   materialHref,
 }: TVQuizProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isCompleted, setIsCompleted] = useState(false);
   const [revealedIndex, setRevealedIndex] = useState<number | null>(null);
+  const [selectedOptionByQ, setSelectedOptionByQ] = useState<Record<string, string>>({});
+  const [orderedStepIdsByQ, setOrderedStepIdsByQ] = useState<Record<string, string[]>>({});
+  const [feedbackByQ, setFeedbackByQ] = useState<
+    Record<string, { ok: boolean; message: string }>
+  >({});
 
   const currentQ = questions[currentIndex];
   const total = questions.length;
   const isRevealed = revealedIndex === currentIndex;
+
+  const handleRestartQuiz = useCallback(() => {
+    setIsCompleted(false);
+    setCurrentIndex(0);
+    setRevealedIndex(null);
+    setSelectedOptionByQ({});
+    setOrderedStepIdsByQ({});
+    setFeedbackByQ({});
+  }, []);
 
   const handlePrev = useCallback(() => {
     setRevealedIndex(null);
@@ -64,6 +102,78 @@ export function TVQuiz({
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [handleNext, handlePrev, total]);
+
+  if (isCompleted) {
+    const correctCount = Object.values(feedbackByQ).filter((f) => f.ok).length;
+    return (
+      <div className="flex h-[100dvh] w-screen flex-col justify-between p-6 sm:p-12 bg-[var(--bg)] text-[var(--ink)]">
+        <header className="flex items-center justify-between border-b-4 border-[var(--border)] pb-4">
+          <Button
+            variant="secondary"
+            size="normal"
+            href={backHref}
+            icon={<Icon name="CaretLeft" size={20} />}
+          >
+            Keluar TV
+          </Button>
+          <span className="text-lg sm:text-xl font-bold text-[var(--muted)] truncate">
+            {lessonTitle}
+          </span>
+          <DisplayPreferencesTrigger />
+        </header>
+
+        <main className="my-auto max-w-2xl mx-auto w-full text-center">
+          <Card className="p-8 sm:p-12 border-4 flex flex-col items-center gap-5 bg-[var(--surface)] shadow-xl">
+            <span className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-[var(--benar-bg)] border-4 border-[var(--benar-edge)] text-[var(--benar-edge)]">
+              <Icon name="CheckCircle" size={56} />
+            </span>
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-[var(--ink)]">
+              Yey! Selesai!
+            </h1>
+            <p className="text-xl sm:text-2xl font-medium text-[var(--ink-2)]">
+              Hebat! Materi dan kuis <span className="font-bold text-[var(--ink)]">{lessonTitle}</span> telah selesai dipelajari bersama.
+            </p>
+            {Object.keys(feedbackByQ).length > 0 && (
+              <div className="rounded-2xl border-2 border-[var(--benar-edge)] bg-[var(--benar-bg)] px-6 py-3 text-xl font-extrabold text-[var(--benar-ink)]">
+                Jawaban Tepat: {correctCount} dari {total} soal
+              </div>
+            )}
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-3 w-full">
+              <Button
+                variant="primary"
+                size="large"
+                onClick={handleRestartQuiz}
+                icon={<Icon name="ArrowsClockwise" size={22} />}
+              >
+                Ulangi Kuis
+              </Button>
+              {onBackToMaterial ? (
+                <Button
+                  variant="secondary"
+                  size="large"
+                  onClick={onBackToMaterial}
+                  icon={<Icon name="Cards" size={22} />}
+                >
+                  Ulangi Materi
+                </Button>
+              ) : materialHref ? (
+                <Button
+                  variant="secondary"
+                  size="large"
+                  href={materialHref}
+                  icon={<Icon name="Cards" size={22} />}
+                >
+                  Ulangi Materi
+                </Button>
+              ) : null}
+            </div>
+          </Card>
+        </main>
+
+        <div />
+      </div>
+    );
+  }
 
   if (!currentQ) {
     return (
@@ -114,7 +224,9 @@ export function TVQuiz({
 
   const promptImageUrl = payload?.promptImageUrl ?? payload?.imageUrl;
   const isOrder =
-    currentQ.type === "urutan" || currentQ.type === "arrange_steps";
+    currentQ.type === "order" ||
+    currentQ.type === "urutan" ||
+    currentQ.type === "arrange_steps";
   const isTrueFalse = currentQ.type === "benar_salah";
   const isSignMatch =
     currentQ.type === "cocokkan_isyarat" || currentQ.type === "choice_sign";
@@ -144,6 +256,7 @@ export function TVQuiz({
       label?: string;
       imageUrl?: string;
       image?: { url?: string };
+      visual?: { url?: string } | null;
       correct?: boolean;
     };
     const text = opt.text ?? opt.label ?? `Pilihan ${idx + 1}`;
@@ -159,7 +272,7 @@ export function TVQuiz({
     return {
       id,
       text,
-      imageUrl: opt.imageUrl ?? opt.image?.url,
+      imageUrl: opt.visual?.url ?? opt.imageUrl ?? opt.image?.url,
       correct: isCorrect,
     };
   });
@@ -182,13 +295,60 @@ export function TVQuiz({
       text?: string;
       imageUrl?: string;
       image?: { url?: string };
+      visual?: { url?: string } | null;
     };
     return {
       id: st.id ?? `step-${idx}`,
       text: st.text ?? `Langkah ${idx + 1}`,
-      imageUrl: st.imageUrl ?? st.image?.url,
+      imageUrl: st.visual?.url ?? st.imageUrl ?? st.image?.url,
     };
   });
+
+  const displaySteps = isRevealed
+    ? steps
+    : deterministicShuffle(steps, currentQ.id || `q-${currentIndex}`);
+  const selectedOptionId = selectedOptionByQ[currentQ.id];
+  const orderedIds = orderedStepIdsByQ[currentQ.id] ?? [];
+  const feedback = feedbackByQ[currentQ.id];
+
+  const handleSelectOption = (opt: NormalizedTVOption) => {
+    setSelectedOptionByQ((prev) => ({ ...prev, [currentQ.id]: opt.id }));
+    setFeedbackByQ((prev) => ({
+      ...prev,
+      [currentQ.id]: opt.correct
+        ? { ok: true, message: "Bagus! Jawaban tepat." }
+        : { ok: false, message: "Belum tepat. Coba pilih jawaban lain." },
+    }));
+  };
+
+  const handleToggleStep = (step: NormalizedTVStep) => {
+    if (isRevealed) return;
+    const currentOrder = orderedStepIdsByQ[currentQ.id] ?? [];
+    let nextOrder: string[];
+    if (currentOrder.includes(step.id)) {
+      nextOrder = currentOrder.filter((id) => id !== step.id);
+    } else {
+      nextOrder = [...currentOrder, step.id];
+    }
+
+    setOrderedStepIdsByQ((prev) => ({ ...prev, [currentQ.id]: nextOrder }));
+
+    if (nextOrder.length === steps.length && steps.length > 0) {
+      const allCorrect = steps.every((s, idx) => nextOrder[idx] === s.id);
+      setFeedbackByQ((prev) => ({
+        ...prev,
+        [currentQ.id]: allCorrect
+          ? { ok: true, message: "Hebat! Urutan sudah benar." }
+          : { ok: false, message: "Urutan belum tepat. Klik langkah untuk mengubah atau ulangi." },
+      }));
+    } else {
+      setFeedbackByQ((prev) => {
+        const copy = { ...prev };
+        delete copy[currentQ.id];
+        return copy;
+      });
+    }
+  };
 
   return (
     <div className="flex h-[100dvh] w-screen flex-col justify-between p-4 sm:p-10 bg-[var(--bg)] text-[var(--ink)] select-none overflow-hidden">
@@ -265,35 +425,86 @@ export function TVQuiz({
         </Card>
 
         {isOrder && steps.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {steps.map((st, idx) => (
-              <div
-                key={st.id}
-                className={`flex items-center gap-4 p-5 rounded-3xl border-4 font-bold text-2xl transition-all ${
-                  isRevealed
-                    ? "bg-[var(--benar-bg)] border-[var(--benar-edge)] text-[var(--benar-ink)]"
-                    : "bg-[var(--surface)] border-[var(--border)] text-[var(--ink)]"
-                }`}
-              >
-                <span className="h-12 w-12 rounded-2xl bg-[var(--primary)] text-[var(--on-primary)] flex items-center justify-center font-extrabold text-xl shrink-0">
-                  {isRevealed ? idx + 1 : "?"}
-                </span>
-                <span className="text-left flex-1">{st.text}</span>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {displaySteps.map((st, idx) => {
+                const pickedPos = orderedIds.indexOf(st.id);
+                const isPicked = pickedPos !== -1;
+                const badgeText = isRevealed
+                  ? idx + 1
+                  : isPicked
+                  ? pickedPos + 1
+                  : "?";
+
+                return (
+                  <button
+                    key={st.id}
+                    type="button"
+                    onClick={() => handleToggleStep(st)}
+                    aria-pressed={isPicked}
+                    className={`flex items-center gap-4 p-5 rounded-3xl border-4 font-bold text-2xl transition-all cursor-pointer text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--focus-ring)] ${
+                      isRevealed || (feedback?.ok && isPicked)
+                        ? "bg-[var(--benar-bg)] border-[var(--benar-edge)] text-[var(--benar-ink)]"
+                        : isPicked
+                        ? "bg-[var(--surface-2)] border-[var(--primary)] text-[var(--ink)]"
+                        : "bg-[var(--surface)] border-[var(--border)] text-[var(--ink)] hover:border-[var(--primary)]"
+                    }`}
+                  >
+                    <span className="h-12 w-12 rounded-2xl bg-[var(--primary)] text-[var(--on-primary)] flex items-center justify-center font-extrabold text-xl shrink-0">
+                      {badgeText}
+                    </span>
+                    {st.imageUrl && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={st.imageUrl}
+                        alt={st.text}
+                        className="h-14 w-14 rounded-xl object-contain bg-[var(--surface-2)] p-1 shrink-0"
+                      />
+                    )}
+                    <span className="text-left flex-1">{st.text}</span>
+                  </button>
+                );
+              })}
+            </div>
+            {orderedIds.length > 0 && !isRevealed && (
+              <div className="flex justify-center">
+                <Button
+                  variant="secondary"
+                  size="normal"
+                  onClick={() => {
+                    setOrderedStepIdsByQ((prev) => ({ ...prev, [currentQ.id]: [] }));
+                    setFeedbackByQ((prev) => {
+                      const copy = { ...prev };
+                      delete copy[currentQ.id];
+                      return copy;
+                    });
+                  }}
+                >
+                  Ulangi Urutan
+                </Button>
               </div>
-            ))}
+            )}
           </div>
         ) : options.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {options.map((opt, idx) => {
-              const isHighlight = isRevealed && opt.correct;
+              const isSelected = selectedOptionId === opt.id;
+              const isCorrectHighlight =
+                (isRevealed && opt.correct) || (isSelected && opt.correct);
+              const isWrongSelected = isSelected && !opt.correct && !isRevealed;
 
               return (
-                <div
+                <button
                   key={opt.id}
-                  className={`flex items-center gap-4 p-5 sm:p-6 rounded-3xl border-4 font-bold text-2xl sm:text-3xl transition-all shadow-[0_6px_0_0_var(--border)] ${
-                    isHighlight
+                  type="button"
+                  onClick={() => handleSelectOption(opt)}
+                  aria-pressed={isSelected}
+                  className={`flex items-center gap-4 p-5 sm:p-6 rounded-3xl border-4 font-bold text-2xl sm:text-3xl transition-all cursor-pointer text-left shadow-[0_6px_0_0_var(--border)] active:translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--focus-ring)] ${
+                    isCorrectHighlight
                       ? "bg-[var(--benar-bg)] border-[var(--benar-edge)] text-[var(--benar-ink)]"
-                      : "bg-[var(--surface)] border-[var(--border)] text-[var(--ink)]"
+                      : isWrongSelected
+                      ? "bg-[var(--salah-bg)] border-[var(--salah-edge)] text-[var(--salah-ink)]"
+                      : "bg-[var(--surface)] border-[var(--border)] text-[var(--ink)] hover:border-[var(--primary)]"
                   }`}
                 >
                   <span className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-[var(--primary)] text-[var(--on-primary)] flex items-center justify-center font-extrabold text-xl sm:text-2xl shrink-0">
@@ -308,18 +519,39 @@ export function TVQuiz({
                     />
                   )}
                   <span className="text-left flex-1">{opt.text}</span>
-                  {isHighlight && (
+                  {isCorrectHighlight && (
                     <Icon
                       name="CheckCircle"
                       size={34}
                       className="ml-auto text-[var(--benar-edge)] shrink-0"
                     />
                   )}
-                </div>
+                  {isWrongSelected && (
+                    <Icon
+                      name="X"
+                      size={34}
+                      className="ml-auto text-[var(--salah-edge)] shrink-0"
+                    />
+                  )}
+                </button>
               );
             })}
           </div>
         ) : null}
+
+        {feedback && !isRevealed && (
+          <div
+            role="status"
+            aria-live="polite"
+            className={`mx-auto rounded-2xl border-2 px-6 py-3 text-xl sm:text-2xl font-bold ${
+              feedback.ok
+                ? "bg-[var(--benar-bg)] border-[var(--benar-edge)] text-[var(--benar-ink)]"
+                : "bg-[var(--salah-bg)] border-[var(--salah-edge)] text-[var(--salah-ink)]"
+            }`}
+          >
+            {feedback.message}
+          </div>
+        )}
       </main>
 
       <footer className="shrink-0 flex flex-wrap items-center justify-between gap-3 border-t-4 border-[var(--border)] pt-4">
@@ -347,7 +579,7 @@ export function TVQuiz({
             <Button
               variant="primary"
               size="large"
-              href={backHref}
+              onClick={() => setIsCompleted(true)}
               icon={<Icon name="CheckCircle" size={22} />}
               iconPosition="right"
               className="font-extrabold"

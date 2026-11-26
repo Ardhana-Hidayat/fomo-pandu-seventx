@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button, Card, Icon, StatusMessage, DisplayPreferencesTrigger } from "@/shared/ui";
 import { SignCard } from "@/features/player";
 import type { QuizQuestion } from "@/server/db/schema";
-import { submitQuizAnswerAction } from "../actions";
+import { submitQuizAnswerAction, finishQuizSessionAction } from "../actions";
 
 interface QuizOption {
   id: string;
@@ -88,11 +88,13 @@ export function QuizRunner({
         label?: string;
         imageUrl?: string;
         image?: { url?: string };
+        visual?: { url?: string | null } | null;
         correct?: boolean;
       };
       const text = opt.text ?? opt.label ?? `Pilihan ${idx + 1}`;
       const id = opt.id ?? `opt-${idx}`;
-      const imageUrl = opt.imageUrl ?? opt.image?.url;
+      const imageUrl =
+        opt.imageUrl ?? opt.image?.url ?? opt.visual?.url ?? undefined;
       const isCorrect =
         typeof opt.correct === "boolean"
           ? opt.correct
@@ -121,11 +123,12 @@ export function QuizRunner({
         text?: string;
         imageUrl?: string;
         image?: { url?: string };
+        visual?: { url?: string | null } | null;
       };
       return {
         id: st.id ?? `step-${sIdx}`,
         text: st.text ?? `Langkah ${sIdx + 1}`,
-        imageUrl: st.imageUrl ?? st.image?.url,
+        imageUrl: st.imageUrl ?? st.image?.url ?? st.visual?.url ?? undefined,
       };
     }
   );
@@ -240,6 +243,9 @@ export function QuizRunner({
       setCurrentIndex((prev) => prev + 1);
     } else {
       setIsFinished(true);
+      if (lessonId) {
+        finishQuizSessionAction(lessonId).catch(() => {});
+      }
     }
   }
 

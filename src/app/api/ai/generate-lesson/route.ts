@@ -1,8 +1,65 @@
 import { NextResponse } from "next/server";
-import { generateLessonContent, sanitizeGeneratedLesson } from "@/server/services/ai";
+import { sql } from "drizzle-orm";
+import {
+  generateLessonContent,
+  sanitizeAndValidateLesson,
+  type CognitiveLevel,
+} from "@/server/services/ai";
 import { getCurrentTeacher } from "@/features/auth";
-import { createLesson, type CreateCardInput, type CreateQuestionInput } from "@/server/repos/lessons";
-import { findOrFetchPictogram } from "@/server/services/media/arasaac";
+import {
+  createLesson,
+  type CreateCardInput,
+  type CreateQuestionInput,
+} from "@/server/repos/lessons";
+import {
+  findOrFetchPictogram,
+  resolveCatalogAssetToDb,
+} from "@/server/services/media/arasaac";
+import { db } from "@/server/db/client";
+import { rateLimits } from "@/server/db/schema";
+
+const AI_RATE_LIMIT_MAX = 20;
+const AI_RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+
+async function checkAiRateLimit(key: string): Promise<{ allowed: boolean }> {
+  if (process.env.NODE_ENV === "test") {
+    return { allowed: true };
+  }
+
+  const windowStart =
+    Math.floor(Date.now() / AI_RATE_LIMIT_WINDOW_MS) * AI_RATE_LIMIT_WINDOW_MS;
+
+  try {
+    const rows = await db
+      .insert(rateLimits)
+      .values({ key, windowStart, count: 1 })
+      .onConflictDoUpdate({
+        target: [rateLimits.key, rateLimits.windowStart],
+        set: { count: sql`${rateLimits.count} + 1` },
+      })
+      .returning({ count: rateLimits.count });
+
+    const currentCount = rows[0]?.count ?? 1;
+    return { allowed: currentCount <= AI_RATE_LIMIT_MAX };
+  } catch (err) {
+    console.warn("Rate limit check skipped (DB error):", err);
+    return { allowed: true };
+  }
+}
+
+function parseLevel(raw: unknown): CognitiveLevel {
+  const valid: CognitiveLevel[] = [
+    "sdlb",
+    "sdlb_awal",
+    "sdlb_menengah",
+    "sdlb_lanjut",
+    "smplb",
+    "smalb",
+  ];
+  return typeof raw === "string" && valid.includes(raw as CognitiveLevel)
+    ? (raw as CognitiveLevel)
+    : "sdlb";
+}
 
 export async function POST(request: Request) {
   try {
@@ -11,7 +68,7 @@ export async function POST(request: Request) {
     let topic = "";
     let text = "";
     let sourceType: "topik" | "teks" | "pdf" | "foto" = "topik";
-    let level: "sdlb" | "smplb" | "smalb" = "sdlb";
+    let level: CognitiveLevel = "sdlb";
     let needs: string[] = ["campuran"];
     let languageComplexity: "sangat_sederhana" | "sederhana" | "biasa" = "sederhana";
     let cardCount = 6;
@@ -27,7 +84,7 @@ export async function POST(request: Request) {
       topic = (formData.get("topic") as string) || "";
       text = (formData.get("text") as string) || "";
       sourceType = ((formData.get("sourceType") as string) || "topik") as typeof sourceType;
-      level = ((formData.get("level") as string) || "sdlb") as typeof level;
+      level = parseLevel(formData.get("level"));
       teacherNotes = (formData.get("teacherNotes") as string) || "";
       const rawCardCount = formData.get("cardCount");
       if (rawCardCount) cardCount = Math.min(15, Math.max(3, Number(rawCardCount) || 6));
@@ -53,7 +110,7 @@ export async function POST(request: Request) {
       topic = body.topic || "";
       text = body.text || "";
       sourceType = body.sourceType || "topik";
-      level = body.level || "sdlb";
+      level = parseLevel(body.level);
       needs = body.needs || ["campuran"];
       languageComplexity = body.languageComplexity || "sederhana";
       cardCount = body.cardCount ? Math.min(15, Math.max(3, Number(body.cardCount) || 6)) : 6;
@@ -90,12 +147,24 @@ export async function POST(request: Request) {
       );
     }
 
+    // Rate limit per guru atau IP
+    const clientIp =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "anon";
+    const rateKey = `ai_gen:${teacherSession?.teacher.id ?? clientIp}`;
+    const rateRes = await checkAiRateLimit(rateKey);
+    if (!rateRes.allowed) {
+      return NextResponse.json(
+        { error: "Terlalu banyak permintaan pembuatan materi. Silakan tunggu sebentar." },
+        { status: 429 }
+      );
+    }
+
     const questionTypes =
       exerciseType === "order"
         ? ["urutkan"]
         : exerciseType === "match"
-          ? ["pilih_kata", "benar_salah"]
-          : ["pilih_kata", "urutkan", "benar_salah"];
+          ? ["pilih_kata", "pilih_gambar", "benar_salah"]
+          : ["pilih_kata", "pilih_gambar", "urutkan", "benar_salah"];
 
     // Panggil layanan AI dengan fallback multi-key Gemini (kunci guru -> env server)
     const teacherApiKeys = teacherSession?.teacher.settings?.geminiApiKeys ?? [];
@@ -111,38 +180,54 @@ export async function POST(request: Request) {
       cardCount,
       questionTypes,
       questionCount,
+      exerciseType,
       optionCount,
       teacherNotes,
       apiKeys: teacherApiKeys,
     });
 
-    const finalLesson = sanitizeGeneratedLesson(aiResult.lesson, {
+    const validation = sanitizeAndValidateLesson(aiResult.lesson, {
       optionCount,
       questionCount,
       exerciseType,
     });
+    const finalLesson = validation.lesson;
+    const warnings = Array.from(
+      new Set([...(aiResult.warnings ?? []), ...validation.warnings])
+    );
 
     let createdLessonId: string | undefined;
 
     if (teacherSession?.teacher) {
       const teacher = teacherSession.teacher;
 
-      // Resolusi piktogram visual secara paralel agar kartu langsung memiliki gambar di DB
-      const pictogramResults = await Promise.allSettled(
-        finalLesson.cards.map((c) =>
-          findOrFetchPictogram(
-            c.image.keyword_id || c.key_terms[0] || topic || "belajar",
-            c.image.keyword_en || undefined
-          )
-        )
+      // Resolusi aset visual terverifikasi (atau null bila tidak ada gambar yang cocok)
+      const assetResults = await Promise.allSettled(
+        finalLesson.cards.map(async (c) => {
+          if (c.visual === null) {
+            return null;
+          }
+          if (c.visual?.asset_id) {
+            const res = await resolveCatalogAssetToDb(c.visual.asset_id, c.visual.alt);
+            return res.ok ? res.data.id : undefined;
+          }
+          if (c.image?.keyword_id || c.image?.keyword_en) {
+            const res = await findOrFetchPictogram(
+              c.image.keyword_id || c.key_terms[0] || topic || "belajar",
+              c.image.keyword_en || undefined
+            );
+            return res.ok ? res.data.id : undefined;
+          }
+          return undefined;
+        })
       );
 
       // Otomatis simpan sebagai DRAFT di database
       const cardsToInsert: CreateCardInput[] = finalLesson.cards.map((c, i) => {
-        const picRes = pictogramResults[i];
+        const assetRes = assetResults[i];
         const imageAssetId =
-          picRes?.status === "fulfilled" && picRes.value.ok
-            ? picRes.value.data.id
+          assetRes?.status === "fulfilled" && assetRes.value
+            ? assetRes.value
             : undefined;
 
         return {
@@ -151,7 +236,7 @@ export async function POST(request: Request) {
           keyTerms: c.key_terms,
           cardType: "instruction",
           imageSource: "pictogram",
-          imageAlt: c.image.alt,
+          imageAlt: c.visual?.alt || c.image?.alt || undefined,
           imageAssetId,
           audioSource: "none",
         };
@@ -169,12 +254,26 @@ export async function POST(request: Request) {
                   id: opt.id || String.fromCharCode(97 + optIdx),
                   text: opt.text,
                   correct: opt.correct,
-                  image: opt.image,
+                  imageUrl: opt.visual?.url ?? opt.image?.url,
+                  image: opt.visual
+                    ? {
+                        keyword_en: opt.image?.keyword_en,
+                        alt: opt.visual.alt,
+                        url: opt.visual.url,
+                      }
+                    : opt.image,
                 })),
                 steps: q.steps?.map((step, stepIdx) => ({
                   id: step.id || `step-${stepIdx + 1}`,
                   text: step.text,
-                  image: step.image,
+                  imageUrl: step.visual?.url ?? step.image?.url,
+                  image: step.visual
+                    ? {
+                        keyword_en: step.image?.keyword_en,
+                        alt: step.visual.alt,
+                        url: step.visual.url,
+                      }
+                    : step.image,
                 })),
                 answer: q.answer,
               },
@@ -195,7 +294,10 @@ export async function POST(request: Request) {
       });
 
       if (!dbRes.ok) {
-        console.error("Gagal menyimpan materi ke DB pada /api/ai/generate-lesson:", dbRes.error);
+        console.error(
+          "Gagal menyimpan materi ke DB pada /api/ai/generate-lesson:",
+          dbRes.error
+        );
         return NextResponse.json(
           { error: dbRes.error.message || "Gagal menyimpan materi pembelajaran." },
           { status: 500 }
@@ -212,6 +314,7 @@ export async function POST(request: Request) {
         badge: aiResult.badge,
         generatedBy: aiResult.generatedBy,
         isScannedNotice: aiResult.isScannedNotice,
+        warnings,
         lessonId: createdLessonId,
       },
     });

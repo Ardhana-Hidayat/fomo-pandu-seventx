@@ -198,17 +198,20 @@ export function ShareLessonOverlay({
               </div>
 
               {/* Panel Kanan: Tautan URL */}
-              <div className="flex flex-col items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-3.5 sm:p-4 text-center">
+              <div className="min-w-0 flex flex-col items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-3.5 sm:p-4 text-center">
                 <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[var(--ink)]">
                   <Icon name="Link" size={18} className="text-[var(--primary)]" />
                   <span>Tautan URL</span>
                 </div>
 
-                <div className="flex flex-col items-center gap-2 w-full">
+                <div className="flex flex-col items-center gap-2 w-full min-w-0">
                   <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--accent-subtle)] text-[var(--primary)] border border-[var(--border)]">
                     <Icon name="ArrowSquareOut" size={24} />
                   </span>
-                  <div className="w-full rounded-xl border border-[var(--border-strong)] bg-[var(--surface)] px-2.5 py-2 text-left font-mono text-[11px] sm:text-xs text-[var(--ink)] break-all line-clamp-2 select-all">
+                  <div
+                    title={shareUrl}
+                    className="w-full min-w-0 rounded-xl border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-2 text-left font-mono text-[11px] sm:text-xs text-[var(--ink)] truncate whitespace-nowrap overflow-hidden select-all"
+                  >
                     {shareUrl}
                   </div>
                 </div>

@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { generateAudioForText } from "@/server/services/media/tts";
-import { getTeacherBySessionToken } from "@/server/services/auth/demo";
-import { TEACHER_COOKIE_NAME } from "@/server/security/session";
+import { getCurrentTeacher } from "@/features/auth";
 
 export async function POST(request: Request) {
   try {
@@ -20,16 +18,8 @@ export async function POST(request: Request) {
     }
 
     // Ambil sesi guru jika ada
-    const cookieStore = await cookies();
-    const teacherToken = cookieStore.get(TEACHER_COOKIE_NAME)?.value;
-    let teacherId: string | undefined;
-
-    if (teacherToken) {
-      const teacher = await getTeacherBySessionToken(teacherToken);
-      if (teacher) {
-        teacherId = teacher.id;
-      }
-    }
+    const teacherSession = await getCurrentTeacher();
+    const teacherId = teacherSession?.teacher.id;
 
     const result = await generateAudioForText({
       text,

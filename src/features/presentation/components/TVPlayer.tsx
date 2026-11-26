@@ -29,7 +29,7 @@ interface TVPlayerProps {
 }
 
 export function TVPlayer({ lesson, questions, backHref, quizHref }: TVPlayerProps) {
-  const [mode, setMode] = useState<"cards" | "quiz">("cards");
+  const [mode, setMode] = useState<"cards" | "quiz" | "completed">("cards");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pace, setPace] = useState<PacePreset>("sedang");
   const [isPlaying, setIsPlaying] = useState(false);
@@ -316,6 +316,64 @@ export function TVPlayer({ lesson, questions, backHref, quizHref }: TVPlayerProp
     );
   }
 
+  if (mode === "completed") {
+    return (
+      <div className="flex h-[100dvh] w-screen flex-col justify-between p-6 sm:p-12 bg-[var(--bg)] text-[var(--ink)]">
+        <header className="flex items-center justify-between border-b-4 border-[var(--border)] pb-4">
+          <Button
+            variant="secondary"
+            size="normal"
+            href={backHref}
+            icon={<Icon name="CaretLeft" size={20} />}
+          >
+            Keluar TV
+          </Button>
+          <span className="text-lg sm:text-xl font-bold text-[var(--muted)] truncate">
+            {lesson.title}
+          </span>
+          <DisplayPreferencesTrigger />
+        </header>
+
+        <main className="my-auto max-w-2xl mx-auto w-full text-center">
+          <Card className="p-8 sm:p-12 border-4 flex flex-col items-center gap-5 bg-[var(--surface)] shadow-xl">
+            <span className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-[var(--benar-bg)] border-4 border-[var(--benar-edge)] text-[var(--benar-edge)]">
+              <Icon name="CheckCircle" size={56} />
+            </span>
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-[var(--ink)]">
+              Yey! Selesai!
+            </h1>
+            <p className="text-xl sm:text-2xl font-medium text-[var(--ink-2)]">
+              Hebat! Seluruh kartu materi <span className="font-bold text-[var(--ink)]">{lesson.title}</span> telah selesai dipelajari.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
+              <Button
+                variant="primary"
+                size="large"
+                onClick={() => {
+                  setCurrentIndex(0);
+                  setMode("cards");
+                }}
+                icon={<Icon name="ArrowsClockwise" size={22} />}
+              >
+                Ulangi Materi
+              </Button>
+              <Button
+                variant="secondary"
+                size="large"
+                href={backHref}
+                icon={<Icon name="CaretLeft" size={22} />}
+              >
+                Keluar TV
+              </Button>
+            </div>
+          </Card>
+        </main>
+
+        <div />
+      </div>
+    );
+  }
+
   if (!currentCard) {
     return (
       <div className="flex h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
@@ -588,8 +646,10 @@ export function TVPlayer({ lesson, questions, backHref, quizHref }: TVPlayerProp
             <Button
               variant="primary"
               size="large"
-              href={backHref}
-              onClick={stopPlayback}
+              onClick={() => {
+                stopPlayback();
+                setMode("completed");
+              }}
               icon={<Icon name="CheckCircle" size={22} />}
               iconPosition="right"
               className="font-bold"

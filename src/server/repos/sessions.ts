@@ -1,10 +1,11 @@
 import "server-only";
-import { eq, and, isNull } from "drizzle-orm";
+import { eq, and, isNull, desc } from "drizzle-orm";
 import { db } from "../db/client";
 import {
   sessions,
   cardEvents,
   questionAttempts,
+  quizQuestions,
   lessons,
   students,
   classrooms,
@@ -347,6 +348,200 @@ export async function joinStudentSession(
   } catch (error) {
     return err(
       makeAppError("DB_ERROR", "Gagal memproses sesi siswa", error)
+    );
+  }
+}
+
+/**
+ * Ambil sesi aktif (belum selesai) terbaru untuk (studentId, lessonId),
+ * atau buat baru jika belum ada agar seluruh soal dalam 1 kuis masuk ke 1 sesi.
+ */
+export async function getOrCreateActiveSession(
+  studentId: string,
+  input: StartSessionInput
+): Promise<Result<Session>> {
+  try {
+    const existing = await db
+      .select()
+      .from(sessions)
+      .where(
+        and(
+          eq(sessions.studentId, studentId),
+          eq(sessions.lessonId, input.lessonId),
+          isNull(sessions.finishedAt)
+        )
+      )
+      .orderBy(desc(sessions.startedAt))
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (existing) {
+      return ok(existing);
+    }
+
+    return startSession(studentId, input);
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal mengambil sesi aktif siswa", error)
+    );
+  }
+}
+
+export async function finishActiveLessonSession(
+  studentId: string,
+  lessonId: string
+): Promise<Result<Session | null>> {
+  try {
+    const active = await db
+      .select()
+      .from(sessions)
+      .where(
+        and(
+          eq(sessions.studentId, studentId),
+          eq(sessions.lessonId, lessonId),
+          isNull(sessions.finishedAt)
+        )
+      )
+      .orderBy(desc(sessions.startedAt))
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (!active) {
+      return ok(null);
+    }
+
+    return finishSession(studentId, active.id);
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal menyelesaikan sesi belajar", error)
+    );
+  }
+}
+
+export interface UpdateSessionResultInput {
+  studentName?: string;
+  correctAttempts?: number;
+  totalAttempts?: number;
+}
+
+/**
+ * Memperbarui data rekap hasil belajar siswa (nama & skor) oleh guru pemilik materi.
+ */
+export async function updateSessionResult(
+  teacherId: string,
+  sessionId: string,
+  input: UpdateSessionResultInput
+): Promise<Result<{ sessionId: string; lessonId: string }>> {
+  try {
+    const row = await db
+      .select({
+        sessionId: sessions.id,
+        lessonId: sessions.lessonId,
+        studentId: sessions.studentId,
+      })
+      .from(sessions)
+      .innerJoin(lessons, eq(sessions.lessonId, lessons.id))
+      .where(and(eq(sessions.id, sessionId), eq(lessons.teacherId, teacherId)))
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (!row) {
+      return err(
+        makeAppError("FORBIDDEN", "Sesi hasil belajar tidak ditemukan atau bukan milik Anda.")
+      );
+    }
+
+    if (input.studentName !== undefined) {
+      const cleanName = input.studentName.trim();
+      if (!cleanName) {
+        return err(makeAppError("VALIDATION", "Nama siswa tidak boleh kosong."));
+      }
+      await db
+        .update(students)
+        .set({ displayName: cleanName })
+        .where(eq(students.id, row.studentId));
+    }
+
+    if (
+      input.correctAttempts !== undefined &&
+      input.totalAttempts !== undefined
+    ) {
+      const total = Math.max(1, Math.min(50, Math.round(input.totalAttempts)));
+      const correct = Math.max(0, Math.min(total, Math.round(input.correctAttempts)));
+
+      const lessonQuestion = await db
+        .select({ id: quizQuestions.id })
+        .from(quizQuestions)
+        .where(eq(quizQuestions.lessonId, row.lessonId))
+        .limit(1)
+        .then((rows) => rows[0]);
+
+      if (!lessonQuestion) {
+        return err(
+          makeAppError("VALIDATION", "Materi belum memiliki soal kuis untuk menyimpan skor.")
+        );
+      }
+
+      await db
+        .delete(questionAttempts)
+        .where(eq(questionAttempts.sessionId, row.sessionId));
+
+      for (let i = 0; i < total; i++) {
+        await db.insert(questionAttempts).values({
+          sessionId: row.sessionId,
+          questionId: lessonQuestion.id,
+          attemptNo: i + 1,
+          isCorrect: i < correct,
+          hintUsed: false,
+          msToAnswer: 0,
+          channelsOn: [],
+        });
+      }
+
+      await db
+        .update(sessions)
+        .set({ finishedAt: new Date() })
+        .where(eq(sessions.id, row.sessionId));
+    }
+
+    return ok({ sessionId: row.sessionId, lessonId: row.lessonId });
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal memperbarui rekap hasil belajar", error)
+    );
+  }
+}
+
+/**
+ * Menghapus satu sesi hasil belajar siswa oleh guru pemilik materi.
+ */
+export async function deleteSessionResult(
+  teacherId: string,
+  sessionId: string
+): Promise<Result<{ lessonId: string }>> {
+  try {
+    const row = await db
+      .select({
+        sessionId: sessions.id,
+        lessonId: sessions.lessonId,
+      })
+      .from(sessions)
+      .innerJoin(lessons, eq(sessions.lessonId, lessons.id))
+      .where(and(eq(sessions.id, sessionId), eq(lessons.teacherId, teacherId)))
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (!row) {
+      return err(
+        makeAppError("FORBIDDEN", "Sesi hasil belajar tidak ditemukan atau bukan milik Anda.")
+      );
+    }
+
+    await db.delete(sessions).where(eq(sessions.id, row.sessionId));
+    return ok({ lessonId: row.lessonId });
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal menghapus rekap hasil belajar", error)
     );
   }
 }

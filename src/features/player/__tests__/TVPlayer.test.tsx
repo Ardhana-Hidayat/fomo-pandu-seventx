@@ -181,7 +181,7 @@ describe("TVPlayer & TVQuiz", () => {
     expect(screen.getByText("Kartu 2 dari 2")).toBeDefined();
   });
 
-  it("menampilkan tombol Selesai pada kartu terakhir TVPlayer jika tidak ada soal kuis maupun quizHref", () => {
+  it("menampilkan layar Yey! Selesai! pada kartu terakhir TVPlayer jika tidak ada soal kuis maupun quizHref", () => {
     render(
       <PreferencesProvider>
         <TVPlayer lesson={mockLesson} backHref="/guru/materi/lesson-1/edit" />
@@ -189,8 +189,10 @@ describe("TVPlayer & TVQuiz", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: /Lanjut/i }));
-    const doneLink = screen.getByRole("link", { name: /Selesai/i });
-    expect(doneLink.getAttribute("href")).toBe("/guru/materi/lesson-1/edit");
+    fireEvent.click(screen.getByRole("button", { name: /Selesai/i }));
+    expect(screen.getByText(/Yey! Selesai!/i)).toBeDefined();
+    const exitLinks = screen.getAllByRole("link", { name: /Keluar TV/i });
+    expect(exitLinks[0]?.getAttribute("href")).toBe("/guru/materi/lesson-1/edit");
   });
 
   it("TVQuiz menangani soal kosong dengan tombol kembali yang bersih", () => {
@@ -219,20 +221,34 @@ describe("TVPlayer & TVQuiz", () => {
     );
 
     expect(screen.getByText("Soal 1 dari 2")).toBeDefined();
-    expect(screen.getByText("Buku")).toBeDefined();
-    expect(screen.getByText("Batu")).toBeDefined();
+    const bukuButton = screen.getByRole("button", { name: /Buku/i });
+    const batuButton = screen.getByRole("button", { name: /Batu/i });
+    expect(bukuButton).toBeDefined();
+    expect(batuButton).toBeDefined();
     expect(screen.getByRole("link", { name: /Lihat Materi/i }).getAttribute("href")).toBe(
       "/tv/123456/lesson-1"
     );
+
+    // Siswa/guru dapat mengklik opsi salah lalu opsi benar seperti di ruang siswa
+    fireEvent.click(batuButton);
+    expect(screen.getByText(/Belum tepat/i)).toBeDefined();
+    fireEvent.click(bukuButton);
+    expect(screen.getByText(/Bagus! Jawaban tepat/i)).toBeDefined();
 
     fireEvent.click(screen.getByRole("button", { name: /Tampilkan Kunci Jawaban/i }));
     expect(screen.getByRole("button", { name: /Sembunyikan Kunci/i })).toBeDefined();
 
     fireEvent.click(screen.getByRole("button", { name: /Berikutnya/i }));
     expect(screen.getByText("Soal 2 dari 2")).toBeDefined();
-    expect(screen.getByText("Benar")).toBeDefined();
-    expect(screen.getByText("Salah")).toBeDefined();
-    expect(screen.getByRole("link", { name: /Selesai/i }).getAttribute("href")).toBe("/tv/123456");
+    const benarButton = screen.getByRole("button", { name: /Benar/i });
+    const salahButton = screen.getByRole("button", { name: /Salah/i });
+    expect(benarButton).toBeDefined();
+    expect(salahButton).toBeDefined();
+    fireEvent.click(benarButton);
+    expect(screen.getByText(/Bagus! Jawaban tepat/i)).toBeDefined();
+    fireEvent.click(screen.getByRole("button", { name: /Selesai/i }));
+    expect(screen.getByText(/Yey! Selesai!/i)).toBeDefined();
+    expect(screen.getByRole("link", { name: /Keluar TV/i }).getAttribute("href")).toBe("/tv/123456");
     expect(container.textContent).not.toMatch(/\bkelas\b/i);
   });
 });

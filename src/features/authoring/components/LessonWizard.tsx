@@ -16,6 +16,20 @@ interface LessonWizardProps {
 }
 
 type CreationMode = "manual" | "pdf";
+type CognitiveLevel =
+  | "sdlb_awal"
+  | "sdlb_menengah"
+  | "sdlb_lanjut"
+  | "smplb"
+  | "smalb";
+
+const COGNITIVE_LEVEL_OPTIONS: { value: CognitiveLevel; label: string }[] = [
+  { value: "sdlb_awal", label: "SDLB Awal" },
+  { value: "sdlb_menengah", label: "SDLB Menengah" },
+  { value: "sdlb_lanjut", label: "SDLB Lanjut" },
+  { value: "smplb", label: "SMPLB" },
+  { value: "smalb", label: "SMALB" },
+];
 
 interface StepperControlProps {
   label: string;
@@ -94,6 +108,10 @@ export function LessonWizard({
   const [pdfTitle, setPdfTitle] = useState("");
   const [cardCount, setCardCount] = useState<number>(6);
 
+  // Jenjang Kognitif & Catatan Guru
+  const [level, setLevel] = useState<CognitiveLevel>("sdlb_menengah");
+  const [teacherNotes, setTeacherNotes] = useState("");
+
   // Pengaturan Kuis Setelah Materi (untuk Manual & PDF)
   const [questionCount, setQuestionCount] = useState<number>(3);
   const [exerciseType, setExerciseType] = useState<"match" | "order" | "both">("both");
@@ -101,6 +119,8 @@ export function LessonWizard({
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [generationWarnings, setGenerationWarnings] = useState<string[]>([]);
+  const [createdLessonId, setCreatedLessonId] = useState<string | null>(null);
 
   async function handleManualSubmit(e: FormEvent) {
     e.preventDefault();
@@ -113,6 +133,8 @@ export function LessonWizard({
 
     setIsSubmitting(true);
     setErrorMessage(null);
+    setGenerationWarnings([]);
+    setCreatedLessonId(null);
 
     try {
       const response = await fetch("/api/ai/generate-lesson", {
@@ -122,7 +144,8 @@ export function LessonWizard({
           sourceType: "teks",
           topic: cleanTitle,
           text: cleanText || cleanTitle,
-          level: "sdlb",
+          level,
+          teacherNotes: teacherNotes.trim() || undefined,
           cardCount,
           questionCount,
           exerciseType,
@@ -141,7 +164,17 @@ export function LessonWizard({
       }
 
       const createdId = payload.data?.lessonId as string | undefined;
+      const warnings = Array.isArray(payload.data?.warnings)
+        ? (payload.data.warnings as string[]).filter(Boolean)
+        : [];
       if (createdId) {
+        if (warnings.length > 0) {
+          setIsSubmitting(false);
+          setGenerationWarnings(warnings);
+          setCreatedLessonId(createdId);
+          onSuccess?.();
+          return;
+        }
         onSuccess?.();
         router.push(`/guru/materi/${createdId}/edit`);
       } else {
@@ -163,6 +196,8 @@ export function LessonWizard({
 
     setIsSubmitting(true);
     setErrorMessage(null);
+    setGenerationWarnings([]);
+    setCreatedLessonId(null);
 
     try {
       const formData = new FormData();
@@ -176,7 +211,10 @@ export function LessonWizard({
       formData.append("questionCount", String(questionCount));
       formData.append("exerciseType", exerciseType);
       formData.append("optionCount", String(optionCount));
-      formData.append("level", "sdlb");
+      formData.append("level", level);
+      if (teacherNotes.trim()) {
+        formData.append("teacherNotes", teacherNotes.trim());
+      }
 
       const response = await fetch("/api/ai/generate-lesson", {
         method: "POST",
@@ -194,7 +232,17 @@ export function LessonWizard({
       }
 
       const createdId = payload.data?.lessonId as string | undefined;
+      const warnings = Array.isArray(payload.data?.warnings)
+        ? (payload.data.warnings as string[]).filter(Boolean)
+        : [];
       if (createdId) {
+        if (warnings.length > 0) {
+          setIsSubmitting(false);
+          setGenerationWarnings(warnings);
+          setCreatedLessonId(createdId);
+          onSuccess?.();
+          return;
+        }
         onSuccess?.();
         router.push(`/guru/materi/${createdId}/edit`);
       } else {
@@ -206,6 +254,39 @@ export function LessonWizard({
       setErrorMessage("Terjadi gangguan jaringan saat mengunggah PDF.");
     }
   }
+
+  const levelAndNotesSection = (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+      <div className="flex flex-col gap-2">
+        <label
+          htmlFor="wizard-cognitive-level"
+          className="text-sm font-bold text-[var(--ink)]"
+        >
+          Jenjang Kemampuan Siswa
+        </label>
+        <select
+          id="wizard-cognitive-level"
+          value={level}
+          onChange={(e) => setLevel(e.target.value as CognitiveLevel)}
+          className="h-[46px] w-full rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] px-3.5 text-sm font-semibold text-[var(--ink)] focus:outline-none focus:border-[var(--primary)] cursor-pointer"
+        >
+          {COGNITIVE_LEVEL_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <Field
+        id="wizard-teacher-notes"
+        label="Catatan Khusus Guru (Opsional)"
+        placeholder="Contoh: Gunakan kalimat sangat singkat, fokus benda di rumah"
+        value={teacherNotes}
+        onChange={(e) => setTeacherNotes(e.target.value)}
+      />
+    </div>
+  );
 
   const quizSettingsSection = (
     <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-4 sm:p-5 flex flex-col gap-4">
@@ -324,6 +405,32 @@ export function LessonWizard({
         <StatusMessage type="galat">{errorMessage}</StatusMessage>
       )}
 
+      {generationWarnings.length > 0 && createdLessonId && (
+        <StatusMessage type="info">
+          <div className="flex flex-col gap-2.5">
+            <p className="font-bold">
+              Materi berhasil dibuat, namun ada beberapa catatan untuk ditinjau:
+            </p>
+            <ul className="list-disc pl-5 text-sm space-y-1">
+              {generationWarnings.map((w, idx) => (
+                <li key={idx}>{w}</li>
+              ))}
+            </ul>
+            <div className="pt-1">
+              <Button
+                type="button"
+                variant="primary"
+                size="compact"
+                onClick={() => router.push(`/guru/materi/${createdLessonId}/edit`)}
+                icon={<Icon name="CaretRight" size={16} />}
+              >
+                Lanjut ke Editor Materi
+              </Button>
+            </div>
+          </div>
+        </StatusMessage>
+      )}
+
       {/* Pilihan 2 Mode Utama: Buat Manual & Upload PDF */}
       <div
         className="grid grid-cols-2 gap-2.5 sm:gap-3"
@@ -429,6 +536,8 @@ export function LessonWizard({
               />
             </div>
 
+            {levelAndNotesSection}
+
             {quizSettingsSection}
 
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-4 border-t border-[var(--border)]">
@@ -510,6 +619,8 @@ export function LessonWizard({
                 labelSize="sm"
               />
             </div>
+
+            {levelAndNotesSection}
 
             {quizSettingsSection}
 

@@ -15,11 +15,13 @@ import {
 import { SignCard } from "@/features/player";
 import {
   saveCardAction,
+  saveQuizQuestionAction,
   updateLessonAction,
   updatePresentationAction,
 } from "../actions";
 import type { LessonShareInfo } from "../queries";
 import type { LessonWithContent } from "@/server/repos/lessons";
+import type { QuizQuestionPayload } from "@/server/db/schema";
 import { ShareLessonButton } from "./ShareLessonOverlay";
 
 const PictogramModal = dynamic(
@@ -120,13 +122,14 @@ function extractOptions(
       label?: string;
       imageUrl?: string;
       image?: { url?: string };
+      visual?: { url?: string | null } | null;
       correct?: boolean;
     };
     const text = obj.text ?? obj.label ?? `Pilihan ${idx + 1}`;
     return {
       id: obj.id ?? `opt-${idx + 1}`,
       text,
-      imageUrl: obj.imageUrl ?? obj.image?.url,
+      imageUrl: obj.imageUrl ?? obj.image?.url ?? obj.visual?.url ?? undefined,
       correct: typeof obj.correct === "boolean" ? obj.correct : idx === 0,
     };
   });
@@ -146,11 +149,12 @@ function extractSteps(
       text?: string;
       imageUrl?: string;
       image?: { url?: string };
+      visual?: { url?: string | null } | null;
     };
     return {
       id: obj.id ?? `step-${idx + 1}`,
       text: obj.text ?? `Langkah ${idx + 1}`,
-      imageUrl: obj.imageUrl ?? obj.image?.url,
+      imageUrl: obj.imageUrl ?? obj.image?.url ?? obj.visual?.url ?? undefined,
     };
   });
 }
@@ -274,9 +278,25 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
 
   const [isSaving, setIsSaving] = useState(false);
   const [isSavingCard, setIsSavingCard] = useState(false);
+  const [isSavingQuestion, setIsSavingQuestion] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [lastDeletedCard, setLastDeletedCard] = useState<{
+    card: (typeof cards)[number];
+    index: number;
+  } | null>(null);
   const [syncingCardId, setSyncingCardId] = useState<string | null>(null);
   const autoSyncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autoSyncAbortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    if (!hasUnsavedChanges) return;
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [hasUnsavedChanges]);
 
   useEffect(() => {
     return () => {
@@ -370,6 +390,7 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
     if (!targetCard) return;
     const cardId = targetCard.id;
 
+    setHasUnsavedChanges(true);
     setCards((prev) =>
       prev.map((c, i) => (i === idx ? { ...c, text: newText } : c))
     );
@@ -473,6 +494,7 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
       setCards((prev) =>
         prev.map((c, i) => (i === idx ? { ...c, id: res.data.id } : c))
       );
+      setHasUnsavedChanges(false);
       setFeedback({ type: "benar", message: `Kartu #${card.position} berhasil disimpan.` });
       router.refresh();
     } else {
@@ -529,13 +551,33 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
       });
       return;
     }
+    const deleted = cards[idx];
+    if (deleted) {
+      setLastDeletedCard({ card: deleted, index: idx });
+    }
     setCards((prev) =>
       prev
         .filter((_, i) => i !== idx)
         .map((c, i) => ({ ...c, position: i + 1 }))
     );
     setActiveCardIdx((prev) => Math.max(0, Math.min(prev, cards.length - 2)));
-    setFeedback({ type: "info", message: "Kartu dihapus dari draf pratinjau." });
+    setHasUnsavedChanges(true);
+    setFeedback({ type: "info", message: "Kartu dihapus. Anda dapat memulihkannya dengan tombol Urungkan Hapus." });
+  }
+
+  function handleUndoDeleteCard() {
+    if (!lastDeletedCard) return;
+    const { card, index } = lastDeletedCard;
+    const restoredIdx = Math.min(index, cards.length);
+    setCards((prev) => {
+      const next = [...prev];
+      next.splice(Math.min(index, next.length), 0, card);
+      return next.map((c, i) => ({ ...c, position: i + 1 }));
+    });
+    setActiveCardIdx(restoredIdx);
+    setLastDeletedCard(null);
+    setHasUnsavedChanges(true);
+    setFeedback({ type: "benar", message: "Kartu berhasil dikembalikan." });
   }
 
   function handleAddCard() {
@@ -810,7 +852,41 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
     setActiveQuestionIdx((prev) =>
       Math.max(0, Math.min(prev, questions.length - 2))
     );
+    setHasUnsavedChanges(true);
     setFeedback({ type: "info", message: "Soal dihapus dari daftar latihan." });
+  }
+
+  async function handleSaveQuestion(idx: number) {
+    const q = questions[idx];
+    if (!q) return;
+    if (!q.prompt.trim()) {
+      setFeedback({ type: "ulang", message: "Teks pertanyaan soal tidak boleh kosong." });
+      return;
+    }
+
+    setIsSavingQuestion(true);
+    const res = await saveQuizQuestionAction(lesson.id, {
+      id: q.id,
+      position: q.position,
+      type: q.type,
+      prompt: q.prompt.trim(),
+      payload: q.payload as QuizQuestionPayload,
+      keyTerms: q.keyTerms ?? [],
+      linkedCardId: q.linkedCardId ?? null,
+      explanation: q.explanation ?? null,
+    });
+    setIsSavingQuestion(false);
+
+    if (res.ok) {
+      setQuestions((prev) =>
+        prev.map((item, i) => (i === idx ? { ...item, id: res.data.id } : item))
+      );
+      setHasUnsavedChanges(false);
+      setFeedback({ type: "benar", message: `Soal #${q.position} berhasil disimpan.` });
+      router.refresh();
+    } else {
+      setFeedback({ type: "galat", message: res.error.message });
+    }
   }
 
   return (
@@ -851,6 +927,11 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
               {primaryShareCode && (
                 <span className="text-xs px-2.5 py-0.5 rounded-full font-mono font-bold border border-[var(--border)] bg-[var(--accent-subtle)] text-[var(--primary)]">
                   Kode: {primaryShareCode}
+                </span>
+              )}
+              {hasUnsavedChanges && (
+                <span className="text-xs px-2.5 py-0.5 rounded-full font-bold border border-[var(--ulang-edge)] bg-[var(--ulang-bg)] text-[var(--ulang-ink)]">
+                  Perubahan belum disimpan
                 </span>
               )}
             </div>
@@ -1025,16 +1106,30 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                 Pilih kartu di daftar untuk menyunting kalimat, kata isyarat, gambar, dan suara.
               </p>
             </div>
-            <Button
-              type="button"
-              variant="primary"
-              size="normal"
-              onClick={handleAddCard}
-              icon={<Icon name="Plus" size={18} />}
-              className="w-full sm:w-auto shrink-0"
-            >
-              Tambah Kartu
-            </Button>
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              {lastDeletedCard && (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="normal"
+                  onClick={handleUndoDeleteCard}
+                  icon={<Icon name="ArrowCounterClockwise" size={18} />}
+                  className="w-full sm:w-auto"
+                >
+                  Urungkan Hapus
+                </Button>
+              )}
+              <Button
+                type="button"
+                variant="primary"
+                size="normal"
+                onClick={handleAddCard}
+                icon={<Icon name="Plus" size={18} />}
+                className="w-full sm:w-auto"
+              >
+                Tambah Kartu
+              </Button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
@@ -1330,7 +1425,8 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                                 type="button"
                                 variant="ghost"
                                 size="compact"
-                                onClick={() =>
+                                onClick={() => {
+                                  setHasUnsavedChanges(true);
                                   setCards((prev) =>
                                     prev.map((item, i) =>
                                       i === safeCardIdx
@@ -1338,17 +1434,35 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                                             ...item,
                                             imageUrl: null,
                                             imageAlt: null,
+                                            imageAssetId: null,
                                           }
                                         : item
                                     )
-                                  )
-                                }
+                                  );
+                                }}
                                 icon={<Icon name="Trash" size={14} />}
                                 className="text-[var(--galat-ink)]"
                               >
                                 Hapus
                               </Button>
                             </div>
+                            <Field
+                              id={`card-alt-${safeCardIdx}`}
+                              label="Teks Alternatif (Alt)"
+                              placeholder="Deskripsi singkat gambar untuk aksesibilitas"
+                              value={activeCard.imageAlt ?? ""}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setHasUnsavedChanges(true);
+                                setCards((prev) =>
+                                  prev.map((item, i) =>
+                                    i === safeCardIdx
+                                      ? { ...item, imageAlt: val || null }
+                                      : item
+                                  )
+                                );
+                              }}
+                            />
                           </div>
                         ) : (
                           <div className="flex flex-wrap gap-2">
@@ -1692,6 +1806,17 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                         </div>
 
                         <div className="flex items-center gap-1.5">
+                          <Button
+                            type="button"
+                            variant="primary"
+                            size="compact"
+                            loading={isSavingQuestion}
+                            onClick={() => handleSaveQuestion(safeQuestionIdx)}
+                            icon={<Icon name="Check" size={14} />}
+                            className="mr-1"
+                          >
+                            Simpan Soal
+                          </Button>
                           <button
                             type="button"
                             onClick={() =>

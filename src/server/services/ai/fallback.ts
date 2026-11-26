@@ -1,4 +1,11 @@
-import type { GeneratedLesson, GenerateLessonOptions } from "./types";
+import { searchAssets } from "../assets/retrieval";
+import {
+  extractConcepts,
+  ID_STOP_WORDS,
+  splitSourceIntoSentences,
+  type LessonPlan,
+} from "./planner";
+import type { GeneratedLesson, GenerateLessonOptions, VisualRef } from "./types";
 
 export const FALLBACK_LESSONS: Record<string, GeneratedLesson> = {
   "cuci tangan": {
@@ -7,6 +14,7 @@ export const FALLBACK_LESSONS: Record<string, GeneratedLesson> = {
       {
         text: "Siapkan air bersih mengalir.",
         key_terms: ["air"],
+        visual: null,
         image: {
           keyword_id: "air",
           keyword_en: "water",
@@ -16,6 +24,7 @@ export const FALLBACK_LESSONS: Record<string, GeneratedLesson> = {
       {
         text: "Basahi kedua telapak tangan.",
         key_terms: ["tangan"],
+        visual: null,
         image: {
           keyword_id: "cuci tangan",
           keyword_en: "wash hands",
@@ -25,6 +34,7 @@ export const FALLBACK_LESSONS: Record<string, GeneratedLesson> = {
       {
         text: "Ambil sabun secukupnya.",
         key_terms: ["sabun"],
+        visual: null,
         image: {
           keyword_id: "sabun",
           keyword_en: "soap",
@@ -34,6 +44,7 @@ export const FALLBACK_LESSONS: Record<string, GeneratedLesson> = {
       {
         text: "Gosok tangan sampai berbusa.",
         key_terms: ["gosok"],
+        visual: null,
         image: {
           keyword_id: "gosok tangan",
           keyword_en: "rub hands",
@@ -43,6 +54,7 @@ export const FALLBACK_LESSONS: Record<string, GeneratedLesson> = {
       {
         text: "Bilas tangan dengan air bersih.",
         key_terms: ["bilas"],
+        visual: null,
         image: {
           keyword_id: "bilas",
           keyword_en: "rinse",
@@ -52,6 +64,7 @@ export const FALLBACK_LESSONS: Record<string, GeneratedLesson> = {
       {
         text: "Keringkan tangan memakai handuk.",
         key_terms: ["handuk"],
+        visual: null,
         image: {
           keyword_id: "handuk",
           keyword_en: "towel",
@@ -121,26 +134,31 @@ export const FALLBACK_LESSONS: Record<string, GeneratedLesson> = {
       {
         text: "Buku untuk membaca cerita.",
         key_terms: ["buku"],
+        visual: null,
         image: { keyword_id: "buku", keyword_en: "book", alt: "Buku pelajaran" },
       },
       {
         text: "Pensil untuk menulis tugas.",
         key_terms: ["pensil"],
+        visual: null,
         image: { keyword_id: "pensil", keyword_en: "pencil", alt: "Pensil kayu" },
       },
       {
         text: "Penghapus untuk menghapus tulisan.",
         key_terms: ["penghapus"],
+        visual: null,
         image: { keyword_id: "penghapus", keyword_en: "eraser", alt: "Penghapus karet" },
       },
       {
         text: "Meja tempat menaruh buku.",
         key_terms: ["meja"],
+        visual: null,
         image: { keyword_id: "meja", keyword_en: "desk", alt: "Meja belajar" },
       },
       {
         text: "Kursi tempat duduk siswa.",
         key_terms: ["kursi"],
+        visual: null,
         image: { keyword_id: "kursi", keyword_en: "chair", alt: "Kursi kelas" },
       },
     ],
@@ -170,79 +188,6 @@ export const FALLBACK_LESSONS: Record<string, GeneratedLesson> = {
     ],
   },
 };
-
-const ID_STOP_WORDS = new Set([
-  "yang",
-  "dan",
-  "di",
-  "ke",
-  "dari",
-  "untuk",
-  "pada",
-  "dengan",
-  "ini",
-  "itu",
-  "atau",
-  "ada",
-  "adalah",
-  "akan",
-  "bisa",
-  "dapat",
-  "kami",
-  "kita",
-  "mereka",
-  "saya",
-  "kamu",
-  "dia",
-  "dalam",
-  "juga",
-  "agar",
-  "supaya",
-  "oleh",
-  "saat",
-  "ketika",
-  "tentang",
-  "cara",
-  "belajar",
-  "mengenal",
-  "hari",
-  "setiap",
-  "bersama",
-  "teliti",
-  "gembira",
-  "jelas",
-  "sekitar",
-  "penting",
-  "contoh",
-  "materi",
-  "bagian",
-  "hal",
-  "secara",
-  "yaitu",
-  "seperti",
-  "antara",
-  "karena",
-  "lebih",
-  "sangat",
-  "memiliki",
-  "perhatikan",
-  "menyebutkan",
-  "memahami",
-  "mengingat",
-  "kembali",
-  "berlatih",
-  "menunjukkan",
-  "mempraktikkan",
-  "sebagai",
-  "setelah",
-  "sebelum",
-  "sudah",
-  "belum",
-  "hanya",
-  "semua",
-  "banyak",
-  "sedikit",
-]);
 
 const CONCRETE_DISTRACTORS = [
   "payung",
@@ -338,16 +283,6 @@ const ID_TO_EN_KEYWORD: Record<string, string> = {
   sungai: "river",
 };
 
-const PDF_NOISE_LINE_PATTERNS = [
-  /^(?:halaman|hal\.?|page|pg\.?)\s*\d+(?:\s*(?:dari|of|\/)\s*\d+)?$/i,
-  /^\d+\s*(?:\/\s*\d+)?$/,
-  /^[-_=*•·\s]{2,}$/,
-  /^-\s*\d+\s*-$/,
-  /^https?:\/\/\S+$/i,
-  /^(?:daftar\s+isi|kata\s+pengantar|lampiran|daftar\s+pustaka)$/i,
-  /^bab\s+(?:[ivxlcdm]+|\d+)$/i,
-];
-
 export interface FallbackGenerationConfig {
   optionCount?: number;
   cardCount?: number;
@@ -355,71 +290,62 @@ export interface FallbackGenerationConfig {
   exerciseType?: "match" | "order" | "both";
 }
 
-function isNoisyPdfLine(line: string): boolean {
-  const trimmed = line.trim();
-  if (!trimmed || trimmed.length < 3) return true;
-  if (!/[a-zA-Z]/.test(trimmed)) return true;
-  return PDF_NOISE_LINE_PATTERNS.some((pat) => pat.test(trimmed));
-}
-
-function splitLongSentence(sentence: string): string[] {
-  if (sentence.length <= 115) return [sentence];
-  const clauseParts = sentence
-    .split(/[;,]+\s*/)
-    .map((p) => p.trim())
-    .filter((p) => p.length > 5);
-
-  const chunks: string[] = [];
-  for (const part of clauseParts) {
-    if (part.length <= 115) {
-      chunks.push(part);
-    } else {
-      const words = part.split(/\s+/);
-      for (let i = 0; i < words.length; i += 12) {
-        const slice = words.slice(i, i + 12).join(" ").trim();
-        if (slice.length > 5) chunks.push(slice);
-      }
-    }
-  }
-  return chunks;
-}
-
-function cleanAndSplitSourceText(rawText: string, maxCards: number): string[] {
-  const cleanedLines = rawText
-    .replace(/\r\n/g, "\n")
-    .split("\n")
-    .map((l) => l.replace(/\s+/g, " ").trim())
-    .filter((l) => !isNoisyPdfLine(l));
-
-  const joined = cleanedLines.join(" ");
-  const rawSegments = joined
-    .split(/[.!?]+/)
-    .map((s) => s.trim())
-    .filter((s) => s.length >= 6 && /[a-zA-Z]/.test(s));
-
-  const expanded: string[] = [];
-  for (const seg of rawSegments) {
-    for (const part of splitLongSentence(seg)) {
-      const wordCount = part.split(/\s+/).filter(Boolean).length;
-      if (wordCount >= 2 && part.length >= 6) {
-        expanded.push(part);
-      }
+function findVerifiedVisualForTerms(
+  terms: string[],
+  fallbackTopic?: string,
+  sentenceContext?: string
+): VisualRef | null {
+  if (sentenceContext && sentenceContext.trim()) {
+    const contextHits = searchAssets(sentenceContext.trim(), {
+      limit: 1,
+      minScore: 24,
+      onlyAvailable: true,
+    });
+    const bestContext = contextHits[0];
+    if (bestContext) {
+      return {
+        asset_id: bestContext.asset.asset_id,
+        alt: bestContext.asset.display_name,
+        url: bestContext.asset.file_path,
+      };
     }
   }
 
-  const seen = new Set<string>();
-  const unique: string[] = [];
-  for (const item of expanded) {
-    const key = item.toLowerCase();
-    if (!seen.has(key)) {
-      seen.add(key);
-      const normalized = item.charAt(0).toUpperCase() + item.slice(1);
-      unique.push(normalized.endsWith(".") ? normalized : `${normalized}.`);
+  for (const term of terms) {
+    const clean = term.trim();
+    if (!clean) continue;
+    const hits = searchAssets(clean, {
+      limit: 1,
+      minScore: 18,
+      onlyAvailable: true,
+    });
+    const best = hits[0];
+    if (best) {
+      return {
+        asset_id: best.asset.asset_id,
+        alt: best.asset.display_name,
+        url: best.asset.file_path,
+      };
     }
-    if (unique.length >= maxCards) break;
   }
 
-  return unique;
+  if (fallbackTopic && fallbackTopic.trim()) {
+    const hits = searchAssets(fallbackTopic, {
+      limit: 1,
+      minScore: 20,
+      onlyAvailable: true,
+    });
+    const best = hits[0];
+    if (best) {
+      return {
+        asset_id: best.asset.asset_id,
+        alt: best.asset.display_name,
+        url: best.asset.file_path,
+      };
+    }
+  }
+
+  return null;
 }
 
 function pickContentKeywords(sentence: string, maxTerms = 2): string[] {
@@ -498,6 +424,22 @@ function pickPlausibleDistractors(
 
 function buildTopicSentences(topic: string, cardCount: number): string[] {
   const clean = topic.trim();
+  const concepts = extractConcepts(clean, [], 6);
+  const assetHints = searchAssets(clean, {
+    limit: cardCount,
+    minScore: 12,
+    onlyAvailable: true,
+  });
+
+  const sentences: string[] = [];
+  if (assetHints.length >= 2) {
+    for (const hit of assetHints) {
+      const name = hit.asset.display_name.toLowerCase();
+      sentences.push(`Kita mengenal ${name} pada materi ${clean}.`);
+      if (sentences.length >= cardCount) break;
+    }
+  }
+
   const templates = [
     `Hari ini kita belajar mengenal ${clean}.`,
     `Perhatikan bagian penting dari ${clean}.`,
@@ -509,12 +451,21 @@ function buildTopicSentences(topic: string, cardCount: number): string[] {
     `Kita berdiskusi tentang manfaat ${clean} sehari-hari.`,
   ];
 
-  const result: string[] = [];
-  for (let i = 0; i < cardCount; i++) {
-    const tpl = templates[i % templates.length]!;
-    result.push(tpl);
+  let idx = 0;
+  while (sentences.length < cardCount) {
+    const hintWord = concepts[idx % Math.max(1, concepts.length)];
+    const tpl =
+      idx === 0 && hintWord
+        ? `Hari ini kita belajar mengenal ${clean}.`
+        : templates[idx % templates.length]!;
+    if (!sentences.includes(tpl)) {
+      sentences.push(tpl);
+    } else {
+      sentences.push(`Contoh ${idx + 1} tentang ${clean} ada di sekitar kita.`);
+    }
+    idx += 1;
   }
-  return result;
+  return sentences.slice(0, cardCount);
 }
 
 function resolveExerciseType(
@@ -571,6 +522,7 @@ function buildQuestionsForCards(
         id: `opt-${idx + 1}`,
         text: opt.text,
         correct: opt.correct,
+        visual: findVerifiedVisualForTerms([opt.text]),
       })),
     };
   };
@@ -616,6 +568,7 @@ function buildQuestionsForCards(
     const steps = (selectedCards.length >= 2 ? selectedCards : cards).map((c, idx) => ({
       id: `step-${idx + 1}`,
       text: c.text.replace(/\.$/, ""),
+      visual: c.visual ?? null,
     }));
 
     return {
@@ -645,7 +598,6 @@ function buildQuestionsForCards(
       continue;
     }
 
-    // "both": mix pilih_kata, benar_salah, and order
     if (i % 3 === 0) {
       questions.push(makeChoiceQuestion(i, i));
     } else if (i % 3 === 1) {
@@ -681,26 +633,29 @@ export function generateFallbackFromText(
   };
 
   const cleanTitle = title.trim();
-  let sentences = cleanAndSplitSourceText(rawText, config.cardCount);
+  let sentences = splitSourceIntoSentences(rawText, config.cardCount);
 
   if (sentences.length === 0 && cleanTitle.length > 0) {
     sentences = buildTopicSentences(cleanTitle, config.cardCount);
   }
 
   if (sentences.length === 0) {
-    return adaptPresetLesson(FALLBACK_LESSONS["cuci tangan"]!, config);
+    sentences = buildTopicSentences("Materi Pembelajaran Dasar", config.cardCount);
   }
 
   const cards: GeneratedLesson["cards"] = sentences.map((sent) => {
     const keyTerms = pickContentKeywords(sent, 2);
     const primaryKey = keyTerms[0] ?? "materi";
+    const visual = findVerifiedVisualForTerms(keyTerms, cleanTitle, sent);
+
     return {
       text: sent,
       key_terms: keyTerms,
+      visual,
       image: {
         keyword_id: primaryKey,
         keyword_en: toEnglishKeyword(primaryKey),
-        alt: `Ilustrasi ${primaryKey}`,
+        alt: visual?.alt || `Ilustrasi ${primaryKey}`,
       },
     };
   });
@@ -719,7 +674,16 @@ function adaptPresetLesson(
   preset: GeneratedLesson,
   config: Required<FallbackGenerationConfig>
 ): GeneratedLesson {
-  const cards = preset.cards.slice(0, config.cardCount);
+  const cards = preset.cards.slice(0, config.cardCount).map((card) => {
+    const visual = findVerifiedVisualForTerms(
+      [card.image?.keyword_id || "", ...card.key_terms],
+      preset.title
+    );
+    return {
+      ...card,
+      visual,
+    };
+  });
   const maxCard = Math.max(1, cards.length);
 
   let questions = preset.questions
@@ -741,6 +705,7 @@ function adaptPresetLesson(
           options: [correctOpt, ...distractors].map((o, idx) => ({
             ...o,
             id: o.id || `opt-${idx + 1}`,
+            visual: o.visual ?? findVerifiedVisualForTerms([o.text]),
           })),
         };
       }
@@ -769,7 +734,8 @@ function adaptPresetLesson(
 export function getFallbackLesson(
   options: GenerateLessonOptions,
   extractedText?: string,
-  optionCountOverride?: number
+  optionCountOverride?: number,
+  plan?: LessonPlan
 ): GeneratedLesson {
   const query = (options.topic || "").toLowerCase();
   const hasIntellectual =
@@ -779,18 +745,22 @@ export function getFallbackLesson(
   const config: Required<FallbackGenerationConfig> = {
     optionCount: Math.min(
       4,
-      Math.max(2, optionCountOverride ?? (hasIntellectual ? 2 : 3))
+      Math.max(2, optionCountOverride ?? options.optionCount ?? (hasIntellectual ? 2 : 3))
     ),
-    cardCount: Math.min(15, Math.max(1, options.cardCount ?? 6)),
+    cardCount: Math.min(
+      15,
+      Math.max(1, plan?.recommendedCardCount ?? options.cardCount ?? 6)
+    ),
     questionCount:
       options.questionCount !== undefined
         ? Math.min(10, Math.max(0, options.questionCount))
         : 4,
-    exerciseType: resolveExerciseType(options.questionTypes),
+    exerciseType:
+      options.exerciseType ?? resolveExerciseType(options.questionTypes),
   };
 
   // 1. Jika ada teks sumber (hasil ekstraksi PDF atau teks manual), selalu gunakan teks tersebut
-  const content = (extractedText || options.text || "").trim();
+  const content = (plan?.normalizedText || extractedText || options.text || "").trim();
   if (content.length > 0) {
     return generateFallbackFromText(
       options.topic?.trim() || "Materi Pembelajaran",
@@ -799,7 +769,7 @@ export function getFallbackLesson(
     );
   }
 
-  // 2. Jika topik cocok dengan kurikulum bawaan
+  // 2. Hanya gunakan preset bawaan jika topik secara eksplisit cocok
   for (const [key, lesson] of Object.entries(FALLBACK_LESSONS)) {
     if (query.includes(key)) {
       return adaptPresetLesson(lesson, config);
@@ -813,6 +783,8 @@ export function getFallbackLesson(
     return generateFallbackFromText(cleanTopic, topicSentences, config);
   }
 
-  // 4. Hanya jika benar-benar tidak ada topik maupun teks sama sekali
-  return adaptPresetLesson(FALLBACK_LESSONS["cuci tangan"]!, config);
+  // 4. Fallback netral jika benar-benar tidak ada topik maupun teks (tidak pernah memaksa cuci tangan)
+  const neutralTopic = "Mengenal Benda di Sekitar";
+  const neutralSentences = buildTopicSentences(neutralTopic, config.cardCount).join(" ");
+  return generateFallbackFromText(neutralTopic, neutralSentences, config);
 }

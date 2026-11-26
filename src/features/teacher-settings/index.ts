@@ -1,1 +1,2 @@
-export * from "./components/TeacherSettingsClient";
+export { TeacherSettingsClient } from "./components/TeacherSettingsClient";
+export { saveTeacherGeminiKeysAction } from "./actions";

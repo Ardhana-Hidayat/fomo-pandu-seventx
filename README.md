@@ -1,4 +1,4 @@
-# PanduIn — Platform Pembelajaran Adaptif Terintegrasi SLB
+# PanduIn — Panduan Dukungan Inklusif
 
 [![Quality Gate](https://img.shields.io/badge/Quality%20Gate-Passing-success)](docs/backlog.md)
 [![Next.js](https://img.shields.io/badge/Next.js-16.4.6-black)](https://nextjs.org)

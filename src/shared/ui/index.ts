@@ -13,3 +13,5 @@ export * from './PreferencesContext';
 export * from './DisplayPreferencesSheet';
 export * from './DisplayPreferencesTrigger';
 export * from './UIProviders';
+export * from './BrandLogo';
+export * from './SplashScreen';

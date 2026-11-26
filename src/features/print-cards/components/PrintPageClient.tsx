@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
-import { Button, Card, Icon } from "@/shared/ui";
+import { Button, Card, Icon, BrandLogo } from "@/shared/ui";
 import type { LessonWithContent } from "@/server/repos/lessons";
 import type { QuizQuestion } from "@/server/db/schema";
 
@@ -140,38 +140,7 @@ function getQuestionTypeLabel(type: string): string {
 function PanduInBrandLogo() {
   return (
     <div className="flex items-center gap-2.5">
-      <div
-        aria-hidden="true"
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#0F766E] bg-[#0F766E] text-white"
-      >
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M4 6.5C4 5.39543 4.89543 4.5 6 4.5H11V19.5H6C4.89543 19.5 4 18.6046 4 17.5V6.5Z"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M20 6.5C20 5.39543 19.1046 4.5 18 4.5H13V19.5H18C19.1046 19.5 20 18.6046 20 17.5V6.5Z"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinejoin="round"
-          />
-          <circle cx="7.5" cy="9.5" r="1.2" fill="currentColor" />
-          <path
-            d="M15.5 9.5H17.5M15.5 13H17.5"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
+      <BrandLogo size={36} showText={false} />
       <div className="leading-tight">
         <span className="block text-base font-extrabold tracking-tight text-slate-900">
           PanduIn

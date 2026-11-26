@@ -212,7 +212,7 @@ describe("Story S4-01: Accessibility & Visual Audit", () => {
       // String verifikasi anti-slop
       const forbiddenEmojiRegex = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}]/u;
       const sampleInterfaceTexts = [
-        "Papan Belajar Inklusif",
+        "Panduan Dukungan Inklusif",
         "Setujui dan bagikan",
         "Tandai terverifikasi",
         "Putar suara",

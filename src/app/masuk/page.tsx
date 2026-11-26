@@ -3,7 +3,7 @@
 import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Button, Card, Field, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
+import { Button, Card, Field, Icon, DisplayPreferencesTrigger, BrandLogo, SplashScreen } from "@/shared/ui";
 import { joinClassroomAction } from "@/features/auth/actions";
 
 function StudentLoginForm() {
@@ -160,10 +160,11 @@ function StudentLoginForm() {
 export default function StudentLoginPage() {
   return (
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
+      <SplashScreen />
       <header className="h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
         <div className="mx-auto flex h-full w-full max-w-5xl items-center justify-between">
-          <Link href="/" className="text-base font-bold tracking-tight text-[var(--ink)] hover:text-[var(--primary)] transition-colors duration-[120ms]">
-            PanduIn
+          <Link href="/" className="hover:opacity-90 transition-opacity duration-[120ms]">
+            <BrandLogo size={32} />
           </Link>
           <DisplayPreferencesTrigger />
         </div>

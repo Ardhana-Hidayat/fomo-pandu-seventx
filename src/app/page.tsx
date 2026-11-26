@@ -1,16 +1,15 @@
 import Link from "next/link";
-import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
+import { Button, Card, Icon, DisplayPreferencesTrigger, BrandLogo, SplashScreen } from "@/shared/ui";
 
 export default function HomePage() {
   return (
     <div className="flex min-h-[100dvh] flex-col bg-[var(--bg)] text-[var(--ink)]">
+      <SplashScreen />
       {/* Header Utama — 64px, white bg, 1px bottom border (DESIGN.md §6) */}
       <header className="h-16 w-full border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6">
         <div className="mx-auto flex h-full w-full max-w-5xl items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-lg font-bold tracking-tight text-[var(--ink)]">
-              PanduIn
-            </span>
+            <BrandLogo size={34} />
           </div>
           <DisplayPreferencesTrigger />
         </div>
@@ -23,7 +22,7 @@ export default function HomePage() {
       >
         <div className="w-full max-w-xl text-center mb-8 sm:mb-10">
           <h1 className="text-[1.75rem] font-bold leading-tight tracking-[-0.015em] text-[var(--ink)] sm:text-[2.25rem]">
-            Papan Belajar Inklusif
+            Panduan Dukungan Inklusif
           </h1>
           <p className="mt-3 text-base text-[var(--ink-2)] max-w-[60ch] mx-auto">
             Alat bantu belajar yang tenang dan jelas untuk siswa dan guru SLB.
@@ -91,7 +90,7 @@ export default function HomePage() {
       <footer className="w-full border-t border-[var(--border)] bg-[var(--surface)] px-4 py-5 sm:px-6 sm:py-6">
         <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:gap-6 sm:text-left">
           <p className="text-xs sm:text-sm leading-relaxed text-[var(--muted)]">
-            <span className="font-semibold text-[var(--ink-2)]">PanduIn</span>
+            <span className="font-semibold text-[var(--ink-2)]">PanduIn — Panduan Dukungan Inklusif</span>
             {" \u2022 "}
             Dirancang untuk aksesibilitas dan kemandirian belajar SLB
           </p>

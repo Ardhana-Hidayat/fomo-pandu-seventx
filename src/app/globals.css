@@ -425,3 +425,59 @@ body {
     background: #ffffff !important;
   }
 }
+
+/* Animasi halus Splash Screen PanduIn (ramah sensorik, tanpa kedipan) */
+@keyframes panduinSplashLogo {
+  0% {
+    opacity: 0;
+    transform: scale(0.86) translateY(8px);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.03) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes panduinSplashText {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes panduinSplashBar {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.panduin-splash-logo {
+  animation: panduinSplashLogo 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.panduin-splash-text {
+  animation: panduinSplashText 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+}
+
+.panduin-splash-bar {
+  animation: panduinSplashBar 1.55s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panduin-splash-logo,
+  .panduin-splash-text,
+  .panduin-splash-bar {
+    animation: none !important;
+  }
+}

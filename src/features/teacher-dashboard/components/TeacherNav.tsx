@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { List } from "@phosphor-icons/react";
-import { Icon, type IconName } from "@/shared/ui";
+import { Icon, BrandLogo, type IconName } from "@/shared/ui";
 
 interface NavItem {
   href: string;
@@ -38,7 +38,7 @@ export function TeacherSidebar() {
           prefetch={true}
           className="text-base font-bold tracking-tight text-[var(--ink)] flex items-center gap-2 hover:text-[var(--primary)] transition-colors duration-[120ms]"
         >
-          <span>PanduIn</span>
+          <BrandLogo size={28} textClassName="text-base font-bold tracking-tight text-[var(--ink)]" />
           <span className="text-xs px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--surface-2)] text-[var(--muted)] font-semibold">
             Ruang Guru
           </span>
@@ -107,7 +107,7 @@ export function TeacherMobileNav() {
           onClick={() => setOpen(false)}
           className="flex items-center gap-2 text-base font-bold tracking-tight text-[var(--ink)] hover:text-[var(--primary)] transition-colors duration-[120ms]"
         >
-          <span>PanduIn</span>
+          <BrandLogo size={28} textClassName="text-base font-bold tracking-tight text-[var(--ink)]" />
           <span className="text-xs px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--surface-2)] text-[var(--muted)] font-semibold">
             Ruang Guru
           </span>

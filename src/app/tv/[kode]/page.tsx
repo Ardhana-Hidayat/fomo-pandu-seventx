@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getClassroomByJoinCode } from "@/server/repos/classrooms";
 import { listPublicationsForClassroom } from "@/server/repos/publications";
-import { Card, Button, Icon } from "@/shared/ui";
+import { Card, Button, Icon, BrandLogo } from "@/shared/ui";
 
 export const instant = false;
 
@@ -30,13 +30,16 @@ export default async function TVClassroomMenuPage({
           >
             Beranda
           </Button>
-          <div>
-            <span className="text-sm sm:text-xl font-bold text-[var(--muted)] uppercase block">
-              PanduIn &bull; Layar TV
-            </span>
-            <h1 className="text-3xl sm:text-5xl font-extrabold text-[var(--ink)]">
-              Materi Pembelajaran
-            </h1>
+          <div className="flex items-center gap-3">
+            <BrandLogo size={36} showText={false} />
+            <div>
+              <span className="text-sm sm:text-xl font-bold text-[var(--muted)] uppercase block">
+                PanduIn &bull; Layar TV
+              </span>
+              <h1 className="text-3xl sm:text-5xl font-extrabold text-[var(--ink)]">
+                Materi Pembelajaran
+              </h1>
+            </div>
           </div>
         </div>
 

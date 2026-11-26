@@ -1,7 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
 import { getCurrentTeacher } from "@/features/auth";
+import { db } from "@/server/db/client";
+import { teachers, type Teacher } from "@/server/db/schema";
 import {
   createLesson,
   updateLesson,
@@ -43,6 +46,51 @@ export interface CreateLessonPayload {
   voiceSpeed?: number;
 }
 
+async function verifyTeacherExists(teacher: Teacher): Promise<Result<string>> {
+  try {
+    const existing = await db
+      .select({ id: teachers.id })
+      .from(teachers)
+      .where(eq(teachers.id, teacher.id))
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (existing) {
+      return ok(existing.id);
+    }
+
+    await db
+      .insert(teachers)
+      .values({
+        id: teacher.id,
+        email: teacher.email,
+        displayName: teacher.displayName,
+        schoolName: teacher.schoolName,
+        authProvider: teacher.authProvider,
+      })
+      .onConflictDoNothing();
+
+    const verified = await db
+      .select({ id: teachers.id })
+      .from(teachers)
+      .where(eq(teachers.id, teacher.id))
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (!verified) {
+      return err(
+        makeAppError("UNAUTHORIZED", "Data guru tidak ditemukan di basis data.")
+      );
+    }
+
+    return ok(verified.id);
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal memverifikasi akun guru di basis data.", error)
+    );
+  }
+}
+
 export async function createLessonAction(
   payload: CreateLessonPayload
 ): Promise<Result<{ id: string }>> {
@@ -50,6 +98,12 @@ export async function createLessonAction(
   if (!teacherSession) {
     return err(makeAppError("UNAUTHORIZED", "Sesi guru tidak valid."));
   }
+
+  const teacherCheck = await verifyTeacherExists(teacherSession.teacher);
+  if (!teacherCheck.ok) {
+    return teacherCheck;
+  }
+  const teacherId = teacherCheck.data;
 
   const {
     title,
@@ -68,7 +122,7 @@ export async function createLessonAction(
     voiceSpeed,
   } = payload;
 
-  const res = await createLesson(teacherSession.teacher.id, {
+  const res = await createLesson(teacherId, {
     title,
     topic: topic ?? title,
     level: level ?? "sdlb",
@@ -93,7 +147,10 @@ export async function createLessonAction(
 
   // Jika ada wadah yang dipilih untuk diterbitkan langsung
   if (classroomIdsToPublish && classroomIdsToPublish.length > 0) {
-    await publishLesson(teacherSession.teacher.id, lesson.id, classroomIdsToPublish);
+    const pubRes = await publishLesson(teacherId, lesson.id, classroomIdsToPublish);
+    if (!pubRes.ok) {
+      return pubRes;
+    }
   }
 
   revalidatePath("/guru");
@@ -145,7 +202,11 @@ export async function approveAndPublishAction(
     return err(makeAppError("UNAUTHORIZED", "Sesi guru tidak valid."));
   }
 
-  const teacherId = teacherSession.teacher.id;
+  const teacherCheck = await verifyTeacherExists(teacherSession.teacher);
+  if (!teacherCheck.ok) {
+    return teacherCheck;
+  }
+  const teacherId = teacherCheck.data;
   let targetIds = classroomIds?.filter(Boolean) ?? [];
   let containerMeta: { id: string; name: string; joinCode: string } | null = null;
 

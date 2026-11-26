@@ -4,13 +4,31 @@ import { z } from "zod";
 const emptyToUndefined = (value: unknown) =>
   typeof value === "string" && value.trim() === "" ? undefined : value;
 
+const urlSchema = z.string().url();
+
+function pickFirstValidUrl(candidates: Array<unknown>): string | undefined {
+  for (const candidate of candidates) {
+    const normalized = emptyToUndefined(candidate);
+    if (typeof normalized !== "string") continue;
+    const trimmed = normalized.trim();
+    if (urlSchema.safeParse(trimmed).success) {
+      return trimmed;
+    }
+  }
+  return undefined;
+}
+
 const schema = z
   .object({
+    VERCEL: z.preprocess(emptyToUndefined, z.string().optional()),
     DATA_DRIVER: z.preprocess(
       emptyToUndefined,
       z.enum(["local", "postgres"]).optional()
     ),
-    DATABASE_URL: z.preprocess(emptyToUndefined, z.string().url().optional()),
+    DATABASE_URL: z.preprocess(emptyToUndefined, z.string().optional()),
+    POSTGRES_URL: z.preprocess(emptyToUndefined, z.string().optional()),
+    POSTGRES_PRISMA_URL: z.preprocess(emptyToUndefined, z.string().optional()),
+    SUPABASE_DB_URL: z.preprocess(emptyToUndefined, z.string().optional()),
     STORAGE_DRIVER: z.enum(["local", "supabase"]).default("local"),
     AUTH_MODE: z.enum(["demo", "google"]).default("demo"),
     SESSION_SECRET: z
@@ -31,13 +49,27 @@ const schema = z
           : "http://localhost:3000"
       ),
   })
-  .transform((v) => ({
-    ...v,
-    // Jika DATABASE_URL tersedia dan DATA_DRIVER tidak disetel eksplisit,
-    // otomatis gunakan postgres agar serverless (mis. Vercel) tidak jatuh ke /tmp/pglite.
-    DATA_DRIVER:
-      v.DATA_DRIVER ?? (v.DATABASE_URL ? ("postgres" as const) : ("local" as const)),
-  }))
+  .transform((v) => {
+    const resolvedDatabaseUrl = pickFirstValidUrl([
+      v.DATABASE_URL,
+      v.POSTGRES_URL,
+      v.POSTGRES_PRISMA_URL,
+      v.SUPABASE_DB_URL,
+    ]);
+    const isVercel = Boolean(v.VERCEL ?? process.env.VERCEL);
+    // Di Vercel, jika URL Postgres tersedia, selalu paksa DATA_DRIVER="postgres"
+    // agar variabel lama DATA_DRIVER="local" tidak menjatuhkan penyimpanan ke /tmp/pglite.
+    const resolvedDataDriver =
+      isVercel && resolvedDatabaseUrl
+        ? ("postgres" as const)
+        : (v.DATA_DRIVER ?? (resolvedDatabaseUrl ? ("postgres" as const) : ("local" as const)));
+
+    return {
+      ...v,
+      DATABASE_URL: resolvedDatabaseUrl,
+      DATA_DRIVER: resolvedDataDriver,
+    };
+  })
   .superRefine((v, ctx) => {
     if (v.DATA_DRIVER === "postgres" && !v.DATABASE_URL) {
       ctx.addIssue({

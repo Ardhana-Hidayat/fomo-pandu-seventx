@@ -971,5 +971,42 @@ describe("Database Repositories & Data Layer (S0-03, S0-04, S0-07)", () => {
       const withoutDbUrl = parseEnv({});
       expect(withoutDbUrl.DATA_DRIVER).toBe("local");
     });
+
+    it("mendukung POSTGRES_URL, POSTGRES_PRISMA_URL, SUPABASE_DB_URL dan memaksa postgres di Vercel meski DATA_DRIVER=local", () => {
+      const withPostgresUrl = parseEnv({
+        POSTGRES_URL: "postgres://user:pass@ep-example.aws.neon.tech/neondb",
+      });
+      expect(withPostgresUrl.DATABASE_URL).toBe(
+        "postgres://user:pass@ep-example.aws.neon.tech/neondb"
+      );
+      expect(withPostgresUrl.DATA_DRIVER).toBe("postgres");
+
+      const withPrismaUrl = parseEnv({
+        DATABASE_URL: "",
+        POSTGRES_PRISMA_URL: "postgres://user:pass@ep-prisma.aws.neon.tech/neondb",
+      });
+      expect(withPrismaUrl.DATABASE_URL).toBe(
+        "postgres://user:pass@ep-prisma.aws.neon.tech/neondb"
+      );
+      expect(withPrismaUrl.DATA_DRIVER).toBe("postgres");
+
+      const withSupabaseUrl = parseEnv({
+        SUPABASE_DB_URL: "postgres://postgres:pass@db.example.supabase.co:5432/postgres",
+      });
+      expect(withSupabaseUrl.DATABASE_URL).toBe(
+        "postgres://postgres:pass@db.example.supabase.co:5432/postgres"
+      );
+      expect(withSupabaseUrl.DATA_DRIVER).toBe("postgres");
+
+      const vercelWithStaleLocal = parseEnv({
+        VERCEL: "1",
+        DATA_DRIVER: "local",
+        POSTGRES_URL: "postgres://user:pass@ep-example.aws.neon.tech/neondb",
+      });
+      expect(vercelWithStaleLocal.DATA_DRIVER).toBe("postgres");
+      expect(vercelWithStaleLocal.DATABASE_URL).toBe(
+        "postgres://user:pass@ep-example.aws.neon.tech/neondb"
+      );
+    });
   });
 });

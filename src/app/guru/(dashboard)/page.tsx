@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getCurrentTeacher } from "@/features/auth";
 import { getTeacherMateriDashboardOverview } from "@/features/teacher-dashboard";
-import { Card, Button, Icon } from "@/shared/ui";
+import { env } from "@/server/config/env";
+import { Card, Button, Icon, StatusMessage } from "@/shared/ui";
 
 export const instant = false;
 
@@ -22,6 +23,17 @@ export default async function TeacherDashboardPage() {
 
   return (
     <div className="flex flex-col gap-8">
+      {Boolean(process.env.VERCEL) && env.DATA_DRIVER === "local" && (
+        <StatusMessage
+          type="galat"
+          title="Basis data permanen (DATABASE_URL) belum dikonfigurasi di Vercel"
+        >
+          Aplikasi saat ini berjalan dengan penyimpanan sementara lokal (<code>DATA_DRIVER=local</code>).
+          Materi yang Anda buat tidak akan tersimpan permanen setelah halaman dimuat ulang.
+          Tambahkan variabel <code>DATABASE_URL</code> (atau <code>POSTGRES_URL</code>) di pengaturan Vercel untuk mengaktifkan PostgreSQL.
+        </StatusMessage>
+      )}
+
       {/* Sambutan & Aksi Cepat */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>

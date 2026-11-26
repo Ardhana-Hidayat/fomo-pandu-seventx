@@ -37,11 +37,12 @@ Aturan ketat kartu peraga:
 Aturan latihan kuis:
 - Buat ${questionCount} soal latihan dengan jenis: ${questionTypes}.
 - Setiap soal HARUS merujuk ke nomor kartu ('linked_card', integer mulai dari 1).
-- Jumlah pilihan jawaban adalah ${hasIntellectual ? "2" : "3"}. Pilihan pengecoh harus masuk akal tetapi jelas berbeda dan konkret.
+- Setiap 'prompt' harus berupa kalimat tanya atau perintah bahasa Indonesia yang jelas, lengkap, dan langsung berkaitan dengan isi kartu (DILARANG menulis judul umum seperti "Latihan 1").
+- Jumlah pilihan jawaban adalah ${hasIntellectual ? "2" : "3"}. Pilihan pengecoh harus masuk akal, berupa kata/frasa konkret yang berbeda dari jawaban benar (DILARANG memakai teks placeholder seperti "Jawaban Benar", "Pilihan 2", "Salah", atau "Lain").
 - DILARANG menggunakan pertanyaan bernegasi (seperti "yang bukan...", "yang salah...").
-- Jawaban benar diberi atribut "correct": true.
-- Untuk jenis "order" atau "urutkan", sertakan 3 langkah berurutan di atribut 'steps'.
-- Untuk jenis "match", sertakan pilihan di atribut 'options' dengan satu "correct": true.
+- Pada setiap soal pilihan ('match', 'pilih_kata', 'pilih_gambar', 'cocokkan_isyarat'), HARUS ada tepat satu pilihan dengan "correct": true dan pilihan lainnya "correct": false.
+- Untuk jenis "order" atau "urutkan", sertakan 3 langkah tindakan nyata yang berurutan di atribut 'steps' (DILARANG menulis "Langkah 1", "Langkah 2").
+- Untuk jenis "match", sertakan pilihan di atribut 'options' dengan tepat satu "correct": true.
 
 Keamanan isi:
 - Hanya gunakan informasi dari materi sumber atau fakta edukatif umum. DILARANG membuat hal berbahaya, tidak pantas, atau menakutkan untuk anak sekolah.

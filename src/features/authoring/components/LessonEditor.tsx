@@ -208,6 +208,23 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
 
   const [questions, setQuestions] = useState(lesson.questions);
   const [activeQuestionIdx, setActiveQuestionIdx] = useState(0);
+  const [previewSelectedOptionId, setPreviewSelectedOptionId] = useState<
+    string | null
+  >(null);
+  const [previewFeedback, setPreviewFeedback] = useState<
+    "benar" | "ulang" | null
+  >(null);
+  const [previewOrderIds, setPreviewOrderIds] = useState<string[] | null>(null);
+  const [previewSelectedStepId, setPreviewSelectedStepId] = useState<
+    string | null
+  >(null);
+
+  function resetPreview() {
+    setPreviewSelectedOptionId(null);
+    setPreviewFeedback(null);
+    setPreviewOrderIds(null);
+    setPreviewSelectedStepId(null);
+  }
 
   // Pengaturan Isyarat & Suara (dikunci ke SIBI)
   const signSystem = "SIBI" as const;
@@ -1376,7 +1393,10 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                       <button
                         key={q.id ?? idx}
                         type="button"
-                        onClick={() => setActiveQuestionIdx(idx)}
+                        onClick={() => {
+                          setActiveQuestionIdx(idx);
+                          resetPreview();
+                        }}
                         className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-bold border transition-colors cursor-pointer ${
                           selected
                             ? "bg-[var(--primary)] text-[var(--on-primary)] border-[var(--primary)]"
@@ -1403,7 +1423,10 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                         <button
                           key={q.id ?? idx}
                           type="button"
-                          onClick={() => setActiveQuestionIdx(idx)}
+                          onClick={() => {
+                          setActiveQuestionIdx(idx);
+                          resetPreview();
+                        }}
                           className={`flex items-start gap-3 rounded-xl border p-3 text-left transition-all cursor-pointer ${
                             selected
                               ? "border-[var(--primary)] bg-[var(--accent-subtle)] shadow-xs"
@@ -1784,9 +1807,20 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                         <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
                           Pratinjau Soal Siswa
                         </span>
-                        <span className="rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-0.5 text-xs font-semibold text-[var(--ink-2)]">
-                          Soal {activeQuestion.position} dari {questions.length}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          {previewFeedback !== null && (
+                            <button
+                              type="button"
+                              onClick={resetPreview}
+                              className="rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-0.5 text-xs font-semibold text-[var(--ink-2)] hover:text-[var(--ink)] cursor-pointer"
+                            >
+                              Ulangi
+                            </button>
+                          )}
+                          <span className="rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-0.5 text-xs font-semibold text-[var(--ink-2)]">
+                            Soal {activeQuestion.position} dari {questions.length}
+                          </span>
+                        </div>
                       </div>
 
                       <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-4 sm:p-6 flex flex-col items-center gap-4 text-center">
@@ -1826,70 +1860,213 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                                     : "grid-cols-1 sm:grid-cols-2"
                               }`}
                             >
-                              {options.map((opt) => (
-                                <div
-                                  key={opt.id}
-                                  className={`flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-xl border-2 px-3 py-3 text-sm font-bold ${
-                                    opt.correct
-                                      ? "border-[var(--benar-edge)] bg-[var(--benar-bg)]/45 text-[var(--ink)]"
-                                      : "border-[var(--border)] bg-[var(--surface)] text-[var(--ink)]"
-                                  }`}
-                                >
-                                  {opt.imageUrl && (
-                                    <div className="h-14 w-14 rounded-lg bg-white p-1 border border-[var(--border)] flex items-center justify-center overflow-hidden">
-                                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                                      <img
-                                        src={opt.imageUrl}
-                                        alt={opt.text}
-                                        className="h-full w-full object-contain"
-                                      />
-                                    </div>
-                                  )}
-                                  <span>{opt.text}</span>
-                                </div>
-                              ))}
+                              {options.map((opt) => {
+                                const isSelected =
+                                  previewSelectedOptionId === opt.id;
+                                let optStyle =
+                                  "border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] hover:bg-[var(--surface-2)]";
+                                if (isSelected && previewFeedback === "benar") {
+                                  optStyle =
+                                    "border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)]";
+                                } else if (
+                                  isSelected &&
+                                  previewFeedback === "ulang"
+                                ) {
+                                  optStyle =
+                                    "border-[var(--ulang-edge)] bg-[var(--ulang-bg)] text-[var(--ulang-ink)]";
+                                }
+                                return (
+                                  <button
+                                    key={opt.id}
+                                    type="button"
+                                    aria-pressed={isSelected}
+                                    onClick={() => {
+                                      setPreviewSelectedOptionId(opt.id);
+                                      setPreviewFeedback(
+                                        opt.correct ? "benar" : "ulang"
+                                      );
+                                    }}
+                                    className={`flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-xl border-2 px-3 py-3 text-sm font-bold cursor-pointer transition-colors ${optStyle}`}
+                                  >
+                                    {opt.imageUrl && (
+                                      <div className="h-14 w-14 rounded-lg bg-white p-1 border border-[var(--border)] flex items-center justify-center overflow-hidden">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                          src={opt.imageUrl}
+                                          alt={opt.text}
+                                          className="h-full w-full object-contain"
+                                        />
+                                      </div>
+                                    )}
+                                    <span>{opt.text}</span>
+                                  </button>
+                                );
+                              })}
                             </div>
                           )}
 
                         {qType === "benar_salah" && (
                           <div className="grid w-full max-w-sm grid-cols-2 gap-3">
-                            <div
-                              className={`flex min-h-[52px] items-center justify-center gap-2 rounded-xl border-2 font-bold text-sm ${
-                                tfAnswer
-                                  ? "border-[var(--benar-edge)] bg-[var(--benar-bg)]/50 text-[var(--benar-ink)]"
-                                  : "border-[var(--border)] bg-[var(--surface)] text-[var(--ink-2)]"
-                              }`}
-                            >
-                              <Icon name="CheckCircle" size={18} />
-                              <span>Benar</span>
-                            </div>
-                            <div
-                              className={`flex min-h-[52px] items-center justify-center gap-2 rounded-xl border-2 font-bold text-sm ${
-                                !tfAnswer
-                                  ? "border-[var(--benar-edge)] bg-[var(--benar-bg)]/50 text-[var(--benar-ink)]"
-                                  : "border-[var(--border)] bg-[var(--surface)] text-[var(--ink-2)]"
-                              }`}
-                            >
-                              <Icon name="X" size={18} />
-                              <span>Salah</span>
-                            </div>
+                            {[
+                              { val: true, id: "tf-true", label: "Benar", icon: "CheckCircle" as const },
+                              { val: false, id: "tf-false", label: "Salah", icon: "X" as const },
+                            ].map((item) => {
+                              const isSelected =
+                                previewSelectedOptionId === item.id;
+                              let tfStyle =
+                                "border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] hover:bg-[var(--surface-2)]";
+                              if (isSelected && previewFeedback === "benar") {
+                                tfStyle =
+                                  "border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)]";
+                              } else if (
+                                isSelected &&
+                                previewFeedback === "ulang"
+                              ) {
+                                tfStyle =
+                                  "border-[var(--ulang-edge)] bg-[var(--ulang-bg)] text-[var(--ulang-ink)]";
+                              }
+                              return (
+                                <button
+                                  key={item.id}
+                                  type="button"
+                                  aria-pressed={isSelected}
+                                  onClick={() => {
+                                    setPreviewSelectedOptionId(item.id);
+                                    setPreviewFeedback(
+                                      item.val === tfAnswer ? "benar" : "ulang"
+                                    );
+                                  }}
+                                  className={`flex min-h-[52px] items-center justify-center gap-2 rounded-xl border-2 font-bold text-sm cursor-pointer transition-colors ${tfStyle}`}
+                                >
+                                  <Icon name={item.icon} size={18} />
+                                  <span>{item.label}</span>
+                                </button>
+                              );
+                            })}
                           </div>
                         )}
 
-                        {qType === "arrange_steps" && (
-                          <div className="w-full max-w-md flex flex-col gap-2 text-left">
-                            {steps.map((step, sIdx) => (
-                              <div
-                                key={step.id}
-                                className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm font-bold text-[var(--ink)]"
+                        {qType === "arrange_steps" && steps.length > 0 && (() => {
+                          const stepMap = new Map(steps.map((s) => [s.id, s]));
+                          const defaultIds =
+                            steps.length >= 2
+                              ? [...steps.slice(1), steps[0]!].map((s) => s.id)
+                              : steps.map((s) => s.id);
+                          const currentIds =
+                            previewOrderIds &&
+                            previewOrderIds.length === steps.length &&
+                            previewOrderIds.every((id) => stepMap.has(id))
+                              ? previewOrderIds
+                              : defaultIds;
+                          const orderedPreviewSteps = currentIds.map(
+                            (id) => stepMap.get(id)!
+                          );
+
+                          function swapPreviewSteps(idxA: number, idxB: number) {
+                            const next = [...currentIds];
+                            const tmp = next[idxA]!;
+                            next[idxA] = next[idxB]!;
+                            next[idxB] = tmp;
+                            setPreviewOrderIds(next);
+                            setPreviewSelectedStepId(null);
+                            setPreviewFeedback(null);
+                          }
+
+                          return (
+                            <div className="w-full max-w-md flex flex-col gap-2 text-left">
+                              {orderedPreviewSteps.map((step, sIdx) => {
+                                const isPicked =
+                                  previewSelectedStepId === step.id;
+                                return (
+                                  <div
+                                    key={step.id}
+                                    className={`flex items-center gap-2 rounded-xl border-2 px-3 py-2 text-sm font-bold transition-colors ${
+                                      isPicked
+                                        ? "border-[var(--primary)] bg-[var(--accent-subtle)] text-[var(--ink)]"
+                                        : "border-[var(--border)] bg-[var(--surface)] text-[var(--ink)]"
+                                    }`}
+                                  >
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        if (!previewSelectedStepId) {
+                                          setPreviewSelectedStepId(step.id);
+                                        } else if (
+                                          previewSelectedStepId === step.id
+                                        ) {
+                                          setPreviewSelectedStepId(null);
+                                        } else {
+                                          const fromIdx = currentIds.indexOf(
+                                            previewSelectedStepId
+                                          );
+                                          if (fromIdx >= 0) {
+                                            swapPreviewSteps(fromIdx, sIdx);
+                                          }
+                                        }
+                                      }}
+                                      className="flex flex-1 items-center gap-3 text-left cursor-pointer"
+                                    >
+                                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--on-primary)]">
+                                        {sIdx + 1}
+                                      </span>
+                                      <span>{step.text}</span>
+                                    </button>
+                                    <div className="flex items-center gap-1 shrink-0">
+                                      <button
+                                        type="button"
+                                        disabled={sIdx === 0}
+                                        aria-label={`Naikkan langkah ${sIdx + 1}`}
+                                        onClick={() =>
+                                          swapPreviewSteps(sIdx, sIdx - 1)
+                                        }
+                                        className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-2)] text-xs font-bold disabled:opacity-35 cursor-pointer"
+                                      >
+                                        ↑
+                                      </button>
+                                      <button
+                                        type="button"
+                                        disabled={
+                                          sIdx === orderedPreviewSteps.length - 1
+                                        }
+                                        aria-label={`Turunkan langkah ${sIdx + 1}`}
+                                        onClick={() =>
+                                          swapPreviewSteps(sIdx, sIdx + 1)
+                                        }
+                                        className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-2)] text-xs font-bold disabled:opacity-35 cursor-pointer"
+                                      >
+                                        ↓
+                                      </button>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                              <Button
+                                type="button"
+                                variant="secondary"
+                                size="compact"
+                                onClick={() => {
+                                  const isMatch = orderedPreviewSteps.every(
+                                    (s, idx) => s.id === steps[idx]?.id
+                                  );
+                                  setPreviewFeedback(
+                                    isMatch ? "benar" : "ulang"
+                                  );
+                                }}
+                                className="mt-1 w-full"
                               >
-                                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--on-primary)]">
-                                  {sIdx + 1}
-                                </span>
-                                <span>{step.text}</span>
-                              </div>
-                            ))}
-                          </div>
+                                Periksa Urutan
+                              </Button>
+                            </div>
+                          );
+                        })()}
+
+                        {previewFeedback === "benar" && (
+                          <StatusMessage type="benar">Benar!</StatusMessage>
+                        )}
+                        {previewFeedback === "ulang" && (
+                          <StatusMessage type="ulang">
+                            Coba lagi. Pilihan ini belum tepat.
+                          </StatusMessage>
                         )}
                       </div>
                     </Card>

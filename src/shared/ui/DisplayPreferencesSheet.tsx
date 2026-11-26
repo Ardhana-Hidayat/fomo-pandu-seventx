@@ -26,13 +26,13 @@ export function DisplayPreferencesSheet() {
     >
       <div className="flex flex-col gap-5">
         {/* Pratinjau Langsung */}
-        <div className="p-4 sm:p-5 rounded-[var(--r-kartu)] border border-[var(--border-strong)] bg-[var(--surface-2)]">
-          <span className="block text-xs font-bold uppercase tracking-wide text-[var(--muted)] mb-1.5">
+        <div className="rounded-[var(--r-kartu)] border border-[var(--border-strong)] bg-[var(--surface-2)] p-4 sm:p-5">
+          <span className="block text-xs font-bold uppercase tracking-wider text-[var(--muted)] mb-2">
             Pratinjau Langsung
           </span>
-          <p className="text-[var(--ink)] font-medium leading-relaxed">
+          <p className="text-base text-[var(--ink)] font-medium leading-relaxed">
             PanduIn membantu siswa dan guru SLB belajar dengan{' '}
-            <mark className="rounded px-1.5 py-0.5 bg-[var(--sorot-lembut)] text-[var(--on-sorot)] font-bold">
+            <mark className="rounded-md px-1.5 py-0.5 bg-[var(--sorot-lembut)] text-[var(--on-sorot)] font-bold">
               tenang dan jelas
             </mark>
             .
@@ -40,14 +40,14 @@ export function DisplayPreferencesSheet() {
         </div>
 
         {/* Tema Warna */}
-        <section className="flex flex-col gap-2.5 pt-1">
+        <section className="flex flex-col gap-3">
           <h3 className="font-bold text-base text-[var(--ink)]">Tema Warna</h3>
-          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Tema warna">
+          <div className="flex flex-wrap gap-2.5" role="radiogroup" aria-label="Tema warna">
             {(
               [
                 ['terang', 'Terang'],
                 ['gelap', 'Gelap'],
-                ['kuning-hitam', 'Kuning di atas Hitam'],
+                ['kuning-hitam', 'Kontras Tinggi'],
               ] as const
             ).map(([value, label]) => (
               <Chip
@@ -62,9 +62,9 @@ export function DisplayPreferencesSheet() {
         </section>
 
         {/* Ukuran Huruf */}
-        <section className="flex flex-col gap-2.5 pt-4 border-t border-[var(--border)]">
+        <section className="flex flex-col gap-3 pt-4 border-t border-[var(--border)]">
           <h3 className="font-bold text-base text-[var(--ink)]">Ukuran Huruf</h3>
-          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Ukuran huruf">
+          <div className="flex flex-wrap gap-2.5" role="radiogroup" aria-label="Ukuran huruf">
             {(
               [
                 ['normal', 'Normal (100%)'],
@@ -85,9 +85,9 @@ export function DisplayPreferencesSheet() {
         </section>
 
         {/* Jenis Huruf */}
-        <section className="flex flex-col gap-2.5 pt-4 border-t border-[var(--border)]">
+        <section className="flex flex-col gap-3 pt-4 border-t border-[var(--border)]">
           <h3 className="font-bold text-base text-[var(--ink)]">Jenis Huruf</h3>
-          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Jenis huruf">
+          <div className="flex flex-wrap gap-2.5" role="radiogroup" aria-label="Jenis huruf">
             {(
               [
                 ['plus-jakarta', 'Plus Jakarta Sans'],
@@ -107,10 +107,10 @@ export function DisplayPreferencesSheet() {
         </section>
 
         {/* Jarak Baris & Ukuran Tombol */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[var(--border)]">
-          <section className="flex flex-col gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-4 border-t border-[var(--border)]">
+          <section className="flex flex-col gap-3">
             <h3 className="font-bold text-base text-[var(--ink)]">Jarak Baris &amp; Huruf</h3>
-            <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Jarak baris dan huruf">
+            <div className="flex flex-wrap gap-2.5" role="radiogroup" aria-label="Jarak baris dan huruf">
               {(
                 [
                   ['normal', 'Normal'],
@@ -128,9 +128,9 @@ export function DisplayPreferencesSheet() {
             </div>
           </section>
 
-          <section className="flex flex-col gap-2.5">
+          <section className="flex flex-col gap-3">
             <h3 className="font-bold text-base text-[var(--ink)]">Ukuran Tombol</h3>
-            <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Ukuran tombol">
+            <div className="flex flex-wrap gap-2.5" role="radiogroup" aria-label="Ukuran tombol">
               {(
                 [
                   ['normal', 'Normal (56px)'],
@@ -150,9 +150,9 @@ export function DisplayPreferencesSheet() {
         </div>
 
         {/* Warna Sorotan Kata */}
-        <section className="flex flex-col gap-2.5 pt-4 border-t border-[var(--border)]">
+        <section className="flex flex-col gap-3 pt-4 border-t border-[var(--border)]">
           <h3 className="font-bold text-base text-[var(--ink)]">Warna Sorotan Kata</h3>
-          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Warna sorotan kata">
+          <div className="flex flex-wrap gap-2.5" role="radiogroup" aria-label="Warna sorotan kata">
             {(
               [
                 ['kuning', 'Kuning'],
@@ -172,9 +172,9 @@ export function DisplayPreferencesSheet() {
         </section>
 
         {/* Kurangi Gerak */}
-        <section className="flex flex-col gap-2.5 pt-4 border-t border-[var(--border)]">
+        <section className="flex flex-col gap-3 pt-4 border-t border-[var(--border)]">
           <h3 className="font-bold text-base text-[var(--ink)]">Kurangi Gerak</h3>
-          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Kurangi gerak">
+          <div className="flex flex-wrap gap-2.5" role="radiogroup" aria-label="Kurangi gerak">
             {(
               [
                 ['normal', 'Ikut Sistem'],
@@ -193,11 +193,21 @@ export function DisplayPreferencesSheet() {
         </section>
 
         {/* Aksi Bawah */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t-2 border-[var(--border)]">
-          <Button variant="secondary" size="large" onClick={resetPreferences}>
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-5 border-t-2 border-[var(--border)]">
+          <Button
+            variant="secondary"
+            size="large"
+            onClick={resetPreferences}
+            className="flex-1 sm:flex-initial"
+          >
             Atur Ulang
           </Button>
-          <Button variant="primary" size="large" onClick={closeSheet}>
+          <Button
+            variant="primary"
+            size="large"
+            onClick={closeSheet}
+            className="flex-1 sm:flex-initial sm:min-w-[140px]"
+          >
             Selesai
           </Button>
         </div>

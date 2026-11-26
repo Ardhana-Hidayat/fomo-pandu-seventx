@@ -79,20 +79,20 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
         </p>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         {/* Kolom Utama: Tampilan, Suara & Sistem Isyarat */}
         <div className="lg:col-span-7 flex flex-col gap-6">
           {/* 1. Tampilan & Suara */}
           <Card as="section" className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
+                <div className="flex items-start gap-3.5">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
                     <Icon name="TextAa" size={22} />
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-[var(--ink)]">Tampilan &amp; Kontras</h2>
-                    <p className="text-sm text-[var(--ink-2)] mt-0.5 leading-relaxed">
+                    <p className="text-sm text-[var(--ink-2)] mt-1 leading-relaxed">
                       Tiga palet warna berstandar WCAG AAA (kontras minimal 7:1) untuk kenyamanan visual.
                     </p>
                   </div>
@@ -114,7 +114,7 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
                   [
                     ["terang", "Terang (17:1)"],
                     ["gelap", "Gelap (15.7:1)"],
-                    ["kuning-hitam", "Kuning-Hitam (14.7:1)"],
+                    ["kuning-hitam", "Kontras Tinggi (AAA)"],
                   ] as const
                 ).map(([val, label]) => (
                   <Chip
@@ -129,13 +129,13 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
             </div>
 
             <div className="border-t border-[var(--border)] pt-6 flex flex-col gap-4">
-              <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
+              <div className="flex items-start gap-3.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
                   <Icon name="SpeakerHigh" size={22} />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-[var(--ink)]">Kecepatan Suara Belajar</h2>
-                  <p className="text-sm text-[var(--ink-2)] mt-0.5 leading-relaxed">
+                  <p className="text-sm text-[var(--ink-2)] mt-1 leading-relaxed">
                     Kecepatan pelafalan suara sintetis dan audio peraga untuk membantu pemahaman siswa.
                   </p>
                 </div>
@@ -162,15 +162,15 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
           </Card>
 
           {/* 2. Sistem Isyarat & Pustaka */}
-          <Card as="section" className="flex flex-col gap-4">
-            <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
+          <Card as="section" className="flex flex-1 flex-col justify-between gap-5">
+            <div className="flex items-start gap-3.5">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
                 <Icon name="Hand" size={22} />
               </div>
               <div>
                 <h2 className="text-xl font-bold text-[var(--ink)]">Sistem Isyarat</h2>
-                <p className="text-sm text-[var(--ink-2)] mt-0.5 leading-relaxed">
-                  PanduIn menggunakan SIBI (Sistem Isyarat Bahasa Indonesia) sebagai sistem isyarat standar kelas.
+                <p className="text-sm text-[var(--ink-2)] mt-1 leading-relaxed">
+                  PanduIn menggunakan SIBI (Sistem Isyarat Bahasa Indonesia) sebagai sistem isyarat standar pembelajaran.
                 </p>
               </div>
             </div>
@@ -185,7 +185,7 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
                 size="normal"
                 href="/guru/pengaturan/isyarat"
                 icon={<Icon name="Hand" size={18} />}
-                className="shrink-0 w-fit"
+                className="shrink-0 w-full sm:w-fit"
               >
                 Buka Pustaka Isyarat
               </Button>
@@ -196,17 +196,22 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
         {/* Kolom Sekunder: Akun Guru & Pemeriksaan Layanan */}
         <div className="lg:col-span-5 flex flex-col gap-6">
           {/* 3. Akun Guru & Keluar */}
-          <Card as="section" className="flex flex-col gap-5 border-[var(--border-strong)]">
-            <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
-                <Icon name="UsersThree" size={22} />
+          <Card as="section" className="flex flex-col justify-between gap-5 border-[var(--border-strong)]">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-3.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
+                  <Icon name="UsersThree" size={22} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-[var(--ink)]">Akun Guru &amp; Keluar</h2>
+                  <p className="text-sm text-[var(--ink-2)] mt-1 leading-relaxed">
+                    Informasi akun yang sedang aktif di ruang guru PanduIn.
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-xl font-bold text-[var(--ink)]">Akun Guru &amp; Keluar</h2>
-                <p className="text-sm text-[var(--ink-2)] mt-0.5 leading-relaxed">
-                  Informasi akun Google yang sedang aktif di ruang guru PanduIn.
-                </p>
-              </div>
+              <span className="inline-flex shrink-0 items-center rounded-full border border-[var(--benar-edge)] bg-[var(--benar-bg)] px-2.5 py-1 text-xs font-bold text-[var(--benar-ink)]">
+                Aktif
+              </span>
             </div>
 
             <div className="flex items-center gap-3.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
@@ -226,9 +231,9 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
               </div>
             </div>
 
-            <div className="pt-2 border-t border-[var(--border)] flex flex-col gap-3">
+            <div className="pt-4 border-t border-[var(--border)] flex flex-col gap-3">
               <p className="text-xs text-[var(--muted)] leading-relaxed">
-                Keluar akan mengakhiri sesi guru di perangkat ini. Materi dan kelas Anda tetap tersimpan aman.
+                Keluar akan mengakhiri sesi guru di perangkat ini. Materi dan pengaturan Anda tetap tersimpan aman.
               </p>
               <form action="/api/auth/logout" method="POST" className="w-full">
                 <Button
@@ -236,7 +241,7 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
                   variant="danger"
                   size="large"
                   icon={<Icon name="DoorOpen" size={20} />}
-                  className="w-full"
+                  className="w-full justify-center"
                 >
                   Keluar dari Akun
                 </Button>
@@ -245,24 +250,26 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
           </Card>
 
           {/* 4. Pemeriksaan Kesehatan AI (Healthcheck) */}
-          <Card as="section" className="flex flex-col gap-4">
-            <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
-                <Icon name="Sparkle" size={22} />
+          <Card as="section" className="flex flex-1 flex-col justify-between gap-5">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-start gap-3.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--primary)]">
+                  <Icon name="Sparkle" size={22} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-[var(--ink)]">Pemeriksaan Layanan Otomatis</h2>
+                  <p className="text-sm text-[var(--ink-2)] mt-1 leading-relaxed">
+                    Verifikasi koneksi model kecerdasan buatan Google Gemini atau kesiapan mode cadangan lokal.
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-xl font-bold text-[var(--ink)]">Pemeriksaan Layanan Otomatis</h2>
-                <p className="text-sm text-[var(--ink-2)] mt-0.5 leading-relaxed">
-                  Verifikasi koneksi model kecerdasan buatan Google Gemini atau kesiapan mode cadangan lokal.
-                </p>
-              </div>
-            </div>
 
-            {healthResult && (
-              <StatusMessage type={healthResult.status === "ok" ? "benar" : "info"}>
-                {healthResult.message}
-              </StatusMessage>
-            )}
+              {healthResult && (
+                <StatusMessage type={healthResult.status === "ok" ? "benar" : "info"}>
+                  {healthResult.message}
+                </StatusMessage>
+              )}
+            </div>
 
             <Button
               type="button"

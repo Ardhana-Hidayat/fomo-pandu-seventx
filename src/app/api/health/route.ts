@@ -4,7 +4,7 @@ import { env } from "@/server/config/env";
 export async function GET() {
   return NextResponse.json({
     status: "ok",
-    app: "PANDU",
+    app: "PanduIn",
     timestamp: new Date().toISOString(),
     drivers: {
       data: env.DATA_DRIVER,

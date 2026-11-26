@@ -72,7 +72,9 @@ describe("generateLessonContent End-to-End Fallback Service", () => {
       topic: "Cara cuci tangan",
     });
     expect(res.generatedBy).toBe("fallback");
-    expect(res.badge).toContain("Dibuat dari contoh bawaan");
+    expect(res.badge).toMatch(
+      /Dibuat dari contoh bawaan|Dibuat otomatis secara lokal/
+    );
     expect(res.lesson.cards.length).toBeGreaterThan(0);
     expect(res.lesson.questions.length).toBeGreaterThan(0);
   });

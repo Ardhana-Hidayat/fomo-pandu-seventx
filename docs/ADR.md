@@ -1,6 +1,6 @@
-﻿# Architecture Decision Records (ADR) â€” PANDU
+# Architecture Decision Records (ADR) â€” PanduIn
 
-Dokumen ini mencatat keputusan arsitektural penting (*Architecture Decision Records*) yang diambil selama perancangan dan implementasi platform **PANDU**.
+Dokumen ini mencatat keputusan arsitektural penting (*Architecture Decision Records*) yang diambil selama perancangan dan implementasi platform **PanduIn**.
 
 ---
 

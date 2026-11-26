@@ -1,5 +1,5 @@
 /**
- * PANDU — Script Sinkronisasi dan Upload Aset ke Supabase Storage
+ * PanduIn — Script Sinkronisasi dan Upload Aset ke Supabase Storage
  * Mengunggah seluruh piktogram ARASAAC, isyarat SIBI/BISINDO, audio klip, dan manifest ke Supabase Storage.
  */
 
@@ -145,7 +145,7 @@ async function processQueue(tasks: UploadTask[], concurrency = 6) {
 }
 
 async function main() {
-  console.log("=== PANDU Supabase Asset Uploader ===");
+  console.log("=== PanduIn Supabase Asset Uploader ===");
   console.log(`Target: ${SUPABASE_URL}\n`);
 
   // 1. Verifikasi dan buat seluruh bucket yang dibutuhkan

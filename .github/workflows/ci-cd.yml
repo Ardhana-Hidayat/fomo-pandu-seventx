@@ -1,4 +1,4 @@
-name: PANDU CI/CD Pipeline
+name: PanduIn CI/CD Pipeline
 
 on:
   push:

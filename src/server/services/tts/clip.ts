@@ -92,8 +92,8 @@ export async function generateClip(
       bytes: audioBuffer.length,
       keyword: input.text.slice(0, 60),
       source: "system-tts",
-      license: "PANDU Synthesized",
-      attribution: "PANDU Acoustic Engine",
+      license: "PanduIn Synthesized",
+      attribution: "PanduIn Acoustic Engine",
       ownerTeacherId: input.teacherId,
       verified: true,
     });

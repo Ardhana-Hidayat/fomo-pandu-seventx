@@ -92,7 +92,7 @@ export async function POST(request: Request) {
         alt: alt || "Rekaman suara guru",
         source: "recording",
         license: "Hak cipta guru",
-        attribution: "Rekaman guru PANDU",
+        attribution: "Rekaman guru PanduIn",
         verified: true,
         ownerTeacherId: teacherId,
       });

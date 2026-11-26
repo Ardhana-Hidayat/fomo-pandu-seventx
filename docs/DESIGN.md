@@ -1,6 +1,6 @@
-﻿# PANDU Design System (`DESIGN.md`)
+# PanduIn Design System (`DESIGN.md`)
 
-**Product:** PANDU (Panduan Dukungan Inklusif: AI-assisted digital/print flashcard and adaptive exercise platform for SLB and inclusive classrooms)
+**Product:** PanduIn (Panduan Dukungan Inklusif: AI-assisted digital/print flashcard and adaptive exercise platform for SLB and inclusive classrooms)
 
 **Audience:** SLB teachers (including senior teachers), students with sensory disabilities across multi-grade classrooms, and parents assisting at home
 
@@ -199,7 +199,7 @@ Every interactive element must define `default`, `hover`, `focus-visible`, `acti
 
 ### Navigation, Tables, Modals, and Feedback
 
-* **Teacher Navigation:** Top bar (`64px` height, `#FFFFFF`, `1px` bottom border `#E2E8F0`) with **PANDU** wordmark, primary `Buat Materi` button, and teacher account menu.
+* **Teacher Navigation:** Top bar (`64px` height, `#FFFFFF`, `1px` bottom border `#E2E8F0`) with **PanduIn** wordmark, primary `Buat Materi` button, and teacher account menu.
 
 * **Student Recap Table:** Full-width `#FFFFFF` container with `1px solid #E2E8F0`, `#F1F5F9` header row (`12px` uppercase `#475569`), `52px` row height, `tabular-nums` on scores and timestamps.
 

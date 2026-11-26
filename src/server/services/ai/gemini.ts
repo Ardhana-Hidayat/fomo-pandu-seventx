@@ -214,100 +214,119 @@ export async function generateWithGemini(
   extractedText?: string,
   isScannedNotice?: boolean
 ): Promise<GenerateLessonResult> {
-  const apiKey = env.GEMINI_API_KEY;
+  const candidateKeys = Array.from(
+    new Set(
+      [...(options.apiKeys ?? []), env.GEMINI_API_KEY]
+        .map((k) => k?.trim() ?? "")
+        .filter((k) => k.length > 0)
+    )
+  );
 
-  // Jika API key belum diset atau kosong, gunakan contoh bawaan
-  if (!apiKey || apiKey.trim() === "") {
+  // Jika belum ada API key yang disetel, gunakan generator bawaan yang kontekstual
+  if (candidateKeys.length === 0) {
     const fallback = getFallbackLesson(options, extractedText);
     return {
       lesson: fallback,
       generatedBy: "fallback",
-      badge: "Dibuat dari contoh bawaan (layanan otomatis sedang tidak tersedia)",
+      badge: "Dibuat dari contoh bawaan (tambahkan API key Gemini di Pengaturan untuk AI)",
       sourceText: extractedText || options.text,
       isScannedNotice,
     };
   }
 
-  try {
+  const systemPrompt = buildSystemPrompt(options);
+  const userPromptText = buildUserPrompt(options, extractedText);
+
+  // Siapkan konten prompt
+  const contents: Array<string | { inlineData: { mimeType: string; data: string } }> = [];
+
+  // Jika ada lampiran foto/gambar buffer
+  if (options.fileBuffer && options.mimeType?.startsWith("image/")) {
+    contents.push({
+      inlineData: {
+        mimeType: options.mimeType,
+        data: Buffer.from(options.fileBuffer).toString("base64"),
+      },
+    });
+    contents.push(
+      "Bacalah foto catatan/halaman buku ini dan jadikan materi pembelajaran terstruktur sesuai aturan."
+    );
+  }
+
+  contents.push(userPromptText);
+
+  const candidateModels = Array.from(
+    new Set([env.GEMINI_MODEL, "gemini-2.5-flash", "gemini-2.0-flash"].filter(Boolean))
+  );
+
+  let lastError: unknown = null;
+
+  for (let keyIdx = 0; keyIdx < candidateKeys.length; keyIdx++) {
+    const apiKey = candidateKeys[keyIdx]!;
     const ai = new GoogleGenAI({ apiKey });
-    const systemPrompt = buildSystemPrompt(options);
-    const userPromptText = buildUserPrompt(options, extractedText);
 
-    // Siapkan konten prompt
-    const contents: Array<string | { inlineData: { mimeType: string; data: string } }> = [];
+    for (const modelName of candidateModels) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 35000);
 
-    // Jika ada lampiran foto/gambar buffer
-    if (options.fileBuffer && options.mimeType?.startsWith("image/")) {
-      contents.push({
-        inlineData: {
-          mimeType: options.mimeType,
-          data: Buffer.from(options.fileBuffer).toString("base64"),
-        },
-      });
-      contents.push(
-        "Bacalah foto catatan/halaman buku ini dan jadikan materi pembelajaran terstruktur sesuai aturan."
-      );
-    }
+      try {
+        const response = await ai.models.generateContent({
+          model: modelName,
+          contents,
+          config: {
+            systemInstruction: systemPrompt,
+            responseMimeType: "application/json",
+            temperature: 0.3,
+          },
+        });
 
-    contents.push(userPromptText);
+        clearTimeout(timeout);
 
-    // Timeout 40 detik
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 40000);
-
-    try {
-      const response = await ai.models.generateContent({
-        model: env.GEMINI_MODEL,
-        contents,
-        config: {
-          systemInstruction: systemPrompt,
-          responseMimeType: "application/json",
-          temperature: 0.3,
-        },
-      });
-
-      clearTimeout(timeout);
-
-      const text = response.text?.trim() || "";
-      if (!text) {
-        throw new Error("Respons kosong dari Gemini");
-      }
-
-      // Bersihkan kemungkinan markdown code block jika ada
-      const cleaned = text.replace(/^```json\s*/i, "").replace(/```$/, "").trim();
-      const parsedJson = JSON.parse(cleaned);
-
-      // Validasi skema Zod & sanitasi soal
-      const hasIntellectual =
-        options.needs?.includes("intelektual") ||
-        options.needs?.includes("hambatan_intelektual");
-      const validated = sanitizeGeneratedLesson(
-        generatedLessonSchema.parse(parsedJson),
-        {
-          optionCount: hasIntellectual ? 2 : 3,
-          questionCount: options.questionCount,
+        const text = response.text?.trim() || "";
+        if (!text) {
+          throw new Error("Respons kosong dari Gemini");
         }
-      );
 
-      return {
-        lesson: validated,
-        generatedBy: "ai",
-        badge: "Dibuat oleh Gemini",
-        sourceText: extractedText || options.text,
-        isScannedNotice,
-      };
-    } finally {
-      clearTimeout(timeout);
+        const cleaned = text.replace(/^```json\s*/i, "").replace(/```$/, "").trim();
+        const parsedJson = JSON.parse(cleaned);
+
+        const hasIntellectual =
+          options.needs?.includes("intelektual") ||
+          options.needs?.includes("hambatan_intelektual");
+        const targetOptionCount = options.optionCount ?? (hasIntellectual ? 2 : 3);
+        const validated = sanitizeGeneratedLesson(
+          generatedLessonSchema.parse(parsedJson),
+          {
+            optionCount: targetOptionCount,
+            questionCount: options.questionCount,
+          }
+        );
+
+        return {
+          lesson: validated,
+          generatedBy: "ai",
+          badge: `Disusun oleh Gemini (${modelName})`,
+          sourceText: extractedText || options.text,
+          isScannedNotice,
+        };
+      } catch (err) {
+        clearTimeout(timeout);
+        lastError = err;
+        console.warn(
+          `Gemini attempt failed (key #${keyIdx + 1}, model ${modelName}):`,
+          err instanceof Error ? err.message : err
+        );
+      }
     }
-  } catch (error) {
-    console.warn("Gemini generation failed, falling back to built-in curriculum:", error);
-    const fallback = getFallbackLesson(options, extractedText);
-    return {
-      lesson: fallback,
-      generatedBy: "fallback",
-      badge: "Dibuat dari contoh bawaan (layanan otomatis sedang tidak tersedia)",
-      sourceText: extractedText || options.text,
-      isScannedNotice,
-    };
   }
+
+  console.warn("All Gemini keys/models failed, falling back to built-in curriculum:", lastError);
+  const fallback = getFallbackLesson(options, extractedText);
+  return {
+    lesson: fallback,
+    generatedBy: "fallback",
+    badge: "Dibuat otomatis secara lokal (seluruh kuota API Gemini sedang penuh)",
+    sourceText: extractedText || options.text,
+    isScannedNotice,
+  };
 }

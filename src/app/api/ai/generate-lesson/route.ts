@@ -97,7 +97,8 @@ export async function POST(request: Request) {
           ? ["pilih_kata", "benar_salah"]
           : ["pilih_kata", "urutkan", "benar_salah"];
 
-    // Panggil layanan AI dengan fallback otomatis
+    // Panggil layanan AI dengan fallback multi-key Gemini (kunci guru -> env server)
+    const teacherApiKeys = teacherSession?.teacher.settings?.geminiApiKeys ?? [];
     const aiResult = await generateLessonContent({
       sourceType,
       topic,
@@ -110,7 +111,9 @@ export async function POST(request: Request) {
       cardCount,
       questionTypes,
       questionCount,
+      optionCount,
       teacherNotes,
+      apiKeys: teacherApiKeys,
     });
 
     const finalLesson = sanitizeGeneratedLesson(aiResult.lesson, {

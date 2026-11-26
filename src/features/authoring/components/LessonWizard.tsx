@@ -9,7 +9,6 @@ import {
   Icon,
   StatusMessage,
 } from "@/shared/ui";
-import { createLessonAction } from "../actions";
 
 interface LessonWizardProps {
   onSuccess?: () => void;
@@ -79,226 +78,6 @@ function StepperControl({
   );
 }
 
-const STOP_WORDS = new Set([
-  "mengenal",
-  "belajar",
-  "cara",
-  "tentang",
-  "materi",
-  "pelajaran",
-  "dasar",
-  "untuk",
-  "yang",
-  "dan",
-  "atau",
-  "dengan",
-  "di",
-  "ke",
-  "dari",
-  "pada",
-  "sehari",
-  "hari",
-  "kita",
-  "siswa",
-  "anak",
-]);
-
-const DISTRACTOR_POOL = [
-  "Sepeda",
-  "Payung",
-  "Batu",
-  "Garpu",
-  "Bantal",
-  "Awan",
-  "Pintu",
-  "Topi",
-  "Sendok",
-  "Kertas",
-];
-
-function extractSubjectAndKeywords(cleanTitle: string, rawTopic: string) {
-  const combined = `${cleanTitle} ${rawTopic}`.trim();
-  const words = combined
-    .split(/\s+/)
-    .map((w) => w.replace(/[^a-zA-Z0-9-]/g, ""))
-    .filter(Boolean);
-
-  const keywords = Array.from(
-    new Set(
-      words
-        .map((w) => w.toLowerCase())
-        .filter((w) => w.length >= 3 && !STOP_WORDS.has(w))
-    )
-  );
-
-  const meaningfulWords = words.filter(
-    (w) => w.length >= 2 && !STOP_WORDS.has(w.toLowerCase())
-  );
-  const topicText = rawTopic.trim();
-  const subject =
-    topicText ||
-    (meaningfulWords.length > 0 ? meaningfulWords.join(" ") : cleanTitle);
-  const primaryKey = keywords[0] || cleanTitle.split(/\s+/)[0]?.toLowerCase() || "belajar";
-  const secondaryKey = keywords[1] || primaryKey;
-
-  return { subject, primaryKey, secondaryKey, keywords };
-}
-
-function pickDistractors(
-  count: number,
-  excludeLower: Set<string>
-): string[] {
-  const result: string[] = [];
-  for (const item of DISTRACTOR_POOL) {
-    if (!excludeLower.has(item.toLowerCase())) {
-      result.push(item);
-      excludeLower.add(item.toLowerCase());
-    }
-    if (result.length >= count) break;
-  }
-  return result;
-}
-
-function buildStarterCards(cleanTitle: string, rawTopic: string) {
-  const { subject, primaryKey, secondaryKey } = extractSubjectAndKeywords(
-    cleanTitle,
-    rawTopic
-  );
-  const topicText = rawTopic.trim();
-
-  return [
-    {
-      position: 1,
-      text: topicText
-        ? `Hari ini kita belajar ${cleanTitle} tentang ${topicText}.`
-        : `Hari ini kita belajar mengenal ${subject}.`,
-      keyTerms: [primaryKey],
-      cardType: "instruction" as const,
-      imageSource: "pictogram" as const,
-      imageAlt: `Ilustrasi ${cleanTitle}`,
-      audioSource: "tts" as const,
-    },
-    {
-      position: 2,
-      text: `Perhatikan contoh ${subject} dengan teliti.`,
-      keyTerms: [secondaryKey],
-      cardType: "instruction" as const,
-      imageSource: "pictogram" as const,
-      imageAlt: `Contoh ${subject}`,
-      audioSource: "tts" as const,
-    },
-    {
-      position: 3,
-      text: `Kita dapat mempraktikkan ${subject} setiap hari.`,
-      keyTerms: [primaryKey],
-      cardType: "instruction" as const,
-      imageSource: "pictogram" as const,
-      imageAlt: `Praktik ${subject}`,
-      audioSource: "tts" as const,
-    },
-  ];
-}
-
-function buildStarterQuestions(
-  cleanTitle: string,
-  rawTopic: string,
-  questionCount: number,
-  exerciseType: "match" | "order" | "both",
-  optionCount: number
-) {
-  const { subject, primaryKey, secondaryKey, keywords } =
-    extractSubjectAndKeywords(cleanTitle, rawTopic);
-  const capPrimary =
-    primaryKey.charAt(0).toUpperCase() + primaryKey.slice(1);
-  const capSecondary =
-    secondaryKey.charAt(0).toUpperCase() + secondaryKey.slice(1);
-
-  return Array.from({ length: questionCount }, (_, idx) => {
-    const pos = idx + 1;
-    const isOrderQ =
-      exerciseType === "order" || (exerciseType === "both" && pos % 2 === 0);
-
-    if (isOrderQ) {
-      const stepSets = [
-        [
-          `Siapkan diri dan perhatikan materi ${subject}`,
-          `Amati contoh ${subject} bersama guru`,
-          `Praktikkan ${subject} dengan tepat`,
-        ],
-        [
-          `Dengarkan penjelasan tentang ${subject}`,
-          `Sebutkan kata penting tentang ${subject}`,
-          `Tunjukkan hasil belajar ${subject}`,
-        ],
-      ];
-      const chosenSteps = stepSets[idx % stepSets.length]!;
-      return {
-        position: pos,
-        type: "arrange_steps" as const,
-        prompt: `Susun urutan belajar ${subject} yang benar.`,
-        payload: {
-          steps: chosenSteps.map((text, sIdx) => ({
-            id: `q${pos}-step-${sIdx + 1}`,
-            text,
-          })),
-        },
-      };
-    }
-
-    const exclude = new Set<string>([
-      cleanTitle.toLowerCase(),
-      subject.toLowerCase(),
-      primaryKey.toLowerCase(),
-      secondaryKey.toLowerCase(),
-      ...keywords,
-    ]);
-
-    const templates = [
-      {
-        prompt: `Apa topik yang sedang kita pelajari pada materi "${cleanTitle}"?`,
-        correctText: subject,
-        distractors: pickDistractors(optionCount - 1, new Set(exclude)),
-      },
-      {
-        prompt: `Kata mana yang berkaitan dengan "${cleanTitle}"?`,
-        correctText: capPrimary,
-        distractors: pickDistractors(optionCount - 1, new Set(exclude)),
-      },
-      {
-        prompt: `Contoh kata penting dalam materi ${subject} adalah...`,
-        correctText: capSecondary !== capPrimary ? capSecondary : capPrimary,
-        distractors: pickDistractors(optionCount - 1, new Set(exclude)),
-      },
-    ];
-    const tpl = templates[idx % templates.length]!;
-    const rawOptions = [
-      { text: tpl.correctText, correct: true },
-      ...tpl.distractors.map((text) => ({ text, correct: false })),
-    ];
-    // Rotate correct position slightly so the first option isn't always the answer
-    const shift = idx % rawOptions.length;
-    const rotated = [
-      ...rawOptions.slice(shift),
-      ...rawOptions.slice(0, shift),
-    ];
-
-    return {
-      position: pos,
-      type: "choice_word" as const,
-      prompt: tpl.prompt,
-      payload: {
-        options: rotated.map((opt, oIdx) => ({
-          id: `q${pos}-opt-${oIdx + 1}`,
-          text: opt.text,
-          correct: opt.correct,
-        })),
-        answer: tpl.correctText,
-        showTextHint: true,
-      },
-    };
-  });
-}
-
 export function LessonWizard({
   onSuccess,
   embedded = false,
@@ -306,9 +85,9 @@ export function LessonWizard({
   const router = useRouter();
   const [mode, setMode] = useState<CreationMode>("manual");
 
-  // State Buat Manual
+  // State Buat Manual (Teks Materi -> AI Gemini)
   const [title, setTitle] = useState("");
-  const [topic, setTopic] = useState("");
+  const [materialText, setMaterialText] = useState("");
 
   // State Upload PDF
   const [pdfFile, setPdfFile] = useState<File | null>(null);
@@ -326,6 +105,7 @@ export function LessonWizard({
   async function handleManualSubmit(e: FormEvent) {
     e.preventDefault();
     const cleanTitle = title.trim();
+    const cleanText = materialText.trim();
     if (!cleanTitle) {
       setErrorMessage("Judul materi wajib diisi.");
       return;
@@ -334,33 +114,43 @@ export function LessonWizard({
     setIsSubmitting(true);
     setErrorMessage(null);
 
-    const starterCards = buildStarterCards(cleanTitle, topic);
-    const starterQuestions = buildStarterQuestions(
-      cleanTitle,
-      topic,
-      questionCount,
-      exerciseType,
-      optionCount
-    );
+    try {
+      const response = await fetch("/api/ai/generate-lesson", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sourceType: "teks",
+          topic: cleanTitle,
+          text: cleanText || cleanTitle,
+          level: "sdlb",
+          cardCount,
+          questionCount,
+          exerciseType,
+          optionCount,
+        }),
+      });
 
-    const result = await createLessonAction({
-      title: cleanTitle,
-      topic: topic.trim() || cleanTitle,
-      level: "sdlb",
-      sourceType: "teks",
-      generatedBy: "manual",
-      exerciseType,
-      optionCount,
-      cards: starterCards,
-      questions: starterQuestions,
-    });
+      const payload = await response.json();
 
-    if (result.ok) {
-      onSuccess?.();
-      router.push(`/guru/materi/${result.data.id}/edit`);
-    } else {
+      if (!response.ok || !payload.success) {
+        setIsSubmitting(false);
+        setErrorMessage(
+          payload.error || "Gagal menyusun materi dari teks. Silakan coba lagi."
+        );
+        return;
+      }
+
+      const createdId = payload.data?.lessonId as string | undefined;
+      if (createdId) {
+        onSuccess?.();
+        router.push(`/guru/materi/${createdId}/edit`);
+      } else {
+        setIsSubmitting(false);
+        setErrorMessage("Materi berhasil diproses tetapi ID tidak ditemukan.");
+      }
+    } catch {
       setIsSubmitting(false);
-      setErrorMessage(result.error.message);
+      setErrorMessage("Terjadi gangguan jaringan saat memproses materi.");
     }
   }
 
@@ -595,11 +385,11 @@ export function LessonWizard({
         </button>
       </div>
 
-      {/* Form 1: Buat Manual */}
+      {/* Form 1: Buat Manual (Teks Materi -> AI Gemini) */}
       {mode === "manual" &&
         renderFormContainer(
           <form onSubmit={handleManualSubmit} className="flex flex-col gap-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
               <Field
                 id="manual-lesson-title"
                 label="Judul Materi"
@@ -609,12 +399,33 @@ export function LessonWizard({
                 required
               />
 
-              <Field
-                id="manual-lesson-topic"
-                label="Topik Singkat (Opsional)"
-                placeholder="Contoh: Kebersihan Diri"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
+              <StepperControl
+                label="Jumlah Kartu"
+                value={cardCount}
+                unit="Kartu"
+                min={3}
+                max={15}
+                onChange={setCardCount}
+                decreaseAriaLabel="Kurangi jumlah kartu"
+                increaseAriaLabel="Tambah jumlah kartu"
+                labelSize="sm"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="manual-lesson-text"
+                className="text-sm font-bold text-[var(--ink)]"
+              >
+                Isi / Teks Materi Pembelajaran
+              </label>
+              <textarea
+                id="manual-lesson-text"
+                rows={4}
+                placeholder="Tulis atau tempel isi materi di sini (misal: Mata untuk melihat benda di sekitar. Hidung untuk mencium aroma. Telinga untuk mendengar suara...). AI akan menyusunnya menjadi kartu belajar, gambar visual, isyarat SIBI, dan soal kuis otomatis."
+                value={materialText}
+                onChange={(e) => setMaterialText(e.target.value)}
+                className="w-full rounded-[var(--r-kartu)] border border-[var(--border-strong)] bg-[var(--surface)] px-3.5 py-2.5 text-sm sm:text-base text-[var(--ink)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[var(--primary)]"
               />
             </div>
 
@@ -626,11 +437,10 @@ export function LessonWizard({
                 variant="primary"
                 size="normal"
                 loading={isSubmitting}
-                icon={<Icon name="CaretRight" size={18} />}
-                iconPosition="right"
+                icon={<Icon name="Sparkle" size={18} />}
                 className="w-full sm:w-auto"
               >
-                {isSubmitting ? "Menyimpan..." : "Buat & Lanjut Sunting"}
+                {isSubmitting ? "Menyusun Materi & Kuis..." : "Buat Materi & Kuis dengan AI"}
               </Button>
             </div>
           </form>

@@ -74,8 +74,10 @@ export interface GenerateLessonOptions {
   cardCount?: number;
   questionTypes?: string[];
   questionCount?: number;
+  optionCount?: number;
   signSystem?: "SIBI" | "BISINDO";
   teacherNotes?: string;
+  apiKeys?: string[];
 }
 
 export interface GenerateLessonResult {

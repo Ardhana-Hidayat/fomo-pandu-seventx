@@ -24,6 +24,7 @@ export interface TeacherSettings {
   highContrast?: boolean;
   dyslexicFont?: boolean;
   reducedMotion?: boolean;
+  geminiApiKeys?: string[];
 }
 
 export interface ChannelSettings {

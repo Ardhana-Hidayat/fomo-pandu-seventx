@@ -13,6 +13,7 @@ export default async function TeacherSettingsPage() {
       teacher={{
         displayName: session.teacher.displayName,
         email: session.teacher.email,
+        geminiApiKeys: session.teacher.settings?.geminiApiKeys ?? [],
       }}
     />
   );

@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Button, Chip, Icon, StatusMessage, usePreferences } from "@/shared/ui";
+import { Card, Button, Chip, Field, Icon, StatusMessage, usePreferences } from "@/shared/ui";
+import { saveTeacherGeminiKeysAction } from "../actions";
 
 interface TeacherSettingsProps {
   teacher?: {
     displayName: string;
     email?: string | null;
+    geminiApiKeys?: string[];
   };
 }
 
@@ -14,12 +16,56 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
   const { preferences, setPreference, openSheet } = usePreferences();
   const [audioSpeed, setAudioSpeed] = useState<"0.8" | "0.9" | "1.0">("0.9");
 
+  // Multi-key Gemini API state
+  const [geminiKeys, setGeminiKeys] = useState<string[]>(
+    teacher?.geminiApiKeys && teacher.geminiApiKeys.length > 0
+      ? teacher.geminiApiKeys
+      : [""]
+  );
+  const [visibleKeys, setVisibleKeys] = useState<Record<number, boolean>>({});
+  const [isSavingKeys, setIsSavingKeys] = useState(false);
+  const [keysStatus, setKeysStatus] = useState<{
+    type: "benar" | "galat";
+    message: string;
+  } | null>(null);
+
   // Healthcheck state
   const [isCheckingHealth, setIsCheckingHealth] = useState(false);
   const [healthResult, setHealthResult] = useState<{
     status: "ok" | "fallback" | "error";
     message: string;
   } | null>(null);
+
+  async function handleSaveKeys() {
+    setIsSavingKeys(true);
+    setKeysStatus(null);
+    try {
+      const res = await saveTeacherGeminiKeysAction(geminiKeys);
+      if (res.ok) {
+        const saved = res.data.keys;
+        setGeminiKeys(saved.length > 0 ? saved : [""]);
+        setKeysStatus({
+          type: "benar",
+          message:
+            saved.length > 0
+              ? `${saved.length} API Key Gemini tersimpan. Sistem otomatis beralih ke key berikutnya jika kuota habis.`
+              : "Daftar API Key Gemini dikosongkan. Sistem memakai kunci bawaan server atau mode lokal.",
+        });
+      } else {
+        setKeysStatus({
+          type: "galat",
+          message: res.error.message,
+        });
+      }
+    } catch {
+      setKeysStatus({
+        type: "galat",
+        message: "Gagal menyimpan API Key Gemini.",
+      });
+    } finally {
+      setIsSavingKeys(false);
+    }
+  }
 
   async function handleCheckHealth() {
     setIsCheckingHealth(true);
@@ -249,7 +295,7 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
             </div>
           </Card>
 
-          {/* 4. Pemeriksaan Kesehatan AI (Healthcheck) */}
+          {/* 4. API Key Gemini (Multi-Key Fallback) & Pemeriksaan Layanan */}
           <Card as="section" className="flex flex-1 flex-col justify-between gap-5">
             <div className="flex flex-col gap-4">
               <div className="flex items-start gap-3.5">
@@ -257,12 +303,88 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
                   <Icon name="Sparkle" size={22} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-[var(--ink)]">Pemeriksaan Layanan Otomatis</h2>
+                  <h2 className="text-xl font-bold text-[var(--ink)]">API Key Gemini &amp; Layanan AI</h2>
                   <p className="text-sm text-[var(--ink-2)] mt-1 leading-relaxed">
-                    Verifikasi koneksi model kecerdasan buatan Google Gemini atau kesiapan mode cadangan lokal.
+                    Tambahkan satu atau lebih API Key Google Gemini. Jika kuota key pertama habis, sistem otomatis beralih ke key berikutnya.
                   </p>
                 </div>
               </div>
+
+              <div className="flex flex-col gap-2.5">
+                {geminiKeys.map((keyVal, idx) => (
+                  <div key={idx} className="flex items-end gap-2">
+                    <div className="flex-1 min-w-0">
+                      <Field
+                        id={`gemini-key-${idx}`}
+                        label={idx === 0 ? "API Key Utama (#1)" : `API Key Cadangan (#${idx + 1})`}
+                        type={visibleKeys[idx] ? "text" : "password"}
+                        placeholder="AIza..."
+                        value={keyVal}
+                        onChange={(e) => {
+                          const next = [...geminiKeys];
+                          next[idx] = e.target.value;
+                          setGeminiKeys(next);
+                        }}
+                      />
+                    </div>
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      size="normal"
+                      onClick={() =>
+                        setVisibleKeys((prev) => ({ ...prev, [idx]: !prev[idx] }))
+                      }
+                      aria-label={visibleKeys[idx] ? "Sembunyikan key" : "Tampilkan key"}
+                      className="shrink-0"
+                    >
+                      {visibleKeys[idx] ? "Tutup" : "Lihat"}
+                    </Button>
+                    {geminiKeys.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        size="normal"
+                        onClick={() =>
+                          setGeminiKeys((prev) => prev.filter((_, i) => i !== idx))
+                        }
+                        aria-label={`Hapus API Key #${idx + 1}`}
+                        icon={<Icon name="X" size={16} />}
+                        className="shrink-0"
+                      />
+                    )}
+                  </div>
+                ))}
+
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  {geminiKeys.length < 10 && (
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      size="compact"
+                      onClick={() => setGeminiKeys((prev) => [...prev, ""])}
+                      icon={<Icon name="Plus" size={16} />}
+                    >
+                      Tambah API Key
+                    </Button>
+                  )}
+                  <Button
+                    type="button"
+                    variant="primary"
+                    size="compact"
+                    loading={isSavingKeys}
+                    onClick={handleSaveKeys}
+                    icon={<Icon name="CheckCircle" size={16} />}
+                  >
+                    {isSavingKeys ? "Menyimpan..." : "Simpan API Key"}
+                  </Button>
+                </div>
+              </div>
+
+              {keysStatus && (
+                <StatusMessage type={keysStatus.type}>
+                  {keysStatus.message}
+                </StatusMessage>
+              )}
 
               {healthResult && (
                 <StatusMessage type={healthResult.status === "ok" ? "benar" : "info"}>
@@ -271,17 +393,21 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
               )}
             </div>
 
-            <Button
-              type="button"
-              variant="primary"
-              size="normal"
-              disabled={isCheckingHealth}
-              onClick={handleCheckHealth}
-              icon={<Icon name="ArrowsClockwise" size={18} />}
-              className="w-full sm:w-fit"
-            >
-              {isCheckingHealth ? "Memeriksa layanan..." : "Uji layanan otomatis"}
-            </Button>
+            <div className="pt-3 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-2">
+              <span className="text-xs text-[var(--muted)]">
+                Uji koneksi model Gemini aktif &amp; cadangan
+              </span>
+              <Button
+                type="button"
+                variant="secondary"
+                size="normal"
+                disabled={isCheckingHealth}
+                onClick={handleCheckHealth}
+                icon={<Icon name="ArrowsClockwise" size={18} />}
+              >
+                {isCheckingHealth ? "Memeriksa..." : "Uji layanan AI"}
+              </Button>
+            </div>
           </Card>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentTeacher } from "@/features/auth";
-import { TeacherSettingsClient } from "@/features/teacher-settings/components/TeacherSettingsClient";
+import { TeacherSettingsClient } from "@/features/teacher-settings";
 
 export const instant = false;
 

@@ -5,7 +5,6 @@
     "src/server/**/*.ts",
     "src/shared/**/*.{ts,tsx}",
     "src/features/**/index.ts",
-    "src/lib/**/*.{ts,tsx}",
     "scripts/**/*.{ts,js,mjs}"
   ],
   "project": [

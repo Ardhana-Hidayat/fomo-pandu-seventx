@@ -92,9 +92,7 @@ function createDb(): DbClient {
     const client =
       globalForDb.sqlClient ??
       postgres(env.DATABASE_URL!, { prepare: false });
-    if (process.env.NODE_ENV !== "production") {
-      globalForDb.sqlClient = client;
-    }
+    globalForDb.sqlClient = client;
     return drizzlePostgres(client, { schema }) as unknown as DbClient;
   }
 

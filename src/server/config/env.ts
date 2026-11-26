@@ -1,10 +1,16 @@
 import "server-only";
 import { z } from "zod";
 
+const emptyToUndefined = (value: unknown) =>
+  typeof value === "string" && value.trim() === "" ? undefined : value;
+
 const schema = z
   .object({
-    DATA_DRIVER: z.enum(["local", "postgres"]).default("local"),
-    DATABASE_URL: z.string().url().optional(),
+    DATA_DRIVER: z.preprocess(
+      emptyToUndefined,
+      z.enum(["local", "postgres"]).optional()
+    ),
+    DATABASE_URL: z.preprocess(emptyToUndefined, z.string().url().optional()),
     STORAGE_DRIVER: z.enum(["local", "supabase"]).default("local"),
     AUTH_MODE: z.enum(["demo", "google"]).default("demo"),
     SESSION_SECRET: z
@@ -25,6 +31,13 @@ const schema = z
           : "http://localhost:3000"
       ),
   })
+  .transform((v) => ({
+    ...v,
+    // Jika DATABASE_URL tersedia dan DATA_DRIVER tidak disetel eksplisit,
+    // otomatis gunakan postgres agar serverless (mis. Vercel) tidak jatuh ke /tmp/pglite.
+    DATA_DRIVER:
+      v.DATA_DRIVER ?? (v.DATABASE_URL ? ("postgres" as const) : ("local" as const)),
+  }))
   .superRefine((v, ctx) => {
     if (v.DATA_DRIVER === "postgres" && !v.DATABASE_URL) {
       ctx.addIssue({
@@ -36,4 +49,9 @@ const schema = z
   });
 
 export type Env = z.infer<typeof schema>;
-export const env = schema.parse(process.env);
+
+export function parseEnv(raw: NodeJS.ProcessEnv | Record<string, string | undefined>): Env {
+  return schema.parse(raw);
+}
+
+export const env = parseEnv(process.env);

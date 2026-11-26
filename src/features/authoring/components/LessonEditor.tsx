@@ -14,7 +14,6 @@ import {
 } from "@/shared/ui";
 import { SignCard } from "@/features/player";
 import {
-  approveAndPublishAction,
   updateLessonAction,
   updatePresentationAction,
 } from "../actions";
@@ -44,7 +43,7 @@ interface LessonEditorProps {
   shares: LessonShareInfo[];
 }
 
-type EditorTab = "kartu" | "kuis" | "isyarat_suara" | "terbitkan";
+type EditorTab = "kartu" | "kuis" | "isyarat_suara";
 type CanonicalQuestionType =
   | "choice_word"
   | "pilih_gambar"
@@ -642,23 +641,6 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
     setFeedback({ type: "info", message: "Soal dihapus dari daftar latihan." });
   }
 
-  async function handleApproveAndPublish() {
-    setIsSaving(true);
-    const res = await approveAndPublishAction(lesson.id);
-    setIsSaving(false);
-
-    if (res.ok) {
-      setLocalShare(res.data);
-      setFeedback({
-        type: "benar",
-        message: "Materi berhasil diterbitkan dan tautan bagikan siap digunakan!",
-      });
-      router.refresh();
-    } else {
-      setFeedback({ type: "galat", message: res.error.message });
-    }
-  }
-
   return (
     <div className="flex flex-col gap-6 w-full pb-10">
       {/* Header Editor Terstruktur */}
@@ -825,14 +807,13 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
       <div
         role="tablist"
         aria-label="Bagian penyuntingan materi"
-        className="grid grid-cols-2 sm:inline-flex sm:self-start gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-1.5"
+        className="flex flex-wrap sm:inline-flex sm:self-start gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-1.5"
       >
         {(
           [
             ["kartu", `Kartu (${cards.length})`, "Cards"],
             ["kuis", `Kuis (${questions.length})`, "ListChecks"],
             ["isyarat_suara", "Isyarat & Suara", "Hand"],
-            ["terbitkan", "Bagikan & Terbit", "DoorOpen"],
           ] as const
         ).map(([tabKey, label, ic]) => {
           const isActive = activeTab === tabKey;
@@ -1968,121 +1949,6 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
             </Button>
           </div>
         </section>
-      )}
-
-      {/* TAB 4: BAGIKAN & TERBITKAN */}
-      {activeTab === "terbitkan" && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-          <Card as="section" className="lg:col-span-7 flex flex-col gap-5 p-5 sm:p-6">
-            <div>
-              <h2 className="text-xl font-bold text-[var(--ink)]">
-                Terbitkan &amp; Bagikan Materi
-              </h2>
-              <p className="text-sm text-[var(--ink-2)] mt-1">
-                Dengan menerbitkan materi, status materi menjadi{" "}
-                <strong>Terbit</strong> dan siswa dapat langsung membukanya melalui Kode QR, tautan URL, atau Kode Materi.
-              </p>
-            </div>
-
-            {primaryShare ? (
-              <div className="rounded-xl border border-[var(--benar-edge)] bg-[var(--benar-bg)]/45 p-4 flex flex-col gap-3">
-                <div className="flex items-center gap-2 text-sm font-bold text-[var(--benar-ink)]">
-                  <Icon name="CheckCircle" size={18} />
-                  <span>Materi sudah terbit dan siap dibagikan</span>
-                </div>
-                <p className="text-xs text-[var(--ink-2)]">
-                  Klik tombol <strong>Bagikan</strong> untuk menampilkan Kode QR, menyalin tautan URL, atau menyalin Kode Materi.
-                </p>
-              </div>
-            ) : (
-              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-4 text-sm text-[var(--ink-2)]">
-                Materi masih berstatus <strong>Draf</strong>. Klik tombol di bawah untuk menerbitkan dan langsung mendapatkan Kode QR serta tautan bagikan.
-              </div>
-            )}
-
-            <div className="pt-4 border-t border-[var(--border)] flex flex-wrap gap-3">
-              {primaryShare ? (
-                <ShareLessonButton
-                  lessonId={lesson.id}
-                  lessonTitle={title}
-                  shares={activeShares}
-                  label="Buka QR & Tautan Bagikan"
-                  variant="primary"
-                  size="large"
-                  className="w-full sm:w-auto"
-                  onPublished={(share) => setLocalShare(share)}
-                />
-              ) : (
-                <Button
-                  variant="primary"
-                  size="large"
-                  loading={isSaving}
-                  onClick={handleApproveAndPublish}
-                  icon={<Icon name="CheckCircle" size={22} />}
-                  className="w-full sm:w-auto"
-                >
-                  {isSaving ? "Menerbitkan..." : "Terbitkan & Buat Tautan"}
-                </Button>
-              )}
-            </div>
-          </Card>
-
-          <Card className="lg:col-span-5 flex flex-col gap-4 p-5 sm:p-6">
-            <h3 className="text-base font-bold text-[var(--ink)]">
-              Akses &amp; Cetak Kartu
-            </h3>
-            {primaryShare ? (
-              <div className="flex flex-col gap-2.5">
-                <div className="flex items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-2)]/60 px-3.5 py-2.5">
-                  <div className="min-w-0">
-                    <span className="block text-xs font-semibold text-[var(--muted)]">
-                      Kode Materi
-                    </span>
-                    <span className="font-mono text-base font-extrabold tracking-widest text-[var(--primary)]">
-                      {primaryShare.shareCode}
-                    </span>
-                    {primaryShare.classroomJoinCode && (
-                      <span className="block text-[11px] text-[var(--muted)] mt-0.5">
-                        Kode akses 6 angka: {primaryShare.classroomJoinCode}
-                      </span>
-                    )}
-                  </div>
-                  <Link
-                    href={`/m/${primaryShare.shareCode}`}
-                    className="text-xs font-bold text-[var(--link)] hover:underline shrink-0"
-                  >
-                    Buka Tautan
-                  </Link>
-                </div>
-              </div>
-            ) : (
-              <p className="text-sm text-[var(--muted)]">
-                Materi masih berstatus Draf. Terbitkan materi untuk mendapatkan Kode Materi.
-              </p>
-            )}
-
-            <div className="flex flex-col gap-2 pt-3 border-t border-[var(--border)]">
-              <Button
-                variant="secondary"
-                size="normal"
-                href={`/guru/materi/${lesson.id}/cetak`}
-                icon={<Icon name="Cards" size={18} />}
-                className="w-full justify-center"
-              >
-                Cetak Kartu Fisik (A4)
-              </Button>
-              <Button
-                variant="secondary"
-                size="normal"
-                href={tvHref}
-                icon={<Icon name="Television" size={18} />}
-                className="w-full justify-center"
-              >
-                Buka Mode TV
-              </Button>
-            </div>
-          </Card>
-        </div>
       )}
 
       {/* MODAL PIKTOGRAM */}

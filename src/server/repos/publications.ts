@@ -28,7 +28,8 @@ export async function publishLesson(
   lessonId: string,
   classroomIds: string[]
 ): Promise<Result<Publication[]>> {
-  if (classroomIds.length === 0) {
+  const uniqueClassroomIds = Array.from(new Set(classroomIds.filter(Boolean)));
+  if (uniqueClassroomIds.length === 0) {
     return err(makeAppError("NO_CLASSROOMS", "Pilih minimal satu kelas tujuan"));
   }
 
@@ -48,7 +49,7 @@ export async function publishLesson(
         .from(classrooms)
         .where(
           and(
-            inArray(classrooms.id, classroomIds),
+            inArray(classrooms.id, uniqueClassroomIds),
             eq(classrooms.teacherId, teacherId)
           )
         ),
@@ -60,7 +61,7 @@ export async function publishLesson(
       );
     }
 
-    if (ownedClasses.length !== classroomIds.length) {
+    if (ownedClasses.length !== uniqueClassroomIds.length) {
       return err(
         makeAppError("FORBIDDEN", "Sebagian kelas tujuan tidak valid atau bukan milik Anda")
       );
@@ -80,7 +81,7 @@ export async function publishLesson(
         .where(
           and(
             eq(publications.lessonId, lessonId),
-            inArray(publications.classroomId, classroomIds)
+            inArray(publications.classroomId, uniqueClassroomIds)
           )
         ),
     ]);
@@ -89,6 +90,7 @@ export async function publishLesson(
       existingPubs.map((p) => [p.classroomId, p])
     );
     const existingIdsToUpdate: string[] = [];
+    const existingMissingCodeUpdates: Array<{ id: string; shareCode: string }> = [];
     const newPubValues: Array<{
       lessonId: string;
       classroomId: string;
@@ -96,10 +98,17 @@ export async function publishLesson(
       visible: boolean;
     }> = [];
 
-    for (const cId of classroomIds) {
+    for (const cId of uniqueClassroomIds) {
       const existing = existingByClassroom.get(cId);
       if (existing) {
-        existingIdsToUpdate.push(existing.id);
+        if (existing.shareCode) {
+          existingIdsToUpdate.push(existing.id);
+        } else {
+          existingMissingCodeUpdates.push({
+            id: existing.id,
+            shareCode: generateShareCode(),
+          });
+        }
       } else {
         newPubValues.push({
           lessonId,
@@ -111,7 +120,7 @@ export async function publishLesson(
     }
 
     // 3. Perbarui & sisipkan publikasi secara batch paralel
-    const [updatedRecords, insertedRecords] = await Promise.all([
+    const [updatedRecords, backfilledRecords, insertedRecords] = await Promise.all([
       existingIdsToUpdate.length > 0
         ? db
             .update(publications)
@@ -119,12 +128,28 @@ export async function publishLesson(
             .where(inArray(publications.id, existingIdsToUpdate))
             .returning()
         : Promise.resolve([]),
+      existingMissingCodeUpdates.length > 0
+        ? Promise.all(
+            existingMissingCodeUpdates.map((item) =>
+              db
+                .update(publications)
+                .set({
+                  visible: true,
+                  publishedAt: new Date(),
+                  shareCode: item.shareCode,
+                })
+                .where(eq(publications.id, item.id))
+                .returning()
+                .then((rows) => rows[0])
+            )
+          ).then((rows) => rows.filter((r): r is Publication => Boolean(r)))
+        : Promise.resolve([]),
       newPubValues.length > 0
         ? db.insert(publications).values(newPubValues).returning()
         : Promise.resolve([]),
     ]);
 
-    return ok([...updatedRecords, ...insertedRecords]);
+    return ok([...updatedRecords, ...backfilledRecords, ...insertedRecords]);
   } catch (error) {
     return err(
       makeAppError("DB_ERROR", "Gagal menerbitkan materi ke kelas", error)

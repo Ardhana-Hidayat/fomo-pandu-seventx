@@ -171,12 +171,112 @@ export const FALLBACK_LESSONS: Record<string, GeneratedLesson> = {
   },
 };
 
+const ID_STOP_WORDS = new Set([
+  "yang",
+  "dan",
+  "di",
+  "ke",
+  "dari",
+  "untuk",
+  "pada",
+  "dengan",
+  "ini",
+  "itu",
+  "atau",
+  "ada",
+  "adalah",
+  "akan",
+  "bisa",
+  "kami",
+  "kita",
+  "mereka",
+  "saya",
+  "kamu",
+  "dia",
+  "dalam",
+  "juga",
+  "agar",
+  "supaya",
+  "oleh",
+  "saat",
+  "ketika",
+  "tentang",
+  "cara",
+  "belajar",
+  "mengenal",
+]);
+
+const CONCRETE_DISTRACTORS = [
+  "payung",
+  "sepatu",
+  "batu",
+  "awan",
+  "garpu",
+  "bantal",
+  "pintu",
+  "topi",
+  "kertas",
+  "bola",
+];
+
+function pickContentKeyword(sentence: string): string {
+  const words = sentence
+    .split(/\s+/)
+    .map((w) => w.replace(/[^a-zA-Z0-9-]/g, "").toLowerCase())
+    .filter((w) => w.length >= 3);
+
+  return (
+    words.find((w) => !ID_STOP_WORDS.has(w)) ??
+    words[0] ??
+    "materi"
+  );
+}
+
+function buildClozePrompt(sentence: string, keyword: string): string {
+  const cleanSentence = sentence.replace(/\.$/, "");
+  const regex = new RegExp(`\\b${keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+  if (regex.test(cleanSentence)) {
+    return `Lengkapi kalimat berikut: "${cleanSentence.replace(regex, "___")}."`;
+  }
+  return `Kata mana yang sesuai dengan kalimat "${cleanSentence}."?`;
+}
+
+function pickPlausibleDistractors(
+  correctWord: string,
+  otherCardTerms: string[],
+  sentenceLower: string,
+  count: number
+): string[] {
+  const seen = new Set<string>([correctWord.toLowerCase()]);
+  const result: string[] = [];
+
+  for (const term of otherCardTerms) {
+    const clean = term.trim().toLowerCase();
+    if (clean && !seen.has(clean) && !sentenceLower.includes(clean)) {
+      seen.add(clean);
+      result.push(clean);
+    }
+    if (result.length >= count) return result;
+  }
+
+  for (const fallbackWord of CONCRETE_DISTRACTORS) {
+    if (!seen.has(fallbackWord) && !sentenceLower.includes(fallbackWord)) {
+      seen.add(fallbackWord);
+      result.push(fallbackWord);
+    }
+    if (result.length >= count) break;
+  }
+
+  return result;
+}
+
 /**
  * Buat kartu dan kuis sederhana jika teks bebas diberikan tetapi AI offline.
  */
 export function generateFallbackFromText(
   title: string,
-  rawText: string
+  rawText: string,
+  optionCount = 3
 ): GeneratedLesson {
   const sentences = rawText
     .split(/[.\n!?]+/)
@@ -185,8 +285,7 @@ export function generateFallbackFromText(
     .slice(0, 6);
 
   const cards = sentences.map((sent) => {
-    const words = sent.split(/\s+/).filter(Boolean);
-    const key = words.find((w) => w.length >= 3)?.toLowerCase() || "belajar";
+    const key = pickContentKeyword(sent);
     return {
       text: sent.endsWith(".") ? sent : `${sent}.`,
       key_terms: [key],
@@ -202,22 +301,84 @@ export function generateFallbackFromText(
     return FALLBACK_LESSONS["cuci tangan"]!;
   }
 
+  const allTerms = cards.map((c) => c.key_terms[0] ?? "").filter(Boolean);
+  const distractorCount = Math.max(1, Math.min(3, optionCount - 1));
+
+  const firstCard = cards[0]!;
+  const firstKey = firstCard.key_terms[0] || "materi";
+  const firstDistractors = pickPlausibleDistractors(
+    firstKey,
+    allTerms.slice(1),
+    firstCard.text.toLowerCase(),
+    distractorCount
+  );
+
+  const questions: GeneratedLesson["questions"] = [
+    {
+      type: "match",
+      variant: "pilih_kata",
+      prompt: buildClozePrompt(firstCard.text, firstKey),
+      linked_card: 1,
+      options: [
+        { id: "opt-1", text: firstKey, correct: true },
+        ...firstDistractors.map((d, i) => ({
+          id: `opt-${i + 2}`,
+          text: d,
+          correct: false,
+        })),
+      ],
+    },
+  ];
+
+  if (cards.length >= 2) {
+    const secondCard = cards[1]!;
+    questions.push({
+      type: "benar_salah",
+      prompt: secondCard.text,
+      linked_card: 2,
+      answer: true,
+    });
+  }
+
+  if (cards.length >= 3) {
+    questions.push({
+      type: "order",
+      prompt: `Susun urutan isi materi "${title || "Pembelajaran"}" dengan benar.`,
+      linked_card: 1,
+      steps: cards.slice(0, 3).map((c, idx) => ({
+        id: `step-${idx + 1}`,
+        text: c.text.replace(/\.$/, ""),
+      })),
+    });
+
+    const thirdCard = cards[2]!;
+    const thirdKey = thirdCard.key_terms[0] || "materi";
+    const thirdDistractors = pickPlausibleDistractors(
+      thirdKey,
+      allTerms.filter((t) => t !== thirdKey),
+      thirdCard.text.toLowerCase(),
+      distractorCount
+    );
+    questions.push({
+      type: "match",
+      variant: "pilih_kata",
+      prompt: buildClozePrompt(thirdCard.text, thirdKey),
+      linked_card: 3,
+      options: [
+        { id: "opt-1", text: thirdKey, correct: true },
+        ...thirdDistractors.map((d, i) => ({
+          id: `opt-${i + 2}`,
+          text: d,
+          correct: false,
+        })),
+      ],
+    });
+  }
+
   return {
     title: title || "Materi Pembelajaran",
     cards,
-    questions: [
-      {
-        type: "match",
-        variant: "pilih_kata",
-        prompt: `Apa kata penting pada langkah pertama?`,
-        linked_card: 1,
-        options: [
-          { id: "opt-1", text: cards[0]?.key_terms[0] || "kata", correct: true },
-          { id: "opt-2", text: "salah", correct: false },
-          { id: "opt-3", text: "lain", correct: false },
-        ],
-      },
-    ],
+    questions,
   };
 }
 
@@ -226,6 +387,10 @@ export function getFallbackLesson(
   extractedText?: string
 ): GeneratedLesson {
   const query = (options.topic || "").toLowerCase();
+  const hasIntellectual =
+    options.needs?.includes("intelektual") ||
+    options.needs?.includes("hambatan_intelektual");
+  const optionCount = hasIntellectual ? 2 : 3;
 
   for (const [key, lesson] of Object.entries(FALLBACK_LESSONS)) {
     if (query.includes(key)) {
@@ -235,7 +400,17 @@ export function getFallbackLesson(
 
   const content = extractedText || options.text;
   if (content && content.length > 20) {
-    return generateFallbackFromText(options.topic || "Materi Kelas", content);
+    return generateFallbackFromText(
+      options.topic || "Materi Kelas",
+      content,
+      optionCount
+    );
+  }
+
+  const cleanTopic = (options.topic || "").trim();
+  if (cleanTopic.length > 0) {
+    const topicSentence = `Kita belajar mengenal ${cleanTopic}. Perhatikan contoh ${cleanTopic} di sekitar kita. Kita mempraktikkan ${cleanTopic} dengan gembira.`;
+    return generateFallbackFromText(cleanTopic, topicSentence, optionCount);
   }
 
   return FALLBACK_LESSONS["cuci tangan"]!;

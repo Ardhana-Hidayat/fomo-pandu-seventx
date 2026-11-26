@@ -185,4 +185,113 @@ describe("QuizRunner Component", () => {
     expect(homeLink.getAttribute("href")).toBe("/");
     expect(screen.queryByText(/Kembali ke Kelas/i)).toBeNull();
   });
+
+  it("mendukung soal susun urutan (arrange_steps) secara interaktif", () => {
+    const orderQuestions = [
+      {
+        id: "q-order-1",
+        lessonId: "l-order",
+        position: 1,
+        type: "arrange_steps",
+        prompt: "Susun langkah mencuci tangan.",
+        payload: {
+          steps: [
+            { id: "s1", text: "Basahi tangan dengan air" },
+            { id: "s2", text: "Gosok tangan dengan sabun" },
+            { id: "s3", text: "Bilas tangan sampai bersih" },
+          ],
+        },
+        linkedCardId: null,
+        explanation: null,
+        keyTerms: [] as string[],
+        signOverride: null,
+        createdAt: new Date(),
+      },
+    ];
+
+    render(
+      <PreferencesProvider>
+        <QuizRunner
+          lessonTitle="Cuci Tangan"
+          questions={orderQuestions}
+          backHref="/"
+        />
+      </PreferencesProvider>
+    );
+
+    // Awalnya urutan diacak (s2, s3, s1), klik Periksa Urutan harus memberi umpan balik Coba lagi
+    fireEvent.click(screen.getByRole("button", { name: /Periksa Urutan/i }));
+    expect(screen.getByText(/Coba lagi/i)).toBeDefined();
+
+    // Pindahkan "Basahi tangan dengan air" (di posisi 3) naik dua kali ke posisi 1
+    fireEvent.click(screen.getByRole("button", { name: /Naikkan langkah 3/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Naikkan langkah 2/i }));
+
+    fireEvent.click(screen.getByRole("button", { name: /Periksa Urutan/i }));
+    expect(screen.getByText(/Tepat! Jawabanmu benar/i)).toBeDefined();
+  });
+
+  it("mendukung soal match, pilih_gambar, dan choice_sign yang dapat diklik", () => {
+    const multiTypeQuestions = [
+      {
+        id: "q-match-1",
+        lessonId: "l-multi",
+        position: 1,
+        type: "match",
+        prompt: "Mana alat untuk menulis?",
+        payload: {
+          options: [
+            { id: "m1", text: "Pensil", correct: true },
+            { id: "m2", text: "Piring", correct: false },
+          ],
+        },
+        linkedCardId: null,
+        explanation: null,
+        keyTerms: [] as string[],
+        signOverride: null,
+        createdAt: new Date(),
+      },
+      {
+        id: "q-sign-1",
+        lessonId: "l-multi",
+        position: 2,
+        type: "choice_sign",
+        prompt: "Kata apa yang dieja isyarat ini?",
+        payload: {
+          signWord: "BUKU",
+          options: [
+            { id: "sg1", text: "Buku", correct: true },
+            { id: "sg2", text: "Meja", correct: false },
+          ],
+        },
+        linkedCardId: null,
+        explanation: null,
+        keyTerms: ["buku"],
+        signOverride: null,
+        createdAt: new Date(),
+      },
+    ];
+
+    render(
+      <PreferencesProvider>
+        <QuizRunner
+          lessonTitle="Benda Kelas"
+          questions={multiTypeQuestions}
+          backHref="/"
+        />
+      </PreferencesProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Piring" }));
+    expect(screen.getByText(/Coba lagi/i)).toBeDefined();
+
+    fireEvent.click(screen.getByRole("button", { name: "Pensil" }));
+    expect(screen.getByText(/Tepat! Jawabanmu benar/i)).toBeDefined();
+
+    fireEvent.click(screen.getByRole("button", { name: /Soal Berikutnya/i }));
+    expect(screen.getByText(/Kata apa yang dieja isyarat ini\?/i)).toBeDefined();
+
+    fireEvent.click(screen.getByRole("button", { name: "Buku" }));
+    expect(screen.getByText(/Tepat! Jawabanmu benar/i)).toBeDefined();
+  });
 });

@@ -79,6 +79,224 @@ function StepperControl({
   );
 }
 
+const STOP_WORDS = new Set([
+  "mengenal",
+  "belajar",
+  "cara",
+  "tentang",
+  "materi",
+  "pelajaran",
+  "dasar",
+  "untuk",
+  "yang",
+  "dan",
+  "atau",
+  "dengan",
+  "di",
+  "ke",
+  "dari",
+  "pada",
+  "sehari",
+  "hari",
+  "kita",
+  "siswa",
+  "anak",
+]);
+
+const DISTRACTOR_POOL = [
+  "Sepeda",
+  "Payung",
+  "Batu",
+  "Garpu",
+  "Bantal",
+  "Awan",
+  "Pintu",
+  "Topi",
+  "Sendok",
+  "Kertas",
+];
+
+function extractSubjectAndKeywords(cleanTitle: string, rawTopic: string) {
+  const combined = `${cleanTitle} ${rawTopic}`.trim();
+  const words = combined
+    .split(/\s+/)
+    .map((w) => w.replace(/[^a-zA-Z0-9-]/g, ""))
+    .filter(Boolean);
+
+  const keywords = Array.from(
+    new Set(
+      words
+        .map((w) => w.toLowerCase())
+        .filter((w) => w.length >= 3 && !STOP_WORDS.has(w))
+    )
+  );
+
+  const meaningfulWords = words.filter(
+    (w) => w.length >= 2 && !STOP_WORDS.has(w.toLowerCase())
+  );
+  const subject =
+    meaningfulWords.length > 0 ? meaningfulWords.join(" ") : cleanTitle;
+  const primaryKey = keywords[0] || cleanTitle.split(/\s+/)[0]?.toLowerCase() || "belajar";
+  const secondaryKey = keywords[1] || primaryKey;
+
+  return { subject, primaryKey, secondaryKey, keywords };
+}
+
+function pickDistractors(
+  count: number,
+  excludeLower: Set<string>
+): string[] {
+  const result: string[] = [];
+  for (const item of DISTRACTOR_POOL) {
+    if (!excludeLower.has(item.toLowerCase())) {
+      result.push(item);
+      excludeLower.add(item.toLowerCase());
+    }
+    if (result.length >= count) break;
+  }
+  return result;
+}
+
+function buildStarterCards(cleanTitle: string, rawTopic: string) {
+  const { subject, primaryKey, secondaryKey } = extractSubjectAndKeywords(
+    cleanTitle,
+    rawTopic
+  );
+  const topicText = rawTopic.trim();
+
+  return [
+    {
+      position: 1,
+      text: topicText
+        ? `Hari ini kita belajar ${cleanTitle} tentang ${topicText}.`
+        : `Hari ini kita belajar mengenal ${subject}.`,
+      keyTerms: [primaryKey],
+      cardType: "instruction" as const,
+      imageSource: "pictogram" as const,
+      imageAlt: `Ilustrasi ${cleanTitle}`,
+      audioSource: "tts" as const,
+    },
+    {
+      position: 2,
+      text: `Perhatikan contoh ${subject} dengan teliti.`,
+      keyTerms: [secondaryKey],
+      cardType: "instruction" as const,
+      imageSource: "pictogram" as const,
+      imageAlt: `Contoh ${subject}`,
+      audioSource: "tts" as const,
+    },
+    {
+      position: 3,
+      text: `Kita dapat mempraktikkan ${subject} setiap hari.`,
+      keyTerms: [primaryKey],
+      cardType: "instruction" as const,
+      imageSource: "pictogram" as const,
+      imageAlt: `Praktik ${subject}`,
+      audioSource: "tts" as const,
+    },
+  ];
+}
+
+function buildStarterQuestions(
+  cleanTitle: string,
+  rawTopic: string,
+  questionCount: number,
+  exerciseType: "match" | "order" | "both",
+  optionCount: number
+) {
+  const { subject, primaryKey, secondaryKey, keywords } =
+    extractSubjectAndKeywords(cleanTitle, rawTopic);
+  const capPrimary =
+    primaryKey.charAt(0).toUpperCase() + primaryKey.slice(1);
+  const capSecondary =
+    secondaryKey.charAt(0).toUpperCase() + secondaryKey.slice(1);
+
+  return Array.from({ length: questionCount }, (_, idx) => {
+    const pos = idx + 1;
+    const isOrderQ =
+      exerciseType === "order" || (exerciseType === "both" && pos % 2 === 0);
+
+    if (isOrderQ) {
+      const stepSets = [
+        [
+          `Siapkan diri dan perhatikan materi ${subject}`,
+          `Amati contoh ${subject} bersama guru`,
+          `Praktikkan ${subject} dengan tepat`,
+        ],
+        [
+          `Dengarkan penjelasan tentang ${subject}`,
+          `Sebutkan kata penting tentang ${subject}`,
+          `Tunjukkan hasil belajar ${subject}`,
+        ],
+      ];
+      const chosenSteps = stepSets[idx % stepSets.length]!;
+      return {
+        position: pos,
+        type: "arrange_steps" as const,
+        prompt: `Susun urutan belajar ${subject} yang benar.`,
+        payload: {
+          steps: chosenSteps.map((text, sIdx) => ({
+            id: `q${pos}-step-${sIdx + 1}`,
+            text,
+          })),
+        },
+      };
+    }
+
+    const exclude = new Set<string>([
+      cleanTitle.toLowerCase(),
+      subject.toLowerCase(),
+      primaryKey.toLowerCase(),
+      secondaryKey.toLowerCase(),
+      ...keywords,
+    ]);
+
+    const templates = [
+      {
+        prompt: `Apa topik yang sedang kita pelajari pada materi "${cleanTitle}"?`,
+        correctText: subject,
+        distractors: pickDistractors(optionCount - 1, new Set(exclude)),
+      },
+      {
+        prompt: `Kata mana yang berkaitan dengan "${cleanTitle}"?`,
+        correctText: capPrimary,
+        distractors: pickDistractors(optionCount - 1, new Set(exclude)),
+      },
+      {
+        prompt: `Contoh kata penting dalam materi ${subject} adalah...`,
+        correctText: capSecondary !== capPrimary ? capSecondary : capPrimary,
+        distractors: pickDistractors(optionCount - 1, new Set(exclude)),
+      },
+    ];
+    const tpl = templates[idx % templates.length]!;
+    const rawOptions = [
+      { text: tpl.correctText, correct: true },
+      ...tpl.distractors.map((text) => ({ text, correct: false })),
+    ];
+    // Rotate correct position slightly so the first option isn't always the answer
+    const shift = idx % rawOptions.length;
+    const rotated = [
+      ...rawOptions.slice(shift),
+      ...rawOptions.slice(0, shift),
+    ];
+
+    return {
+      position: pos,
+      type: "choice_word" as const,
+      prompt: tpl.prompt,
+      payload: {
+        options: rotated.map((opt, oIdx) => ({
+          id: `q${pos}-opt-${oIdx + 1}`,
+          text: opt.text,
+          correct: opt.correct,
+        })),
+        answer: tpl.correctText,
+        showTextHint: true,
+      },
+    };
+  });
+}
+
 export function LessonWizard({
   onSuccess,
   embedded = false,
@@ -114,35 +332,14 @@ export function LessonWizard({
     setIsSubmitting(true);
     setErrorMessage(null);
 
-    const starterQuestions = Array.from({ length: questionCount }, (_, idx) => {
-      const pos = idx + 1;
-      const isOrderQ = exerciseType === "order" || (exerciseType === "both" && pos % 2 === 0);
-      if (isOrderQ) {
-        return {
-          position: pos,
-          type: "arrange_steps" as const,
-          prompt: `Urutkan langkah ${cleanTitle} (Soal ${pos})`,
-          payload: {
-            steps: ["Langkah 1", "Langkah 2", "Langkah 3"],
-          },
-        };
-      }
-      const opts = Array.from({ length: optionCount }, (__, oIdx) => ({
-        id: `q${pos}-opt-${oIdx + 1}`,
-        text: oIdx === 0 ? "Jawaban Benar" : `Pilihan ${oIdx + 1}`,
-        correct: oIdx === 0,
-      }));
-      return {
-        position: pos,
-        type: "choice_word" as const,
-        prompt: `Latihan ${pos}: ${cleanTitle}`,
-        payload: {
-          options: opts,
-          answer: "Jawaban Benar",
-          showTextHint: true,
-        },
-      };
-    });
+    const starterCards = buildStarterCards(cleanTitle, topic);
+    const starterQuestions = buildStarterQuestions(
+      cleanTitle,
+      topic,
+      questionCount,
+      exerciseType,
+      optionCount
+    );
 
     const result = await createLessonAction({
       title: cleanTitle,
@@ -152,17 +349,7 @@ export function LessonWizard({
       generatedBy: "manual",
       exerciseType,
       optionCount,
-      cards: [
-        {
-          position: 1,
-          text: topic.trim() || cleanTitle,
-          keyTerms: [cleanTitle.split(/\s+/)[0]?.toLowerCase() || "belajar"],
-          cardType: "instruction",
-          imageSource: "pictogram",
-          imageAlt: cleanTitle,
-          audioSource: "tts",
-        },
-      ],
+      cards: starterCards,
       questions: starterQuestions,
     });
 

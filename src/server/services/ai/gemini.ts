@@ -3,11 +3,53 @@ import { GoogleGenAI } from "@google/genai";
 import { env } from "../../config/env";
 import {
   generatedLessonSchema,
+  type GeneratedLesson,
   type GenerateLessonOptions,
   type GenerateLessonResult,
 } from "./types";
 import { buildSystemPrompt, buildUserPrompt } from "./prompts";
 import { getFallbackLesson } from "./fallback";
+
+function sanitizeGeneratedLesson(lesson: GeneratedLesson): GeneratedLesson {
+  const maxCard = Math.max(1, lesson.cards.length);
+  const sanitizedQuestions = lesson.questions
+    .filter((q) => q.prompt.trim().length > 0)
+    .map((q) => {
+      const linked_card = Math.min(maxCard, Math.max(1, q.linked_card));
+
+      if (q.options && q.options.length > 0) {
+        const cleanOpts = q.options.filter((o) => o.text.trim().length > 0);
+        if (cleanOpts.length > 0) {
+          let foundCorrect = false;
+          const normalizedOpts = cleanOpts.map((o, idx) => {
+            if (o.correct && !foundCorrect) {
+              foundCorrect = true;
+              return { ...o, id: o.id || `opt-${idx + 1}`, correct: true };
+            }
+            return { ...o, id: o.id || `opt-${idx + 1}`, correct: false };
+          });
+          if (!foundCorrect && normalizedOpts[0]) {
+            normalizedOpts[0] = { ...normalizedOpts[0], correct: true };
+          }
+          return { ...q, linked_card, options: normalizedOpts };
+        }
+      }
+
+      if (q.steps && q.steps.length > 0) {
+        const cleanSteps = q.steps
+          .filter((s) => s.text.trim().length > 0)
+          .map((s, idx) => ({ ...s, id: s.id || `step-${idx + 1}` }));
+        return { ...q, linked_card, steps: cleanSteps };
+      }
+
+      return { ...q, linked_card };
+    });
+
+  return {
+    ...lesson,
+    questions: sanitizedQuestions,
+  };
+}
 
 export async function generateWithGemini(
   options: GenerateLessonOptions,
@@ -77,8 +119,10 @@ export async function generateWithGemini(
       const cleaned = text.replace(/^```json\s*/i, "").replace(/```$/, "").trim();
       const parsedJson = JSON.parse(cleaned);
 
-      // Validasi skema Zod
-      const validated = generatedLessonSchema.parse(parsedJson);
+      // Validasi skema Zod & sanitasi soal
+      const validated = sanitizeGeneratedLesson(
+        generatedLessonSchema.parse(parsedJson)
+      );
 
       return {
         lesson: validated,

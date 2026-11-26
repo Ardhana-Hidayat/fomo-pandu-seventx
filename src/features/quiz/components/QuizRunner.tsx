@@ -46,6 +46,10 @@ export function QuizRunner({
   const [isFinished, setIsFinished] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [showPromptSign, setShowPromptSign] = useState(false);
+  const [orderIdsByQuestion, setOrderIdsByQuestion] = useState<
+    Record<number, string[]>
+  >({});
+  const [selectedStepId, setSelectedStepId] = useState<string | null>(null);
 
   const currentQ = questions[currentIndex];
   const totalQuestions = questions.length;
@@ -227,6 +231,7 @@ export function QuizRunner({
 
   function handleNextQuestion() {
     setSelectedOptionId(null);
+    setSelectedStepId(null);
     setFeedback(null);
     setShowHint(false);
     setShowPromptSign(false);
@@ -241,6 +246,8 @@ export function QuizRunner({
   function handleRestart() {
     setCurrentIndex(0);
     setSelectedOptionId(null);
+    setSelectedStepId(null);
+    setOrderIdsByQuestion({});
     setFeedback(null);
     setAttemptsCount({});
     setFirstTryCorrectCount(0);
@@ -540,35 +547,150 @@ export function QuizRunner({
           )}
 
           {/* Opsi Urutan (Steps Ordering) */}
-          {isOrder && steps.length > 0 && (
-            <div className="flex flex-col gap-2">
-              <p className="text-center text-xs sm:text-sm font-semibold text-[var(--ink-2)]">
-                Urutan langkah yang tepat:
-              </p>
-              {steps.map((st, sIdx) => (
-                <div
-                  key={st.id ?? sIdx}
-                  className="flex min-h-[44px] items-center gap-3 rounded-[var(--r-tombol)] border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-sm font-bold text-[var(--ink)]"
-                >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--on-primary)]">
-                    {sIdx + 1}
-                  </span>
-                  <span>{st.text}</span>
-                </div>
-              ))}
-              {feedback !== "benar" && (
-                <Button
-                  type="button"
-                  variant="primary"
-                  size="large"
-                  onClick={() => setFeedback("benar")}
-                  className="mt-1 w-full"
-                >
-                  Periksa Urutan
-                </Button>
-              )}
-            </div>
-          )}
+          {isOrder && steps.length > 0 && (() => {
+            const stepMap = new Map(steps.map((s) => [s.id, s]));
+            const defaultIds =
+              steps.length >= 2
+                ? [...steps.slice(1), steps[0]!].map((s) => s.id)
+                : steps.map((s) => s.id);
+            const savedIds = orderIdsByQuestion[currentIndex];
+            const currentIds =
+              savedIds &&
+              savedIds.length === steps.length &&
+              savedIds.every((id) => stepMap.has(id))
+                ? savedIds
+                : defaultIds;
+            const orderedSteps = currentIds.map((id) => stepMap.get(id)!);
+
+            function swapSteps(idxA: number, idxB: number) {
+              if (feedback === "benar") return;
+              const next = [...currentIds];
+              const tmp = next[idxA]!;
+              next[idxA] = next[idxB]!;
+              next[idxB] = tmp;
+              setOrderIdsByQuestion((prev) => ({
+                ...prev,
+                [currentIndex]: next,
+              }));
+              setSelectedStepId(null);
+              if (feedback === "ulang") {
+                setFeedback(null);
+              }
+            }
+
+            function handleCheckOrder() {
+              if (feedback === "benar") return;
+              const isCorrectOrder = orderedSteps.every(
+                (st, idx) => st.id === steps[idx]?.id
+              );
+              const prevAttempts = attemptsCount[currentIndex] ?? 0;
+              const attemptNo = prevAttempts + 1;
+              setAttemptsCount((prev) => ({
+                ...prev,
+                [currentIndex]: attemptNo,
+              }));
+
+              if (lessonId && currentQ.id) {
+                submitQuizAnswerAction({
+                  lessonId,
+                  questionId: currentQ.id,
+                  isCorrect: isCorrectOrder,
+                  attemptNo,
+                  hintUsed: showHint,
+                  chosen: { orderedStepIds: currentIds },
+                }).catch(() => {});
+              }
+
+              if (isCorrectOrder) {
+                setFeedback("benar");
+                if (prevAttempts === 0) {
+                  setFirstTryCorrectCount((prev) => prev + 1);
+                }
+              } else {
+                setFeedback("ulang");
+              }
+            }
+
+            return (
+              <div className="flex flex-col gap-2">
+                <p className="text-center text-xs sm:text-sm font-semibold text-[var(--ink-2)]">
+                  Klik dua langkah untuk menukar atau gunakan tombol panah untuk menyusun urutan:
+                </p>
+                {orderedSteps.map((st, sIdx) => {
+                  const isPicked = selectedStepId === st.id;
+                  return (
+                    <div
+                      key={st.id ?? sIdx}
+                      className={`flex min-h-[48px] items-center gap-2 rounded-[var(--r-tombol)] border-2 px-3 py-2 text-sm font-bold transition-colors ${
+                        feedback === "benar"
+                          ? "border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)]"
+                          : isPicked
+                            ? "border-[var(--primary)] bg-[var(--accent-subtle)] text-[var(--ink)]"
+                            : "border-[var(--border-strong)] bg-[var(--surface)] text-[var(--ink)]"
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        disabled={feedback === "benar"}
+                        onClick={() => {
+                          if (!selectedStepId) {
+                            setSelectedStepId(st.id);
+                          } else if (selectedStepId === st.id) {
+                            setSelectedStepId(null);
+                          } else {
+                            const fromIdx = currentIds.indexOf(selectedStepId);
+                            if (fromIdx >= 0) {
+                              swapSteps(fromIdx, sIdx);
+                            }
+                          }
+                        }}
+                        className="flex flex-1 items-center gap-3 text-left cursor-pointer disabled:cursor-default"
+                      >
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-bold text-[var(--on-primary)]">
+                          {sIdx + 1}
+                        </span>
+                        <span>{st.text}</span>
+                      </button>
+
+                      {feedback !== "benar" && (
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            type="button"
+                            disabled={sIdx === 0}
+                            aria-label={`Naikkan langkah ${sIdx + 1}`}
+                            onClick={() => swapSteps(sIdx, sIdx - 1)}
+                            className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-2)] text-xs font-bold text-[var(--ink)] hover:bg-[var(--surface)] disabled:opacity-35 cursor-pointer"
+                          >
+                            ↑
+                          </button>
+                          <button
+                            type="button"
+                            disabled={sIdx === orderedSteps.length - 1}
+                            aria-label={`Turunkan langkah ${sIdx + 1}`}
+                            onClick={() => swapSteps(sIdx, sIdx + 1)}
+                            className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-2)] text-xs font-bold text-[var(--ink)] hover:bg-[var(--surface)] disabled:opacity-35 cursor-pointer"
+                          >
+                            ↓
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+                {feedback !== "benar" && (
+                  <Button
+                    type="button"
+                    variant="primary"
+                    size="large"
+                    onClick={handleCheckOrder}
+                    className="mt-1 w-full"
+                  >
+                    Periksa Urutan
+                  </Button>
+                )}
+              </div>
+            );
+          })()}
 
           {/* Umpan Balik Singkat */}
           <div aria-live="polite" className="flex min-h-[44px] items-center justify-center">

@@ -481,3 +481,7 @@ body {
     animation: none !important;
   }
 }
+
+[data-splash-seen="1"] [data-panduin-splash] {
+  display: none !important;
+}

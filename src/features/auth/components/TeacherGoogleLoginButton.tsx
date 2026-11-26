@@ -67,7 +67,7 @@ export function TeacherGoogleLoginButton({
       >
         <Button
           type="submit"
-          variant="primary"
+          variant="secondary"
           size="large"
           loading={loading}
           icon={<GoogleIcon />}

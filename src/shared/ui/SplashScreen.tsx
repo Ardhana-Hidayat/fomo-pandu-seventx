@@ -17,7 +17,7 @@ export interface SplashScreenProps {
  */
 export function SplashScreen({ durationMs = 1700 }: SplashScreenProps) {
   const { preferences } = usePreferences();
-  const [phase, setPhase] = useState<'checking' | 'visible' | 'hiding' | 'done'>('checking');
+  const [phase, setPhase] = useState<'visible' | 'hiding' | 'done'>('visible');
 
   useEffect(() => {
     let seen = false;
@@ -28,15 +28,16 @@ export function SplashScreen({ durationMs = 1700 }: SplashScreenProps) {
     }
 
     if (seen) {
+      document.documentElement.setAttribute('data-splash-seen', '1');
       const skipTimer = window.setTimeout(() => setPhase('done'), 0);
       return () => window.clearTimeout(skipTimer);
     }
 
-    const showTimer = window.setTimeout(() => setPhase('visible'), 0);
     const hideTimer = window.setTimeout(() => setPhase('hiding'), durationMs);
     const doneTimer = window.setTimeout(() => {
       try {
         window.sessionStorage.setItem(SPLASH_STORAGE_KEY, '1');
+        document.documentElement.setAttribute('data-splash-seen', '1');
       } catch {
         // Abaikan jika sessionStorage tidak tersedia
       }
@@ -44,7 +45,6 @@ export function SplashScreen({ durationMs = 1700 }: SplashScreenProps) {
     }, durationMs + 320);
 
     return () => {
-      window.clearTimeout(showTimer);
       window.clearTimeout(hideTimer);
       window.clearTimeout(doneTimer);
     };
@@ -53,13 +53,14 @@ export function SplashScreen({ durationMs = 1700 }: SplashScreenProps) {
   function handleSkip() {
     try {
       window.sessionStorage.setItem(SPLASH_STORAGE_KEY, '1');
+      document.documentElement.setAttribute('data-splash-seen', '1');
     } catch {
       // Abaikan
     }
     setPhase('done');
   }
 
-  if (phase === 'checking' || phase === 'done') {
+  if (phase === 'done') {
     return null;
   }
 
@@ -67,6 +68,7 @@ export function SplashScreen({ durationMs = 1700 }: SplashScreenProps) {
 
   return (
     <div
+      data-panduin-splash="true"
       role="status"
       aria-live="polite"
       aria-label="Memuat PanduIn"

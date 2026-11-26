@@ -85,6 +85,9 @@ export default function RootLayout({
               if (p.tombol) d.setAttribute('data-tombol', p.tombol);
               if (p.gerak === 'kurang') d.setAttribute('data-gerak', 'kurang');
             }
+            if (sessionStorage.getItem('panduin_splash_seen') === '1') {
+              document.documentElement.setAttribute('data-splash-seen', '1');
+            }
           } catch (e) {}`}
         </script>
       </head>

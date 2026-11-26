@@ -32,14 +32,25 @@ export function ShareLessonOverlay({
 }: ShareLessonOverlayProps) {
   const router = useRouter();
   const [copied, setCopied] = useState<"url" | "code" | null>(null);
-  const [localShare, setLocalShare] = useState<LessonShareInfo | null>(null);
+  const [localShareState, setLocalShareState] = useState<{
+    lessonId: string;
+    share: LessonShareInfo;
+  } | null>(null);
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishError, setPublishError] = useState<string | null>(null);
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const autoPublishAttemptedRef = useRef(false);
+  const inFlightPublishRef = useRef(false);
+  const onPublishedRef = useRef(onPublished);
 
+  useEffect(() => {
+    onPublishedRef.current = onPublished;
+  }, [onPublished]);
+
+  const localShare =
+    localShareState?.lessonId === lessonId ? localShareState.share : null;
   const activeShare = localShare ?? shares[0] ?? null;
 
   const origin =
@@ -50,19 +61,32 @@ export function ShareLessonOverlay({
     ? `${origin.replace(/\/+$/, "")}/m/${activeShare.shareCode}`
     : "";
 
+  const handleClose = useCallback(() => {
+    setPublishError(null);
+    onClose();
+  }, [onClose]);
+
   const handlePublishNow = useCallback(async () => {
+    if (inFlightPublishRef.current) return;
+    inFlightPublishRef.current = true;
     setIsPublishing(true);
     setPublishError(null);
-    const res = await approveAndPublishAction(lessonId);
-    setIsPublishing(false);
-    if (res.ok) {
-      setLocalShare(res.data);
-      onPublished?.(res.data);
-      router.refresh();
-    } else {
-      setPublishError(res.error.message);
+    try {
+      const res = await approveAndPublishAction(lessonId);
+      if (res.ok) {
+        setLocalShareState({ lessonId, share: res.data });
+        onPublishedRef.current?.(res.data);
+        router.refresh();
+      } else {
+        setPublishError(res.error.message);
+      }
+    } catch {
+      setPublishError("Gagal menerbitkan materi. Silakan coba lagi.");
+    } finally {
+      inFlightPublishRef.current = false;
+      setIsPublishing(false);
     }
-  }, [lessonId, onPublished, router]);
+  }, [lessonId, router]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -78,7 +102,7 @@ export function ShareLessonOverlay({
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        onClose();
+        handleClose();
       }
     };
 
@@ -87,7 +111,7 @@ export function ShareLessonOverlay({
       window.removeEventListener("keydown", handleKeyDown);
       previousFocusRef.current?.focus();
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, handleClose]);
 
   useEffect(() => {
     if (!isOpen || activeShare || isPublishing || autoPublishAttemptedRef.current) {
@@ -114,7 +138,7 @@ export function ShareLessonOverlay({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-[2px]"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
-          onClose();
+          handleClose();
         }
       }}
       role="presentation"
@@ -141,7 +165,7 @@ export function ShareLessonOverlay({
 
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             aria-label="Tutup jendela bagikan materi"
             className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--ink)] cursor-pointer hover:bg-[var(--surface-2)]"
           >

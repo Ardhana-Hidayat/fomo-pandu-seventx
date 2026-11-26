@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { generateLessonContent } from "@/server/services/ai";
-import { getTeacherBySessionToken } from "@/server/services/auth/demo";
-import { TEACHER_COOKIE_NAME } from "@/server/security/session";
+import { getCurrentTeacher } from "@/features/auth";
 import { createLesson, type CreateCardInput, type CreateQuestionInput } from "@/server/repos/lessons";
 
 export async function POST(request: Request) {
@@ -69,6 +67,15 @@ export async function POST(request: Request) {
       );
     }
 
+    // Periksa sesi guru terautentikasi sekaligus pulihkan baris guru di DB bila perlu
+    const teacherSession = await getCurrentTeacher();
+    if (sourceType === "pdf" && !teacherSession) {
+      return NextResponse.json(
+        { error: "Sesi guru tidak valid. Silakan masuk kembali." },
+        { status: 401 }
+      );
+    }
+
     // Panggil layanan AI dengan fallback otomatis
     const aiResult = await generateLessonContent({
       sourceType,
@@ -84,66 +91,67 @@ export async function POST(request: Request) {
       teacherNotes,
     });
 
-    // Periksa apakah guru sedang login
-    const cookieStore = await cookies();
-    const teacherToken = cookieStore.get(TEACHER_COOKIE_NAME)?.value;
     let createdLessonId: string | undefined;
 
-    if (teacherToken) {
-      const teacher = await getTeacherBySessionToken(teacherToken);
-      if (teacher) {
-        // Otomatis simpan sebagai DRAFT di database
-        const cardsToInsert: CreateCardInput[] = aiResult.lesson.cards.map((c, i) => ({
-          position: i + 1,
-          text: c.text,
-          keyTerms: c.key_terms,
-          cardType: "instruction",
-          imageSource: "pictogram",
-          imageAlt: c.image.alt,
-          audioSource: "none",
-        }));
+    if (teacherSession?.teacher) {
+      const teacher = teacherSession.teacher;
+      // Otomatis simpan sebagai DRAFT di database
+      const cardsToInsert: CreateCardInput[] = aiResult.lesson.cards.map((c, i) => ({
+        position: i + 1,
+        text: c.text,
+        keyTerms: c.key_terms,
+        cardType: "instruction",
+        imageSource: "pictogram",
+        imageAlt: c.image.alt,
+        audioSource: "none",
+      }));
 
-        const questionsToInsert: CreateQuestionInput[] =
-          questionCount === 0
-            ? []
-            : aiResult.lesson.questions.slice(0, questionCount).map((q, i) => ({
-                position: i + 1,
-                type: q.type,
-                prompt: q.prompt,
-                payload: {
-                  options: q.options?.slice(0, optionCount).map((opt, optIdx) => ({
-                    id: opt.id || String.fromCharCode(97 + optIdx),
-                    text: opt.text,
-                    correct: opt.correct,
-                    image: opt.image,
-                  })),
-                  steps: q.steps?.map((step, stepIdx) => ({
-                    id: step.id || `step-${stepIdx + 1}`,
-                    text: step.text,
-                    image: step.image,
-                  })),
-                  answer: q.answer,
-                },
-                linkedCardId: undefined,
-              }));
+      const questionsToInsert: CreateQuestionInput[] =
+        questionCount === 0
+          ? []
+          : aiResult.lesson.questions.slice(0, questionCount).map((q, i) => ({
+              position: i + 1,
+              type: q.type,
+              prompt: q.prompt,
+              payload: {
+                options: q.options?.slice(0, optionCount).map((opt, optIdx) => ({
+                  id: opt.id || String.fromCharCode(97 + optIdx),
+                  text: opt.text,
+                  correct: opt.correct,
+                  image: opt.image,
+                })),
+                steps: q.steps?.map((step, stepIdx) => ({
+                  id: step.id || `step-${stepIdx + 1}`,
+                  text: step.text,
+                  image: step.image,
+                })),
+                answer: q.answer,
+              },
+              linkedCardId: undefined,
+            }));
 
-        const dbRes = await createLesson(teacher.id, {
-          title: aiResult.lesson.title || topic || "Materi Baru",
-          topic: topic || aiResult.lesson.title || "",
-          level,
-          sourceType,
-          status: "draft",
-          exerciseType,
-          optionCount,
-          generatedBy: aiResult.generatedBy,
-          cards: cardsToInsert,
-          questions: questionsToInsert,
-        });
+      const dbRes = await createLesson(teacher.id, {
+        title: aiResult.lesson.title || topic || "Materi Baru",
+        topic: topic || aiResult.lesson.title || "",
+        level,
+        sourceType,
+        status: "draft",
+        exerciseType,
+        optionCount,
+        generatedBy: aiResult.generatedBy,
+        cards: cardsToInsert,
+        questions: questionsToInsert,
+      });
 
-        if (dbRes.ok) {
-          createdLessonId = dbRes.data.id;
-        }
+      if (!dbRes.ok) {
+        console.error("Gagal menyimpan materi ke DB pada /api/ai/generate-lesson:", dbRes.error);
+        return NextResponse.json(
+          { error: dbRes.error.message || "Gagal menyimpan materi pembelajaran." },
+          { status: 500 }
+        );
       }
+
+      createdLessonId = dbRes.data.id;
     }
 
     return NextResponse.json({

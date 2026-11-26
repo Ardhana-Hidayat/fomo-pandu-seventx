@@ -71,6 +71,7 @@ import {
 import { teachers } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { seedDatabase } from "@/server/db/seed";
+import { parseEnv } from "@/server/config/env";
 
 describe("Database Repositories & Data Layer (S0-03, S0-04, S0-07)", () => {
   beforeAll(async () => {
@@ -838,6 +839,137 @@ describe("Database Repositories & Data Layer (S0-03, S0-04, S0-07)", () => {
         text: "Disusupi",
       });
       expect(forbiddenCard.ok).toBe(false);
+    });
+
+    it("guru Google baru membuat draf, menerbitkan (Bagikan), dan membaca ulang setelah refresh", async () => {
+      const email = "guru.google.publish@sekolah.id";
+      const [teacher] = await db
+        .insert(teachers)
+        .values({
+          email,
+          displayName: "Guru Google Publish",
+          authProvider: "google",
+        })
+        .onConflictDoUpdate({
+          target: teachers.email,
+          set: { displayName: "Guru Google Publish", authProvider: "google" },
+        })
+        .returning();
+
+      expect(teacher).toBeDefined();
+
+      // 1. Buat materi draf baru (sebelum guru memiliki wadah/kelas apapun)
+      const created = await createLesson(teacher!.id, {
+        title: "Mengenal Hewan Jinak",
+        topic: "Hewan di sekitar rumah",
+        level: "sdlb",
+        sourceType: "pdf",
+        status: "draft",
+        generatedBy: "ai",
+        cards: [
+          { position: 1, text: "Kucing suka makan ikan.", keyTerms: ["kucing", "ikan"] },
+          { position: 2, text: "Kelinci suka makan wortel.", keyTerms: ["kelinci", "wortel"] },
+        ],
+        questions: [
+          {
+            position: 1,
+            type: "choice_word",
+            prompt: "Hewan apa yang suka wortel?",
+            payload: {
+              options: [
+                { id: "opt-1", text: "Kelinci", correct: true },
+                { id: "opt-2", text: "Batu", correct: false },
+              ],
+            },
+          },
+        ],
+      });
+      expect(created.ok).toBe(true);
+      if (!created.ok) return;
+
+      // 2. Pastikan draf dapat langsung dibaca ulang sebelum terbit
+      const draftFetch = await getLessonWithContent(teacher!.id, created.data.id);
+      expect(draftFetch.ok).toBe(true);
+      if (!draftFetch.ok) return;
+      expect(draftFetch.data.status).toBe("draft");
+      expect(draftFetch.data.cards).toHaveLength(2);
+      expect(draftFetch.data.questions).toHaveLength(1);
+
+      // 3. Simulasi klik Bagikan pertama kali: buat wadah default jika belum ada + publishLesson
+      const classesBefore = await listClassroomsByTeacher(teacher!.id);
+      expect(classesBefore.ok).toBe(true);
+      let targetClassroomId = classesBefore.ok ? classesBefore.data[0]?.id : undefined;
+      if (!targetClassroomId) {
+        const defaultContainer = await createClassroom(teacher!.id, {
+          name: "Pustaka PanduIn",
+          level: "sdlb",
+        });
+        expect(defaultContainer.ok).toBe(true);
+        if (!defaultContainer.ok) return;
+        targetClassroomId = defaultContainer.data.id;
+      }
+
+      const pubRes = await publishLesson(teacher!.id, created.data.id, [targetClassroomId]);
+      expect(pubRes.ok).toBe(true);
+      if (!pubRes.ok) return;
+      const shareCode = pubRes.data[0]?.shareCode;
+      expect(shareCode).toBeTruthy();
+
+      // 4. Simulasi refresh halaman: re-fetch materi & publikasi harus tetap ada
+      const afterRefresh = await getLessonWithContent(teacher!.id, created.data.id);
+      expect(afterRefresh.ok).toBe(true);
+      if (afterRefresh.ok) {
+        expect(afterRefresh.data.status).toBe("published");
+        expect(afterRefresh.data.publications?.some((p) => p.shareCode === shareCode)).toBe(true);
+      }
+
+      const listAfterRefresh = await listLessonsByTeacher(teacher!.id);
+      expect(listAfterRefresh.ok).toBe(true);
+      if (listAfterRefresh.ok) {
+        expect(listAfterRefresh.data.some((l) => l.id === created.data.id)).toBe(true);
+      }
+
+      if (shareCode) {
+        const resolvedByCode = await getPublicationByShareCode(shareCode);
+        expect(resolvedByCode.ok).toBe(true);
+        if (resolvedByCode.ok) {
+          expect(resolvedByCode.data.lesson.id).toBe(created.data.id);
+        }
+      }
+
+      // 5. Guru lain tidak boleh menerbitkan atau mengambil materi milik guru ini
+      const otherTeacherId = "00000000-0000-0000-0000-000000000088";
+      const forbiddenPublish = await publishLesson(otherTeacherId, created.data.id, [
+        targetClassroomId,
+      ]);
+      expect(forbiddenPublish.ok).toBe(false);
+      if (!forbiddenPublish.ok) {
+        expect(forbiddenPublish.error.code).toBe("NOT_FOUND");
+      }
+    });
+  });
+
+  describe("Environment Config (DATA_DRIVER auto-detection)", () => {
+    it("otomatis memilih postgres saat DATA_DRIVER kosong dan DATABASE_URL tersedia", () => {
+      const withDbUrl = parseEnv({
+        DATABASE_URL: "https://user:pass@ep-example.aws.neon.tech/neondb",
+      });
+      expect(withDbUrl.DATA_DRIVER).toBe("postgres");
+
+      const withEmptyDriver = parseEnv({
+        DATA_DRIVER: "",
+        DATABASE_URL: "https://user:pass@ep-example.aws.neon.tech/neondb",
+      });
+      expect(withEmptyDriver.DATA_DRIVER).toBe("postgres");
+
+      const explicitLocal = parseEnv({
+        DATA_DRIVER: "local",
+        DATABASE_URL: "https://user:pass@ep-example.aws.neon.tech/neondb",
+      });
+      expect(explicitLocal.DATA_DRIVER).toBe("local");
+
+      const withoutDbUrl = parseEnv({});
+      expect(withoutDbUrl.DATA_DRIVER).toBe("local");
     });
   });
 });

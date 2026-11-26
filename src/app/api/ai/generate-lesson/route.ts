@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { generateLessonContent } from "@/server/services/ai";
+import { generateLessonContent, sanitizeGeneratedLesson } from "@/server/services/ai";
 import { getCurrentTeacher } from "@/features/auth";
 import { createLesson, type CreateCardInput, type CreateQuestionInput } from "@/server/repos/lessons";
+import { findOrFetchPictogram } from "@/server/services/media/arasaac";
 
 export async function POST(request: Request) {
   try {
@@ -55,8 +56,21 @@ export async function POST(request: Request) {
       level = body.level || "sdlb";
       needs = body.needs || ["campuran"];
       languageComplexity = body.languageComplexity || "sederhana";
-      cardCount = body.cardCount ? Number(body.cardCount) : 6;
-      questionCount = body.questionCount ? Number(body.questionCount) : 4;
+      cardCount = body.cardCount ? Math.min(15, Math.max(3, Number(body.cardCount) || 6)) : 6;
+      questionCount =
+        body.questionCount !== undefined && body.questionCount !== ""
+          ? Math.min(10, Math.max(0, Number(body.questionCount)))
+          : 4;
+      if (
+        body.exerciseType === "match" ||
+        body.exerciseType === "order" ||
+        body.exerciseType === "both"
+      ) {
+        exerciseType = body.exerciseType;
+      }
+      if (body.optionCount) {
+        optionCount = Math.min(4, Math.max(2, Number(body.optionCount) || 3));
+      }
       teacherNotes = body.teacherNotes || "";
     }
 
@@ -76,6 +90,13 @@ export async function POST(request: Request) {
       );
     }
 
+    const questionTypes =
+      exerciseType === "order"
+        ? ["urutkan"]
+        : exerciseType === "match"
+          ? ["pilih_kata", "benar_salah"]
+          : ["pilih_kata", "urutkan", "benar_salah"];
+
     // Panggil layanan AI dengan fallback otomatis
     const aiResult = await generateLessonContent({
       sourceType,
@@ -87,29 +108,56 @@ export async function POST(request: Request) {
       needs,
       languageComplexity,
       cardCount,
+      questionTypes,
       questionCount,
       teacherNotes,
+    });
+
+    const finalLesson = sanitizeGeneratedLesson(aiResult.lesson, {
+      optionCount,
+      questionCount,
+      exerciseType,
     });
 
     let createdLessonId: string | undefined;
 
     if (teacherSession?.teacher) {
       const teacher = teacherSession.teacher;
+
+      // Resolusi piktogram visual secara paralel agar kartu langsung memiliki gambar di DB
+      const pictogramResults = await Promise.allSettled(
+        finalLesson.cards.map((c) =>
+          findOrFetchPictogram(
+            c.image.keyword_id || c.key_terms[0] || topic || "belajar",
+            c.image.keyword_en || undefined
+          )
+        )
+      );
+
       // Otomatis simpan sebagai DRAFT di database
-      const cardsToInsert: CreateCardInput[] = aiResult.lesson.cards.map((c, i) => ({
-        position: i + 1,
-        text: c.text,
-        keyTerms: c.key_terms,
-        cardType: "instruction",
-        imageSource: "pictogram",
-        imageAlt: c.image.alt,
-        audioSource: "none",
-      }));
+      const cardsToInsert: CreateCardInput[] = finalLesson.cards.map((c, i) => {
+        const picRes = pictogramResults[i];
+        const imageAssetId =
+          picRes?.status === "fulfilled" && picRes.value.ok
+            ? picRes.value.data.id
+            : undefined;
+
+        return {
+          position: i + 1,
+          text: c.text,
+          keyTerms: c.key_terms,
+          cardType: "instruction",
+          imageSource: "pictogram",
+          imageAlt: c.image.alt,
+          imageAssetId,
+          audioSource: "none",
+        };
+      });
 
       const questionsToInsert: CreateQuestionInput[] =
         questionCount === 0
           ? []
-          : aiResult.lesson.questions.slice(0, questionCount).map((q, i) => ({
+          : finalLesson.questions.slice(0, questionCount).map((q, i) => ({
               position: i + 1,
               type: q.type,
               prompt: q.prompt,
@@ -131,8 +179,8 @@ export async function POST(request: Request) {
             }));
 
       const dbRes = await createLesson(teacher.id, {
-        title: aiResult.lesson.title || topic || "Materi Baru",
-        topic: topic || aiResult.lesson.title || "",
+        title: finalLesson.title || topic || "Materi Baru",
+        topic: topic || finalLesson.title || "",
         level,
         sourceType,
         status: "draft",
@@ -157,7 +205,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       data: {
-        lesson: aiResult.lesson,
+        lesson: finalLesson,
         badge: aiResult.badge,
         generatedBy: aiResult.generatedBy,
         isScannedNotice: aiResult.isScannedNotice,

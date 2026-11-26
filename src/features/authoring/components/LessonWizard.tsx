@@ -134,8 +134,10 @@ function extractSubjectAndKeywords(cleanTitle: string, rawTopic: string) {
   const meaningfulWords = words.filter(
     (w) => w.length >= 2 && !STOP_WORDS.has(w.toLowerCase())
   );
+  const topicText = rawTopic.trim();
   const subject =
-    meaningfulWords.length > 0 ? meaningfulWords.join(" ") : cleanTitle;
+    topicText ||
+    (meaningfulWords.length > 0 ? meaningfulWords.join(" ") : cleanTitle);
   const primaryKey = keywords[0] || cleanTitle.split(/\s+/)[0]?.toLowerCase() || "belajar";
   const secondaryKey = keywords[1] || primaryKey;
 

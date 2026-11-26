@@ -1,7 +1,7 @@
 import "server-only";
 import fs from "node:fs";
 import path from "node:path";
-import { eq, and, or, sql } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 import { db } from "./client";
 import {
   teachers,
@@ -66,12 +66,7 @@ async function seedDatabaseInternal(): Promise<{
   let teacher = await db
     .select()
     .from(teachers)
-    .where(
-      or(
-        eq(teachers.email, "guru.demo@pandu.id"),
-        eq(teachers.email, "guru@inkludidik.id")
-      )
-    )
+    .where(eq(teachers.email, "guru.demo@pandu.id"))
     .limit(1)
     .then((rows) => rows[0]);
 
@@ -340,8 +335,8 @@ async function seedDatabaseInternal(): Promise<{
                 bytes: audioBuffer.length,
                 keyword: c.text.slice(0, 50),
                 source: "system-tts",
-                license: "PANDU Synthesized",
-                attribution: "PANDU Acoustic Engine",
+                license: "PanduIn Synthesized",
+                attribution: "PanduIn Acoustic Engine",
                 verified: true,
               })
               .returning();

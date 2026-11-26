@@ -1,6 +1,6 @@
-﻿# Panduan Implementasi Teknis PANDU (Next.js + Supabase)
+# Panduan Implementasi Teknis PanduIn (Next.js + Supabase)
 
-Dokumen ini merupakan cetak biru (*blueprint*) implementasi bertahap untuk aplikasi web responsif **PANDU** berbasis **Next.js (App Router)**, **Supabase**, dan **Gemini API** untuk memenuhi target MVP lomba **SEVENT X (Kategori Website)** hingga tahap *deployment* daring.
+Dokumen ini merupakan cetak biru (*blueprint*) implementasi bertahap untuk aplikasi web responsif **PanduIn** berbasis **Next.js (App Router)**, **Supabase**, dan **Gemini API** untuk memenuhi target MVP lomba **SEVENT X (Kategori Website)** hingga tahap *deployment* daring.
 
 ---
 
@@ -10,8 +10,8 @@ Dokumen ini merupakan cetak biru (*blueprint*) implementasi bertahap untuk aplik
 Gunakan **Next.js (App Router + TypeScript + Tailwind CSS)** agar satu *codebase* langsung responsif di laptop/Smart TV sekolah maupun *smartphone* Android siswa di rumah.
 
 ```bash
-npx create-next-app@latest PANDU --typescript --tailwind --eslint --app --src-dir
-cd PANDU
+npx create-next-app@latest PanduIn --typescript --tailwind --eslint --app --src-dir
+cd PanduIn
 
 # Dependensi inti: Supabase, Gemini AI, Ikon, Validasi, dan Drag-and-Drop Latihan
 npm install @supabase/supabase-js @supabase/ssr @google/genai lucide-react zod @dnd-kit/core @dnd-kit/sortable

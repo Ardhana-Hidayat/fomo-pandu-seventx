@@ -135,7 +135,7 @@ export const assets = pgTable("assets", {
   alt: text("alt"),
   source: text("source").notNull().default("system"),
   license: text("license").notNull().default("CC-BY-SA"),
-  attribution: text("attribution").notNull().default("ARASAAC / PANDU"),
+  attribution: text("attribution").notNull().default("ARASAAC / PanduIn"),
   verified: boolean("verified").notNull().default(false),
   ownerTeacherId: uuid("owner_teacher_id").references(() => teachers.id, {
     onDelete: "set null",

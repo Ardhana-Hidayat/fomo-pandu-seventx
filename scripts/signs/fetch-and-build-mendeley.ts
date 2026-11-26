@@ -168,7 +168,7 @@ async function main() {
   const manifest = {
     version: 2,
     generated_by: "scripts/signs/fetch-and-build-mendeley.ts",
-    note: "Manifest pustaka isyarat PANDU v2 100% bersumber dari dataset foto penelitian Universitas Negeri Malang (CC BY 4.0)",
+    note: "Manifest pustaka isyarat PanduIn v2 100% bersumber dari dataset foto penelitian Universitas Negeri Malang (CC BY 4.0)",
     items: [...sibiItems, ...bisindoItems],
   };
 

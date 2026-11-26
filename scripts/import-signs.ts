@@ -1,4 +1,4 @@
-﻿import fs from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -76,7 +76,7 @@ export async function importSignsFromCsv(
     const system = (cols[systemIdx]?.toUpperCase() === "BISINDO" ? "BISINDO" : "SIBI") as "SIBI" | "BISINDO";
     const filename = cols[fileIdx] || "";
     const source = (sourceIdx !== -1 ? cols[sourceIdx] : "") || "Rekaman tim bersama guru SLB";
-    const license = (licenseIdx !== -1 ? cols[licenseIdx] : "") || "Hak cipta tim, boleh dipakai untuk PANDU";
+    const license = (licenseIdx !== -1 ? cols[licenseIdx] : "") || "Hak cipta tim, boleh dipakai untuk PanduIn";
 
     if (!letter || !filename) continue;
 

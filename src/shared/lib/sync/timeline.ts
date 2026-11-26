@@ -1,5 +1,5 @@
 /**
- * Mesin sinkronisasi PANDU.
+ * Mesin sinkronisasi PanduIn.
  * Fungsi murni: tanpa DOM, tanpa speechSynthesis.
  * Aman dijalankan di server, worker, maupun browser.
  */

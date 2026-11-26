@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 /**
- * Pengunduh dan pembangun metadata piktogram ARASAAC demo untuk PANDU (Pack 2 Berkas 03 Â§6).
+ * Pengunduh dan pembangun metadata piktogram ARASAAC demo untuk PanduIn (Pack 2 Berkas 03 Â§6).
  */
 const DEMO_KEYWORDS: Record<string, { id: number; name: string; alt: string }> = {
   air: { id: 2414, name: "water tap", alt: "Air mengalir dari keran" },

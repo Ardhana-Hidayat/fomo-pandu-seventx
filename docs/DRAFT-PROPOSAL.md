@@ -1,4 +1,4 @@
-**PANDU (PANDUAN DUKUNGAN INKLUSIF): PLATFORM PEMBUATAN KARTU PERAGA DIGITAL DAN LATIHAN ADAPTIF BERBASIS AI UNTUK PENDIDIKAN INKLUSIF**
+**PanduIn (PANDUAN DUKUNGAN INKLUSIF): PLATFORM PEMBUATAN KARTU PERAGA DIGITAL DAN LATIHAN ADAPTIF BERBASIS AI UNTUK PENDIDIKAN INKLUSIF**
 
 **![][image1]**
 
@@ -66,9 +66,9 @@
 
 1. ## **Judul/Nama Perangkat Lunak** {#judul/nama-perangkat-lunak}
 
-Perangkat lunak yang dikembangkan bernama PANDU (Panduan Dukungan Inklusif), sebuah aplikasi web responsif berbasis Artificial Intelligence (AI) yang dirancang untuk membantu guru di Sekolah Luar Biasa (SLB) maupun sekolah penyelenggara pendidikan inklusif membuat set kartu peraga digital dan cetak (PDF) beserta latihan interaktif adaptif secara cepat dan intuitif. Nama PANDU merupakan akronim dari "Panduan Dukungan Inklusif" yang mencerminkan alur pembelajaran bertahap dan ramah bagi guru maupun siswa.
+Perangkat lunak yang dikembangkan bernama PanduIn (Panduan Dukungan Inklusif), sebuah aplikasi web responsif berbasis Artificial Intelligence (AI) yang dirancang untuk membantu guru di Sekolah Luar Biasa (SLB) maupun sekolah penyelenggara pendidikan inklusif membuat set kartu peraga digital dan cetak (PDF) beserta latihan interaktif adaptif secara cepat dan intuitif. Nama PanduIn merupakan akronim dari "Panduan Dukungan Inklusif" yang mencerminkan alur pembelajaran bertahap dan ramah bagi guru maupun siswa.
 
-Nama PANDU merepresentasikan semangat pemerataan akses pendidikan berkualitas sesuai SDG 4 (Quality Education). Melalui pendekatan Human-in-the-Loop, guru cukup mengetikkan topik pembelajaran atau memotret halaman buku ajar, lalu AI menyusun kosakata konkret, instruksi singkat, serta urutan langkah yang wajib ditinjau dan disetujui guru sebelum diterbitkan. Sistem ini dilengkapi pengaturan gambar kartu peraga (foto guru, pustaka piktogram, atau opsi gambar AI), audio konsisten dari server (Text-to-Speech) maupun rekaman suara guru sendiri, mode presentasi layar penuh untuk Smart TV di kelas, ekspor PDF siap cetak sebagai pelengkap praktik manual, serta akses latihan tanpa akun bagi siswa melalui pemindaian QR Code.
+Nama PanduIn merepresentasikan semangat pemerataan akses pendidikan berkualitas sesuai SDG 4 (Quality Education). Melalui pendekatan Human-in-the-Loop, guru cukup mengetikkan topik pembelajaran atau memotret halaman buku ajar, lalu AI menyusun kosakata konkret, instruksi singkat, serta urutan langkah yang wajib ditinjau dan disetujui guru sebelum diterbitkan. Sistem ini dilengkapi pengaturan gambar kartu peraga (foto guru, pustaka piktogram, atau opsi gambar AI), audio konsisten dari server (Text-to-Speech) maupun rekaman suara guru sendiri, mode presentasi layar penuh untuk Smart TV di kelas, ekspor PDF siap cetak sebagai pelengkap praktik manual, serta akses latihan tanpa akun bagi siswa melalui pemindaian QR Code.
 
 2. ## **Latar Belakang Ide Perangkat Lunak** {#latar-belakang-ide-perangkat-lunak}
 
@@ -85,7 +85,7 @@ Permasalahan tersebut terkonfirmasi secara nyata melalui observasi lapangan dan 
 
 Oleh karena itu, materi pembelajaran bagi siswa tunarungu dan tunawicara perlu memperhatikan penggunaan elemen visual, teks yang mudah dibaca, caption, video bahasa isyarat, dan navigasi yang sederhana. Strategi tersebut sejalan dengan prinsip Universal Design for Learning dan pedoman aksesibilitas digital yang merekomendasikan penyediaan berbagai cara untuk menerima informasi dan berinteraksi dengan materi pembelajaran (Rutledge, 2025). 
 
-Berangkat dari urgensi lapangan tersebut, tim merancang PANDU sebagai solusi teknologi yang berkelanjutan (sustainable), mudah diperluas (scalable), dan intuitif (intuitive). PANDU menjembatani kesenjangan literasi IT guru senior sekaligus menyediakan media belajar digital-fisik yang seragam lintas perangkat.
+Berangkat dari urgensi lapangan tersebut, tim merancang PanduIn sebagai solusi teknologi yang berkelanjutan (sustainable), mudah diperluas (scalable), dan intuitif (intuitive). PanduIn menjembatani kesenjangan literasi IT guru senior sekaligus menyediakan media belajar digital-fisik yang seragam lintas perangkat.
 
 3. ## **Rumusan Masalah** {#rumusan-masalah}
 
@@ -97,7 +97,7 @@ Berdasarkan latar belakang dan hasil observasi di SLBN Manisrejo Kota Madiun, ru
 
 4. ## **Tujuan Pengembangan** {#tujuan-pengembangan}
 
-Tujuan dari pengembangan aplikasi PANDU adalah:
+Tujuan dari pengembangan aplikasi PanduIn adalah:
 
 1. Menghasilkan aplikasi web responsif dengan autentikasi akun guru yang memungkinkan penyusunan set kartu peraga otomatis dari topik teks atau foto buku ajar lengkap dengan penyuntingan gambar, perekaman suara guru/TTS server, dan persetujuan guru sebelum diterbitkan.  
 2. Menyediakan fitur Mode Presentasi Layar Penuh untuk Smart TV kelas serta fitur Ekspor PDF tata letak kartu siap gunting untuk menunjang praktik fisik di SLB.  
@@ -105,7 +105,7 @@ Tujuan dari pengembangan aplikasi PANDU adalah:
 
 5. ## **Manfaat Pengembangan** {#manfaat-pengembangan}
 
-Implementasi PANDU memberikan manfaat nyata yang dijabarkan melalui tiga aspek utama:
+Implementasi PanduIn memberikan manfaat nyata yang dijabarkan melalui tiga aspek utama:
 
 1. Aspek Masyarakat (Society). Mempermudah guru (termasuk guru senior) menyiapkan kartu peraga konkret tanpa menyita waktu persiapan manual, membantu siswa SLB belajar sesuai kecepatan daya tangkap masing-masing dengan umpan balik ramah anak, serta memudahkan orang tua mendampingi anak mengulang materi di rumah cukup lewat pemindaian QR Code.  
 2. Aspek Keberlanjutan (Sustainability). Mendukung pencapaian SDG 4 (Quality Education) dan SDG 10 (Reduced Inequalities) melalui arsitektur berbasis cloud yang dapat direplikasi (scalable) ke berbagai SLB dan sekolah inklusi di Indonesia tanpa biaya perangkat keras tambahan, sekaligus mengefisienkan penggunaan bahan cetak dengan menjadikan kartu digital sebagai media utama dan PDF cetak sebagai pelengkap terarah.  
@@ -128,11 +128,11 @@ Agar pengembangan fokus pada penyelesaian fitur inti yang tuntas, terukur, dan b
 
 1. ## **Model Pengembangan Sistem** {#model-pengembangan-sistem}
 
-Pengembangan PANDU menerapkan metodologi Agile Development secara iteratif yang dibagi ke dalam dua gelombang eksekusi (sprint): Gelombang 1 (Alur Inti End-to-End) dan Gelombang 2 (Pengayaan Fitur / Enrichment). Pendekatan Agile dipilih karena pengembangan media ajar untuk siswa berkebutuhan khusus menuntut penyesuaian cepat terhadap masukan guru di SLBN Manisrejo Kota Madiun serta umpan balik dosen pembimbing. Strategi ini memastikan alur fungsionalitas utama selesai 100% dan berjalan stabil sebelum penambahan fitur pelengkap.
+Pengembangan PanduIn menerapkan metodologi Agile Development secara iteratif yang dibagi ke dalam dua gelombang eksekusi (sprint): Gelombang 1 (Alur Inti End-to-End) dan Gelombang 2 (Pengayaan Fitur / Enrichment). Pendekatan Agile dipilih karena pengembangan media ajar untuk siswa berkebutuhan khusus menuntut penyesuaian cepat terhadap masukan guru di SLBN Manisrejo Kota Madiun serta umpan balik dosen pembimbing. Strategi ini memastikan alur fungsionalitas utama selesai 100% dan berjalan stabil sebelum penambahan fitur pelengkap.
 
 2. ## **Teknologi yang digunakan** {#teknologi-yang-digunakan}
 
-Rincian perangkat keras dan perangkat lunak yang digunakan dalam perancangan, implementasi, pengujian, dan deployment PANDU disajikan pada tabel berikut:
+Rincian perangkat keras dan perangkat lunak yang digunakan dalam perancangan, implementasi, pengujian, dan deployment PanduIn disajikan pada tabel berikut:
 
 | Kategori | Spesifikasi / Perangkat yang Digunakan | Fungsi dalam Pengembangan |
 | ----- | ----- | ----- |
@@ -200,9 +200,9 @@ Tahapan pengembangan sistem dilakukan secara sistematis melalui lima fase:
 1. Use Case Diagram  
    ![][image2]
 
-   *Gambar 3.1.  Use Case Diagram Aplikasi PANDU*  
+   *Gambar 3.1.  Use Case Diagram Aplikasi PanduIn*  
      
-   Diagram Use Case memetakan interaksi dua aktor utama terhadap sistem PANDU:
+   Diagram Use Case memetakan interaksi dua aktor utama terhadap sistem PanduIn:
 
 1. Aktor 1 — Guru SLB (Terautentikasi): Melakukan Login/Logout, Membuat Set Materi (Input Topik / Foto Buku → AI Generate Draft), Mengatur Gambar Kartu (Upload / Piktogram / AI), Mengatur Audio Kartu (Rekam Suara / TTS Server), Mengedit & Menyetujui Materi (Approval), Menayangkan Mode Presentasi Smart TV, Mengatur Latihan & Tingkat Kesulitan, Membagikan Tautan/QR Code, Mengekspor PDF Kartu Fisik, dan Melihat Rekap Hasil Latihan.  
 2. Aktor 2 — Siswa / Orang Tua Pendamping (Tanpa Akun): Membuka Materi via Tautan/Scan QR Code, Memasukkan Nama Panggilan, Melihat & Mendengarkan Kartu Peraga, Mengerjakan Latihan (Mencocokkan / Menyusun Urutan), dan Menerima Umpan Balik Positif.  
@@ -210,7 +210,7 @@ Tahapan pengembangan sistem dilakukan secara sistematis melalui lima fase:
 
    ![][image3]
 
-   *Gambar 3.2: Activity Diagram Aplikasi PANDU*
+   *Gambar 3.2: Activity Diagram Aplikasi PanduIn*
 
    Diagram aktivitas menggambarkan alur kerja sistem secara berurutan dari hulu ke hilir:	
 
@@ -222,7 +222,7 @@ Tahapan pengembangan sistem dilakukan secara sistematis melalui lima fase:
 
 3. ## **Desain Antarmuka (UI/UX)** {#desain-antarmuka-(ui/ux)}
 
-Pendekatan desain antarmuka PANDU berfokus pada dua kebutuhan yang saling melengkapi:
+Pendekatan desain antarmuka PanduIn berfokus pada dua kebutuhan yang saling melengkapi:
 
 1. Ramah Guru Senior (Low Cognitive Friction): Alur pembuatan hingga publikasi materi dirancang linear dengan tombol aksi berukuran besar (min-h-12 hingga 56px), label bahasa Indonesia langsung ("Buat Kartu", "Rekam Suara", "Setujui & Terbitkan", "Cetak PDF"), tanpa menu bertingkat yang membingungkan.  
 2. Ramah Siswa SLB & Tajam di Smart TV (Clutter-Free & High Contrast): Tampilan siswa dan Mode Presentasi menerapkan visual yang bersih (clean), modern, dan minimalis menggunakan kanvas terang, kartu membulat dengan batas tipis, aksen warna primer Deep Teal berkontras WCAG AA/AAA, tipografi Plus Jakarta Sans, diferensiasi level antar tingkat kelas, serta satu kartu fokus per layar (single-task screen) tanpa timer untuk kenyamanan belajar mandiri dan Smart TV.  
@@ -232,11 +232,11 @@ Pendekatan desain antarmuka PANDU berfokus pada dua kebutuhan yang saling meleng
 2. Layar 2: Halaman Editor & Approval Kartu Peraga (Pemilih Gambar, Perekam Suara/TTS, dan Pengatur Kesulitan Latihan).  
 3. Layar 3: Halaman Mode Presentasi Layar Penuh (Smart TV) & Pratinjau Cetak PDF Kartu A4.  
 4. Layar 4: Halaman Ruang Belajar & Latihan Siswa Tanpa Akun via QR Code beserta Umpan Balik Positif.  
-   \[Sisipkan Gambar 3.3: Wireframe / High-Fidelity Mockup Antarmuka PANDU di sini\]
+   \[Sisipkan Gambar 3.3: Wireframe / High-Fidelity Mockup Antarmuka PanduIn di sini\]
 
 4. ## **Fitur dan Alur Kerja Sistem** {#fitur-dan-alur-kerja-sistem}
 
-Siklus kerja PANDU menyatukan kebutuhan persiapan ajar guru, penyampaian di kelas, hingga pengulangan mandiri di rumah:
+Siklus kerja PanduIn menyatukan kebutuhan persiapan ajar guru, penyampaian di kelas, hingga pengulangan mandiri di rumah:
 
 1. Penyusunan Materi Berbasis AI dengan Persetujuan Guru  
    Guru tidak lagi memulai dari nol atau menggunting kertas manual. AI menyusun draf kosakata dan langkah konkret yang divalidasi penuh oleh guru.
@@ -252,7 +252,7 @@ Siklus kerja PANDU menyatukan kebutuhan persiapan ajar guru, penyampaian di kela
 
 Perbandingan Orisinalitas & Inovasi (State of the Art):
 
-| Aspek Pembanding | Alat Peraga Kertas & Laminating Manual | Smart TV & Video Umum (YouTube) | Aplikasi Kuis Umum (Wayground (sebelumnya Quizizz)) | PANDU (Solusi yang Diajukan) |
+| Aspek Pembanding | Alat Peraga Kertas & Laminating Manual | Smart TV & Video Umum (YouTube) | Aplikasi Kuis Umum (Wayground (sebelumnya Quizizz)) | PanduIn (Solusi yang Diajukan) |
 | :---: | :---: | :---: | :---: | :---: |
 | Pembuatan Materi Ajar | Menggunting & melaminasi manual (memakan waktu) | Harus mencari video yang sering tidak sesuai level rombel | Guru mengetik soal satu per satu secara manual | Otomatis berbasis AI dari topik/foto buku \+ Approval Guru |
 | Konsistensi Audio & Visual | Tidak memiliki audio (bergantung penuh pada suara guru) | Audio tetap, tetapi tempo bicara sering terlalu cepat | Tidak dirancang untuk audio per kartu peraga | Audio konsisten dari rekaman guru / server TTS \+ piktogram/foto |
@@ -263,7 +263,7 @@ Perbandingan Orisinalitas & Inovasi (State of the Art):
 
 1. ## **Kesimpulan** {#kesimpulan}
 
-PANDU adalah platform web responsif berbasis Next.js, Supabase, dan AI yang dirancang langsung dari temuan observasi dan wawancara di SLBN Manisrejo Kota Madiun. Dengan mengintegrasikan 10 fitur utama guru—mulai dari pembuatan set materi otomatis dari topik atau foto buku, persetujuan (approval) guru, pengaturan gambar piktogram/foto, audio konsisten dari server atau rekaman guru, mode presentasi Smart TV, ekspor PDF kartu fisik, hingga latihan adaptif dengan rekap hasil—serta 4 fitur akses cepat tanpa akun bagi siswa melalui QR Code, aplikasi ini menjawab kendala keterbatasan waktu pembuatan alat peraga manual dan variasi daya tangkap siswa di kelas. Desain sistem yang intuitif bagi guru senior, fleksibel menjembatani pembelajaran di sekolah dan di rumah, serta mudah direplikasi lintas sekolah menjadikan PANDU solusi teknologi berkelanjutan yang mendukung pencapaian SDG 4 (Quality Education).
+PanduIn adalah platform web responsif berbasis Next.js, Supabase, dan AI yang dirancang langsung dari temuan observasi dan wawancara di SLBN Manisrejo Kota Madiun. Dengan mengintegrasikan 10 fitur utama guru—mulai dari pembuatan set materi otomatis dari topik atau foto buku, persetujuan (approval) guru, pengaturan gambar piktogram/foto, audio konsisten dari server atau rekaman guru, mode presentasi Smart TV, ekspor PDF kartu fisik, hingga latihan adaptif dengan rekap hasil—serta 4 fitur akses cepat tanpa akun bagi siswa melalui QR Code, aplikasi ini menjawab kendala keterbatasan waktu pembuatan alat peraga manual dan variasi daya tangkap siswa di kelas. Desain sistem yang intuitif bagi guru senior, fleksibel menjembatani pembelajaran di sekolah dan di rumah, serta mudah direplikasi lintas sekolah menjadikan PanduIn solusi teknologi berkelanjutan yang mendukung pencapaian SDG 4 (Quality Education).
 
 # 
 
@@ -287,7 +287,7 @@ Lampiran 1: Dokumentasi Foto Observasi dan Wawancara di SLBN Manisrejo Kota Madi
 
 Lampiran 2: Transkrip Ringkas Hasil Wawancara Guru & Rekapitulasi Data Siswa Berkebutuhan Khusus.
 
-Lampiran 3: High-Fidelity Mockup Antarmuka Aplikasi PANDU dan Tangkapan Layar Prototipe Fungsional.
+Lampiran 3: High-Fidelity Mockup Antarmuka Aplikasi PanduIn dan Tangkapan Layar Prototipe Fungsional.
 
 ***Keterangan :*** 
 

@@ -1,6 +1,6 @@
-﻿# Panduan Penerapan Produksi (*Production Deployment Guide*) â€” PANDU
+# Panduan Penerapan Produksi (*Production Deployment Guide*) â€” PanduIn
 
-Dokumen ini memuat prosedur resmi dan daftar periksa teknis untuk men-deploy platform **PANDU** ke lingkungan produksi menggunakan arsitektur **Next.js (Vercel / Railway)** dan **Supabase (PostgreSQL + Storage + Auth)**.
+Dokumen ini memuat prosedur resmi dan daftar periksa teknis untuk men-deploy platform **PanduIn** ke lingkungan produksi menggunakan arsitektur **Next.js (Vercel / Railway)** dan **Supabase (PostgreSQL + Storage + Auth)**.
 
 ---
 
@@ -68,7 +68,7 @@ Atur variabel lingkungan berikut pada dashboard Vercel / Railway (pastikan varia
 | `TTS_PROVIDER` | `none` (atau `gemini`) | Penyedia pelafalan suara |
 | `GENERATE_LIMIT_PER_HOUR` | `10` | Batas kecepatan AI per guru |
 | `ALLOW_DRAFT_SIGNS` | `false` | Hanya tampilkan isyarat terverifikasi |
-| `NEXT_PUBLIC_APP_URL` | `https://PANDU.id` | URL publik resmi aplikasi |
+| `NEXT_PUBLIC_APP_URL` | `https://panduin.vercel.app` | URL publik resmi aplikasi |
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://[ref].supabase.co` | Endpoint Supabase publik |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGci...` | Kunci anonim publik Supabase |
 | `SUPABASE_SERVICE_ROLE_KEY` | `eyJhbGci...` | Kunci internal aman Supabase |
@@ -124,7 +124,7 @@ Setelah deployment berhasil tayang, lakukan pengujian cepat pada rute-rute inti:
 
 ## ðŸ”’ Keamanan & Kebijakan Header
 
-Platform PANDU menerapkan header keamanan ketat melalui konfigurasi server:
+Platform PanduIn menerapkan header keamanan ketat melalui konfigurasi server:
 - **Content-Security-Policy (CSP)**: Membatasi sumber skrip, melarang eval tidak aman, membatasi `img-src` dan `media-src` hanya ke domain internal dan storage Supabase.
 - **X-Content-Type-Options**: `nosniff` (mencegah MIME-sniffing).
 - **Referrer-Policy**: `strict-origin-when-cross-origin`.

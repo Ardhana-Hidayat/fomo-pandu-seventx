@@ -1,5 +1,5 @@
 /**
- * Katalog Suara dan Kecepatan Resmi PANDU (Pack 2 Berkas 04 §4 & Berkas 06).
+ * Katalog Suara dan Kecepatan Resmi PanduIn (Pack 2 Berkas 04 §4 & Berkas 06).
  * Antarmuka hanya menampilkan label netral (Suara A, B, C, D) tanpa menyebut nama teknis/gender.
  */
 

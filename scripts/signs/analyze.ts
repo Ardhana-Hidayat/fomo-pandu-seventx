@@ -1,4 +1,4 @@
-﻿import fs from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 import { evaluateCandidate } from "./lib/score";
 import { SIGN_CONFIG } from "./config";
@@ -7,7 +7,7 @@ import { SIGN_CONFIG } from "./config";
  * Script to analyze sign candidates per Pack 2 Berkas 03 Â§2.
  */
 async function main() {
-  console.log("Menganalisis kandidat pustaka isyarat PANDU...");
+  console.log("Menganalisis kandidat pustaka isyarat PanduIn...");
   const reviewDir = path.resolve(process.cwd(), ".data/sign-review");
   if (!fs.existsSync(reviewDir)) {
     fs.mkdirSync(reviewDir, { recursive: true });

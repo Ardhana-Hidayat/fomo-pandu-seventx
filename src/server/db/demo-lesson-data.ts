@@ -1,5 +1,5 @@
 /**
- * Data Kurikulum SDLB Resmi PANDU (SLBN Manisrejo)
+ * Data Kurikulum SDLB Resmi PanduIn (SLBN Manisrejo)
  * Mencakup 2 Kelas Demo (SIBI dan BISINDO)
  * dengan ragam disabilitas: Tunarungu (SIBI/BISINDO), Tunagrahita, Campuran.
  */

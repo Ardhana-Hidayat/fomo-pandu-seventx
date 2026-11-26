@@ -1,4 +1,4 @@
-﻿import fs from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 import { SIGN_CONFIG } from "./config";
 
@@ -17,7 +17,7 @@ async function main() {
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Lembar Tinjau Isyarat PANDU (SIBI &amp; BISINDO)</title>
+  <title>Lembar Tinjau Isyarat PanduIn (SIBI &amp; BISINDO)</title>
   <style>
     body { font-family: system-ui, sans-serif; background: #f8fafc; color: #0f172a; padding: 24px; }
     h1 { font-size: 24px; }
@@ -28,7 +28,7 @@ async function main() {
   </style>
 </head>
 <body>
-  <h1>Lembar Tinjau Pustaka Isyarat PANDU</h1>
+  <h1>Lembar Tinjau Pustaka Isyarat PanduIn</h1>
   <h2>SIBI</h2>
   <div class="grid">
     ${SIGN_CONFIG.alphabet

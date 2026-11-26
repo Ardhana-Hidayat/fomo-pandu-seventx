@@ -1,4 +1,4 @@
-# PANDU — Platform Pembelajaran Adaptif Terintegrasi SLB
+# PanduIn — Platform Pembelajaran Adaptif Terintegrasi SLB
 
 [![Quality Gate](https://img.shields.io/badge/Quality%20Gate-Passing-success)](docs/backlog.md)
 [![Next.js](https://img.shields.io/badge/Next.js-16.4.6-black)](https://nextjs.org)
@@ -169,7 +169,7 @@ npm run build
 ## Struktur Direktori Proyek
 
 ```text
-PANDU/
+PanduIn/
 ├── src/
 │   ├── app/                      # Rute Next.js 16 App Router (Guru, Siswa, TV, API)
 │   │   ├── api/                  # Route handler API (AI, media, TTS, signs, health)

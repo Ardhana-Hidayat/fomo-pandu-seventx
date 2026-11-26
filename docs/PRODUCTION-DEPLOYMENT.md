@@ -1,4 +1,4 @@
-﻿# Panduan Production Deployment & CI/CD PANDU
+# Panduan Production Deployment & CI/CD PanduIn
 
 Dokumen ini memandu langkah demi langkah konfigurasi pipeline **CI/CD (GitHub Actions)**, deployment ke **Vercel**, basis data **Supabase**, dan **Gemini API**.
 
@@ -6,7 +6,7 @@ Dokumen ini memandu langkah demi langkah konfigurasi pipeline **CI/CD (GitHub Ac
 
 ## 1. Arsitektur CI/CD Pipeline
 
-Pipeline otomatis didefinisikan pada [.github/workflows/ci-cd.yml](file:///d:/Projects/fomo-PANDU-seventx/.github/workflows/ci-cd.yml):
+Pipeline otomatis didefinisikan pada [.github/workflows/ci-cd.yml](file:///d:/Projects/fomo-panduin-seventx/.github/workflows/ci-cd.yml):
 
 ```mermaid
 flowchart LR
@@ -22,7 +22,7 @@ flowchart LR
 
 ## 2. Variabel Lingkungan (*Environment Variables*)
 
-Aplikasi PANDU membutuhkan 4 variabel lingkungan utama:
+Aplikasi PanduIn membutuhkan 4 variabel lingkungan utama:
 
 | Nama Variabel | Lokasi Digunakan | Deskripsi |
 | :--- | :--- | :--- |
@@ -58,7 +58,7 @@ Untuk mengaktifkan deployment otomatis via GitHub Actions:
 
 Selain pada GitHub Actions, variabel lingkungan wajib dimasukkan pada Dashboard Vercel:
 
-1. Buka [Vercel Dashboard](https://vercel.com/) dan pilih project **fomo-PANDU-seventx**.
+1. Buka [Vercel Dashboard](https://vercel.com/) dan pilih project **fomo-panduin-seventx**.
 2. Masuk ke tab **Settings** > **Environment Variables**.
 3. Tambahkan 4 variabel:
    * `NEXT_PUBLIC_SUPABASE_URL` (Pilih: Production, Preview, Development)

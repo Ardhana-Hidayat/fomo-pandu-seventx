@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import {
 } from "@/shared/ui";
 import { SignCard } from "@/features/player";
 import {
+  saveCardAction,
   updateLessonAction,
   updatePresentationAction,
 } from "../actions";
@@ -163,6 +164,40 @@ function extractSignWord(
   ).trim();
 }
 
+const INDONESIAN_STOP_WORDS = new Set([
+  "yang", "dan", "di", "ke", "dari", "untuk", "dengan", "pada", "atau",
+  "ini", "itu", "adalah", "ada", "akan", "juga", "saya", "kamu", "kita",
+  "kami", "mereka", "dia", "ia", "nya", "oleh", "karena", "sebagai",
+  "dalam", "tidak", "bukan", "jangan", "agar", "supaya", "saat", "ketika",
+  "jika", "kalau", "bila", "sudah", "telah", "sedang", "masih", "bisa",
+  "dapat", "harus", "mau", "ingin", "lalu", "kemudian", "serta", "secara",
+  "tentang", "seperti", "antara", "setelah", "sebelum", "selama", "hingga",
+  "sampai", "si", "sang", "para", "pun", "lah", "kah", "tah", "saja",
+  "hanya", "lebih", "sangat", "sekali", "semua", "setiap", "tiap",
+  "banyak", "sedikit", "beberapa", "satu", "dua", "tiga", "yuk", "ayo", "mari",
+]);
+
+function deriveSibiKeyTerms(text: string): string[] {
+  const words = text
+    .toLowerCase()
+    .split(/\s+/)
+    .map((w) => w.replace(/[^a-z0-9-]/g, ""))
+    .filter((w) => w.length >= 2);
+
+  const unique: string[] = [];
+  for (const w of words) {
+    if (!INDONESIAN_STOP_WORDS.has(w) && !unique.includes(w)) {
+      unique.push(w);
+      if (unique.length >= 4) break;
+    }
+  }
+
+  if (unique.length === 0 && words.length > 0 && words[0]) {
+    return [words[0]];
+  }
+  return unique;
+}
+
 function renderCardTextWithKeyTerms(
   text: string,
   keyTerms: string[] | null | undefined
@@ -238,6 +273,17 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
   const [localShare, setLocalShare] = useState<LessonShareInfo | null>(null);
 
   const [isSaving, setIsSaving] = useState(false);
+  const [isSavingCard, setIsSavingCard] = useState(false);
+  const [syncingCardId, setSyncingCardId] = useState<string | null>(null);
+  const autoSyncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoSyncAbortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (autoSyncTimerRef.current) clearTimeout(autoSyncTimerRef.current);
+      autoSyncAbortRef.current?.abort();
+    };
+  }, []);
   const [feedback, setFeedback] = useState<{
     type: "benar" | "ulang" | "galat" | "info";
     message: string;
@@ -320,9 +366,118 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
 
   // Card modifications
   function updateCardText(idx: number, newText: string) {
+    const targetCard = cards[idx];
+    if (!targetCard) return;
+    const cardId = targetCard.id;
+
     setCards((prev) =>
       prev.map((c, i) => (i === idx ? { ...c, text: newText } : c))
     );
+
+    if (autoSyncTimerRef.current) {
+      clearTimeout(autoSyncTimerRef.current);
+    }
+    autoSyncAbortRef.current?.abort();
+
+    const trimmed = newText.trim();
+    if (!trimmed) {
+      setSyncingCardId(null);
+      setCards((prev) =>
+        prev.map((c) => (c.id === cardId ? { ...c, keyTerms: [] } : c))
+      );
+      return;
+    }
+
+    autoSyncTimerRef.current = setTimeout(async () => {
+      const derivedTerms = deriveSibiKeyTerms(trimmed);
+      setCards((prev) =>
+        prev.map((c) =>
+          c.id === cardId ? { ...c, keyTerms: derivedTerms } : c
+        )
+      );
+
+      const primaryKeyword = derivedTerms[0];
+      if (!primaryKeyword || targetCard.imageSource === "upload") {
+        setSyncingCardId(null);
+        return;
+      }
+
+      const controller = new AbortController();
+      autoSyncAbortRef.current = controller;
+      setSyncingCardId(cardId);
+
+      try {
+        const res = await fetch(
+          `/api/media/pictograms?q=${encodeURIComponent(primaryKeyword)}`,
+          { signal: controller.signal }
+        );
+        if (!res.ok) return;
+        const data = (await res.json()) as {
+          pictogram?: { id?: string; url?: string; alt?: string };
+        };
+        const pic = data?.pictogram;
+        if (pic?.url && !controller.signal.aborted) {
+          setCards((prev) =>
+            prev.map((c) =>
+              c.id === cardId
+                ? {
+                    ...c,
+                    imageUrl: pic.url ?? null,
+                    imageAssetId: pic.id ?? null,
+                    imageAlt: pic.alt || `Piktogram ${primaryKeyword}`,
+                    imageSource: "pictogram",
+                  }
+                : c
+            )
+          );
+        }
+      } catch (err) {
+        if ((err as { name?: string })?.name !== "AbortError") {
+          // Abaikan kegagalan jaringan sementara saat mengetik
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setSyncingCardId((curr) => (curr === cardId ? null : curr));
+        }
+      }
+    }, 450);
+  }
+
+  async function handleSaveCard(idx: number) {
+    const card = cards[idx];
+    if (!card) return;
+    if (!card.text.trim()) {
+      setFeedback({ type: "ulang", message: "Teks kalimat kartu tidak boleh kosong." });
+      return;
+    }
+
+    setIsSavingCard(true);
+    const res = await saveCardAction(lesson.id, {
+      id: card.id,
+      position: card.position,
+      text: card.text.trim(),
+      keyTerms: card.keyTerms ?? [],
+      cardType:
+        (card.cardType as "vocabulary" | "instruction" | "step") ?? "instruction",
+      imageSource:
+        (card.imageSource as "upload" | "pictogram" | "ai") ?? "pictogram",
+      imageAlt: card.imageAlt ?? null,
+      imageAssetId: card.imageAssetId ?? null,
+      audioSource:
+        (card.audioSource as "tts" | "recording" | "none") ?? "none",
+      audioAssetId: card.audioAssetId ?? null,
+    });
+    setIsSavingCard(false);
+
+    if (res.ok) {
+      setCards((prev) =>
+        prev.map((c, i) => (i === idx ? { ...c, id: res.data.id } : c))
+      );
+      setFeedback({ type: "benar", message: `Kartu #${card.position} berhasil disimpan.` });
+      router.refresh();
+    } else {
+      setFeedback({ type: "galat", message: res.error.message });
+    }
   }
 
   function handleAddKeyTerm(idx: number) {
@@ -994,6 +1149,17 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                       </div>
 
                       <div className="flex items-center gap-1.5">
+                        <Button
+                          type="button"
+                          variant="primary"
+                          size="compact"
+                          loading={isSavingCard}
+                          onClick={() => handleSaveCard(safeCardIdx)}
+                          icon={<Icon name="Check" size={14} />}
+                          className="mr-1"
+                        >
+                          Simpan Kartu
+                        </Button>
                         <button
                           type="button"
                           onClick={() => handleMoveCard(safeCardIdx, "up")}
@@ -1023,14 +1189,29 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                       </div>
                     </div>
 
-                    {/* Kalimat Kartu */}
+                    {/* Teks Kalimat Kartu */}
                     <div className="flex flex-col gap-1.5">
-                      <label
-                        htmlFor={`card-text-${safeCardIdx}`}
-                        className="text-sm font-semibold text-[var(--ink)]"
-                      >
-                        Kalimat Kartu (Maks. 80 karakter)
-                      </label>
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <label
+                          htmlFor={`card-text-${safeCardIdx}`}
+                          className="text-sm font-semibold text-[var(--ink)]"
+                        >
+                          Teks Kalimat Kartu (Maks. 80 karakter)
+                        </label>
+                        {syncingCardId === activeCard.id ? (
+                          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--primary)]">
+                            <span
+                              className="h-3 w-3 animate-spin rounded-full border-2 border-[var(--primary)] border-t-transparent"
+                              aria-hidden="true"
+                            />
+                            <span>Menyelaraskan piktogram &amp; SIBI...</span>
+                          </span>
+                        ) : (
+                          <span className="text-[11px] font-medium text-[var(--muted)]">
+                            Piktogram &amp; SIBI otomatis mengikuti teks
+                          </span>
+                        )}
+                      </div>
                       <textarea
                         id={`card-text-${safeCardIdx}`}
                         rows={2}
@@ -1285,13 +1466,20 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                       <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
                         <div className="sm:col-span-5">
                           {activeCard.imageUrl ? (
-                            <div className="aspect-[4/3] w-full rounded-xl border border-[var(--border)] bg-white p-2 flex items-center justify-center overflow-hidden">
+                            <div className="relative aspect-[4/3] w-full rounded-xl border border-[var(--border)] bg-white p-2 flex items-center justify-center overflow-hidden">
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
                                 src={activeCard.imageUrl}
                                 alt={activeCard.imageAlt ?? activeCard.text}
-                                className="h-full w-full object-contain"
+                                className={`h-full w-full object-contain transition-opacity ${
+                                  syncingCardId === activeCard.id ? "opacity-50" : "opacity-100"
+                                }`}
                               />
+                              {syncingCardId === activeCard.id && (
+                                <span className="absolute bottom-2 right-2 rounded-full bg-[var(--surface)]/90 px-2 py-0.5 text-[10px] font-bold text-[var(--primary)] shadow-sm border border-[var(--border)]">
+                                  Memperbarui...
+                                </span>
+                              )}
                             </div>
                           ) : (
                             <div className="aspect-[4/3] w-full rounded-xl border border-dashed border-[var(--border-strong)] bg-[var(--surface)] flex flex-col items-center justify-center gap-1.5 p-3 text-center">
@@ -2146,7 +2334,7 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
               setCards((prev) =>
                 prev.map((c, i) =>
                   i === activeCardIndexForMedia
-                    ? { ...c, imageUrl, imageAlt, imageSource: "piktogram" }
+                    ? { ...c, imageUrl, imageAlt, imageSource: "pictogram" }
                     : c
                 )
               );

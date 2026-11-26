@@ -751,18 +751,22 @@ export async function saveCard(
       return err(makeAppError("FORBIDDEN", "Materi tidak ditemukan atau bukan milik Anda"));
     }
 
+    const normalizedKeyTerms = Array.isArray(input.keyTerms)
+      ? input.keyTerms.map((t) => t.trim()).filter(Boolean)
+      : undefined;
+
     if (input.id && !input.id.startsWith("card-new-")) {
       const updated = await db
         .update(lessonCards)
         .set({
           position: input.position,
           text: input.text,
-          keyTerms: input.keyTerms ?? [],
-          ...(input.cardType ? { cardType: input.cardType } : {}),
-          ...(input.imageSource ? { imageSource: input.imageSource } : {}),
+          ...(normalizedKeyTerms !== undefined ? { keyTerms: normalizedKeyTerms } : {}),
+          ...(input.cardType !== undefined ? { cardType: input.cardType } : {}),
+          ...(input.imageSource !== undefined ? { imageSource: input.imageSource } : {}),
           ...(input.imageAlt !== undefined ? { imageAlt: input.imageAlt } : {}),
           ...(input.imageAssetId !== undefined ? { imageAssetId: input.imageAssetId } : {}),
-          ...(input.audioSource ? { audioSource: input.audioSource } : {}),
+          ...(input.audioSource !== undefined ? { audioSource: input.audioSource } : {}),
           ...(input.audioAssetId !== undefined ? { audioAssetId: input.audioAssetId } : {}),
         })
         .where(and(eq(lessonCards.id, input.id), eq(lessonCards.lessonId, lessonId)))
@@ -779,13 +783,13 @@ export async function saveCard(
         lessonId,
         position: input.position,
         text: input.text,
-        keyTerms: input.keyTerms ?? [],
+        keyTerms: normalizedKeyTerms ?? [],
         cardType: input.cardType ?? "instruction",
         imageSource: input.imageSource ?? "pictogram",
-        imageAlt: input.imageAlt ?? undefined,
-        imageAssetId: input.imageAssetId ?? undefined,
+        imageAlt: input.imageAlt ?? null,
+        imageAssetId: input.imageAssetId ?? null,
         audioSource: input.audioSource ?? "none",
-        audioAssetId: input.audioAssetId ?? undefined,
+        audioAssetId: input.audioAssetId ?? null,
       })
       .returning();
 

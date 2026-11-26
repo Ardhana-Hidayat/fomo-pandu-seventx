@@ -6,6 +6,7 @@ import {
   listTeacherLessonShares,
   CreateLessonButton,
   ShareLessonButton,
+  DeleteLessonButton,
 } from "@/features/authoring";
 import { Card, Button, Icon } from "@/shared/ui";
 
@@ -118,7 +119,7 @@ export default async function LessonLibraryPage() {
                     </Button>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     <Button
                       variant="primary"
                       size="compact"
@@ -148,6 +149,12 @@ export default async function LessonLibraryPage() {
                     >
                       Hasil
                     </Button>
+                    <DeleteLessonButton
+                      lessonId={l.id}
+                      lessonTitle={l.title}
+                      size="compact"
+                      className="w-full justify-center"
+                    />
                   </div>
                 </div>
               </Card>

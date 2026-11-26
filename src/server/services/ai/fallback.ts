@@ -187,6 +187,7 @@ const ID_STOP_WORDS = new Set([
   "adalah",
   "akan",
   "bisa",
+  "dapat",
   "kami",
   "kita",
   "mereka",
@@ -204,6 +205,43 @@ const ID_STOP_WORDS = new Set([
   "cara",
   "belajar",
   "mengenal",
+  "hari",
+  "setiap",
+  "bersama",
+  "teliti",
+  "gembira",
+  "jelas",
+  "sekitar",
+  "penting",
+  "contoh",
+  "materi",
+  "bagian",
+  "hal",
+  "secara",
+  "yaitu",
+  "seperti",
+  "antara",
+  "karena",
+  "lebih",
+  "sangat",
+  "memiliki",
+  "perhatikan",
+  "menyebutkan",
+  "memahami",
+  "mengingat",
+  "kembali",
+  "berlatih",
+  "menunjukkan",
+  "mempraktikkan",
+  "sebagai",
+  "setelah",
+  "sebelum",
+  "sudah",
+  "belum",
+  "hanya",
+  "semua",
+  "banyak",
+  "sedikit",
 ]);
 
 const CONCRETE_DISTRACTORS = [
@@ -217,28 +255,216 @@ const CONCRETE_DISTRACTORS = [
   "topi",
   "kertas",
   "bola",
+  "jam",
+  "kunci",
 ];
 
-function pickContentKeyword(sentence: string): string {
+const ID_TO_EN_KEYWORD: Record<string, string> = {
+  air: "water",
+  sabun: "soap",
+  tangan: "hand",
+  handuk: "towel",
+  buku: "book",
+  pensil: "pencil",
+  penghapus: "eraser",
+  meja: "desk",
+  kursi: "chair",
+  apel: "apple",
+  jeruk: "orange",
+  pisang: "banana",
+  sayur: "vegetable",
+  bayam: "spinach",
+  buah: "fruit",
+  pasar: "market",
+  dapur: "kitchen",
+  makan: "eat",
+  minum: "drink",
+  masak: "cook",
+  matahari: "sun",
+  bulan: "moon",
+  bintang: "star",
+  bumi: "earth",
+  planet: "planet",
+  hujan: "rain",
+  awan: "cloud",
+  tumbuhan: "plant",
+  tanaman: "plant",
+  pohon: "tree",
+  daun: "leaf",
+  akar: "root",
+  batang: "stem",
+  bunga: "flower",
+  hewan: "animal",
+  kucing: "cat",
+  anjing: "dog",
+  burung: "bird",
+  ikan: "fish",
+  sapi: "cow",
+  ayam: "chicken",
+  rumah: "house",
+  sekolah: "school",
+  kelas: "classroom",
+  guru: "teacher",
+  siswa: "student",
+  anak: "child",
+  ibu: "mother",
+  ayah: "father",
+  angka: "number",
+  huruf: "letter",
+  warna: "color",
+  merah: "red",
+  biru: "blue",
+  hijau: "green",
+  kuning: "yellow",
+  sampah: "trash",
+  bersih: "clean",
+  sehat: "healthy",
+  mandi: "bath",
+  gigi: "tooth",
+  sikat: "toothbrush",
+  tidur: "sleep",
+  olahraga: "sport",
+  sepeda: "bicycle",
+  mobil: "car",
+  uang: "money",
+  waktu: "clock",
+  energi: "energy",
+  cahaya: "light",
+  listrik: "electricity",
+  udara: "air",
+  tanah: "soil",
+  laut: "sea",
+  gunung: "mountain",
+  sungai: "river",
+};
+
+const PDF_NOISE_LINE_PATTERNS = [
+  /^(?:halaman|hal\.?|page|pg\.?)\s*\d+(?:\s*(?:dari|of|\/)\s*\d+)?$/i,
+  /^\d+\s*(?:\/\s*\d+)?$/,
+  /^[-_=*•·\s]{2,}$/,
+  /^-\s*\d+\s*-$/,
+  /^https?:\/\/\S+$/i,
+  /^(?:daftar\s+isi|kata\s+pengantar|lampiran|daftar\s+pustaka)$/i,
+  /^bab\s+(?:[ivxlcdm]+|\d+)$/i,
+];
+
+export interface FallbackGenerationConfig {
+  optionCount?: number;
+  cardCount?: number;
+  questionCount?: number;
+  exerciseType?: "match" | "order" | "both";
+}
+
+function isNoisyPdfLine(line: string): boolean {
+  const trimmed = line.trim();
+  if (!trimmed || trimmed.length < 3) return true;
+  if (!/[a-zA-Z]/.test(trimmed)) return true;
+  return PDF_NOISE_LINE_PATTERNS.some((pat) => pat.test(trimmed));
+}
+
+function splitLongSentence(sentence: string): string[] {
+  if (sentence.length <= 115) return [sentence];
+  const clauseParts = sentence
+    .split(/[;,]+\s*/)
+    .map((p) => p.trim())
+    .filter((p) => p.length > 5);
+
+  const chunks: string[] = [];
+  for (const part of clauseParts) {
+    if (part.length <= 115) {
+      chunks.push(part);
+    } else {
+      const words = part.split(/\s+/);
+      for (let i = 0; i < words.length; i += 12) {
+        const slice = words.slice(i, i + 12).join(" ").trim();
+        if (slice.length > 5) chunks.push(slice);
+      }
+    }
+  }
+  return chunks;
+}
+
+function cleanAndSplitSourceText(rawText: string, maxCards: number): string[] {
+  const cleanedLines = rawText
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((l) => l.replace(/\s+/g, " ").trim())
+    .filter((l) => !isNoisyPdfLine(l));
+
+  const joined = cleanedLines.join(" ");
+  const rawSegments = joined
+    .split(/[.!?]+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length >= 6 && /[a-zA-Z]/.test(s));
+
+  const expanded: string[] = [];
+  for (const seg of rawSegments) {
+    for (const part of splitLongSentence(seg)) {
+      const wordCount = part.split(/\s+/).filter(Boolean).length;
+      if (wordCount >= 2 && part.length >= 6) {
+        expanded.push(part);
+      }
+    }
+  }
+
+  const seen = new Set<string>();
+  const unique: string[] = [];
+  for (const item of expanded) {
+    const key = item.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      const normalized = item.charAt(0).toUpperCase() + item.slice(1);
+      unique.push(normalized.endsWith(".") ? normalized : `${normalized}.`);
+    }
+    if (unique.length >= maxCards) break;
+  }
+
+  return unique;
+}
+
+function pickContentKeywords(sentence: string, maxTerms = 2): string[] {
   const words = sentence
     .split(/\s+/)
     .map((w) => w.replace(/[^a-zA-Z0-9-]/g, "").toLowerCase())
     .filter((w) => w.length >= 3);
 
-  return (
-    words.find((w) => !ID_STOP_WORDS.has(w)) ??
-    words[0] ??
-    "materi"
+  const contentWords = Array.from(
+    new Set(words.filter((w) => !ID_STOP_WORDS.has(w)))
   );
+  if (contentWords.length > 0) {
+    return contentWords.slice(0, maxTerms);
+  }
+  if (words[0]) {
+    return [words[0]];
+  }
+  return ["materi"];
+}
+
+function toEnglishKeyword(idKeyword: string): string {
+  const clean = idKeyword.trim().toLowerCase();
+  return ID_TO_EN_KEYWORD[clean] ?? clean;
 }
 
 function buildClozePrompt(sentence: string, keyword: string): string {
   const cleanSentence = sentence.replace(/\.$/, "");
-  const regex = new RegExp(`\\b${keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+  const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(`\\b${escaped}\\b`, "i");
   if (regex.test(cleanSentence)) {
     return `Lengkapi kalimat berikut: "${cleanSentence.replace(regex, "___")}."`;
   }
   return `Kata mana yang sesuai dengan kalimat "${cleanSentence}."?`;
+}
+
+function buildFalseStatement(
+  sentence: string,
+  correctWord: string,
+  falseWord: string
+): string | null {
+  const cleanSentence = sentence.replace(/\.$/, "");
+  const escaped = correctWord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(`\\b${escaped}\\b`, "i");
+  if (!regex.test(cleanSentence)) return null;
+  return `${cleanSentence.replace(regex, falseWord)}.`;
 }
 
 function pickPlausibleDistractors(
@@ -270,113 +496,271 @@ function pickPlausibleDistractors(
   return result;
 }
 
+function buildTopicSentences(topic: string, cardCount: number): string[] {
+  const clean = topic.trim();
+  const templates = [
+    `Hari ini kita belajar mengenal ${clean}.`,
+    `Perhatikan bagian penting dari ${clean}.`,
+    `Kita dapat melihat contoh ${clean} di sekitar kita.`,
+    `Guru menunjukkan cara memahami ${clean} dengan jelas.`,
+    `Siswa berlatih menyebutkan hal tentang ${clean}.`,
+    `Kita mengingat kembali materi ${clean} bersama.`,
+    `Mari amati ciri utama pada ${clean}.`,
+    `Kita berdiskusi tentang manfaat ${clean} sehari-hari.`,
+  ];
+
+  const result: string[] = [];
+  for (let i = 0; i < cardCount; i++) {
+    const tpl = templates[i % templates.length]!;
+    result.push(tpl);
+  }
+  return result;
+}
+
+function resolveExerciseType(
+  questionTypes?: string[]
+): "match" | "order" | "both" {
+  if (!questionTypes || questionTypes.length === 0) return "both";
+  const normalized = questionTypes.map((t) => t.toLowerCase());
+  const hasOrder = normalized.some((t) => t === "order" || t === "urutkan");
+  const hasMatch = normalized.some((t) =>
+    ["match", "pilih_kata", "pilih_gambar", "benar_salah", "cocokkan_isyarat"].includes(t)
+  );
+  if (hasOrder && !hasMatch) return "order";
+  if (hasMatch && !hasOrder) return "match";
+  return "both";
+}
+
+function buildQuestionsForCards(
+  title: string,
+  cards: GeneratedLesson["cards"],
+  config: Required<FallbackGenerationConfig>
+): GeneratedLesson["questions"] {
+  if (config.questionCount <= 0 || cards.length === 0) {
+    return [];
+  }
+
+  const allTerms = cards.flatMap((c) => c.key_terms).filter(Boolean);
+  const distractorCount = Math.max(1, Math.min(3, config.optionCount - 1));
+  const questions: GeneratedLesson["questions"] = [];
+
+  const makeChoiceQuestion = (cardIndex: number, qIdx: number): GeneratedLesson["questions"][number] => {
+    const card = cards[cardIndex % cards.length]!;
+    const key = card.key_terms[0] || pickContentKeywords(card.text, 1)[0] || "materi";
+    const otherTerms = allTerms.filter((t) => t.toLowerCase() !== key.toLowerCase());
+    const distractors = pickPlausibleDistractors(
+      key,
+      otherTerms,
+      card.text.toLowerCase(),
+      distractorCount
+    );
+
+    const rawOptions = [
+      { text: key, correct: true },
+      ...distractors.map((d) => ({ text: d, correct: false })),
+    ];
+    const shift = qIdx % rawOptions.length;
+    const rotated = [...rawOptions.slice(shift), ...rawOptions.slice(0, shift)];
+
+    return {
+      type: "match",
+      variant: "pilih_kata",
+      prompt: buildClozePrompt(card.text, key),
+      linked_card: (cardIndex % cards.length) + 1,
+      options: rotated.map((opt, idx) => ({
+        id: `opt-${idx + 1}`,
+        text: opt.text,
+        correct: opt.correct,
+      })),
+    };
+  };
+
+  const makeTrueFalseQuestion = (cardIndex: number, qIdx: number): GeneratedLesson["questions"][number] => {
+    const card = cards[cardIndex % cards.length]!;
+    const key = card.key_terms[0] || pickContentKeywords(card.text, 1)[0] || "materi";
+    const wantFalse = qIdx % 2 === 1;
+
+    if (wantFalse) {
+      const otherTerms = allTerms.filter((t) => t.toLowerCase() !== key.toLowerCase());
+      const [falseTerm] = pickPlausibleDistractors(
+        key,
+        otherTerms,
+        card.text.toLowerCase(),
+        1
+      );
+      if (falseTerm) {
+        const falsePrompt = buildFalseStatement(card.text, key, falseTerm);
+        if (falsePrompt) {
+          return {
+            type: "benar_salah",
+            prompt: falsePrompt,
+            linked_card: (cardIndex % cards.length) + 1,
+            answer: false,
+          };
+        }
+      }
+    }
+
+    return {
+      type: "benar_salah",
+      prompt: card.text,
+      linked_card: (cardIndex % cards.length) + 1,
+      answer: true,
+    };
+  };
+
+  const makeOrderQuestion = (qIdx: number): GeneratedLesson["questions"][number] => {
+    const stepCount = Math.min(3, cards.length);
+    const startIdx = cards.length > 3 ? (qIdx * 2) % Math.max(1, cards.length - stepCount + 1) : 0;
+    const selectedCards = cards.slice(startIdx, startIdx + stepCount);
+    const steps = (selectedCards.length >= 2 ? selectedCards : cards).map((c, idx) => ({
+      id: `step-${idx + 1}`,
+      text: c.text.replace(/\.$/, ""),
+    }));
+
+    return {
+      type: "order",
+      prompt: `Susun urutan isi materi "${title || "Pembelajaran"}" dengan benar.`,
+      linked_card: startIdx + 1,
+      steps,
+    };
+  };
+
+  for (let i = 0; i < config.questionCount; i++) {
+    if (config.exerciseType === "order") {
+      if (cards.length >= 2) {
+        questions.push(makeOrderQuestion(i));
+      } else {
+        questions.push(makeChoiceQuestion(i, i));
+      }
+      continue;
+    }
+
+    if (config.exerciseType === "match") {
+      if (i % 3 === 1 && cards.length >= 2) {
+        questions.push(makeTrueFalseQuestion(i, i));
+      } else {
+        questions.push(makeChoiceQuestion(i, i));
+      }
+      continue;
+    }
+
+    // "both": mix pilih_kata, benar_salah, and order
+    if (i % 3 === 0) {
+      questions.push(makeChoiceQuestion(i, i));
+    } else if (i % 3 === 1) {
+      questions.push(makeTrueFalseQuestion(i, i));
+    } else if (cards.length >= 2) {
+      questions.push(makeOrderQuestion(i));
+    } else {
+      questions.push(makeChoiceQuestion(i, i));
+    }
+  }
+
+  return questions;
+}
+
 /**
- * Buat kartu dan kuis sederhana jika teks bebas diberikan tetapi AI offline.
+ * Buat kartu dan kuis yang setia pada teks sumber atau topik jika AI offline.
  */
 export function generateFallbackFromText(
   title: string,
   rawText: string,
-  optionCount = 3
+  optionCountOrConfig: number | FallbackGenerationConfig = 3
 ): GeneratedLesson {
-  const sentences = rawText
-    .split(/[.\n!?]+/)
-    .map((s) => s.trim())
-    .filter((s) => s.length > 5 && s.length < 120)
-    .slice(0, 6);
+  const rawConfig: FallbackGenerationConfig =
+    typeof optionCountOrConfig === "number"
+      ? { optionCount: optionCountOrConfig }
+      : optionCountOrConfig;
 
-  const cards = sentences.map((sent) => {
-    const key = pickContentKeyword(sent);
+  const config: Required<FallbackGenerationConfig> = {
+    optionCount: Math.min(4, Math.max(2, rawConfig.optionCount ?? 3)),
+    cardCount: Math.min(15, Math.max(1, rawConfig.cardCount ?? 6)),
+    questionCount: Math.min(10, Math.max(0, rawConfig.questionCount ?? 4)),
+    exerciseType: rawConfig.exerciseType ?? "both",
+  };
+
+  const cleanTitle = title.trim();
+  let sentences = cleanAndSplitSourceText(rawText, config.cardCount);
+
+  if (sentences.length === 0 && cleanTitle.length > 0) {
+    sentences = buildTopicSentences(cleanTitle, config.cardCount);
+  }
+
+  if (sentences.length === 0) {
+    return adaptPresetLesson(FALLBACK_LESSONS["cuci tangan"]!, config);
+  }
+
+  const cards: GeneratedLesson["cards"] = sentences.map((sent) => {
+    const keyTerms = pickContentKeywords(sent, 2);
+    const primaryKey = keyTerms[0] ?? "materi";
     return {
-      text: sent.endsWith(".") ? sent : `${sent}.`,
-      key_terms: [key],
+      text: sent,
+      key_terms: keyTerms,
       image: {
-        keyword_id: key,
-        keyword_en: "learn",
-        alt: `Gambar untuk ${key}`,
+        keyword_id: primaryKey,
+        keyword_en: toEnglishKeyword(primaryKey),
+        alt: `Ilustrasi ${primaryKey}`,
       },
     };
   });
 
-  if (cards.length === 0) {
-    return FALLBACK_LESSONS["cuci tangan"]!;
-  }
+  const resolvedTitle = cleanTitle || "Materi Pembelajaran";
+  const questions = buildQuestionsForCards(resolvedTitle, cards, config);
 
-  const allTerms = cards.map((c) => c.key_terms[0] ?? "").filter(Boolean);
-  const distractorCount = Math.max(1, Math.min(3, optionCount - 1));
+  return {
+    title: resolvedTitle,
+    cards,
+    questions,
+  };
+}
 
-  const firstCard = cards[0]!;
-  const firstKey = firstCard.key_terms[0] || "materi";
-  const firstDistractors = pickPlausibleDistractors(
-    firstKey,
-    allTerms.slice(1),
-    firstCard.text.toLowerCase(),
-    distractorCount
-  );
+function adaptPresetLesson(
+  preset: GeneratedLesson,
+  config: Required<FallbackGenerationConfig>
+): GeneratedLesson {
+  const cards = preset.cards.slice(0, config.cardCount);
+  const maxCard = Math.max(1, cards.length);
 
-  const questions: GeneratedLesson["questions"] = [
-    {
-      type: "match",
-      variant: "pilih_kata",
-      prompt: buildClozePrompt(firstCard.text, firstKey),
-      linked_card: 1,
-      options: [
-        { id: "opt-1", text: firstKey, correct: true },
-        ...firstDistractors.map((d, i) => ({
-          id: `opt-${i + 2}`,
-          text: d,
-          correct: false,
-        })),
-      ],
-    },
-  ];
-
-  if (cards.length >= 2) {
-    const secondCard = cards[1]!;
-    questions.push({
-      type: "benar_salah",
-      prompt: secondCard.text,
-      linked_card: 2,
-      answer: true,
-    });
-  }
-
-  if (cards.length >= 3) {
-    questions.push({
-      type: "order",
-      prompt: `Susun urutan isi materi "${title || "Pembelajaran"}" dengan benar.`,
-      linked_card: 1,
-      steps: cards.slice(0, 3).map((c, idx) => ({
-        id: `step-${idx + 1}`,
-        text: c.text.replace(/\.$/, ""),
-      })),
+  let questions = preset.questions
+    .filter((q) => {
+      if (config.exerciseType === "order") return q.type === "order";
+      if (config.exerciseType === "match") return q.type !== "order";
+      return true;
+    })
+    .map((q) => {
+      const linked_card = Math.min(maxCard, Math.max(1, q.linked_card));
+      if (q.options && q.options.length > 0) {
+        const correctOpt = q.options.find((o) => o.correct) ?? q.options[0]!;
+        const distractors = q.options
+          .filter((o) => o !== correctOpt)
+          .slice(0, config.optionCount - 1);
+        return {
+          ...q,
+          linked_card,
+          options: [correctOpt, ...distractors].map((o, idx) => ({
+            ...o,
+            id: o.id || `opt-${idx + 1}`,
+          })),
+        };
+      }
+      return { ...q, linked_card };
     });
 
-    const thirdCard = cards[2]!;
-    const thirdKey = thirdCard.key_terms[0] || "materi";
-    const thirdDistractors = pickPlausibleDistractors(
-      thirdKey,
-      allTerms.filter((t) => t !== thirdKey),
-      thirdCard.text.toLowerCase(),
-      distractorCount
-    );
-    questions.push({
-      type: "match",
-      variant: "pilih_kata",
-      prompt: buildClozePrompt(thirdCard.text, thirdKey),
-      linked_card: 3,
-      options: [
-        { id: "opt-1", text: thirdKey, correct: true },
-        ...thirdDistractors.map((d, i) => ({
-          id: `opt-${i + 2}`,
-          text: d,
-          correct: false,
-        })),
-      ],
+  if (config.questionCount === 0) {
+    questions = [];
+  } else if (questions.length < config.questionCount) {
+    const generated = buildQuestionsForCards(preset.title, cards, {
+      ...config,
+      questionCount: config.questionCount - questions.length,
     });
+    questions = [...questions, ...generated];
+  } else {
+    questions = questions.slice(0, config.questionCount);
   }
 
   return {
-    title: title || "Materi Pembelajaran",
+    title: preset.title,
     cards,
     questions,
   };
@@ -384,34 +768,51 @@ export function generateFallbackFromText(
 
 export function getFallbackLesson(
   options: GenerateLessonOptions,
-  extractedText?: string
+  extractedText?: string,
+  optionCountOverride?: number
 ): GeneratedLesson {
   const query = (options.topic || "").toLowerCase();
   const hasIntellectual =
     options.needs?.includes("intelektual") ||
     options.needs?.includes("hambatan_intelektual");
-  const optionCount = hasIntellectual ? 2 : 3;
 
-  for (const [key, lesson] of Object.entries(FALLBACK_LESSONS)) {
-    if (query.includes(key)) {
-      return lesson;
-    }
-  }
+  const config: Required<FallbackGenerationConfig> = {
+    optionCount: Math.min(
+      4,
+      Math.max(2, optionCountOverride ?? (hasIntellectual ? 2 : 3))
+    ),
+    cardCount: Math.min(15, Math.max(1, options.cardCount ?? 6)),
+    questionCount:
+      options.questionCount !== undefined
+        ? Math.min(10, Math.max(0, options.questionCount))
+        : 4,
+    exerciseType: resolveExerciseType(options.questionTypes),
+  };
 
-  const content = extractedText || options.text;
-  if (content && content.length > 20) {
+  // 1. Jika ada teks sumber (hasil ekstraksi PDF atau teks manual), selalu gunakan teks tersebut
+  const content = (extractedText || options.text || "").trim();
+  if (content.length > 0) {
     return generateFallbackFromText(
-      options.topic || "Materi Kelas",
+      options.topic?.trim() || "Materi Pembelajaran",
       content,
-      optionCount
+      config
     );
   }
 
-  const cleanTopic = (options.topic || "").trim();
-  if (cleanTopic.length > 0) {
-    const topicSentence = `Kita belajar mengenal ${cleanTopic}. Perhatikan contoh ${cleanTopic} di sekitar kita. Kita mempraktikkan ${cleanTopic} dengan gembira.`;
-    return generateFallbackFromText(cleanTopic, topicSentence, optionCount);
+  // 2. Jika topik cocok dengan kurikulum bawaan
+  for (const [key, lesson] of Object.entries(FALLBACK_LESSONS)) {
+    if (query.includes(key)) {
+      return adaptPresetLesson(lesson, config);
+    }
   }
 
-  return FALLBACK_LESSONS["cuci tangan"]!;
+  // 3. Jika ada topik khusus apa pun, buat materi & kuis yang 100% berakar pada topik tersebut
+  const cleanTopic = (options.topic || "").trim();
+  if (cleanTopic.length > 0) {
+    const topicSentences = buildTopicSentences(cleanTopic, config.cardCount).join(" ");
+    return generateFallbackFromText(cleanTopic, topicSentences, config);
+  }
+
+  // 4. Hanya jika benar-benar tidak ada topik maupun teks sama sekali
+  return adaptPresetLesson(FALLBACK_LESSONS["cuci tangan"]!, config);
 }

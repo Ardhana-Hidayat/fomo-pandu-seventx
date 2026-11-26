@@ -14,13 +14,28 @@ export function buildSystemPrompt(options: GenerateLessonOptions): string {
 
   const cardCount = options.cardCount ?? 6;
   const questionCount = options.questionCount ?? 4;
+  const optionCount = hasIntellectual ? 2 : 3;
   const questionTypes = options.questionTypes?.length
     ? options.questionTypes.join(", ")
     : "pilih_gambar, pilih_kata, urutkan, benar_salah";
 
+  const quizRules =
+    questionCount === 0
+      ? `Aturan latihan kuis:\n- Jangan buat soal latihan. Kembalikan "questions": [].`
+      : `Aturan latihan kuis:
+- Buat tepat ${questionCount} soal latihan dengan jenis: ${questionTypes}.
+- Setiap soal HARUS merujuk ke nomor kartu yang valid ('linked_card', integer antara 1 sampai ${cardCount}).
+- Setiap 'prompt' harus berupa kalimat tanya atau perintah bahasa Indonesia yang jelas, lengkap, dan langsung berkaitan dengan isi kartu (DILARANG menulis judul umum seperti "Latihan 1").
+- Jumlah pilihan jawaban adalah ${optionCount} (semua opsi harus berbeda satu sama lain). Pilihan pengecoh harus masuk akal, berupa kata/frasa konkret dari materi atau kosakata relevan yang berbeda dari jawaban benar (DILARANG memakai teks placeholder seperti "Jawaban Benar", "Pilihan 2", "Opsi 1", "Salah", "Benar", atau "Lain").
+- DILARANG menggunakan pertanyaan bernegasi (seperti "yang bukan...", "yang salah...").
+- Pada setiap soal pilihan ('match', 'pilih_kata', 'pilih_gambar', 'cocokkan_isyarat'), HARUS ada tepat satu pilihan dengan "correct": true dan pilihan lainnya "correct": false.
+- Untuk jenis "order" atau "urutkan", sertakan 3 langkah tindakan nyata yang berurutan sesuai kartu di atribut 'steps' (DILARANG menulis "Langkah 1", "Langkah 2").
+- Untuk jenis "match", sertakan pilihan di atribut 'options' dengan tepat satu "correct": true.`;
+
   return `Kamu adalah penyusun materi kurikulum Sekolah Luar Biasa (SLB) di Indonesia.
 Siswa memiliki kebutuhan khusus (tunarungu, tunanetra, hambatan intelektual ringan, atau hambatan komunikasi).
 Tulis materi pembelajaran dalam bahasa Indonesia yang sangat sederhana, konkret, dan mudah dipahami anak SLB.
+Materi dan kuis HARUS 100% setia pada topik atau materi sumber yang diberikan. DILARANG mengarang topik lain yang tidak berkaitan.
 
 Aturan ketat kartu peraga:
 - Buat sekitar ${cardCount} kartu terstruktur.
@@ -34,15 +49,7 @@ Aturan ketat kartu peraga:
 - 'image.keyword_en': 1-2 kata bahasa Inggris konkret untuk pencarian piktogram internasional (contoh: "soap", "water").
 - 'image.alt': deskripsi gambar singkat dalam bahasa Indonesia ramah anak.
 
-Aturan latihan kuis:
-- Buat ${questionCount} soal latihan dengan jenis: ${questionTypes}.
-- Setiap soal HARUS merujuk ke nomor kartu ('linked_card', integer mulai dari 1).
-- Setiap 'prompt' harus berupa kalimat tanya atau perintah bahasa Indonesia yang jelas, lengkap, dan langsung berkaitan dengan isi kartu (DILARANG menulis judul umum seperti "Latihan 1").
-- Jumlah pilihan jawaban adalah ${hasIntellectual ? "2" : "3"}. Pilihan pengecoh harus masuk akal, berupa kata/frasa konkret yang berbeda dari jawaban benar (DILARANG memakai teks placeholder seperti "Jawaban Benar", "Pilihan 2", "Salah", atau "Lain").
-- DILARANG menggunakan pertanyaan bernegasi (seperti "yang bukan...", "yang salah...").
-- Pada setiap soal pilihan ('match', 'pilih_kata', 'pilih_gambar', 'cocokkan_isyarat'), HARUS ada tepat satu pilihan dengan "correct": true dan pilihan lainnya "correct": false.
-- Untuk jenis "order" atau "urutkan", sertakan 3 langkah tindakan nyata yang berurutan di atribut 'steps' (DILARANG menulis "Langkah 1", "Langkah 2").
-- Untuk jenis "match", sertakan pilihan di atribut 'options' dengan tepat satu "correct": true.
+${quizRules}
 
 Keamanan isi:
 - Hanya gunakan informasi dari materi sumber atau fakta edukatif umum. DILARANG membuat hal berbahaya, tidak pantas, atau menakutkan untuk anak sekolah.

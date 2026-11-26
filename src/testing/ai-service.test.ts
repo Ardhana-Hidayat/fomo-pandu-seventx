@@ -5,6 +5,7 @@ import {
   getFallbackLesson,
   generatedLessonSchema,
   generateLessonContent,
+  sanitizeGeneratedLesson,
 } from "@/server/services/ai";
 
 describe("AI Prompt Builder", () => {
@@ -74,5 +75,146 @@ describe("generateLessonContent End-to-End Fallback Service", () => {
     expect(res.badge).toContain("Dibuat dari contoh bawaan");
     expect(res.lesson.cards.length).toBeGreaterThan(0);
     expect(res.lesson.questions.length).toBeGreaterThan(0);
+  });
+
+  it("tidak pernah jatuh ke cuci tangan saat diberikan topik khusus atau teks PDF bernomor halaman", () => {
+    const topicOnly = getFallbackLesson({
+      sourceType: "topik",
+      topic: "Fotosintesis Tumbuhan",
+      cardCount: 5,
+      questionCount: 4,
+    });
+    expect(topicOnly.title).toBe("Fotosintesis Tumbuhan");
+    expect(topicOnly.cards).toHaveLength(5);
+    expect(topicOnly.cards.every((c) => c.text.toLowerCase().includes("fotosintesis"))).toBe(true);
+    expect(topicOnly.cards.some((c) => c.text.toLowerCase().includes("sabun"))).toBe(false);
+    expect(topicOnly.questions).toHaveLength(4);
+
+    const noisyPdfText = [
+      "Halaman 1",
+      "DAFTAR ISI",
+      "1 / 3",
+      "Page 2 of 5",
+      "Kucing adalah hewan peliharaan yang lucu.",
+      "Kucing suka makan ikan segar.",
+      "Burung terbang tinggi di langit biru.",
+      "Anjing menjaga halaman rumah setiap malam.",
+    ].join("\n");
+
+    const pdfLesson = getFallbackLesson(
+      {
+        sourceType: "pdf",
+        topic: "Hewan di Sekitar Kita",
+        cardCount: 4,
+        questionCount: 4,
+      },
+      noisyPdfText,
+      4
+    );
+
+    expect(pdfLesson.title).toBe("Hewan di Sekitar Kita");
+    expect(pdfLesson.cards).toHaveLength(4);
+    expect(pdfLesson.cards[0]?.text).toContain("Kucing");
+    expect(pdfLesson.cards[0]?.image.keyword_en).toBe("cat");
+    expect(pdfLesson.cards.some((c) => /^(?:halaman\s+\d+|daftar isi|page\s+\d+)/i.test(c.text))).toBe(false);
+    expect(pdfLesson.questions).toHaveLength(4);
+
+    const choiceQuestions = pdfLesson.questions.filter((q) => q.options && q.options.length > 0);
+    expect(choiceQuestions.length).toBeGreaterThan(0);
+    for (const q of choiceQuestions) {
+      expect(q.options).toHaveLength(4);
+      expect(q.options!.filter((o) => o.correct)).toHaveLength(1);
+      const uniqueTexts = new Set(q.options!.map((o) => o.text.toLowerCase()));
+      expect(uniqueTexts.size).toBe(4);
+    }
+  });
+
+  it("menghormati questionCount, optionCount, dan exerciseType (match / order / both)", () => {
+    const sourceText =
+      "Matahari terbit di sebelah timur. Tumbuhan hijau membutuhkan cahaya matahari. Udara pagi terasa sangat sejuk. Kita berolahraga di halaman sekolah.";
+
+    const matchOnly = getFallbackLesson(
+      {
+        sourceType: "teks",
+        topic: "Alam Pagi",
+        questionCount: 3,
+        questionTypes: ["pilih_kata", "benar_salah"],
+      },
+      sourceText,
+      2
+    );
+    expect(matchOnly.questions).toHaveLength(3);
+    expect(matchOnly.questions.every((q) => q.type !== "order")).toBe(true);
+    for (const q of matchOnly.questions) {
+      if (q.options) {
+        expect(q.options).toHaveLength(2);
+        expect(q.options.filter((o) => o.correct)).toHaveLength(1);
+      }
+    }
+
+    const orderOnly = getFallbackLesson(
+      {
+        sourceType: "teks",
+        topic: "Alam Pagi",
+        questionCount: 2,
+        questionTypes: ["urutkan"],
+      },
+      sourceText
+    );
+    expect(orderOnly.questions).toHaveLength(2);
+    expect(orderOnly.questions.every((q) => q.type === "order")).toBe(true);
+    expect(orderOnly.questions[0]?.steps?.length).toBeGreaterThanOrEqual(2);
+
+    const noQuiz = getFallbackLesson(
+      {
+        sourceType: "teks",
+        topic: "Alam Pagi",
+        questionCount: 0,
+      },
+      sourceText
+    );
+    expect(noQuiz.questions).toHaveLength(0);
+  });
+});
+
+describe("sanitizeGeneratedLesson", () => {
+  it("menghapus placeholder, memastikan 1 jawaban benar, dan menyesuaikan optionCount & linked_card", () => {
+    const raw = generatedLessonSchema.parse({
+      title: "Mengenal Buah",
+      cards: [
+        {
+          text: "Apel berwarna merah segar.",
+          key_terms: ["apel"],
+          image: { keyword_id: "apel", keyword_en: "apple", alt: "Apel merah" },
+        },
+        {
+          text: "Jeruk rasanya manis.",
+          key_terms: ["jeruk"],
+          image: { keyword_id: "jeruk", keyword_en: "orange", alt: "Buah jeruk" },
+        },
+      ],
+      questions: [
+        {
+          type: "match",
+          variant: "pilih_kata",
+          prompt: "Buah mana yang berwarna merah?",
+          linked_card: 99,
+          options: [
+            { text: "apel", correct: true },
+            { text: "Pilihan 2", correct: false },
+            { text: "Jawaban Benar", correct: true },
+            { text: "apel", correct: false },
+          ],
+        },
+      ],
+    });
+
+    const sanitized = sanitizeGeneratedLesson(raw, { optionCount: 3 });
+    expect(sanitized.questions).toHaveLength(1);
+    const q = sanitized.questions[0]!;
+    expect(q.linked_card).toBe(2);
+    expect(q.options).toHaveLength(3);
+    expect(q.options!.filter((o) => o.correct)).toHaveLength(1);
+    expect(q.options!.some((o) => /pilihan|jawaban benar/i.test(o.text))).toBe(false);
   });
 });

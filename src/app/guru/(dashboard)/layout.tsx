@@ -1,7 +1,7 @@
 import { connection } from "next/server";
 import { redirect } from "next/navigation";
 import { getCurrentTeacher } from "@/features/auth";
-import { TeacherSidebar, TeacherMobileNav } from "@/features/classrooms";
+import { TeacherSidebar, TeacherMobileNav } from "@/features/teacher-dashboard";
 
 export const instant = false;
 

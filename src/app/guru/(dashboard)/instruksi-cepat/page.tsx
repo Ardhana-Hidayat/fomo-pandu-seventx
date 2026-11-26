@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentTeacher } from "@/features/auth";
-import { QuickInstructionsClient } from "@/features/quick-instructions/components/QuickInstructionsClient";
+import { QuickInstructionsClient } from "@/features/quick-instructions";
 
 export const instant = false;
 

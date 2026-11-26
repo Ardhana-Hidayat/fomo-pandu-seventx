@@ -16,7 +16,6 @@ interface SignCardProps {
 }
 
 export function SignCard({
-  system = "SIBI",
   term = "",
   activeLetter,
   activeLetterIndex = 0,

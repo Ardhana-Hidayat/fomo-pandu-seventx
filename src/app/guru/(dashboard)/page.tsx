@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getCurrentTeacher } from "@/features/auth";
-import { getTeacherMateriDashboardOverview } from "@/features/classrooms";
+import { getTeacherMateriDashboardOverview } from "@/features/teacher-dashboard";
 import { Card, Button, Icon } from "@/shared/ui";
 
 export const instant = false;

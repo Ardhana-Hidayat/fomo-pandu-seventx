@@ -1,11 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { tokenize, slotAt } from "@/shared/lib/sync";
 import {
+  tokenize,
+  slotAt,
   PACE_CONFIGS,
   buildQuickInstructionPlan,
   resolveSegmentState,
   extractUniqueSignLetters,
-} from "../lib/playback-plan";
+} from "@/shared/lib/sync";
 
 describe("buildQuickInstructionPlan", () => {
   it("memecah kalimat menjadi segmen kata kunci dan non-kunci dengan indeks token yang tepat", () => {

@@ -21,8 +21,7 @@ const globalForDb = globalThis as unknown as {
 export async function ensureDatabaseInitialized(): Promise<void> {
   if (
     globalForDb.isInitializing ||
-    process.env.NODE_ENV === "test" ||
-    env.DATA_DRIVER === "postgres"
+    process.env.NODE_ENV === "test"
   ) {
     return;
   }
@@ -32,6 +31,33 @@ export async function ensureDatabaseInitialized(): Promise<void> {
 
   globalForDb.isInitializing = true;
   globalForDb.dbInitPromise = (async () => {
+    if (env.DATA_DRIVER === "postgres") {
+      const sqlClient = globalForDb.sqlClient;
+      if (!sqlClient) return;
+      try {
+        const rows = await sqlClient<{ count: string }[]>`
+          SELECT count(*)::text as count
+          FROM information_schema.tables
+          WHERE table_schema = 'public' AND table_name = 'teachers'
+        `;
+        if (rows[0]?.count === "0") {
+          for (const statement of SCHEMA_STATEMENTS) {
+            if (statement && statement.trim()) {
+              try {
+                await sqlClient.unsafe(statement);
+              } catch {
+                // Abaikan jika tabel/indeks/constraint sudah ada
+              }
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Gagal auto-init database postgres:", e);
+        globalForDb.dbInitPromise = undefined;
+      }
+      return;
+    }
+
     const pglite = globalForDb.pglite;
     if (!pglite) return;
     try {
@@ -89,11 +115,21 @@ function createDb(): DbClient {
   }
 
   if (env.DATA_DRIVER === "postgres") {
+    const dbUrl = env.DATABASE_URL!;
+    const isRemote = !/localhost|127\.0\.0\.1/i.test(dbUrl);
+    const disableSsl = /sslmode=disable/i.test(dbUrl);
     const client =
       globalForDb.sqlClient ??
-      postgres(env.DATABASE_URL!, { prepare: false });
+      postgres(dbUrl, {
+        prepare: false,
+        ssl: isRemote && !disableSsl ? { rejectUnauthorized: false } : undefined,
+        max: 3,
+        idle_timeout: 20,
+        connect_timeout: 10,
+      });
     globalForDb.sqlClient = client;
-    return drizzlePostgres(client, { schema }) as unknown as DbClient;
+    const rawPg = drizzlePostgres(client, { schema }) as unknown as DbClient;
+    return wrapWithInit(rawPg);
   }
 
   // In test environment without explicit data dir, use in-memory PGlite.

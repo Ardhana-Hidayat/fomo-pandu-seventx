@@ -146,7 +146,7 @@ export default function HelpPage() {
           <div className="grid gap-3 sm:grid-cols-2 text-xs text-[var(--ink-2)]">
             <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-3 space-y-1">
               <strong className="text-[var(--ink)] text-sm block">Pilihan Tema Warna</strong>
-              <p>Mendukung tema Terang, Gelap, serta mode kontras tinggi Kuning di atas Hitam yang optimal bagi siswa dengan daya penglihatan rendah (low vision).</p>
+              <p>Mendukung tema Terang, Gelap, serta mode Kontras Tinggi (AAA) yang nyaman di mata untuk siswa dengan daya penglihatan rendah (low vision).</p>
             </div>
             <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-3 space-y-1">
               <strong className="text-[var(--ink)] text-sm block">Ukuran &amp; Jenis Huruf</strong>

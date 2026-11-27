@@ -31,7 +31,7 @@ export default async function TVQuizPage({
       <TVQuiz
         lessonTitle={lesson.title}
         questions={lesson.questions}
-        backHref="/"
+        backHref={`/tv/${kode}/${lesson.id}`}
         materialHref={`/tv/${kode}/${lesson.id}`}
       />
     </div>

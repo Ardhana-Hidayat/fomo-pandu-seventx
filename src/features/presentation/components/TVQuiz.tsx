@@ -97,21 +97,35 @@ export function TVQuiz({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [handleNext, handlePrev, total]);
 
-  const safeExitHref = /^\/tv\/[^/]+\/?$/.test(backHref) ? "/" : backHref || "/";
+  const safeExitHref = /^\/tv\/[^/]+\/?$/.test(backHref)
+    ? materialHref || "/"
+    : backHref || materialHref || "/";
+  const lessonReturnHref = materialHref || safeExitHref;
 
   if (isCompleted) {
     const correctCount = Object.values(feedbackByQ).filter((f) => f.ok).length;
     return (
       <div className="flex h-[100dvh] w-screen flex-col justify-between p-6 sm:p-12 bg-[var(--bg)] text-[var(--ink)]">
         <header className="flex items-center justify-between border-b-4 border-[var(--border)] pb-4">
-          <Button
-            variant="secondary"
-            size="normal"
-            href={safeExitHref}
-            icon={<Icon name="CaretLeft" size={20} />}
-          >
-            {safeExitHref === "/" ? "Kembali ke Beranda" : "Keluar TV"}
-          </Button>
+          {onBackToMaterial ? (
+            <Button
+              variant="secondary"
+              size="normal"
+              onClick={onBackToMaterial}
+              icon={<Icon name="CaretLeft" size={20} />}
+            >
+              Kembali ke Materi
+            </Button>
+          ) : (
+            <Button
+              variant="secondary"
+              size="normal"
+              href={lessonReturnHref}
+              icon={<Icon name="CaretLeft" size={20} />}
+            >
+              Kembali ke Materi
+            </Button>
+          )}
           <span className="text-lg sm:text-xl font-bold text-[var(--muted)] truncate">
             {lessonTitle}
           </span>
@@ -150,26 +164,18 @@ export function TVQuiz({
                   onClick={onBackToMaterial}
                   icon={<Icon name="Cards" size={22} />}
                 >
-                  Ulangi Materi
+                  Kembali ke Materi
                 </Button>
-              ) : materialHref ? (
+              ) : (
                 <Button
                   variant="secondary"
                   size="large"
-                  href={materialHref}
+                  href={lessonReturnHref}
                   icon={<Icon name="Cards" size={22} />}
                 >
-                  Ulangi Materi
+                  Kembali ke Materi
                 </Button>
-              ) : null}
-              <Button
-                variant="secondary"
-                size="large"
-                href={safeExitHref}
-                icon={<Icon name="CaretLeft" size={22} />}
-              >
-                {safeExitHref === "/" ? "Kembali ke Beranda" : "Keluar TV"}
-              </Button>
+              )}
             </div>
           </Card>
         </main>

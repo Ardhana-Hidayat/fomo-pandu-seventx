@@ -248,9 +248,9 @@ describe("TVPlayer & TVQuiz", () => {
     expect(screen.getByText(/Bagus! Jawaban tepat/i)).toBeDefined();
     fireEvent.click(screen.getByRole("button", { name: /Selesai/i }));
     expect(screen.getByText(/Yey! Selesai!/i)).toBeDefined();
-    const exitLinks = screen.getAllByRole("link", { name: /Kembali ke Beranda/i });
+    const exitLinks = screen.getAllByRole("link", { name: /Kembali ke Materi/i });
     expect(exitLinks.length).toBeGreaterThanOrEqual(1);
-    expect(exitLinks[0]?.getAttribute("href")).toBe("/");
+    expect(exitLinks[0]?.getAttribute("href")).toBe("/tv/123456/lesson-1");
     expect(container.textContent).not.toMatch(/\bkelas\b/i);
   });
 

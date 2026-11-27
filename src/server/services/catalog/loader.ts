@@ -32,6 +32,14 @@ export function loadCatalogFromDisk(catalogDir = getCatalogDir()): ConceptRecord
 
   const byId = new Map<string, ConceptRecord>();
 
+  const supabaseUrl = (
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.SUPABASE_URL ||
+    ""
+  ).replace(/\/+$/, "");
+  const useSupabaseForMissingLocal =
+    process.env.STORAGE_DRIVER === "supabase" && Boolean(supabaseUrl);
+
   for (const file of files) {
     const fullPath = path.join(catalogDir, file);
     const raw = fs.readFileSync(fullPath, "utf8");
@@ -41,7 +49,22 @@ export function loadCatalogFromDisk(catalogDir = getCatalogDir()): ConceptRecord
     for (const item of items) {
       if (!item || !item.id) continue;
       if (!byId.has(item.id)) {
-        byId.set(item.id, item);
+        let resolvedUrl = item.assetUrl;
+        if (
+          useSupabaseForMissingLocal &&
+          resolvedUrl &&
+          resolvedUrl.startsWith("/media/custom/")
+        ) {
+          const localDiskPath = path.join(
+            process.cwd(),
+            "public",
+            resolvedUrl.replace(/^\/+/, "")
+          );
+          if (!fs.existsSync(localDiskPath)) {
+            resolvedUrl = `${supabaseUrl}/storage/v1/object/public/card-images/${path.basename(resolvedUrl)}`;
+          }
+        }
+        byId.set(item.id, { ...item, assetUrl: resolvedUrl });
       }
     }
   }

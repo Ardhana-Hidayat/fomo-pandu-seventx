@@ -19,6 +19,7 @@ import {
 } from "../db/schema";
 import { ok, err, type Result, makeAppError } from "@/shared/lib/result";
 import { storage } from "../services/storage";
+import { searchAssets } from "../services/assets";
 
 export type LessonCardWithMedia = LessonCard & {
   imageUrl?: string | null;
@@ -37,7 +38,7 @@ export interface CreateCardInput {
   text: string;
   keyTerms?: string[];
   cardType?: "vocabulary" | "instruction" | "step";
-  imageSource?: "upload" | "pictogram" | "ai";
+  imageSource?: "upload" | "pictogram" | "ai" | "none";
   imageAlt?: string;
   imageAssetId?: string;
   audioSource?: "tts" | "recording" | "none";
@@ -147,9 +148,9 @@ export async function createLesson(
             cardType: c.cardType ?? "instruction",
             imageSource: c.imageSource ?? "pictogram",
             imageAlt: c.imageAlt,
-            imageAssetId: c.imageAssetId,
+            imageAssetId: c.imageAssetId || undefined,
             audioSource: c.audioSource ?? "none",
-            audioAssetId: c.audioAssetId,
+            audioAssetId: c.audioAssetId || undefined,
           })
           .returning();
         if (cardRows[0]) createdCards.push(cardRows[0]);
@@ -188,10 +189,6 @@ export async function createLesson(
 }
 
 function getPictoUrl(slug: string): string {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
-  if (supabaseUrl && (process.env.STORAGE_DRIVER === "supabase" || process.env.NODE_ENV === "production")) {
-    return `${supabaseUrl}/storage/v1/object/public/card-images/${slug}.webp`;
-  }
   return `/media/pictograms/${slug}.webp`;
 }
 
@@ -270,7 +267,10 @@ function loadPictoMap(): Record<string, string> {
 
 const EXTENDED_PICTO_MAP = loadPictoMap();
 
-async function enrichCardsWithMedia(cards: LessonCard[]): Promise<LessonCardWithMedia[]> {
+async function enrichCardsWithMedia(
+  cards: LessonCard[],
+  isDemoHandwash = false
+): Promise<LessonCardWithMedia[]> {
   const assetIds = cards
     .flatMap((c) => [c.imageAssetId, c.audioAssetId])
     .filter((id): id is string => Boolean(id));
@@ -295,17 +295,18 @@ async function enrichCardsWithMedia(cards: LessonCard[]): Promise<LessonCardWith
         a.storageKey.startsWith("/") || a.storageKey.startsWith("http")
           ? a.storageKey
           : storage.url(a.storageKey, "card-images");
-    } else if (c.imageSource === "pictogram" && DEMO_PICTO_MAP[c.position]) {
+    } else if (isDemoHandwash && c.imageSource === "pictogram" && DEMO_PICTO_MAP[c.position]) {
       imageUrl = DEMO_PICTO_MAP[c.position]!;
-    } else {
-      // Periksa kecocokan kata kunci kartu dengan pustaka piktogram lokal yang tersedia
-      const terms = [
-        ...(c.keyTerms || []),
-        ...c.text.toLowerCase().replace(/[^a-z0-9\s-]/g, "").split(/\s+/),
-      ];
-      for (const t of terms) {
-        const clean = t.trim();
-        if (clean && EXTENDED_PICTO_MAP[clean]) {
+    } else if (c.imageSource !== "none") {
+      // Resolusi aman lewat katalog aset lokal (kustom SDLB + ARASAAC), tanpa memaksa gambar kebersihan
+      const terms = (c.keyTerms || []).map((t) => t.toLowerCase().trim()).filter(Boolean);
+      for (const clean of terms) {
+        const hit = searchAssets(clean, { limit: 1, minScore: 22, onlyAvailable: true })[0];
+        if (hit) {
+          imageUrl = hit.asset.file_path;
+          break;
+        }
+        if (EXTENDED_PICTO_MAP[clean]) {
           imageUrl = EXTENDED_PICTO_MAP[clean];
           break;
         }
@@ -331,6 +332,12 @@ async function enrichCardsWithMedia(cards: LessonCard[]): Promise<LessonCardWith
 }
 
 function resolveQuizVisualUrl(textKey: string, enKey: string): string | undefined {
+  const catalogQuery = (textKey || enKey || "").trim();
+  if (catalogQuery) {
+    const hit = searchAssets(catalogQuery, { limit: 1, minScore: 22, onlyAvailable: true })[0];
+    if (hit) return hit.asset.file_path;
+  }
+
   const direct =
     EXTENDED_PICTO_MAP[textKey] ||
     EXTENDED_PICTO_MAP[enKey] ||
@@ -380,7 +387,12 @@ function enrichQuestionsWithMedia(
         const text = opt.text ?? opt.label ?? (isString ? rawOpt : "");
         const textKey = text.toLowerCase().trim();
         const enKey = opt.image?.keyword_en?.toLowerCase().trim() || "";
-        const picUrl = resolveQuizVisualUrl(textKey, enKey);
+        const optVisual = (opt as { visual?: { url?: string } | null }).visual;
+        const groundedUrl = optVisual?.url || opt.imageUrl || opt.image?.url;
+        const picUrl =
+          optVisual === null
+            ? undefined
+            : groundedUrl || resolveQuizVisualUrl(textKey, enKey);
 
         const id = opt.id ?? `opt-${idx}`;
         const isCorrect =
@@ -391,7 +403,7 @@ function enrichQuestionsWithMedia(
               String(payload.answer).trim().toLowerCase() === id.toLowerCase()
             : idx === 0;
 
-        const imageUrl = picUrl || opt.imageUrl || opt.image?.url;
+        const imageUrl = picUrl;
 
         return {
           ...opt,
@@ -417,10 +429,15 @@ function enrichQuestionsWithMedia(
         const text = st.text ?? (isString ? rawSt : "");
         const textKey = text.toLowerCase().trim();
         const enKey = st.image?.keyword_en?.toLowerCase().trim() || "";
-        const picUrl = resolveQuizVisualUrl(textKey, enKey);
+        const stVisual = (st as { visual?: { url?: string } | null }).visual;
+        const groundedUrl = stVisual?.url || st.imageUrl || st.image?.url;
+        const picUrl =
+          stVisual === null
+            ? undefined
+            : groundedUrl || resolveQuizVisualUrl(textKey, enKey);
 
         const id = st.id ?? `step-${sIdx}`;
-        const imageUrl = picUrl || st.imageUrl || st.image?.url;
+        const imageUrl = picUrl;
 
         return {
           ...st,
@@ -474,7 +491,10 @@ export async function getLessonWithContent(
         .where(eq(publications.lessonId, lesson.id)),
     ]);
 
-    const cards = await enrichCardsWithMedia(rawCards);
+    const isDemoHandwash =
+      lesson.slug === "cuci-tangan-bersih" ||
+      lesson.topic.toLowerCase().includes("cuci tangan");
+    const cards = await enrichCardsWithMedia(rawCards, isDemoHandwash);
     const questions = enrichQuestionsWithMedia(rawQuestions, cards);
 
     return ok({
@@ -557,7 +577,10 @@ export async function getLessonForStudent(
         .where(eq(publications.lessonId, lesson.id)),
     ]);
 
-    const cards = await enrichCardsWithMedia(rawCards);
+    const isDemoHandwash =
+      lesson.slug === "cuci-tangan-bersih" ||
+      lesson.topic.toLowerCase().includes("cuci tangan");
+    const cards = await enrichCardsWithMedia(rawCards, isDemoHandwash);
     const questions = enrichQuestionsWithMedia(rawQuestions, cards);
 
     return ok({
@@ -728,7 +751,7 @@ export interface SaveCardInput {
   text: string;
   keyTerms?: string[];
   cardType?: "vocabulary" | "instruction" | "step";
-  imageSource?: "upload" | "pictogram" | "ai";
+  imageSource?: "upload" | "pictogram" | "ai" | "none";
   imageAlt?: string | null;
   imageAssetId?: string | null;
   audioSource?: "tts" | "recording" | "none";

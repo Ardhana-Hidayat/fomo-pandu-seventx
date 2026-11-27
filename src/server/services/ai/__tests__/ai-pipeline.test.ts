@@ -288,6 +288,13 @@ describe("Mocked Gemini Generation & 1x Repair", () => {
     let callCount = 0;
 
     vi.doMock("@google/genai", () => ({
+      Type: {
+        OBJECT: "OBJECT",
+        ARRAY: "ARRAY",
+        STRING: "STRING",
+        BOOLEAN: "BOOLEAN",
+        INTEGER: "INTEGER",
+      },
       GoogleGenAI: class {
         models = {
           generateContent: vi.fn(async () => {

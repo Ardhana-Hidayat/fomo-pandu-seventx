@@ -67,6 +67,7 @@ export async function POST(request: Request) {
 
     let topic = "";
     let text = "";
+    let subject = "Otomatis";
     let sourceType: "topik" | "teks" | "pdf" | "foto" = "topik";
     let level: CognitiveLevel = "sdlb";
     let needs: string[] = ["campuran"];
@@ -83,8 +84,17 @@ export async function POST(request: Request) {
       const formData = await request.formData();
       topic = (formData.get("topic") as string) || "";
       text = (formData.get("text") as string) || "";
+      subject = (formData.get("subject") as string) || "Otomatis";
       sourceType = ((formData.get("sourceType") as string) || "topik") as typeof sourceType;
       level = parseLevel(formData.get("level"));
+      const rawComplexity = formData.get("languageComplexity") as string | null;
+      if (
+        rawComplexity === "sangat_sederhana" ||
+        rawComplexity === "sederhana" ||
+        rawComplexity === "biasa"
+      ) {
+        languageComplexity = rawComplexity;
+      }
       teacherNotes = (formData.get("teacherNotes") as string) || "";
       const rawCardCount = formData.get("cardCount");
       if (rawCardCount) cardCount = Math.min(15, Math.max(3, Number(rawCardCount) || 6));
@@ -109,6 +119,7 @@ export async function POST(request: Request) {
       const body = await request.json();
       topic = body.topic || "";
       text = body.text || "";
+      subject = body.subject || "Otomatis";
       sourceType = body.sourceType || "topik";
       level = parseLevel(body.level);
       needs = body.needs || ["campuran"];
@@ -131,18 +142,24 @@ export async function POST(request: Request) {
       teacherNotes = body.teacherNotes || "";
     }
 
-    if (!topic && !text && !fileBuffer) {
+    if (!topic.trim() && !text.trim() && !fileBuffer) {
       return NextResponse.json(
-        { error: "Mohon masukkan topik, teks, atau unggah dokumen." },
+        {
+          success: false,
+          error: "Mohon masukkan topik, teks, atau unggah dokumen.",
+        },
         { status: 400 }
       );
     }
 
     // Periksa sesi guru terautentikasi sekaligus pulihkan baris guru di DB bila perlu
     const teacherSession = await getCurrentTeacher();
-    if (sourceType === "pdf" && !teacherSession) {
+    if (!teacherSession) {
       return NextResponse.json(
-        { error: "Sesi guru tidak valid. Silakan masuk kembali." },
+        {
+          success: false,
+          error: "Sesi guru tidak valid atau telah berakhir. Silakan masuk kembali.",
+        },
         { status: 401 }
       );
     }
@@ -150,11 +167,14 @@ export async function POST(request: Request) {
     // Rate limit per guru atau IP
     const clientIp =
       request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "anon";
-    const rateKey = `ai_gen:${teacherSession?.teacher.id ?? clientIp}`;
+    const rateKey = `ai_gen:${teacherSession.teacher.id ?? clientIp}`;
     const rateRes = await checkAiRateLimit(rateKey);
     if (!rateRes.allowed) {
       return NextResponse.json(
-        { error: "Terlalu banyak permintaan pembuatan materi. Silakan tunggu sebentar." },
+        {
+          success: false,
+          error: "Terlalu banyak permintaan pembuatan materi. Silakan tunggu sebentar.",
+        },
         { status: 429 }
       );
     }
@@ -172,6 +192,7 @@ export async function POST(request: Request) {
       sourceType,
       topic,
       text,
+      subject,
       fileBuffer,
       mimeType,
       level,
@@ -190,6 +211,8 @@ export async function POST(request: Request) {
       optionCount,
       questionCount,
       exerciseType,
+      subject,
+      skipRecordVisualGap: true,
     });
     const finalLesson = validation.lesson;
     const warnings = Array.from(
@@ -235,7 +258,7 @@ export async function POST(request: Request) {
           text: c.text,
           keyTerms: c.key_terms,
           cardType: "instruction",
-          imageSource: "pictogram",
+          imageSource: imageAssetId ? "pictogram" : "none",
           imageAlt: c.visual?.alt || c.image?.alt || undefined,
           imageAssetId,
           audioSource: "none",
@@ -254,6 +277,7 @@ export async function POST(request: Request) {
                   id: opt.id || String.fromCharCode(97 + optIdx),
                   text: opt.text,
                   correct: opt.correct,
+                  visual: opt.visual ?? null,
                   imageUrl: opt.visual?.url ?? opt.image?.url,
                   image: opt.visual
                     ? {
@@ -266,6 +290,7 @@ export async function POST(request: Request) {
                 steps: q.steps?.map((step, stepIdx) => ({
                   id: step.id || `step-${stepIdx + 1}`,
                   text: step.text,
+                  visual: step.visual ?? null,
                   imageUrl: step.visual?.url ?? step.image?.url,
                   image: step.visual
                     ? {
@@ -299,7 +324,10 @@ export async function POST(request: Request) {
           dbRes.error
         );
         return NextResponse.json(
-          { error: dbRes.error.message || "Gagal menyimpan materi pembelajaran." },
+          {
+            success: false,
+            error: dbRes.error.message || "Gagal menyimpan materi pembelajaran.",
+          },
           { status: 500 }
         );
       }
@@ -320,12 +348,20 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Error pada /api/ai/generate-lesson:", error);
+    const msg = error instanceof Error ? error.message : "";
+    const isClientError =
+      msg.includes("PDF terlihat") ||
+      msg.includes("tidak memiliki teks") ||
+      msg.includes("API key") ||
+      msg.includes("tidak ada teks materi sumber");
     return NextResponse.json(
       {
-        error:
-          "Gagal menyusun materi pembelajaran. Coba gunakan topik yang lebih sederhana.",
+        success: false,
+        error: isClientError
+          ? msg
+          : "Gagal menyusun materi pembelajaran. Coba gunakan topik yang lebih sederhana.",
       },
-      { status: 500 }
+      { status: isClientError ? 400 : 500 }
     );
   }
 }

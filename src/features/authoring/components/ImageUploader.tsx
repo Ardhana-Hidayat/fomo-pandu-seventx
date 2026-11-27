@@ -1,12 +1,16 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button, Field, Icon, Sheet, StatusMessage } from "@/shared/ui";
 
 interface ImageUploaderProps {
   isOpen: boolean;
   onClose: () => void;
-  onUploadComplete: (item: { imageUrl: string; imageAlt: string }) => void;
+  onUploadComplete: (item: {
+    imageAssetId?: string | null;
+    imageUrl: string;
+    imageAlt: string;
+  }) => void;
 }
 
 export function ImageUploader({
@@ -20,6 +24,14 @@ export function ImageUploader({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   function handleFileSelect(selected: File | null) {
     if (!selected) return;
@@ -68,26 +80,43 @@ export function ImageUploader({
         body: formData,
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        onUploadComplete({
-          imageUrl: data.url ?? previewUrl!,
-          imageAlt: cleanAlt,
-        });
-        onClose();
+      const data = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        url?: string;
+        asset?: { id?: string; url?: string; alt?: string };
+      };
+
+      if (!res.ok) {
+        setErrorMsg(
+          data.error || `Gagal mengunggah gambar (HTTP ${res.status}).`
+        );
         return;
       }
-    } catch {
-      // Jika endpoint belum tersedia di mock/offline, gunakan URL pratinjau lokal
-    }
 
-    // Fallback: gunakan blob URL lokal sehingga guru tetap bisa melanjutkan draf
-    onUploadComplete({
-      imageUrl: previewUrl!,
-      imageAlt: cleanAlt,
-    });
-    setIsUploading(false);
-    onClose();
+      const uploadedUrl = data.asset?.url ?? data.url;
+      const uploadedAssetId = data.asset?.id ?? null;
+
+      if (!uploadedUrl || !uploadedAssetId) {
+        setErrorMsg(
+          "Server tidak mengembalikan data gambar yang tersimpan. Silakan coba lagi."
+        );
+        return;
+      }
+
+      onUploadComplete({
+        imageAssetId: uploadedAssetId,
+        imageUrl: uploadedUrl,
+        imageAlt: data.asset?.alt ?? cleanAlt,
+      });
+      handleReset();
+      onClose();
+    } catch {
+      setErrorMsg(
+        "Gagal mengunggah gambar karena gangguan jaringan. Gambar belum disimpan, silakan coba lagi."
+      );
+    } finally {
+      setIsUploading(false);
+    }
   }
 
   function handleReset() {
@@ -107,7 +136,7 @@ export function ImageUploader({
           Unggah foto nyata (JPG, PNG, WebP &le; 2 MB). Gambar akan dipangkas ke rasio 4:3 untuk konsistensi kartu.
         </p>
 
-        {errorMsg && <StatusMessage type="ulang">{errorMsg}</StatusMessage>}
+        {errorMsg && <StatusMessage type="galat">{errorMsg}</StatusMessage>}
 
         {/* Kotak Pilih Berkas / Drag & Drop */}
         {!previewUrl ? (

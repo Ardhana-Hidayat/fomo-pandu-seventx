@@ -312,4 +312,49 @@ describe("CardPlayer Component", () => {
     fireEvent.click(doneBtn);
     expect(onExit).toHaveBeenCalledTimes(1);
   });
+
+  it("tidak merender gambar maupun placeholder Icon Image saat imageUrl null meski imageAlt terisi", () => {
+    const cardWithAltOnly = [
+      {
+        ...dummyCards[0]!,
+        id: "c-no-url",
+        text: "Kucing tidur di teras",
+        imageUrl: null,
+        imageSource: "none" as const,
+        imageAlt: "Ilustrasi yang seharusnya tidak muncul",
+        keyTerms: ["kucing"],
+      },
+    ];
+
+    const { container } = render(
+      <PreferencesProvider>
+        <CardPlayer cards={cardWithAltOnly} backHref="/" />
+      </PreferencesProvider>
+    );
+
+    const cardImgs = Array.from(container.querySelectorAll("main img")).filter(
+      (img) => !img.getAttribute("src")?.startsWith("/signs/")
+    );
+    expect(cardImgs).toHaveLength(0);
+    expect(screen.queryByAltText("Ilustrasi yang seharusnya tidak muncul")).toBeNull();
+    expect(screen.queryByText("Ilustrasi yang seharusnya tidak muncul")).toBeNull();
+    expect(screen.getByAltText("Isyarat huruf K dalam SIBI")).toBeDefined();
+  });
+
+  it("menyembunyikan gambar yang gagal dimuat tanpa menampilkan ikon rusak atau placeholder", () => {
+    const { container } = render(
+      <PreferencesProvider>
+        <CardPlayer cards={[dummyCards[0]!]} backHref="/" />
+      </PreferencesProvider>
+    );
+
+    const img = screen.getByAltText("Budi membaca buku");
+    fireEvent.error(img);
+
+    const cardImgs = Array.from(container.querySelectorAll("main img")).filter(
+      (el) => !el.getAttribute("src")?.startsWith("/signs/")
+    );
+    expect(cardImgs).toHaveLength(0);
+    expect(screen.queryByText("Budi membaca buku")).toBeNull();
+  });
 });

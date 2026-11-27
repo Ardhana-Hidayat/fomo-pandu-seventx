@@ -42,6 +42,7 @@ export function TVPlayer({ lesson, questions, backHref, quizHref }: TVPlayerProp
   const [lastSignedWordIdx, setLastSignedWordIdx] = useState<number | null>(null);
   const [manualWordIdx, setManualWordIdx] = useState<number | null>(null);
   const [manualLetterIndex, setManualLetterIndex] = useState(0);
+  const [failedImageKey, setFailedImageKey] = useState<string | null>(null);
 
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
@@ -431,7 +432,9 @@ export function TVPlayer({ lesson, questions, backHref, quizHref }: TVPlayerProp
     manualLetterIndex,
   });
 
-  const hasVisualCard = Boolean(currentCard.imageUrl || currentCard.imageAlt);
+  const imageUrl = currentCard.imageUrl?.trim() || null;
+  const imageErrorKey = imageUrl ? `${currentCard.id}:${imageUrl}` : null;
+  const hasVisualCard = Boolean(imageUrl) && failedImageKey !== imageErrorKey;
 
   return (
     <div
@@ -474,21 +477,15 @@ export function TVPlayer({ lesson, questions, backHref, quizHref }: TVPlayerProp
       >
         {(hasVisualCard || activeKeyTerm) && (
           <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
-            {currentCard.imageUrl ? (
+            {hasVisualCard && imageUrl ? (
               <div className="w-44 h-44 sm:w-60 sm:h-60 md:w-68 md:h-68 rounded-3xl border-4 border-[var(--border)] overflow-hidden bg-[var(--surface-2)] flex items-center justify-center p-3 shrink-0 shadow-sm">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={currentCard.imageUrl}
+                  src={imageUrl}
                   alt={currentCard.imageAlt ?? currentCard.text}
+                  onError={() => setFailedImageKey(imageErrorKey)}
                   className="w-full h-full object-contain"
                 />
-              </div>
-            ) : currentCard.imageAlt ? (
-              <div className="w-44 h-44 sm:w-60 sm:h-60 md:w-68 md:h-68 rounded-3xl border-4 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-4 text-center shrink-0">
-                <Icon name="Image" size={36} className="text-[var(--muted)] mb-2" />
-                <span className="text-base sm:text-xl font-bold text-[var(--ink)] line-clamp-3">
-                  {currentCard.imageAlt}
-                </span>
               </div>
             ) : null}
 

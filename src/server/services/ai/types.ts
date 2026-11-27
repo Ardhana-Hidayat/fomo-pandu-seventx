@@ -14,9 +14,23 @@ export const legacyImageSchema = z.object({
   alt: z.string().default(""),
 });
 
+export const cardSuggestionSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  url: z.string(),
+});
+
+export type CardSuggestion = z.infer<typeof cardSuggestionSchema>;
+
+export type CardImageStatus = "cocok" | "dipilih_guru" | "tanpa_gambar";
+
 export const generatedCardSchema = z.object({
   text: z.string().min(1),
   key_terms: z.array(z.string()).default([]),
+  concept: z.string().nullable().optional(),
+  quote: z.string().optional(),
+  imageStatus: z.enum(["cocok", "dipilih_guru", "tanpa_gambar"]).optional(),
+  suggestions: z.array(cardSuggestionSchema).optional(),
   visual: visualRefSchema.nullable().optional(),
   image: legacyImageSchema.default({
     keyword_id: "",
@@ -65,8 +79,31 @@ export const generatedQuestionSchema = z.object({
   prompt_image: legacyOptionImageSchema.optional(),
 });
 
+export type LessonKind = "langkah" | "konsep" | "kosakata" | "cerita";
+
+export const lessonV2CardSchema = z.object({
+  text: z.string().min(1),
+  key_terms: z.array(z.string()).default([]),
+  concept: z.string().nullable().default(null),
+  quote: z.string().optional(),
+});
+
+export const lessonV2Schema = z.object({
+  title: z.string().min(1),
+  lesson_kind: z
+    .enum(["langkah", "konsep", "kosakata", "cerita"])
+    .default("konsep"),
+  cards: z.array(lessonV2CardSchema).min(1),
+  questions: z.array(generatedQuestionSchema).optional(),
+});
+
+export type LessonV2 = z.infer<typeof lessonV2Schema>;
+
 export const generatedLessonSchema = z.object({
   title: z.string().min(1),
+  lesson_kind: z
+    .enum(["langkah", "konsep", "kosakata", "cerita"])
+    .optional(),
   cards: z.array(generatedCardSchema).min(1),
   questions: z.array(generatedQuestionSchema).default([]),
 });
@@ -89,6 +126,7 @@ export interface GenerateLessonOptions {
   sourceType: "topik" | "teks" | "pdf" | "foto";
   topic?: string;
   text?: string;
+  subject?: string;
   fileBuffer?: Buffer | Uint8Array;
   mimeType?: string;
   level?: CognitiveLevel;
@@ -102,6 +140,7 @@ export interface GenerateLessonOptions {
   signSystem?: "SIBI" | "BISINDO";
   teacherNotes?: string;
   apiKeys?: string[];
+  lessonId?: string;
 }
 
 export interface GenerateLessonResult {
@@ -110,5 +149,7 @@ export interface GenerateLessonResult {
   badge: string;
   sourceText?: string;
   isScannedNotice?: boolean;
+  cacheHit?: boolean;
+  visualGaps?: string[];
   warnings: string[];
 }

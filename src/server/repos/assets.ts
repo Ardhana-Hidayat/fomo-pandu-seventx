@@ -1,5 +1,5 @@
 import "server-only";
-import { eq, and, sql, desc, or } from "drizzle-orm";
+import { eq, and, sql, desc, or, inArray, ne } from "drizzle-orm";
 import { db } from "../db/client";
 import { assets, type Asset, type NewAsset } from "../db/schema";
 import { ok, err, type Result, makeAppError } from "@/shared/lib/result";
@@ -216,6 +216,79 @@ export async function listAssetsByKind(
   } catch (error) {
     return err(
       makeAppError("DB_ERROR", "Gagal memuat daftar aset", error)
+    );
+  }
+}
+
+export interface ListVisualAssetsOptions {
+  kind?: string;
+  search?: string;
+  limit?: number;
+  offset?: number;
+  source?: string;
+  ownerTeacherId?: string;
+}
+
+/**
+ * Memuat daftar aset visual (gambar/piktogram) dari tabel assets DB,
+ * termasuk unggahan guru yang tersimpan di penyimpanan (Supabase/lokal).
+ */
+export async function listVisualAssets(
+  options: ListVisualAssetsOptions = {}
+): Promise<Result<Asset[]>> {
+  const {
+    kind,
+    search,
+    limit = 60,
+    offset = 0,
+    source,
+    ownerTeacherId,
+  } = options;
+
+  const safeLimit = Math.max(1, Math.min(200, Math.floor(limit)));
+  const safeOffset = Math.max(0, Math.floor(offset));
+
+  try {
+    const conditions = [
+      kind ? eq(assets.kind, kind) : inArray(assets.kind, ["gambar", "piktogram"]),
+      ne(assets.source, "system-placeholder"),
+    ];
+
+    if (source) {
+      conditions.push(eq(assets.source, source));
+    }
+
+    if (ownerTeacherId) {
+      conditions.push(eq(assets.ownerTeacherId, ownerTeacherId));
+    }
+
+    const cleanSearch = search?.trim().toLowerCase() ?? "";
+    if (cleanSearch) {
+      const tokens = cleanSearch.split(/\s+/).filter(Boolean).slice(0, 6);
+      for (const tok of tokens) {
+        const pattern = `%${tok}%`;
+        const tokCond = or(
+          sql`lower(coalesce(${assets.keyword}, '')) LIKE ${pattern}`,
+          sql`lower(coalesce(${assets.alt}, '')) LIKE ${pattern}`
+        );
+        if (tokCond) {
+          conditions.push(tokCond);
+        }
+      }
+    }
+
+    const rows = await db
+      .select()
+      .from(assets)
+      .where(and(...conditions))
+      .orderBy(desc(assets.createdAt))
+      .limit(safeLimit)
+      .offset(safeOffset);
+
+    return ok(rows);
+  } catch (error) {
+    return err(
+      makeAppError("DB_ERROR", "Gagal memuat daftar aset visual", error)
     );
   }
 }

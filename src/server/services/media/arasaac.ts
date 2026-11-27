@@ -248,10 +248,7 @@ export async function resolveCatalogAssetToDb(
       );
     }
 
-    const storageKey =
-      record.visual_type === "illustration"
-        ? `custom-${record.filename}`
-        : record.filename;
+    const storageKey = record.file_path;
 
     const existing = await getAssetByStorageKey(storageKey);
     if (existing.ok && existing.data) {
@@ -269,7 +266,7 @@ export async function resolveCatalogAssetToDb(
       );
     }
 
-    const fileBuffer = fs.readFileSync(diskPath);
+    const stats = fs.statSync(diskPath);
     const ext = path.extname(record.filename).toLowerCase();
     const mime =
       ext === ".png"
@@ -280,8 +277,6 @@ export async function resolveCatalogAssetToDb(
             ? "image/svg+xml"
             : "image/webp";
 
-    await storage.put(storageKey, fileBuffer, mime, "card-images");
-
     const keyword = Array.from(
       new Set([record.display_name.toLowerCase(), ...record.keywords_id.slice(0, 3)])
     ).join(" | ");
@@ -290,7 +285,7 @@ export async function resolveCatalogAssetToDb(
       kind: record.visual_type === "illustration" ? "gambar" : "piktogram",
       storageKey,
       mime,
-      bytes: fileBuffer.length,
+      bytes: stats.size,
       keyword,
       alt: customAlt?.trim() || record.display_name,
       source: record.source,

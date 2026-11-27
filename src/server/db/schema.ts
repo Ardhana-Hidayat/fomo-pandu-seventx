@@ -137,6 +137,7 @@ export const assets = pgTable("assets", {
   license: text("license").notNull().default("CC-BY-SA"),
   attribution: text("attribution").notNull().default("ARASAAC / PanduIn"),
   verified: boolean("verified").notNull().default(false),
+  sha256: text("sha256"),
   ownerTeacherId: uuid("owner_teacher_id").references(() => teachers.id, {
     onDelete: "set null",
   }),
@@ -470,6 +471,58 @@ export const signOverrides = pgTable(
   ]
 );
 
+export const visualConcepts = pgTable(
+  "visual_concepts",
+  {
+    id: text("id").primaryKey(),
+    label: text("label").notNull(),
+    labelNorm: text("label_norm").notNull(),
+    synonyms: text("synonyms").array().notNull().default([]),
+    labelEn: text("label_en"),
+    domains: text("domains").array().notNull().default([]),
+    groupId: text("group_id"),
+    kind: text("kind"),
+    popularity: real("popularity").notNull().default(0),
+    assetId: uuid("asset_id").references(() => assets.id, {
+      onDelete: "set null",
+    }),
+    altAssetIds: uuid("alt_asset_ids").array().notNull().default([]),
+    altText: text("alt_text"),
+    status: text("status").notNull().default("active"),
+    source: text("source").notNull().default("arasaac"),
+    sourceRef: text("source_ref"),
+    uploadedBy: uuid("uploaded_by").references(() => teachers.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("visual_concepts_active_label_norm_idx")
+      .on(table.labelNorm)
+      .where(sql`${table.status} <> 'hidden'`),
+    index("visual_concepts_status_idx").on(table.status),
+  ]
+);
+
+export const visualGaps = pgTable("visual_gaps", {
+  term: text("term").primaryKey(),
+  count: integer("count").notNull().default(1),
+  lastLessonId: uuid("last_lesson_id").references(() => lessons.id, {
+    onDelete: "set null",
+  }),
+  subject: text("subject"),
+  firstSeen: timestamp("first_seen", { withTimezone: true }).defaultNow().notNull(),
+  lastSeen: timestamp("last_seen", { withTimezone: true }).defaultNow().notNull(),
+  status: text("status").notNull().default("open"),
+});
+
+export const catalogVersion = pgTable("catalog_version", {
+  id: text("id").primaryKey(),
+  hash: text("hash").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 
 export type Teacher = typeof teachers.$inferSelect;
 export type NewTeacher = typeof teachers.$inferInsert;
@@ -509,4 +562,10 @@ export type AudioClip = typeof audioClips.$inferSelect;
 export type NewAudioClip = typeof audioClips.$inferInsert;
 export type SignOverride = typeof signOverrides.$inferSelect;
 export type NewSignOverride = typeof signOverrides.$inferInsert;
+export type VisualConcept = typeof visualConcepts.$inferSelect;
+export type NewVisualConcept = typeof visualConcepts.$inferInsert;
+export type VisualGap = typeof visualGaps.$inferSelect;
+export type NewVisualGap = typeof visualGaps.$inferInsert;
+export type CatalogVersion = typeof catalogVersion.$inferSelect;
+export type NewCatalogVersion = typeof catalogVersion.$inferInsert;
 

@@ -4,11 +4,36 @@ import { getCurrentTeacher } from "@/features/auth";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const text = (body.text as string) || "";
-    const cardId = (body.cardId as string) || undefined;
-    const voice = (body.voice as string) || undefined;
-    const speed = body.speed ? Number(body.speed) : 1.0;
+    const teacherSession = await getCurrentTeacher();
+    if (!teacherSession) {
+      return NextResponse.json(
+        { error: "Akses ditolak. Sesi guru tidak valid atau telah kedaluwarsa." },
+        { status: 401 }
+      );
+    }
+
+    let body: Record<string, unknown>;
+    try {
+      const parsed = await request.json();
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        return NextResponse.json(
+          { error: "Format permintaan tidak valid" },
+          { status: 400 }
+        );
+      }
+      body = parsed as Record<string, unknown>;
+    } catch {
+      return NextResponse.json(
+        { error: "Format JSON permintaan tidak valid" },
+        { status: 400 }
+      );
+    }
+
+    const text = typeof body.text === "string" ? body.text : "";
+    const cardId = typeof body.cardId === "string" && body.cardId.trim() ? body.cardId.trim() : undefined;
+    const voice = typeof body.voice === "string" && body.voice.trim() ? body.voice.trim() : undefined;
+    const rawSpeed = body.speed !== undefined ? Number(body.speed) : 1.0;
+    const speed = Number.isFinite(rawSpeed) && rawSpeed >= 0.5 && rawSpeed <= 2.0 ? rawSpeed : 1.0;
 
     if (!text.trim()) {
       return NextResponse.json(
@@ -17,9 +42,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Ambil sesi guru jika ada
-    const teacherSession = await getCurrentTeacher();
-    const teacherId = teacherSession?.teacher.id;
+    const teacherId = teacherSession.teacher.id;
 
     const result = await generateAudioForText({
       text,
@@ -31,8 +54,8 @@ export async function POST(request: Request) {
 
     if (!result.ok) {
       return NextResponse.json(
-        { error: result.error.message },
-        { status: 500 }
+        { error: result.error.message || "Gagal membuat audio kartu" },
+        { status: result.error.code === "VALIDATION_ERROR" ? 400 : 500 }
       );
     }
 
@@ -52,13 +75,9 @@ export async function POST(request: Request) {
       linkedCardId,
     });
   } catch (error) {
+    console.error("TTS route error:", error);
     return NextResponse.json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Terjadi kesalahan saat membuat audio kartu",
-      },
+      { error: "Terjadi kesalahan saat membuat audio kartu" },
       { status: 500 }
     );
   }

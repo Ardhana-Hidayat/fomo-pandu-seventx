@@ -5,9 +5,11 @@ import { generateWithGemini } from "./gemini";
 import type { GenerateLessonOptions, GenerateLessonResult } from "./types";
 
 export * from "./types";
+export * from "./ingest";
 export * from "./prompts";
 export * from "./pdf";
 export * from "./planner";
+export * from "./quiz-builder";
 export * from "./validator";
 export * from "./fallback";
 export * from "./gemini";

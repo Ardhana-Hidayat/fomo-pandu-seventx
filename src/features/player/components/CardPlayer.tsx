@@ -55,6 +55,7 @@ export function CardPlayer({
   const [lastSignedWordIdx, setLastSignedWordIdx] = useState<number | null>(null);
   const [manualWordIdx, setManualWordIdx] = useState<number | null>(null);
   const [manualLetterIndex, setManualLetterIndex] = useState(0);
+  const [failedImageKey, setFailedImageKey] = useState<string | null>(null);
 
   const currentCard = cards[currentIndex];
   const totalCards = cards.length;
@@ -301,7 +302,9 @@ export function CardPlayer({
     manualLetterIndex,
   });
 
-  const hasVisualCard = Boolean(currentCard.imageUrl || currentCard.imageAlt);
+  const imageUrl = currentCard.imageUrl?.trim() || null;
+  const imageErrorKey = imageUrl ? `${currentCard.id}:${imageUrl}` : null;
+  const hasVisualCard = Boolean(imageUrl) && failedImageKey !== imageErrorKey;
 
   return (
     <div className="flex min-h-[100dvh] sm:h-[100dvh] sm:max-h-[100dvh] flex-col justify-between sm:overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
@@ -350,26 +353,24 @@ export function CardPlayer({
         id="main-content"
         className="flex-1 min-h-0 w-full max-w-4xl mx-auto p-2.5 sm:p-4 flex flex-col justify-center items-center sm:overflow-hidden"
       >
-        <Card className="w-full flex-1 min-h-0 flex flex-col justify-between items-center gap-2.5 sm:gap-4 p-3.5 sm:p-6 border-2 border-[var(--border)] bg-[var(--surface)] shadow-md sm:overflow-hidden">
+        <Card
+          className={`w-full flex-1 min-h-0 flex flex-col ${
+            hasVisualCard || activeKeyTerm ? "justify-between" : "justify-center"
+          } items-center gap-2.5 sm:gap-4 p-3.5 sm:p-6 border-2 border-[var(--border)] bg-[var(--surface)] shadow-md sm:overflow-hidden`}
+        >
           {/* Bagian Peraga Visual & Isyarat (Bersebelahan di Tablet/Desktop, Bertumpuk Rapi & Seimbang di Mobile) */}
           {(hasVisualCard || activeKeyTerm) && (
             <div className="w-full flex-1 min-h-0 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
               {/* Kartu Gambar / Piktogram */}
-              {currentCard.imageUrl ? (
+              {hasVisualCard && imageUrl ? (
                 <div className="w-48 h-48 sm:w-[230px] sm:h-[230px] md:w-[268px] md:h-[268px] rounded-2xl border-2 border-[var(--border)] overflow-hidden bg-[var(--surface-2)] flex items-center justify-center p-2 shadow-xs shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={currentCard.imageUrl}
+                    src={imageUrl}
                     alt={currentCard.imageAlt ?? currentCard.text}
+                    onError={() => setFailedImageKey(imageErrorKey)}
                     className="w-full h-full object-contain"
                   />
-                </div>
-              ) : currentCard.imageAlt ? (
-                <div className="w-48 h-48 sm:w-[230px] sm:h-[230px] md:w-[268px] md:h-[268px] rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] flex flex-col items-center justify-center p-3 text-center shrink-0">
-                  <Icon name="Image" size={30} className="text-[var(--muted)] mb-1.5" />
-                  <span className="text-xs font-bold text-[var(--ink)] line-clamp-3">
-                    {currentCard.imageAlt}
-                  </span>
                 </div>
               ) : null}
 

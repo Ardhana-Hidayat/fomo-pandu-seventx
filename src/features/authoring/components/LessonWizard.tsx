@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import {
   Card,
@@ -22,6 +22,28 @@ type CognitiveLevel =
   | "sdlb_lanjut"
   | "smplb"
   | "smalb";
+type LanguageComplexity = "sangat_sederhana" | "sederhana" | "biasa";
+
+const SUBJECT_CHIPS = [
+  "Otomatis",
+  "Bahasa Indonesia",
+  "Matematika",
+  "IPA",
+  "IPS",
+  "Pendidikan Pancasila",
+  "Kesehatan dan Kebersihan",
+  "Seni dan Budaya",
+] as const;
+
+const LANGUAGE_COMPLEXITY_OPTIONS: {
+  value: LanguageComplexity;
+  label: string;
+  hint: string;
+}[] = [
+  { value: "sangat_sederhana", label: "Sangat Sederhana", hint: "Maks. 4 kata" },
+  { value: "sederhana", label: "Sederhana", hint: "Maks. 7 kata" },
+  { value: "biasa", label: "Biasa", hint: "Maks. 12 kata" },
+];
 
 const COGNITIVE_LEVEL_OPTIONS: { value: CognitiveLevel; label: string }[] = [
   { value: "sdlb_awal", label: "SDLB Awal" },
@@ -108,7 +130,10 @@ export function LessonWizard({
   const [pdfTitle, setPdfTitle] = useState("");
   const [cardCount, setCardCount] = useState<number>(6);
 
-  // Jenjang Kognitif & Catatan Guru
+  // Jenjang Kognitif, Mata Pelajaran, Kompleksitas Bahasa & Catatan Guru
+  const [subject, setSubject] = useState<string>("Otomatis");
+  const [languageComplexity, setLanguageComplexity] =
+    useState<LanguageComplexity>("sederhana");
   const [level, setLevel] = useState<CognitiveLevel>("sdlb_menengah");
   const [teacherNotes, setTeacherNotes] = useState("");
 
@@ -120,7 +145,105 @@ export function LessonWizard({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [generationWarnings, setGenerationWarnings] = useState<string[]>([]);
+  const [fallbackBanner, setFallbackBanner] = useState<string | null>(null);
   const [createdLessonId, setCreatedLessonId] = useState<string | null>(null);
+  const bottomFeedbackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (errorMessage || generationWarnings.length > 0 || fallbackBanner) {
+      bottomFeedbackRef.current?.scrollIntoView?.({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }
+  }, [errorMessage, generationWarnings, fallbackBanner]);
+
+  async function parseGenerateLessonResponse(
+    response: Response,
+    fallbackError: string
+  ): Promise<
+    | {
+        ok: true;
+        lessonId: string;
+        warnings: string[];
+        generatedBy?: "ai" | "fallback";
+        badge?: string;
+      }
+    | { ok: false; error: string }
+  > {
+    if (response.status === 401) {
+      return {
+        ok: false,
+        error:
+          "Sesi guru telah berakhir. Silakan masuk kembali di halaman Masuk Ruang Guru.",
+      };
+    }
+
+    const raw = await response.text();
+    let payload: {
+      success?: boolean;
+      error?: string;
+      data?: {
+        lessonId?: string;
+        warnings?: unknown;
+        generatedBy?: "ai" | "fallback";
+        badge?: string;
+      };
+    } | null = null;
+
+    if (raw) {
+      try {
+        payload = JSON.parse(raw) as {
+          success?: boolean;
+          error?: string;
+          data?: {
+            lessonId?: string;
+            warnings?: unknown;
+            generatedBy?: "ai" | "fallback";
+            badge?: string;
+          };
+        };
+      } catch {
+        payload = null;
+      }
+    }
+
+    if (!payload) {
+      return {
+        ok: false,
+        error: `Server mengalami gangguan atau batas waktu habis (HTTP ${response.status}). Silakan coba lagi.`,
+      };
+    }
+
+    if (!response.ok || !payload.success) {
+      return {
+        ok: false,
+        error: payload.error || fallbackError,
+      };
+    }
+
+    const createdId = payload.data?.lessonId;
+    if (!createdId) {
+      return {
+        ok: false,
+        error: "Materi berhasil diproses tetapi ID tidak ditemukan.",
+      };
+    }
+
+    const warnings = Array.isArray(payload.data?.warnings)
+      ? payload.data.warnings.filter(
+          (w): w is string => typeof w === "string" && w.trim().length > 0
+        )
+      : [];
+
+    return {
+      ok: true,
+      lessonId: createdId,
+      warnings,
+      generatedBy: payload.data?.generatedBy,
+      badge: payload.data?.badge,
+    };
+  }
 
   async function handleManualSubmit(e: FormEvent) {
     e.preventDefault();
@@ -134,6 +257,7 @@ export function LessonWizard({
     setIsSubmitting(true);
     setErrorMessage(null);
     setGenerationWarnings([]);
+    setFallbackBanner(null);
     setCreatedLessonId(null);
 
     try {
@@ -144,6 +268,8 @@ export function LessonWizard({
           sourceType: "teks",
           topic: cleanTitle,
           text: cleanText || cleanTitle,
+          subject,
+          languageComplexity,
           level,
           teacherNotes: teacherNotes.trim() || undefined,
           cardCount,
@@ -153,34 +279,33 @@ export function LessonWizard({
         }),
       });
 
-      const payload = await response.json();
+      const parsed = await parseGenerateLessonResponse(
+        response,
+        "Gagal menyusun materi dari teks. Silakan coba lagi."
+      );
 
-      if (!response.ok || !payload.success) {
+      if (!parsed.ok) {
         setIsSubmitting(false);
-        setErrorMessage(
-          payload.error || "Gagal menyusun materi dari teks. Silakan coba lagi."
-        );
+        setErrorMessage(parsed.error);
         return;
       }
 
-      const createdId = payload.data?.lessonId as string | undefined;
-      const warnings = Array.isArray(payload.data?.warnings)
-        ? (payload.data.warnings as string[]).filter(Boolean)
-        : [];
-      if (createdId) {
-        if (warnings.length > 0) {
-          setIsSubmitting(false);
-          setGenerationWarnings(warnings);
-          setCreatedLessonId(createdId);
-          onSuccess?.();
-          return;
-        }
-        onSuccess?.();
-        router.push(`/guru/materi/${createdId}/edit`);
-      } else {
-        setIsSubmitting(false);
-        setErrorMessage("Materi berhasil diproses tetapi ID tidak ditemukan.");
+      if (parsed.generatedBy === "fallback") {
+        setFallbackBanner(
+          parsed.badge ||
+            "Dibuat dari cadangan ekstraktif karena AI Gemini sedang tidak tersedia."
+        );
       }
+
+      if (parsed.warnings.length > 0 || parsed.generatedBy === "fallback") {
+        setIsSubmitting(false);
+        setGenerationWarnings(parsed.warnings);
+        setCreatedLessonId(parsed.lessonId);
+        return;
+      }
+
+      onSuccess?.();
+      router.push(`/guru/materi/${parsed.lessonId}/edit`);
     } catch {
       setIsSubmitting(false);
       setErrorMessage("Terjadi gangguan jaringan saat memproses materi.");
@@ -197,6 +322,7 @@ export function LessonWizard({
     setIsSubmitting(true);
     setErrorMessage(null);
     setGenerationWarnings([]);
+    setFallbackBanner(null);
     setCreatedLessonId(null);
 
     try {
@@ -207,6 +333,8 @@ export function LessonWizard({
         "topic",
         pdfTitle.trim() || pdfFile.name.replace(/\.pdf$/i, "")
       );
+      formData.append("subject", subject);
+      formData.append("languageComplexity", languageComplexity);
       formData.append("cardCount", String(cardCount));
       formData.append("questionCount", String(questionCount));
       formData.append("exerciseType", exerciseType);
@@ -221,34 +349,33 @@ export function LessonWizard({
         body: formData,
       });
 
-      const payload = await response.json();
+      const parsed = await parseGenerateLessonResponse(
+        response,
+        "Gagal memproses file PDF. Silakan coba lagi."
+      );
 
-      if (!response.ok || !payload.success) {
+      if (!parsed.ok) {
         setIsSubmitting(false);
-        setErrorMessage(
-          payload.error || "Gagal memproses file PDF. Silakan coba lagi."
-        );
+        setErrorMessage(parsed.error);
         return;
       }
 
-      const createdId = payload.data?.lessonId as string | undefined;
-      const warnings = Array.isArray(payload.data?.warnings)
-        ? (payload.data.warnings as string[]).filter(Boolean)
-        : [];
-      if (createdId) {
-        if (warnings.length > 0) {
-          setIsSubmitting(false);
-          setGenerationWarnings(warnings);
-          setCreatedLessonId(createdId);
-          onSuccess?.();
-          return;
-        }
-        onSuccess?.();
-        router.push(`/guru/materi/${createdId}/edit`);
-      } else {
-        setIsSubmitting(false);
-        setErrorMessage("Materi berhasil diproses tetapi ID tidak ditemukan.");
+      if (parsed.generatedBy === "fallback") {
+        setFallbackBanner(
+          parsed.badge ||
+            "Dibuat dari cadangan ekstraktif karena AI Gemini sedang tidak tersedia."
+        );
       }
+
+      if (parsed.warnings.length > 0 || parsed.generatedBy === "fallback") {
+        setIsSubmitting(false);
+        setGenerationWarnings(parsed.warnings);
+        setCreatedLessonId(parsed.lessonId);
+        return;
+      }
+
+      onSuccess?.();
+      router.push(`/guru/materi/${parsed.lessonId}/edit`);
     } catch {
       setIsSubmitting(false);
       setErrorMessage("Terjadi gangguan jaringan saat mengunggah PDF.");
@@ -256,35 +383,100 @@ export function LessonWizard({
   }
 
   const levelAndNotesSection = (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="wizard-cognitive-level"
-          className="text-sm font-bold text-[var(--ink)]"
+        <span className="text-sm font-bold text-[var(--ink)]">
+          Mata Pelajaran
+        </span>
+        <div
+          role="radiogroup"
+          aria-label="Pilih mata pelajaran"
+          className="flex flex-wrap gap-2"
         >
-          Jenjang Kemampuan Siswa
-        </label>
-        <select
-          id="wizard-cognitive-level"
-          value={level}
-          onChange={(e) => setLevel(e.target.value as CognitiveLevel)}
-          className="h-[46px] w-full rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] px-3.5 text-sm font-semibold text-[var(--ink)] focus:outline-none focus:border-[var(--primary)] cursor-pointer"
-        >
-          {COGNITIVE_LEVEL_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+          {SUBJECT_CHIPS.map((chip) => {
+            const active = subject === chip;
+            return (
+              <button
+                key={chip}
+                type="button"
+                role="radio"
+                aria-checked={active}
+                onClick={() => setSubject(chip)}
+                className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors cursor-pointer border ${
+                  active
+                    ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--on-primary)]"
+                    : "border-[var(--border-strong)] bg-[var(--surface)] text-[var(--ink-2)] hover:bg-[var(--surface-2)]"
+                }`}
+              >
+                {chip}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <Field
-        id="wizard-teacher-notes"
-        label="Catatan Khusus Guru (Opsional)"
-        placeholder="Contoh: Gunakan kalimat sangat singkat, fokus benda di rumah"
-        value={teacherNotes}
-        onChange={(e) => setTeacherNotes(e.target.value)}
-      />
+      <div className="flex flex-col gap-2">
+        <span className="text-sm font-bold text-[var(--ink)]">
+          Kompleksitas Bahasa
+        </span>
+        <div
+          role="radiogroup"
+          aria-label="Pilih kompleksitas bahasa"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-2"
+        >
+          {LANGUAGE_COMPLEXITY_OPTIONS.map((opt) => {
+            const active = languageComplexity === opt.value;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                role="radio"
+                aria-checked={active}
+                onClick={() => setLanguageComplexity(opt.value)}
+                className={`flex flex-col items-start rounded-[var(--r-tombol)] px-3 py-2 text-left transition-all cursor-pointer border ${
+                  active
+                    ? "border-2 border-[var(--primary)] bg-[var(--accent-subtle)] text-[var(--ink)]"
+                    : "border-[var(--border-strong)] bg-[var(--surface)] text-[var(--ink)] hover:bg-[var(--surface-2)]"
+                }`}
+              >
+                <span className="text-xs font-bold">{opt.label}</span>
+                <span className="text-[11px] text-[var(--muted)]">{opt.hint}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="wizard-cognitive-level"
+            className="text-sm font-bold text-[var(--ink)]"
+          >
+            Jenjang Kemampuan Siswa
+          </label>
+          <select
+            id="wizard-cognitive-level"
+            value={level}
+            onChange={(e) => setLevel(e.target.value as CognitiveLevel)}
+            className="h-[46px] w-full rounded-[var(--r-tombol)] border border-[var(--border-strong)] bg-[var(--surface)] px-3.5 text-sm font-semibold text-[var(--ink)] focus:outline-none focus:border-[var(--primary)] cursor-pointer"
+          >
+            {COGNITIVE_LEVEL_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <Field
+          id="wizard-teacher-notes"
+          label="Catatan Khusus Guru (Opsional)"
+          placeholder="Contoh: Gunakan kalimat sangat singkat, fokus benda di rumah"
+          value={teacherNotes}
+          onChange={(e) => setTeacherNotes(e.target.value)}
+        />
+      </div>
     </div>
   );
 
@@ -399,37 +591,67 @@ export function LessonWizard({
     return <Card className="p-5 sm:p-6">{children}</Card>;
   }
 
+  function renderFeedback(isBottom = false) {
+    if (
+      !errorMessage &&
+      !((generationWarnings.length > 0 || fallbackBanner) && createdLessonId)
+    ) {
+      return null;
+    }
+
+    return (
+      <div
+        ref={isBottom ? bottomFeedbackRef : undefined}
+        className="flex flex-col gap-3"
+      >
+        {errorMessage && (
+          <StatusMessage type="galat">{errorMessage}</StatusMessage>
+        )}
+
+        {(generationWarnings.length > 0 || fallbackBanner) && createdLessonId && (
+          <div role="alert">
+            <StatusMessage type="info">
+              <div className="flex flex-col gap-2.5">
+                {fallbackBanner && (
+                  <p className="font-bold text-[var(--ink)]">
+                    Mode Cadangan: {fallbackBanner}
+                  </p>
+                )}
+                <p className="font-bold">
+                  Materi berhasil dibuat, namun ada beberapa catatan untuk ditinjau:
+                </p>
+                {generationWarnings.length > 0 && (
+                  <ul className="list-disc pl-5 text-sm space-y-1">
+                    {generationWarnings.map((w, idx) => (
+                      <li key={idx}>{w}</li>
+                    ))}
+                  </ul>
+                )}
+                <div className="pt-1">
+                  <Button
+                    type="button"
+                    variant="primary"
+                    size="compact"
+                    onClick={() => {
+                      onSuccess?.();
+                      router.push(`/guru/materi/${createdLessonId}/edit`);
+                    }}
+                    icon={<Icon name="CaretRight" size={16} />}
+                  >
+                    Lanjut ke Editor Materi
+                  </Button>
+                </div>
+              </div>
+            </StatusMessage>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-5">
-      {errorMessage && (
-        <StatusMessage type="galat">{errorMessage}</StatusMessage>
-      )}
-
-      {generationWarnings.length > 0 && createdLessonId && (
-        <StatusMessage type="info">
-          <div className="flex flex-col gap-2.5">
-            <p className="font-bold">
-              Materi berhasil dibuat, namun ada beberapa catatan untuk ditinjau:
-            </p>
-            <ul className="list-disc pl-5 text-sm space-y-1">
-              {generationWarnings.map((w, idx) => (
-                <li key={idx}>{w}</li>
-              ))}
-            </ul>
-            <div className="pt-1">
-              <Button
-                type="button"
-                variant="primary"
-                size="compact"
-                onClick={() => router.push(`/guru/materi/${createdLessonId}/edit`)}
-                icon={<Icon name="CaretRight" size={16} />}
-              >
-                Lanjut ke Editor Materi
-              </Button>
-            </div>
-          </div>
-        </StatusMessage>
-      )}
+      {renderFeedback(false)}
 
       {/* Pilihan 2 Mode Utama: Buat Manual & Upload PDF */}
       <div
@@ -495,7 +717,7 @@ export function LessonWizard({
       {/* Form 1: Buat Manual (Teks Materi -> AI Gemini) */}
       {mode === "manual" &&
         renderFormContainer(
-          <form onSubmit={handleManualSubmit} className="flex flex-col gap-5">
+          <form onSubmit={handleManualSubmit} noValidate className="flex flex-col gap-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
               <Field
                 id="manual-lesson-title"
@@ -540,6 +762,8 @@ export function LessonWizard({
 
             {quizSettingsSection}
 
+            {renderFeedback(true)}
+
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-4 border-t border-[var(--border)]">
               <Button
                 type="submit"
@@ -558,7 +782,7 @@ export function LessonWizard({
       {/* Form 2: Upload PDF */}
       {mode === "pdf" &&
         renderFormContainer(
-          <form onSubmit={handlePdfSubmit} className="flex flex-col gap-5">
+          <form onSubmit={handlePdfSubmit} noValidate className="flex flex-col gap-5">
             <label
               htmlFor="pdf-file-input"
               className="flex flex-col items-center justify-center gap-2 p-5 sm:p-6 rounded-2xl border-2 border-dashed border-[var(--border-strong)] bg-[var(--surface-2)]/70 hover:border-[var(--primary)] hover:bg-[var(--accent-subtle)]/40 cursor-pointer text-center transition-colors"
@@ -624,13 +848,14 @@ export function LessonWizard({
 
             {quizSettingsSection}
 
+            {renderFeedback(true)}
+
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-4 border-t border-[var(--border)]">
               <Button
                 type="submit"
                 variant="primary"
                 size="normal"
                 loading={isSubmitting}
-                disabled={!pdfFile}
                 icon={<Icon name="Sparkle" size={18} />}
                 className="w-full sm:w-auto"
               >

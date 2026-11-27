@@ -1,14 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Button, Chip, Field, Icon, StatusMessage, usePreferences } from "@/shared/ui";
-import { saveTeacherGeminiKeysAction } from "../actions";
+import {
+  getTeacherGeminiKeysAction,
+  saveTeacherGeminiKeysAction,
+  testTeacherGeminiKeyAction,
+  type TeacherKeyInputItem,
+  type TeacherKeySummary,
+} from "../actions";
+
+const MAX_KEYS = 5;
 
 interface TeacherSettingsProps {
   teacher?: {
     displayName: string;
     email?: string | null;
+    /** Legacy prop kept for compatibility; never rendered directly to DOM */
     geminiApiKeys?: string[];
+    maskedGeminiKeys?: TeacherKeySummary[];
   };
 }
 
@@ -16,14 +26,19 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
   const { preferences, setPreference, openSheet } = usePreferences();
   const [audioSpeed, setAudioSpeed] = useState<"0.8" | "0.9" | "1.0">("0.9");
 
-  // Multi-key Gemini API state
-  const [geminiKeys, setGeminiKeys] = useState<string[]>(
-    teacher?.geminiApiKeys && teacher.geminiApiKeys.length > 0
-      ? teacher.geminiApiKeys
-      : [""]
+  // Saved Gemini API keys (masked only — raw keys never sent from server)
+  const [savedKeys, setSavedKeys] = useState<TeacherKeySummary[]>(
+    teacher?.maskedGeminiKeys ?? []
   );
-  const [visibleKeys, setVisibleKeys] = useState<Record<number, boolean>>({});
+  const [newKeyInput, setNewKeyInput] = useState("");
+  const [showNewKey, setShowNewKey] = useState(false);
   const [isSavingKeys, setIsSavingKeys] = useState(false);
+  const [testingKeyFp, setTestingKeyFp] = useState<string | null>(null);
+  const [isTestingNewKey, setIsTestingNewKey] = useState(false);
+  const [keyTestMessage, setKeyTestMessage] = useState<{
+    type: "benar" | "galat" | "info";
+    message: string;
+  } | null>(null);
   const [keysStatus, setKeysStatus] = useState<{
     type: "benar" | "galat";
     message: string;
@@ -36,20 +51,40 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
     message: string;
   } | null>(null);
 
-  async function handleSaveKeys() {
+  // Load masked keys from server if only legacy prop or empty was provided
+  useEffect(() => {
+    if (teacher?.maskedGeminiKeys) return;
+    let active = true;
+    getTeacherGeminiKeysAction()
+      .then((res) => {
+        if (active && res.ok) {
+          setSavedKeys(res.data.keys);
+        }
+      })
+      .catch(() => {
+        // Ignore initial load error
+      });
+    return () => {
+      active = false;
+    };
+  }, [teacher?.maskedGeminiKeys]);
+
+  async function persistKeyList(items: TeacherKeyInputItem[], successMessage?: string) {
     setIsSavingKeys(true);
     setKeysStatus(null);
     try {
-      const res = await saveTeacherGeminiKeysAction(geminiKeys);
+      const res = await saveTeacherGeminiKeysAction(items);
       if (res.ok) {
-        const saved = res.data.keys;
-        setGeminiKeys(saved.length > 0 ? saved : [""]);
+        setSavedKeys(res.data.keys);
+        setNewKeyInput("");
+        setShowNewKey(false);
         setKeysStatus({
           type: "benar",
           message:
-            saved.length > 0
-              ? `${saved.length} API Key Gemini tersimpan. Sistem otomatis beralih ke key berikutnya jika kuota habis.`
-              : "Daftar API Key Gemini dikosongkan. Sistem memakai kunci bawaan server atau mode lokal.",
+            successMessage ??
+            (res.data.keys.length > 0
+              ? `${res.data.keys.length} API Key Gemini tersimpan terenkripsi.`
+              : "Daftar API Key Gemini dikosongkan. Sistem memakai kunci bawaan server atau mode lokal."),
         });
       } else {
         setKeysStatus({
@@ -64,6 +99,99 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
       });
     } finally {
       setIsSavingKeys(false);
+    }
+  }
+
+  async function handleAddAndSaveKey() {
+    const trimmed = newKeyInput.trim();
+    const items: TeacherKeyInputItem[] = savedKeys.map((k) => ({
+      kind: "existing",
+      fingerprint: k.fingerprint,
+    }));
+    if (trimmed) {
+      items.push({ kind: "new", apiKey: trimmed });
+    }
+    await persistKeyList(items);
+  }
+
+  async function handleMoveKey(index: number, direction: -1 | 1) {
+    const target = index + direction;
+    if (target < 0 || target >= savedKeys.length) return;
+    const reordered = [...savedKeys];
+    const [moved] = reordered.splice(index, 1);
+    reordered.splice(target, 0, moved);
+    setSavedKeys(reordered);
+    await persistKeyList(
+      reordered.map((k) => ({ kind: "existing", fingerprint: k.fingerprint })),
+      "Urutan prioritas API Key diperbarui."
+    );
+  }
+
+  async function handleDeleteKey(fingerprint: string) {
+    const remaining = savedKeys.filter((k) => k.fingerprint !== fingerprint);
+    setSavedKeys(remaining);
+    await persistKeyList(
+      remaining.map((k) => ({ kind: "existing", fingerprint: k.fingerprint })),
+      remaining.length > 0
+        ? "API Key dihapus. Daftar key cadangan diperbarui."
+        : "API Key dihapus. Sistem memakai kunci bawaan server atau mode lokal."
+    );
+  }
+
+  async function handleTestSavedKey(fingerprint: string) {
+    setTestingKeyFp(fingerprint);
+    setKeyTestMessage(null);
+    try {
+      const res = await testTeacherGeminiKeyAction({
+        kind: "existing",
+        fingerprint,
+      });
+      if (res.ok) {
+        setKeyTestMessage({
+          type: res.data.valid ? "benar" : res.data.status === "quota" ? "info" : "galat",
+          message: res.data.message,
+        });
+        // Refresh key statuses
+        const refreshed = await getTeacherGeminiKeysAction();
+        if (refreshed.ok) setSavedKeys(refreshed.data.keys);
+      } else {
+        setKeyTestMessage({ type: "galat", message: res.error.message });
+      }
+    } catch {
+      setKeyTestMessage({
+        type: "galat",
+        message: "Gagal menguji API Key.",
+      });
+    } finally {
+      setTestingKeyFp(null);
+    }
+  }
+
+  async function handleTestNewKey() {
+    const trimmed = newKeyInput.trim();
+    if (!trimmed) return;
+    setIsTestingNewKey(true);
+    setKeyTestMessage(null);
+    try {
+      const res = await testTeacherGeminiKeyAction({
+        kind: "new",
+        apiKey: trimmed,
+      });
+      if (res.ok) {
+        setKeyTestMessage({
+          type: res.data.valid ? "benar" : res.data.status === "quota" ? "info" : "galat",
+          message: res.data.message,
+        });
+      } else {
+        setKeyTestMessage({ type: "galat", message: res.error.message });
+      }
+    } catch {
+      setKeyTestMessage({
+        type: "galat",
+        message: "Gagal menguji API Key baru.",
+      });
+    } finally {
+      setIsTestingNewKey(false);
     }
   }
 
@@ -113,6 +241,28 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
 
   const displayName = teacher?.displayName || "Guru PanduIn";
   const initial = displayName.trim().charAt(0).toUpperCase() || "G";
+
+  function renderKeyStatusBadge(item: TeacherKeySummary) {
+    if (item.status === "invalid") {
+      return (
+        <span className="inline-flex items-center rounded-full border border-[var(--galat-edge)] bg-[var(--galat-bg)] px-2 py-0.5 text-xs font-bold text-[var(--galat-ink)]">
+          Tidak Valid
+        </span>
+      );
+    }
+    if (item.status === "cooldown") {
+      return (
+        <span className="inline-flex items-center rounded-full border border-[var(--border-strong)] bg-[var(--surface-2)] px-2 py-0.5 text-xs font-bold text-[var(--ink-2)]">
+          {item.isDailyQuota ? "Kuota Harian Penuh" : "Jeda Kuota"}
+        </span>
+      );
+    }
+    return (
+      <span className="inline-flex items-center rounded-full border border-[var(--benar-edge)] bg-[var(--benar-bg)] px-2 py-0.5 text-xs font-bold text-[var(--benar-ink)]">
+        Siap
+      </span>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-8 w-full">
@@ -295,7 +445,7 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
             </div>
           </Card>
 
-          {/* 4. API Key Gemini (Multi-Key Fallback) & Pemeriksaan Layanan */}
+          {/* 4. API Key Gemini (Terenkripsi) & Pemeriksaan Layanan */}
           <Card as="section" className="flex flex-1 flex-col justify-between gap-5">
             <div className="flex flex-col gap-4">
               <div className="flex items-start gap-3.5">
@@ -305,86 +455,168 @@ export function TeacherSettingsClient({ teacher }: TeacherSettingsProps) {
                 <div>
                   <h2 className="text-xl font-bold text-[var(--ink)]">API Key Gemini &amp; Layanan AI</h2>
                   <p className="text-sm text-[var(--ink-2)] mt-1 leading-relaxed">
-                    Tambahkan satu atau lebih API Key Google Gemini. Jika kuota key pertama habis, sistem otomatis beralih ke key berikutnya.
+                    Tambahkan hingga {MAX_KEYS} API Key Google Gemini sebagai cadangan setelah kunci server. Semua kunci disimpan terenkripsi.
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2.5">
-                {geminiKeys.map((keyVal, idx) => (
-                  <div key={idx} className="flex items-end gap-2">
+              {/* Daftar kunci tersimpan (hanya masked + fingerprint/status) */}
+              {savedKeys.length > 0 && (
+                <div className="flex flex-col gap-2" aria-label="Daftar API Key tersimpan">
+                  {savedKeys.map((item, idx) => (
+                    <div
+                      key={item.fingerprint}
+                      className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5"
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <Icon name="Key" size={16} className="text-[var(--primary)] shrink-0" />
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-sm font-bold text-[var(--ink)] font-mono">
+                              {item.masked}
+                            </span>
+                            {renderKeyStatusBadge(item)}
+                          </div>
+                          <p className="text-xs text-[var(--muted)]">
+                            Cadangan #{idx + 1} &bull; ID {item.fingerprint.slice(0, 8)}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          size="compact"
+                          disabled={isSavingKeys || idx === 0}
+                          onClick={() => handleMoveKey(idx, -1)}
+                          aria-label={`Naikkan prioritas kunci ${item.masked}`}
+                        >
+                          Naik
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          size="compact"
+                          disabled={isSavingKeys || idx === savedKeys.length - 1}
+                          onClick={() => handleMoveKey(idx, 1)}
+                          aria-label={`Turunkan prioritas kunci ${item.masked}`}
+                        >
+                          Turun
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          size="compact"
+                          disabled={testingKeyFp === item.fingerprint}
+                          onClick={() => handleTestSavedKey(item.fingerprint)}
+                        >
+                          {testingKeyFp === item.fingerprint ? "Menguji..." : "Uji Kunci"}
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          size="compact"
+                          disabled={isSavingKeys}
+                          onClick={() => handleDeleteKey(item.fingerprint)}
+                          aria-label={`Hapus kunci ${item.masked}`}
+                          icon={<Icon name="Trash" size={15} />}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Form tambah kunci baru */}
+              {savedKeys.length < MAX_KEYS ? (
+                <div className="flex flex-col gap-2.5">
+                  <div className="flex items-end gap-2">
                     <div className="flex-1 min-w-0">
                       <Field
-                        id={`gemini-key-${idx}`}
-                        label={idx === 0 ? "API Key Utama (#1)" : `API Key Cadangan (#${idx + 1})`}
-                        type={visibleKeys[idx] ? "text" : "password"}
+                        id="gemini-new-key"
+                        label={`Tambah API Key Baru (${savedKeys.length}/${MAX_KEYS})`}
+                        type={showNewKey ? "text" : "password"}
                         placeholder="AIza..."
-                        value={keyVal}
-                        onChange={(e) => {
-                          const next = [...geminiKeys];
-                          next[idx] = e.target.value;
-                          setGeminiKeys(next);
-                        }}
+                        value={newKeyInput}
+                        onChange={(e) => setNewKeyInput(e.target.value)}
                       />
                     </div>
                     <Button
                       type="button"
                       variant="secondary"
                       size="normal"
-                      onClick={() =>
-                        setVisibleKeys((prev) => ({ ...prev, [idx]: !prev[idx] }))
-                      }
-                      aria-label={visibleKeys[idx] ? "Sembunyikan key" : "Tampilkan key"}
+                      onClick={() => setShowNewKey((v) => !v)}
+                      aria-label={showNewKey ? "Sembunyikan input key" : "Tampilkan input key"}
                       className="shrink-0"
                     >
-                      {visibleKeys[idx] ? "Tutup" : "Lihat"}
+                      {showNewKey ? "Tutup" : "Lihat"}
                     </Button>
-                    {geminiKeys.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        size="normal"
-                        onClick={() =>
-                          setGeminiKeys((prev) => prev.filter((_, i) => i !== idx))
-                        }
-                        aria-label={`Hapus API Key #${idx + 1}`}
-                        icon={<Icon name="X" size={16} />}
-                        className="shrink-0"
-                      />
-                    )}
                   </div>
-                ))}
 
-                <div className="flex flex-wrap items-center gap-2 pt-1">
-                  {geminiKeys.length < 10 && (
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="primary"
+                      size="compact"
+                      loading={isSavingKeys}
+                      disabled={!newKeyInput.trim() || isSavingKeys}
+                      onClick={handleAddAndSaveKey}
+                      icon={<Icon name="Plus" size={16} />}
+                    >
+                      {isSavingKeys ? "Menyimpan..." : "Simpan API Key"}
+                    </Button>
                     <Button
                       type="button"
                       variant="secondary"
                       size="compact"
-                      onClick={() => setGeminiKeys((prev) => [...prev, ""])}
-                      icon={<Icon name="Plus" size={16} />}
+                      disabled={!newKeyInput.trim() || isTestingNewKey}
+                      onClick={handleTestNewKey}
                     >
-                      Tambah API Key
+                      {isTestingNewKey ? "Menguji..." : "Uji Kunci"}
                     </Button>
-                  )}
-                  <Button
-                    type="button"
-                    variant="primary"
-                    size="compact"
-                    loading={isSavingKeys}
-                    onClick={handleSaveKeys}
-                    icon={<Icon name="CheckCircle" size={16} />}
-                  >
-                    {isSavingKeys ? "Menyimpan..." : "Simpan API Key"}
-                  </Button>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <StatusMessage type="info">
+                  Maksimal {MAX_KEYS} API Key tersimpan. Hapus salah satu kunci jika ingin mengganti.
+                </StatusMessage>
+              )}
+
+              {keyTestMessage && (
+                <StatusMessage type={keyTestMessage.type}>
+                  {keyTestMessage.message}
+                </StatusMessage>
+              )}
 
               {keysStatus && (
                 <StatusMessage type={keysStatus.type}>
                   {keysStatus.message}
                 </StatusMessage>
               )}
+
+              {/* Panduan & Privasi Google AI Studio */}
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3.5 text-xs text-[var(--ink-2)] leading-relaxed flex flex-col gap-1.5">
+                <p className="font-bold text-[var(--ink)] flex items-center gap-1.5">
+                  <Icon name="Info" size={15} className="text-[var(--primary)] shrink-0" />
+                  Panduan API Key &amp; Privasi
+                </p>
+                <p>
+                  1. Buat kunci gratis di{" "}
+                  <a
+                    href="https://aistudio.google.com/apikey"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-semibold underline text-[var(--primary)]"
+                  >
+                    Google AI Studio
+                  </a>{" "}
+                  lalu tempelkan di atas. Jangan bagikan API Key Anda kepada orang lain.
+                </p>
+                <p>
+                  2. Konten materi yang Anda buat dikirim ke Google sesuai ketentuan layanan gratis Google AI Studio. Demi privasi, jangan sertakan nama atau data pribadi siswa di dalam teks materi.
+                </p>
+              </div>
 
               {healthResult && (
                 <StatusMessage type={healthResult.status === "ok" ? "benar" : "info"}>

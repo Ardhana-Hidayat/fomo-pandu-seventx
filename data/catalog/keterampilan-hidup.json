@@ -1,0 +1,848 @@
+{
+  "domain": "keterampilan-hidup",
+  "version": "1.0.0",
+  "count": 33,
+  "concepts": [
+    {
+      "id": "keterampilan-hidup-benang",
+      "label": "Benang",
+      "labelNorm": "benang",
+      "synonyms": [],
+      "labelEn": "menjahit",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sew-7068.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menjahit\" pada kategori Profesi, Kehidupan Sehari-hari.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7068"
+    },
+    {
+      "id": "keterampilan-hidup-cangkul",
+      "label": "Cangkul",
+      "labelNorm": "cangkul",
+      "synonyms": [
+        "pacul",
+        "alat tani",
+        "berkebun",
+        "alat",
+        "alat pertanian",
+        "pedesaan"
+      ],
+      "labelEn": "hoe",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "alam-cuaca",
+        "rumah-tempat",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "profesi",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/cangkul.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi cangkul bergagang kayu untuk menggali tanah di kebun atau sawah.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:cangkul"
+    },
+    {
+      "id": "keterampilan-hidup-caretaker",
+      "label": "Caretaker",
+      "labelNorm": "caretaker",
+      "synonyms": [],
+      "labelEn": "caretaker",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/caretaker.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Caretaker\" pada kategori Profesi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6995"
+    },
+    {
+      "id": "keterampilan-hidup-concierge",
+      "label": "concierge",
+      "labelNorm": "concierge",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "rumah-tempat"
+      ],
+      "groupId": "keterampilan-hidup",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "concierge",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-keterampilan-hidup-concierge"
+    },
+    {
+      "id": "keterampilan-hidup-concierge-37823",
+      "label": "concierge 37823",
+      "labelNorm": "concierge 37823",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "rumah-tempat"
+      ],
+      "groupId": "keterampilan-hidup",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "concierge 37823",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-keterampilan-hidup-concierge-37823"
+    },
+    {
+      "id": "keterampilan-hidup-conductor",
+      "label": "Conductor",
+      "labelNorm": "conductor",
+      "synonyms": [],
+      "labelEn": "conductor",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "transportasi-keselamatan"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/conductor.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Conductor\" pada kategori Profesi, Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "34527"
+    },
+    {
+      "id": "keterampilan-hidup-dokter",
+      "label": "Dokter",
+      "labelNorm": "dokter",
+      "synonyms": [
+        "doctor"
+      ],
+      "labelEn": "doctor",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dokter.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Dokter\" pada kategori Profesi, Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6561"
+    },
+    {
+      "id": "keterampilan-hidup-guru",
+      "label": "Guru",
+      "labelNorm": "guru",
+      "synonyms": [
+        "teacher",
+        "pengajar"
+      ],
+      "labelEn": "teacher",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "sekolah",
+        "bahasa",
+        "rumah-tempat"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/guru.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Guru\" pada kategori Profesi, Benda di Sekolah, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6556"
+    },
+    {
+      "id": "keterampilan-hidup-kasir",
+      "label": "Kasir",
+      "labelNorm": "kasir",
+      "synonyms": [
+        "meja kasir",
+        "membayar",
+        "swalayan",
+        "profesi",
+        "transaksi",
+        "pekerjaan"
+      ],
+      "labelEn": "cashier",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/kasir.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi kasir di depan mesin kasir untuk melayani pembayaran belanja.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:kasir"
+    },
+    {
+      "id": "keterampilan-hidup-koki",
+      "label": "Koki",
+      "labelNorm": "koki",
+      "synonyms": [
+        "chef",
+        "cook"
+      ],
+      "labelEn": "chef",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "profesi",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/koki.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Koki\" pada kategori Profesi, Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "30526"
+    },
+    {
+      "id": "keterampilan-hidup-melipat-baju",
+      "label": "Melipat Baju",
+      "labelNorm": "melipat baju",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "keterampilan-hidup",
+        "bina-diri"
+      ],
+      "groupId": "keterampilan-hidup",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Melipat Baju",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-keterampilan-hidup-melipat-baju"
+    },
+    {
+      "id": "keterampilan-hidup-mencuci-piring",
+      "label": "Mencuci Piring",
+      "labelNorm": "mencuci piring",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "keterampilan-hidup",
+        "bina-diri"
+      ],
+      "groupId": "keterampilan-hidup",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Mencuci Piring",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-keterampilan-hidup-mencuci-piring"
+    },
+    {
+      "id": "keterampilan-hidup-menjahit",
+      "label": "Menjahit",
+      "labelNorm": "menjahit",
+      "synonyms": [
+        "jarum",
+        "sew"
+      ],
+      "labelEn": "menjahit",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sew.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menjahit\" pada kategori Profesi, Kehidupan Sehari-hari.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2722"
+    },
+    {
+      "id": "keterampilan-hidup-menyapu-lantai",
+      "label": "Menyapu Lantai",
+      "labelNorm": "menyapu lantai",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "keterampilan-hidup",
+        "bina-diri"
+      ],
+      "groupId": "keterampilan-hidup",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Menyapu Lantai",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-keterampilan-hidup-menyapu-lantai"
+    },
+    {
+      "id": "keterampilan-hidup-menyiram-tanaman",
+      "label": "Menyiram Tanaman",
+      "labelNorm": "menyiram tanaman",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "keterampilan-hidup",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "keterampilan-hidup",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Menyiram Tanaman",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-keterampilan-hidup-menyiram-tanaman"
+    },
+    {
+      "id": "keterampilan-hidup-montir",
+      "label": "Montir",
+      "labelNorm": "montir",
+      "synonyms": [
+        "mekanik",
+        "bengkel",
+        "perbaiki kendaraan",
+        "perawatan kendaraan"
+      ],
+      "labelEn": "mechanic",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "transportasi-keselamatan",
+        "rumah-tempat"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/montir.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi montir bengkel memegang kunci pas untuk memperbaiki kendaraan.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:montir"
+    },
+    {
+      "id": "keterampilan-hidup-nelayan",
+      "label": "Nelayan",
+      "labelNorm": "nelayan",
+      "synonyms": [
+        "penangkap ikan",
+        "perahu",
+        "pekerjaan pesisir",
+        "perikanan"
+      ],
+      "labelEn": "fisherman",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "rumah-tempat",
+        "alam-cuaca",
+        "tumbuhan-makanan",
+        "hewan",
+        "transportasi-keselamatan"
+      ],
+      "groupId": "profesi",
+      "kind": "hewan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/nelayan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi nelayan di atas perahu yang sedang menangkap ikan di laut.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:nelayan"
+    },
+    {
+      "id": "keterampilan-hidup-paediatric",
+      "label": "Paediatric",
+      "labelNorm": "paediatric",
+      "synonyms": [],
+      "labelEn": "paediatric psychiatrist",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/paediatric-psychiatrist-38879.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Paediatric Psychiatrist\" pada kategori Profesi, Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38879"
+    },
+    {
+      "id": "keterampilan-hidup-paediatric-psychiatrist",
+      "label": "Paediatric Psychiatrist",
+      "labelNorm": "paediatric psychiatrist",
+      "synonyms": [],
+      "labelEn": "paediatric psychiatrist",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/paediatric-psychiatrist.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Paediatric Psychiatrist\" pada kategori Profesi, Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38475"
+    },
+    {
+      "id": "keterampilan-hidup-paediatric-psychiatrist-38879",
+      "label": "paediatric psychiatrist 38879",
+      "labelNorm": "paediatric psychiatrist 38879",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "keterampilan-hidup",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "paediatric psychiatrist 38879",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-keterampilan-hidup-paediatric-psychiatrist-38879"
+    },
+    {
+      "id": "keterampilan-hidup-pedagang",
+      "label": "Pedagang",
+      "labelNorm": "pedagang",
+      "synonyms": [
+        "penjual",
+        "berjualan",
+        "warung",
+        "ekonomi",
+        "jual beli",
+        "kegiatan ekonomi"
+      ],
+      "labelEn": "merchant",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "rumah-tempat"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/pedagang.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi pedagang yang sedang berjualan buah dan sayur di kios pasar.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:pedagang"
+    },
+    {
+      "id": "keterampilan-hidup-pemadam-kebakaran",
+      "label": "Pemadam Kebakaran",
+      "labelNorm": "pemadam kebakaran",
+      "synonyms": [
+        "mobil pemadam",
+        "damkar",
+        "darurat",
+        "profesi penolong"
+      ],
+      "labelEn": "fire truck",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/pemadam-kebakaran.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi mobil pemadam kebakaran berwarna merah untuk membantu memadamkan api.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:pemadam-kebakaran"
+    },
+    {
+      "id": "keterampilan-hidup-penjahit",
+      "label": "Penjahit",
+      "labelNorm": "penjahit",
+      "synonyms": [
+        "mesin jahit",
+        "pembuatan pakaian",
+        "keterampilan"
+      ],
+      "labelEn": "tailor",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "bina-diri",
+        "rumah-tempat"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/penjahit.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi mesin jahit yang digunakan penjahit untuk membuat pakaian.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:penjahit"
+    },
+    {
+      "id": "keterampilan-hidup-petani",
+      "label": "Petani",
+      "labelNorm": "petani",
+      "synonyms": [
+        "farmer"
+      ],
+      "labelEn": "farmer",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "rumah-tempat",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "profesi",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/petani.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Petani\" pada kategori Profesi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2982"
+    },
+    {
+      "id": "keterampilan-hidup-pilot",
+      "label": "Pilot",
+      "labelNorm": "pilot",
+      "synonyms": [
+        "penerbang",
+        "kapten pesawat"
+      ],
+      "labelEn": "pilot",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "transportasi-keselamatan",
+        "rumah-tempat"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/pilot.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi pilot berseragam resmi yang menerbangkan pesawat terbang.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:pilot"
+    },
+    {
+      "id": "keterampilan-hidup-polisi",
+      "label": "Polisi",
+      "labelNorm": "polisi",
+      "synonyms": [
+        "police"
+      ],
+      "labelEn": "police",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "rumah-tempat",
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/polisi.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Polisi\" pada kategori Profesi, IPS, Keselamatan Diri.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37367"
+    },
+    {
+      "id": "keterampilan-hidup-psychiatrist",
+      "label": "Psychiatrist",
+      "labelNorm": "psychiatrist",
+      "synonyms": [],
+      "labelEn": "psychiatrist",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/psychiatrist.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Psychiatrist\" pada kategori Profesi, Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38474"
+    },
+    {
+      "id": "keterampilan-hidup-psychiatrist-38880",
+      "label": "Psychiatrist 38880",
+      "labelNorm": "psychiatrist 38880",
+      "synonyms": [],
+      "labelEn": "psychiatrist",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/psychiatrist-38880.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Psychiatrist\" pada kategori Profesi, Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38880"
+    },
+    {
+      "id": "keterampilan-hidup-resepsionis",
+      "label": "Resepsionis",
+      "labelNorm": "resepsionis",
+      "synonyms": [
+        "petugas hotel",
+        "pelayanan",
+        "concierge"
+      ],
+      "labelEn": "resepsionis",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "rumah-tempat"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/concierge.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Resepsionis\" pada kategori Profesi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2353"
+    },
+    {
+      "id": "keterampilan-hidup-resepsionis-hotel",
+      "label": "Resepsionis Hotel",
+      "labelNorm": "resepsionis hotel",
+      "synonyms": [],
+      "labelEn": "resepsionis",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "rumah-tempat"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/concierge-37823.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Resepsionis\" pada kategori Profesi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37823"
+    },
+    {
+      "id": "keterampilan-hidup-sew",
+      "label": "sew",
+      "labelNorm": "sew",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "keterampilan-hidup",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "sew",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-keterampilan-hidup-sew"
+    },
+    {
+      "id": "keterampilan-hidup-sew-7068",
+      "label": "sew 7068",
+      "labelNorm": "sew 7068",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "keterampilan-hidup",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "sew 7068",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-keterampilan-hidup-sew-7068"
+    },
+    {
+      "id": "keterampilan-hidup-tukang-kayu",
+      "label": "Tukang Kayu",
+      "labelNorm": "tukang kayu",
+      "synonyms": [
+        "tukang",
+        "perajin kayu"
+      ],
+      "labelEn": "carpenter",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "rumah-tempat"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/tukang-kayu.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi tukang kayu memakai helm pengaman dan celemek membawa palu.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:tukang-kayu"
+    }
+  ]
+}

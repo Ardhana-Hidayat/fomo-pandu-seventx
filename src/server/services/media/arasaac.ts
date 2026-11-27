@@ -248,28 +248,33 @@ export async function resolveCatalogAssetToDb(
       );
     }
 
-    const storageKey =
-      record.visual_type === "illustration"
-        ? `custom-${record.filename}`
-        : record.filename;
+    const diskPath = path.join(
+      process.cwd(),
+      "public",
+      record.file_path.replace(/^\/+/, "")
+    );
+    const hasDiskFile = fs.existsSync(diskPath);
+    const isSupabaseRemoteCustom =
+      !hasDiskFile &&
+      process.env.STORAGE_DRIVER === "supabase" &&
+      record.file_path.startsWith("/media/custom/");
+
+    const storageKey = isSupabaseRemoteCustom
+      ? path.basename(record.file_path)
+      : record.file_path;
 
     const existing = await getAssetByStorageKey(storageKey);
     if (existing.ok && existing.data) {
       return ok(existing.data);
     }
 
-    const diskPath = path.join(
-      process.cwd(),
-      "public",
-      record.file_path.replace(/^\/+/, "")
-    );
-    if (!fs.existsSync(diskPath)) {
+    if (!hasDiskFile && !isSupabaseRemoteCustom) {
       return err(
         makeAppError("NOT_FOUND", `Berkas aset '${record.file_path}' tidak ada di disk`)
       );
     }
 
-    const fileBuffer = fs.readFileSync(diskPath);
+    const bytes = hasDiskFile ? fs.statSync(diskPath).size : 6000;
     const ext = path.extname(record.filename).toLowerCase();
     const mime =
       ext === ".png"
@@ -280,8 +285,6 @@ export async function resolveCatalogAssetToDb(
             ? "image/svg+xml"
             : "image/webp";
 
-    await storage.put(storageKey, fileBuffer, mime, "card-images");
-
     const keyword = Array.from(
       new Set([record.display_name.toLowerCase(), ...record.keywords_id.slice(0, 3)])
     ).join(" | ");
@@ -290,7 +293,7 @@ export async function resolveCatalogAssetToDb(
       kind: record.visual_type === "illustration" ? "gambar" : "piktogram",
       storageKey,
       mime,
-      bytes: fileBuffer.length,
+      bytes,
       keyword,
       alt: customAlt?.trim() || record.display_name,
       source: record.source,

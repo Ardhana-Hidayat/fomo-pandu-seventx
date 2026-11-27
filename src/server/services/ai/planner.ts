@@ -1,5 +1,7 @@
 import "server-only";
+import type { ConceptRecord } from "@/shared/lib/grounding/visual-retrieval";
 import { searchAssets } from "../assets/retrieval";
+import { ingestSource } from "./ingest";
 import type { PDFExtractionResult } from "./pdf";
 import type { GenerateLessonOptions } from "./types";
 
@@ -15,8 +17,15 @@ export interface LessonPlan {
   subject: string;
   topic: string;
   normalizedText: string;
+  selectedText: string;
+  hasSourceText: boolean;
+  isScannedOrEmpty: boolean;
+  errorMessage?: string;
   sentences: string[];
   concepts: string[];
+  vocabulary: ConceptRecord[];
+  vocabularyLines: string[];
+  domains: string[];
   recommendedCardCount: number;
   requestedCardCount: number;
   candidateAssets: CandidateAsset[];
@@ -219,28 +228,29 @@ export function planLessonContent(
   const warnings: string[] = [];
   const requestedCardCount = Math.min(15, Math.max(1, options.cardCount ?? 6));
 
-  if (pdfResult) {
-    if (pdfResult.totalPages > 10) {
-      warnings.push(
-        `Dokumen PDF memiliki ${pdfResult.totalPages} halaman. Hanya 10 halaman pertama yang diproses.`
-      );
-    }
-    if (pdfResult.isScanned || pdfResult.text.trim().length < 50) {
-      warnings.push(
-        "PDF terlihat seperti hasil pindai atau memiliki sedikit teks. Periksa kembali kartu yang dihasilkan."
-      );
-    }
-  } else if (options.sourceType === "pdf" && !options.text?.trim()) {
+  const ingest = ingestSource({
+    sourceType: options.sourceType,
+    topic: options.topic,
+    text: options.text,
+    subject: options.subject,
+    pdfResult,
+  });
+  warnings.push(...ingest.warnings);
+
+  if (!pdfResult && options.sourceType === "pdf" && !options.text?.trim()) {
     warnings.push(
       "Teks PDF tidak dapat diekstrak secara penuh; materi disusun dari topik yang diberikan."
     );
   }
 
-  const rawSource = (pdfResult?.text || options.text || "").trim();
-  const normalizedText = normalizeSourceText(rawSource);
-  const sentences = splitSourceIntoSentences(normalizedText, 30);
+  const normalizedText = ingest.cleanedText || normalizeSourceText(options.text || "");
+  const selectedText = ingest.selectedText || normalizedText;
+  const sentences = splitSourceIntoSentences(selectedText, 30);
   const topic = (options.topic || "").trim();
-  const subject = inferSubject(topic, normalizedText);
+  const subject =
+    options.subject && options.subject !== "Otomatis"
+      ? options.subject
+      : inferSubject(topic, normalizedText);
   const concepts = extractConcepts(topic, sentences, 12);
 
   let recommendedCardCount = requestedCardCount;
@@ -254,17 +264,33 @@ export function planLessonContent(
     }
   }
 
-  const candidateAssets = retrieveCandidateAssets(topic, concepts, 24);
+  const candidateAssets =
+    ingest.vocabulary.length > 0
+      ? ingest.vocabulary.slice(0, 24).map((c) => ({
+          asset_id: c.assetId || c.id,
+          display_name: c.label,
+          description: c.synonyms.slice(0, 3).join(", ") || c.label,
+          visual_type: "pictogram" as const,
+          file_path: c.assetUrl || "",
+        }))
+      : retrieveCandidateAssets(topic, concepts, 24);
 
   return {
     subject,
     topic: topic || "Materi Pembelajaran",
     normalizedText,
+    selectedText,
+    hasSourceText: ingest.hasSourceText,
+    isScannedOrEmpty: ingest.isScannedOrEmpty,
+    errorMessage: ingest.errorMessage,
     sentences,
     concepts,
+    vocabulary: ingest.vocabulary,
+    vocabularyLines: ingest.vocabularyLines,
+    domains: ingest.domains,
     recommendedCardCount,
     requestedCardCount,
     candidateAssets,
-    warnings,
+    warnings: Array.from(new Set(warnings)),
   };
 }

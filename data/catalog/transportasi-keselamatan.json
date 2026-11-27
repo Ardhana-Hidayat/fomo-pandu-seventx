@@ -1,0 +1,2071 @@
+{
+  "domain": "transportasi-keselamatan",
+  "version": "1.0.0",
+  "count": 89,
+  "concepts": [
+    {
+      "id": "transportasi-keselamatan-accident",
+      "label": "Accident",
+      "labelNorm": "accident",
+      "synonyms": [],
+      "labelEn": "accident",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "keselamatan-diri",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/accident.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Accident\" pada kategori Keselamatan Diri, Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4551"
+    },
+    {
+      "id": "transportasi-keselamatan-airport",
+      "label": "Airport",
+      "labelNorm": "airport",
+      "synonyms": [
+        "bandara"
+      ],
+      "labelEn": "bandara",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/airport.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Airport\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6031"
+    },
+    {
+      "id": "transportasi-keselamatan-ambulans",
+      "label": "Ambulans",
+      "labelNorm": "ambulans",
+      "synonyms": [
+        "mobil ambulans",
+        "darurat medis",
+        "kendaraan",
+        "layanan darurat",
+        "kendaraan kesehatan"
+      ],
+      "labelEn": "ambulance",
+      "domains": [
+        "transportasi-keselamatan",
+        "tubuh-kesehatan",
+        "bina-diri",
+        "rumah-tempat"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/ambulans.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi mobil ambulans darurat dengan tanda palang merah dan sirine.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:ambulans"
+    },
+    {
+      "id": "transportasi-keselamatan-antre",
+      "label": "Antre",
+      "labelNorm": "antre",
+      "synonyms": [],
+      "labelEn": "halte bus",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/wait-at-bus-stop-36913.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Halte Bus\" pada kategori Transportasi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36913"
+    },
+    {
+      "id": "transportasi-keselamatan-berhenti",
+      "label": "Berhenti",
+      "labelNorm": "berhenti",
+      "synonyms": [],
+      "labelEn": "berhenti",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "keselamatan-diri",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/stop-39835.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Rambu Berhenti\" pada kategori Keselamatan Diri, Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "39835"
+    },
+    {
+      "id": "transportasi-keselamatan-bicara",
+      "label": "Bicara",
+      "labelNorm": "bicara",
+      "synonyms": [
+        "speak",
+        "talk"
+      ],
+      "labelEn": "speak",
+      "domains": [
+        "transportasi-keselamatan",
+        "bahasa",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/bicara.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bicara\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6517"
+    },
+    {
+      "id": "transportasi-keselamatan-break-glass",
+      "label": "Break Glass",
+      "labelNorm": "break glass",
+      "synonyms": [
+        "break",
+        "glass"
+      ],
+      "labelEn": "break glass",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "keselamatan-diri",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/break-glass.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Break Glass\" pada kategori Keselamatan Diri.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38109"
+    },
+    {
+      "id": "transportasi-keselamatan-bus",
+      "label": "Bus",
+      "labelNorm": "bus",
+      "synonyms": [
+        "bis"
+      ],
+      "labelEn": "bis",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/bus.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bus\" pada kategori Transportasi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2262"
+    },
+    {
+      "id": "transportasi-keselamatan-cabut-colokan",
+      "label": "Cabut Colokan",
+      "labelNorm": "cabut colokan",
+      "synonyms": [
+        "unplug"
+      ],
+      "labelEn": "cabut colokan",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri",
+        "rumah-tempat"
+      ],
+      "groupId": "keselamatan-diri",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/unplug.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Cabut Colokan\" pada kategori Keselamatan Diri, Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "8086"
+    },
+    {
+      "id": "transportasi-keselamatan-close-the-bus-doors",
+      "label": "Close The Bus Doors",
+      "labelNorm": "close the bus doors",
+      "synonyms": [
+        "doors"
+      ],
+      "labelEn": "close the bus doors",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/close-the-bus-doors.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Close The Bus Doors\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37476"
+    },
+    {
+      "id": "transportasi-keselamatan-descend-moving-ramp",
+      "label": "Descend Moving Ramp",
+      "labelNorm": "descend moving ramp",
+      "synonyms": [
+        "moving",
+        "ramp"
+      ],
+      "labelEn": "descend moving ramp",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/descend-moving-ramp.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Descend Moving Ramp\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38149"
+    },
+    {
+      "id": "transportasi-keselamatan-drive",
+      "label": "Drive",
+      "labelNorm": "drive",
+      "synonyms": [
+        "menyetir"
+      ],
+      "labelEn": "mengemudi",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/drive.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Drive\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6458"
+    },
+    {
+      "id": "transportasi-keselamatan-drive-2712",
+      "label": "drive 2712",
+      "labelNorm": "drive 2712",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "drive 2712",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-drive-2712"
+    },
+    {
+      "id": "transportasi-keselamatan-fly",
+      "label": "Fly",
+      "labelNorm": "fly",
+      "synonyms": [],
+      "labelEn": "fly",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/fly.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Fly\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "10190"
+    },
+    {
+      "id": "transportasi-keselamatan-fly-16113",
+      "label": "Fly 16113",
+      "labelNorm": "fly 16113",
+      "synonyms": [],
+      "labelEn": "fly",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/fly-16113.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Fly\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "16113"
+    },
+    {
+      "id": "transportasi-keselamatan-fly-6246",
+      "label": "Fly 6246",
+      "labelNorm": "fly 6246",
+      "synonyms": [],
+      "labelEn": "fly",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/fly-6246.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Fly\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6246"
+    },
+    {
+      "id": "transportasi-keselamatan-get",
+      "label": "Get",
+      "labelNorm": "get",
+      "synonyms": [],
+      "labelEn": "turun bus",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-off-the-bus-36879.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get Off The Bus\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36879"
+    },
+    {
+      "id": "transportasi-keselamatan-get-into-the-bus",
+      "label": "Get Into The Bus",
+      "labelNorm": "get into the bus",
+      "synonyms": [],
+      "labelEn": "get into the bus",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-into-the-bus.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get Into The Bus\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36968"
+    },
+    {
+      "id": "transportasi-keselamatan-get-into-the-car",
+      "label": "Get Into The Car",
+      "labelNorm": "get into the car",
+      "synonyms": [
+        "masuk mobil",
+        "car"
+      ],
+      "labelEn": "masuk mobil",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-into-the-car.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get Into The Car\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36969"
+    },
+    {
+      "id": "transportasi-keselamatan-get-off-the-bus",
+      "label": "Get Off The Bus",
+      "labelNorm": "get off the bus",
+      "synonyms": [
+        "off"
+      ],
+      "labelEn": "turun bus",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-off-the-bus.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get Off The Bus\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36842"
+    },
+    {
+      "id": "transportasi-keselamatan-get-off-the-bus-36843",
+      "label": "get off the bus 36843",
+      "labelNorm": "get off the bus 36843",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "get off the bus 36843",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-get-off-the-bus-36843"
+    },
+    {
+      "id": "transportasi-keselamatan-get-off-the-bus-36844",
+      "label": "get off the bus 36844",
+      "labelNorm": "get off the bus 36844",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "get off the bus 36844",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-get-off-the-bus-36844"
+    },
+    {
+      "id": "transportasi-keselamatan-get-off-the-bus-36879",
+      "label": "get off the bus 36879",
+      "labelNorm": "get off the bus 36879",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "get off the bus 36879",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-get-off-the-bus-36879"
+    },
+    {
+      "id": "transportasi-keselamatan-get-off-the-car",
+      "label": "Get Off The Car",
+      "labelNorm": "get off the car",
+      "synonyms": [
+        "keluar mobil"
+      ],
+      "labelEn": "keluar mobil",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-off-the-car.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get Off The Car\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36958"
+    },
+    {
+      "id": "transportasi-keselamatan-get-off-the-train",
+      "label": "Get Off The Train",
+      "labelNorm": "get off the train",
+      "synonyms": [
+        "turun kereta",
+        "train"
+      ],
+      "labelEn": "turun kereta",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-off-the-train.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get Off The Train\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38979"
+    },
+    {
+      "id": "transportasi-keselamatan-get-on-bus",
+      "label": "Get On Bus",
+      "labelNorm": "get on bus",
+      "synonyms": [],
+      "labelEn": "naik bus",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-on-bus.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get On Bus\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36593"
+    },
+    {
+      "id": "transportasi-keselamatan-get-on-bus-36594",
+      "label": "get on bus 36594",
+      "labelNorm": "get on bus 36594",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "get on bus 36594",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-get-on-bus-36594"
+    },
+    {
+      "id": "transportasi-keselamatan-get-on-bus-36595",
+      "label": "get on bus 36595",
+      "labelNorm": "get on bus 36595",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "get on bus 36595",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-get-on-bus-36595"
+    },
+    {
+      "id": "transportasi-keselamatan-go-down-escalator",
+      "label": "Go Down Escalator",
+      "labelNorm": "go down escalator",
+      "synonyms": [
+        "go",
+        "escalator"
+      ],
+      "labelEn": "go down escalator",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/go-down-escalator.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Go Down Escalator\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38148"
+    },
+    {
+      "id": "transportasi-keselamatan-go-up-escalator",
+      "label": "Go Up Escalator",
+      "labelNorm": "go up escalator",
+      "synonyms": [],
+      "labelEn": "go up escalator",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/go-up-escalator.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Go Up Escalator\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38151"
+    },
+    {
+      "id": "transportasi-keselamatan-go-up-moving-ramp",
+      "label": "Go Up Moving Ramp",
+      "labelNorm": "go up moving ramp",
+      "synonyms": [],
+      "labelEn": "go up moving ramp",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/go-up-moving-ramp.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Go Up Moving Ramp\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38150"
+    },
+    {
+      "id": "transportasi-keselamatan-halte",
+      "label": "Halte",
+      "labelNorm": "halte",
+      "synonyms": [
+        "wait at bus stop",
+        "wait"
+      ],
+      "labelEn": "halte bus",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/wait-at-bus-stop.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Halte Bus\" pada kategori Transportasi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "25077"
+    },
+    {
+      "id": "transportasi-keselamatan-halte-bus",
+      "label": "Halte Bus",
+      "labelNorm": "halte bus",
+      "synonyms": [
+        "tempat tunggu bus",
+        "angkutan umum",
+        "layanan publik",
+        "transportasi umum"
+      ],
+      "labelEn": "bus stop",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/halte-bus.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi halte tempat menunggu dan naik turun bus kota.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:halte-bus"
+    },
+    {
+      "id": "transportasi-keselamatan-helikopter",
+      "label": "Helikopter",
+      "labelNorm": "helikopter",
+      "synonyms": [
+        "baling-baling",
+        "kendaraan udara",
+        "transportasi udara"
+      ],
+      "labelEn": "helicopter",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/helikopter.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi helikopter merah dengan baling-baling berputar di atas.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:helikopter"
+    },
+    {
+      "id": "transportasi-keselamatan-helm-pengaman",
+      "label": "Helm Pengaman",
+      "labelNorm": "helm pengaman",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Helm Pengaman",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-helm-pengaman"
+    },
+    {
+      "id": "transportasi-keselamatan-honk",
+      "label": "Honk",
+      "labelNorm": "honk",
+      "synonyms": [
+        "klakson",
+        "bunyi kendaraan"
+      ],
+      "labelEn": "klakson",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/honk.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Honk\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "22139"
+    },
+    {
+      "id": "transportasi-keselamatan-in",
+      "label": "In",
+      "labelNorm": "in",
+      "synonyms": [],
+      "labelEn": "transport in wheelchair",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/transport-in-wheelchair-33930.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Transport In Wheelchair\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "33930"
+    },
+    {
+      "id": "transportasi-keselamatan-jalur-penyeberangan",
+      "label": "Jalur Penyeberangan",
+      "labelNorm": "jalur penyeberangan",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Jalur Penyeberangan",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-jalur-penyeberangan"
+    },
+    {
+      "id": "transportasi-keselamatan-kapal",
+      "label": "Kapal",
+      "labelNorm": "kapal",
+      "synonyms": [
+        "ship",
+        "boat",
+        "kapal laut"
+      ],
+      "labelEn": "ship",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "alam-cuaca"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/kapal.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kapal\" pada kategori Transportasi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6932"
+    },
+    {
+      "id": "transportasi-keselamatan-kapal-selam",
+      "label": "Kapal Selam",
+      "labelNorm": "kapal selam",
+      "synonyms": [
+        "menyelam",
+        "transportasi laut",
+        "kendaraan laut",
+        "laut dalam"
+      ],
+      "labelEn": "submarine",
+      "domains": [
+        "transportasi-keselamatan",
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/kapal-selam.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi kapal selam berwarna kuning menyelam di bawah permukaan laut.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:kapal-selam"
+    },
+    {
+      "id": "transportasi-keselamatan-kereta",
+      "label": "Kereta",
+      "labelNorm": "kereta",
+      "synonyms": [],
+      "labelEn": "train",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "alam-cuaca"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/kereta.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kereta\" pada kategori Transportasi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2603"
+    },
+    {
+      "id": "transportasi-keselamatan-keselamatan-di-jalan",
+      "label": "Keselamatan di Jalan",
+      "labelNorm": "keselamatan di jalan",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Keselamatan di Jalan",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-keselamatan-di-jalan"
+    },
+    {
+      "id": "transportasi-keselamatan-keselamatan-di-rumah",
+      "label": "Keselamatan di Rumah",
+      "labelNorm": "keselamatan di rumah",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Keselamatan di Rumah",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-keselamatan-di-rumah"
+    },
+    {
+      "id": "transportasi-keselamatan-koper",
+      "label": "Koper",
+      "labelNorm": "koper",
+      "synonyms": [
+        "tas koper",
+        "bagasi",
+        "perjalanan",
+        "liburan",
+        "perlengkapan hotel",
+        "bepergian"
+      ],
+      "labelEn": "suitcase",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri",
+        "keterampilan-hidup",
+        "rumah-tempat",
+        "sekolah"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/koper.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi koper beroda untuk membawa pakaian saat bepergian dan menginap di hotel.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:koper"
+    },
+    {
+      "id": "transportasi-keselamatan-mengemudi",
+      "label": "Mengemudi",
+      "labelNorm": "mengemudi",
+      "synonyms": [],
+      "labelEn": "mengemudi",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/drive-2712.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Drive\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2712"
+    },
+    {
+      "id": "transportasi-keselamatan-mengendarai",
+      "label": "Mengendarai",
+      "labelNorm": "mengendarai",
+      "synonyms": [],
+      "labelEn": "mengendarai",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/ride-27626.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ride\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "27626"
+    },
+    {
+      "id": "transportasi-keselamatan-menunggu-bus",
+      "label": "Menunggu Bus",
+      "labelNorm": "menunggu bus",
+      "synonyms": [],
+      "labelEn": "halte bus",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/wait-at-bus-stop-25078.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Halte Bus\" pada kategori Transportasi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "25078"
+    },
+    {
+      "id": "transportasi-keselamatan-mobil",
+      "label": "Mobil",
+      "labelNorm": "mobil",
+      "synonyms": [],
+      "labelEn": "car",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/mobil.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mobil\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2339"
+    },
+    {
+      "id": "transportasi-keselamatan-motor",
+      "label": "Motor",
+      "labelNorm": "motor",
+      "synonyms": [
+        "motorcycle",
+        "sepeda motor"
+      ],
+      "labelEn": "motorcycle",
+      "domains": [
+        "transportasi-keselamatan",
+        "seni-olahraga"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/motor.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Motor\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7166"
+    },
+    {
+      "id": "transportasi-keselamatan-naik-bus",
+      "label": "Naik Bus",
+      "labelNorm": "naik bus",
+      "synonyms": [],
+      "labelEn": "naik bus",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-on-bus-36594.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get On Bus\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36594"
+    },
+    {
+      "id": "transportasi-keselamatan-naik-kendaraan",
+      "label": "Naik Kendaraan",
+      "labelNorm": "naik kendaraan",
+      "synonyms": [],
+      "labelEn": "mengendarai",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/ride-35483.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ride\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "35483"
+    },
+    {
+      "id": "transportasi-keselamatan-on",
+      "label": "On",
+      "labelNorm": "on",
+      "synonyms": [],
+      "labelEn": "naik bus",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-on-bus-36595.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get On Bus\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36595"
+    },
+    {
+      "id": "transportasi-keselamatan-open-bus-doors",
+      "label": "Open Bus Doors",
+      "labelNorm": "open bus doors",
+      "synonyms": [],
+      "labelEn": "open bus doors",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/open-bus-doors.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Open Bus Doors\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36483"
+    },
+    {
+      "id": "transportasi-keselamatan-perkotaan",
+      "label": "Perkotaan",
+      "labelNorm": "perkotaan",
+      "synonyms": [],
+      "labelEn": "halte bus",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/wait-at-bus-stop-36917.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Halte Bus\" pada kategori Transportasi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36917"
+    },
+    {
+      "id": "transportasi-keselamatan-pesawat",
+      "label": "Pesawat",
+      "labelNorm": "pesawat",
+      "synonyms": [
+        "airplane",
+        "plane"
+      ],
+      "labelEn": "airplane",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/pesawat.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Pesawat\" pada kategori Transportasi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6924"
+    },
+    {
+      "id": "transportasi-keselamatan-rambu-berhenti",
+      "label": "Rambu Berhenti",
+      "labelNorm": "rambu berhenti",
+      "synonyms": [
+        "tanda berhenti",
+        "stop"
+      ],
+      "labelEn": "berhenti",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "keselamatan-diri",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/stop.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Rambu Berhenti\" pada kategori Keselamatan Diri, Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7196"
+    },
+    {
+      "id": "transportasi-keselamatan-refuel",
+      "label": "Refuel",
+      "labelNorm": "refuel",
+      "synonyms": [
+        "isi bensin",
+        "bahan bakar"
+      ],
+      "labelEn": "isi bensin",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/refuel.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Refuel\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5448"
+    },
+    {
+      "id": "transportasi-keselamatan-ride",
+      "label": "Ride",
+      "labelNorm": "ride",
+      "synonyms": [],
+      "labelEn": "mengendarai",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/ride.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ride\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6643"
+    },
+    {
+      "id": "transportasi-keselamatan-ride-27626",
+      "label": "ride 27626",
+      "labelNorm": "ride 27626",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "ride 27626",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-ride-27626"
+    },
+    {
+      "id": "transportasi-keselamatan-ride-35483",
+      "label": "ride 35483",
+      "labelNorm": "ride 35483",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "ride 35483",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-ride-35483"
+    },
+    {
+      "id": "transportasi-keselamatan-ride-a-bike",
+      "label": "Ride A Bike",
+      "labelNorm": "ride a bike",
+      "synonyms": [
+        "naik sepeda",
+        "bersepeda",
+        "bike"
+      ],
+      "labelEn": "naik sepeda",
+      "domains": [
+        "transportasi-keselamatan",
+        "seni-olahraga"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/ride-a-bike.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ride A Bike\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6045"
+    },
+    {
+      "id": "transportasi-keselamatan-sabuk-pengaman",
+      "label": "Sabuk Pengaman",
+      "labelNorm": "sabuk pengaman",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Sabuk Pengaman",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-sabuk-pengaman"
+    },
+    {
+      "id": "transportasi-keselamatan-sail",
+      "label": "Sail",
+      "labelNorm": "sail",
+      "synonyms": [
+        "berlayar"
+      ],
+      "labelEn": "berlayar",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sail.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sail\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7170"
+    },
+    {
+      "id": "transportasi-keselamatan-scare",
+      "label": "Scare",
+      "labelNorm": "scare",
+      "synonyms": [],
+      "labelEn": "scare",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/scare.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/scared.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Scare\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6916"
+    },
+    {
+      "id": "transportasi-keselamatan-secure",
+      "label": "Secure",
+      "labelNorm": "secure",
+      "synonyms": [],
+      "labelEn": "secure",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "keselamatan-diri",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/secure.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Secure\" pada kategori Keselamatan Diri.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32316"
+    },
+    {
+      "id": "transportasi-keselamatan-secure-32317",
+      "label": "Secure 32317",
+      "labelNorm": "secure 32317",
+      "synonyms": [],
+      "labelEn": "secure",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "keselamatan-diri",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/secure-32317.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Secure\" pada kategori Keselamatan Diri.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32317"
+    },
+    {
+      "id": "transportasi-keselamatan-sepeda",
+      "label": "Sepeda",
+      "labelNorm": "sepeda",
+      "synonyms": [
+        "bicycle"
+      ],
+      "labelEn": "bicycle",
+      "domains": [
+        "transportasi-keselamatan",
+        "seni-olahraga",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sepeda.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sepeda\" pada kategori Transportasi, Pendidikan Jasmani.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6935"
+    },
+    {
+      "id": "transportasi-keselamatan-simpang-jalan",
+      "label": "Simpang Jalan",
+      "labelNorm": "simpang jalan",
+      "synonyms": [
+        "persimpangan",
+        "perempatan",
+        "lalu lintas"
+      ],
+      "labelEn": "intersection",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/simpang-jalan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi persimpangan empat jalan raya dilihat dari atas.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:simpang-jalan"
+    },
+    {
+      "id": "transportasi-keselamatan-stasiun-kereta",
+      "label": "Stasiun Kereta",
+      "labelNorm": "stasiun kereta",
+      "synonyms": [
+        "stasiun",
+        "stasiun kereta api",
+        "peron",
+        "kereta api"
+      ],
+      "labelEn": "train station",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "alam-cuaca"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/stasiun-kereta.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi gedung stasiun kereta api dengan jam dan rel kereta.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:stasiun-kereta"
+    },
+    {
+      "id": "transportasi-keselamatan-stop",
+      "label": "stop",
+      "labelNorm": "stop",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "stop",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-stop"
+    },
+    {
+      "id": "transportasi-keselamatan-stop-39835",
+      "label": "stop 39835",
+      "labelNorm": "stop 39835",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "stop 39835",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-stop-39835"
+    },
+    {
+      "id": "transportasi-keselamatan-tikungan",
+      "label": "Tikungan",
+      "labelNorm": "tikungan",
+      "synonyms": [
+        "belokan jalan"
+      ],
+      "labelEn": "belokan jalan",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "keselamatan-diri",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/tikungan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Tikungan\" pada kategori Keselamatan Diri, Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4681"
+    },
+    {
+      "id": "transportasi-keselamatan-traktor",
+      "label": "Traktor",
+      "labelNorm": "traktor",
+      "synonyms": [
+        "mesin bajak",
+        "kendaraan kerja"
+      ],
+      "labelEn": "tractor",
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "alam-cuaca",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "transportasi",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/traktor.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi traktor pertanian hijau untuk membajak tanah di sawah.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:traktor"
+    },
+    {
+      "id": "transportasi-keselamatan-transport",
+      "label": "Transport",
+      "labelNorm": "transport",
+      "synonyms": [],
+      "labelEn": "transport in wheelchair",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/transport-in-wheelchair-11466.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Transport In Wheelchair\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "11466"
+    },
+    {
+      "id": "transportasi-keselamatan-transport-in-wheelchair",
+      "label": "Transport In Wheelchair",
+      "labelNorm": "transport in wheelchair",
+      "synonyms": [],
+      "labelEn": "transport in wheelchair",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/transport-in-wheelchair.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Transport In Wheelchair\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32288"
+    },
+    {
+      "id": "transportasi-keselamatan-transport-in-wheelchair-11466",
+      "label": "transport in wheelchair 11466",
+      "labelNorm": "transport in wheelchair 11466",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "transport in wheelchair 11466",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-transport-in-wheelchair-11466"
+    },
+    {
+      "id": "transportasi-keselamatan-transport-in-wheelchair-33930",
+      "label": "transport in wheelchair 33930",
+      "labelNorm": "transport in wheelchair 33930",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "transport in wheelchair 33930",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-transport-in-wheelchair-33930"
+    },
+    {
+      "id": "transportasi-keselamatan-transport-in-wheelchair-33931",
+      "label": "transport in wheelchair 33931",
+      "labelNorm": "transport in wheelchair 33931",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "transport in wheelchair 33931",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-transport-in-wheelchair-33931"
+    },
+    {
+      "id": "transportasi-keselamatan-transportasi",
+      "label": "Transportasi",
+      "labelNorm": "transportasi",
+      "synonyms": [],
+      "labelEn": "turun bus",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-off-the-bus-36844.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get Off The Bus\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36844"
+    },
+    {
+      "id": "transportasi-keselamatan-trotoar",
+      "label": "Trotoar",
+      "labelNorm": "trotoar",
+      "synonyms": [
+        "pejalan kaki",
+        "pinggir jalan",
+        "fasilitas jalan"
+      ],
+      "labelEn": "sidewalk",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "keselamatan-diri",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/trotoar.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi jalur trotoar di pinggir jalan raya yang aman bagi pejalan kaki.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:trotoar"
+    },
+    {
+      "id": "transportasi-keselamatan-truk",
+      "label": "Truk",
+      "labelNorm": "truk",
+      "synonyms": [
+        "truck"
+      ],
+      "labelEn": "truck",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/truk.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Truk\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "3232"
+    },
+    {
+      "id": "transportasi-keselamatan-turun-bus",
+      "label": "Turun Bus",
+      "labelNorm": "turun bus",
+      "synonyms": [],
+      "labelEn": "turun bus",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-off-the-bus-36843.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Get Off The Bus\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36843"
+    },
+    {
+      "id": "transportasi-keselamatan-unplug",
+      "label": "unplug",
+      "labelNorm": "unplug",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri",
+        "rumah-tempat"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "unplug",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-unplug"
+    },
+    {
+      "id": "transportasi-keselamatan-wait-at-bus-stop",
+      "label": "wait at bus stop",
+      "labelNorm": "wait at bus stop",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "wait at bus stop",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-wait-at-bus-stop"
+    },
+    {
+      "id": "transportasi-keselamatan-wait-at-bus-stop-25078",
+      "label": "wait at bus stop 25078",
+      "labelNorm": "wait at bus stop 25078",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "wait at bus stop 25078",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-wait-at-bus-stop-25078"
+    },
+    {
+      "id": "transportasi-keselamatan-wait-at-bus-stop-36913",
+      "label": "wait at bus stop 36913",
+      "labelNorm": "wait at bus stop 36913",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "wait at bus stop 36913",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-wait-at-bus-stop-36913"
+    },
+    {
+      "id": "transportasi-keselamatan-wait-at-bus-stop-36917",
+      "label": "wait at bus stop 36917",
+      "labelNorm": "wait at bus stop 36917",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "transportasi-keselamatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "transportasi-keselamatan",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "wait at bus stop 36917",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-transportasi-keselamatan-wait-at-bus-stop-36917"
+    },
+    {
+      "id": "transportasi-keselamatan-wheelchair",
+      "label": "Wheelchair",
+      "labelNorm": "wheelchair",
+      "synonyms": [],
+      "labelEn": "transport in wheelchair",
+      "domains": [
+        "transportasi-keselamatan"
+      ],
+      "groupId": "transportasi",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/transport-in-wheelchair-33931.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Transport In Wheelchair\" pada kategori Transportasi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "33931"
+    },
+    {
+      "id": "transportasi-keselamatan-zebra-cross",
+      "label": "Zebra Cross",
+      "labelNorm": "zebra cross",
+      "synonyms": [
+        "penyeberangan jalan",
+        "zebra",
+        "cross"
+      ],
+      "labelEn": "penyeberangan jalan",
+      "domains": [
+        "transportasi-keselamatan",
+        "bina-diri",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "hewan"
+      ],
+      "groupId": "keselamatan-diri",
+      "kind": "hewan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/zebra-cross.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Zebra Cross\" pada kategori Keselamatan Diri, Transportasi, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7197"
+    }
+  ]
+}

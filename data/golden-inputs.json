@@ -1,0 +1,272 @@
+[
+  {
+    "id": "g01",
+    "subject": "IPA",
+    "topic": "Mengenal Bagian Tumbuhan",
+    "text": "Akar tumbuhan menyerap zat hara dari tanah. Batang menopang daun yang hijau. Bunga tumbuh mekar menjadi buah yang manis.",
+    "lessonKind": "konsep",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g02",
+    "subject": "Matematika",
+    "topic": "Penjumlahan Buah Segar",
+    "text": "Ibu membeli dua apel merah di pasar. Ayah menambah satu pisang kuning. Semua buah ditaruh di atas piring.",
+    "lessonKind": "konsep",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g03",
+    "subject": "Bahasa Indonesia",
+    "topic": "Benda di Ruang Kelas",
+    "text": "Murid membaca buku cerita di meja belajar. Pensil dipakai untuk menulis huruf. Penghapus membersihkan tulisan yang salah.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g04",
+    "subject": "IPA",
+    "topic": "Hewan di Sekitar Kita",
+    "text": "Kucing berjalan pelan di halaman rumah. Burung terbang tinggi dengan sayap lebar. Ikan berenang cepat di dalam kolam.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g05",
+    "subject": "IPS",
+    "topic": "Profesi di Lingkungan Masyarakat",
+    "text": "Guru mengajar murid di ruang kelas. Dokter memeriksa pasien di rumah sakit. Petani menanam padi di sawah luas.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g06",
+    "subject": "Kesehatan dan Kebersihan",
+    "topic": "Cara Mencuci Tangan yang Bersih",
+    "text": "Basahi kedua tangan dengan air bersih. Gosok telapak tangan memakai sabun sampai berbusa. Keringkan tangan menggunakan handuk bersih.",
+    "lessonKind": "langkah",
+    "isHygiene": true,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g07",
+    "subject": "IPA",
+    "topic": "Cuaca dan Alam Sekitar",
+    "text": "Matahari bersinar terang pada siang hari. Awan putih berkumpul di langit biru. Hujan turun membasahi tanah dan pohon.",
+    "lessonKind": "konsep",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g08",
+    "subject": "IPS",
+    "topic": "Benda di Rumah",
+    "text": "Meja dan kursi ada di ruang tamu. Kasur dan bantal ada di kamar tidur. Panci dan wajan ada di dapur.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g09",
+    "subject": "IPA",
+    "topic": "Proses Fotosintesis Tumbuhan",
+    "text": "Klorofil pada daun menangkap cahaya. Mitokondria mengolah energi sel tumbuhan. Stomata membuka pada pagi hari.",
+    "lessonKind": "konsep",
+    "isHygiene": false,
+    "expectMissingTerms": true
+  },
+  {
+    "id": "g10",
+    "subject": "Transportasi",
+    "topic": "Alat Transportasi Umum",
+    "text": "Bus berhenti di halte untuk menaikkan penumpang. Kereta berjalan di atas rel besi. Pesawat terbang melintasi awan di langit.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g11",
+    "subject": "Pendidikan Pancasila",
+    "topic": "Gotong Royong di Keluarga",
+    "text": "Ibu dan ayah bekerja sama membersihkan rumah. Kakak membantu adik merapikan mainan. Keluarga hidup rukun dan saling menyayangi.",
+    "lessonKind": "cerita",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g12",
+    "subject": "IPA",
+    "topic": "Gaya Gravitasi dan Magnetisme",
+    "text": "Gravitasi menarik benda jatuh ke bawah. Magnetisme menarik logam besi dan nikel. Elektromagnetik bekerja memakai arus listrik.",
+    "lessonKind": "konsep",
+    "isHygiene": false,
+    "expectMissingTerms": true
+  },
+  {
+    "id": "g13",
+    "subject": "Seni dan Budaya",
+    "topic": "Mengenal Warna Dasar",
+    "text": "Warna merah tampak cerah seperti buah apel. Warna biru tampak sejuk seperti langit. Warna kuning cerah seperti pisang matang.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g14",
+    "subject": "Pendidikan Jasmani",
+    "topic": "Olahraga Pagi yang Sehat",
+    "text": "Anak berlari santai di taman sekolah. Mereka berenang di kolam bersama teman. Setelah olahraga kita minum susu hangat.",
+    "lessonKind": "langkah",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g15",
+    "subject": "Bina Diri",
+    "topic": "Merapikan Tempat Tidur",
+    "text": "Bangun pagi lalu lipat selimut rapi. Letakkan bantal di ujung kasur. Buka jendela kamar agar udara segar masuk.",
+    "lessonKind": "langkah",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g16",
+    "subject": "Makanan dan Minuman",
+    "topic": "Sarapan Pagi Bergizi",
+    "text": "Pagi hari kita makan nasi dan telur. Sayur wortel baik untuk kesehatan mata. Segelas susu memberi tenaga untuk belajar.",
+    "lessonKind": "konsep",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g17",
+    "subject": "Hewan",
+    "topic": "Hewan Ternak di Desa",
+    "text": "Sapi makan rumput hijau di padang. Ayam bertelur di dalam kandang kayu. Bebek berenang di sungai dekat sawah.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g18",
+    "subject": "Matematika",
+    "topic": "Mengenal Angka dan Waktu",
+    "text": "Jarum jam menunjuk angka satu pagi. Dua buah apel ditaruh di meja. Tiga kursi berjajar rapi di kelas.",
+    "lessonKind": "konsep",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g19",
+    "subject": "Bahasa Indonesia",
+    "topic": "Anggota Tubuh Manusia",
+    "text": "Mata digunakan untuk melihat benda sekitar. Telinga mendengar suara guru di kelas. Hidung mencium aroma bunga di taman.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g20",
+    "subject": "IPS",
+    "topic": "Tempat Umum di Kota",
+    "text": "Pasar ramai dikunjungi pembeli setiap pagi. Rumah sakit tempat dokter mengobati orang sakit. Sekolah tempat murid belajar bersama guru.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g21",
+    "subject": "Kesehatan dan Kebersihan",
+    "topic": "Menjaga Kebersihan Gigi",
+    "text": "Siapkan sikat gigi dan pasta gigi. Sikat gigi atas dan bawah perlahan. Kumur mulut memakai air bersih.",
+    "lessonKind": "langkah",
+    "isHygiene": true,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g22",
+    "subject": "Seni dan Budaya",
+    "topic": "Bernyanyi dan Menggambar",
+    "text": "Murid bernyanyi gembira di ruang musik. Mereka menggambar rumah memakai pensil warna. Lukisan dipajang di dinding kelas.",
+    "lessonKind": "cerita",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g23",
+    "subject": "Transportasi",
+    "topic": "Keselamatan di Jalan Raya",
+    "text": "Berhenti saat lampu merah menyala. Pejalan kaki menyeberang di jembatan penyeberangan. Pakai helm saat naik sepeda motor.",
+    "lessonKind": "langkah",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g24",
+    "subject": "Bina Diri",
+    "topic": "Memakai Pakaian Sendiri",
+    "text": "Ambil baju bersih dari dalam lemari. Pasang kancing baju dari atas ke bawah. Pakai sepatu sebelum berangkat ke sekolah.",
+    "lessonKind": "langkah",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g25",
+    "subject": "IPA",
+    "topic": "Bentuk Alam di Bumi",
+    "text": "Gunung menjulang tinggi di pulau hijau. Sungai mengalir jauh menuju laut luas. Ombak putih memecah di tepi pantai.",
+    "lessonKind": "konsep",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g26",
+    "subject": "Hewan",
+    "topic": "Hewan di Kebun Binatang",
+    "text": "Gajah memiliki belalai panjang untuk minum. Paus hidup berenang di laut dalam. Lebah hinggap di atas bunga taman.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g27",
+    "subject": "Makanan dan Minuman",
+    "topic": "Alat Makan di Meja",
+    "text": "Sendok dan garpu ditaruh di samping piring. Gelas berisi teh hangat di meja. Roti tawar dimakan untuk sarapan pagi.",
+    "lessonKind": "kosakata",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g28",
+    "subject": "Pendidikan Pancasila",
+    "topic": "Teman Baik di Sekolah",
+    "text": "Murid menyapa teman dengan senyum ramah. Kita antre tertib saat masuk kelas. Semua siswa menjaga kebersihan taman sekolah.",
+    "lessonKind": "cerita",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g29",
+    "subject": "Bahasa Indonesia",
+    "topic": "Menulis Surat untuk Nenek",
+    "text": "Adik mengambil kertas dan pensil di meja. Ia menulis cerita tentang kucing peliharaan. Surat dimasukkan ke dalam tas sekolah.",
+    "lessonKind": "cerita",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  },
+  {
+    "id": "g30",
+    "subject": "Pendidikan Jasmani",
+    "topic": "Bermain di Taman",
+    "text": "Anak bermain ayunan di taman kota. Mereka menendang bola bersama di lapangan. Setelah bermain semua duduk di kursi.",
+    "lessonKind": "cerita",
+    "isHygiene": false,
+    "expectMissingTerms": false
+  }
+]

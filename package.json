@@ -25,7 +25,13 @@
     "signs:build": "tsx scripts/signs/build-library.ts",
     "signs:review": "tsx scripts/signs/contact-sheet.ts",
     "media:pictos": "tsx scripts/media/fetch-pictograms.ts",
-    "storage:upload": "tsx scripts/storage/upload-assets-supabase.ts"
+    "storage:upload": "tsx scripts/storage/upload-assets-supabase.ts",
+    "catalog:build": "tsx --conditions=react-server scripts/catalog.ts build",
+    "catalog:verify": "tsx --conditions=react-server scripts/catalog.ts verify",
+    "catalog:report": "tsx --conditions=react-server scripts/catalog.ts report",
+    "catalog:gaps": "tsx --conditions=react-server scripts/catalog.ts gaps",
+    "catalog:sync": "tsx --conditions=react-server scripts/catalog.ts sync",
+    "verify:images": "tsx --conditions=react-server scripts/audit/verify-golden.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.2.14",

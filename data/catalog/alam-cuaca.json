@@ -1,0 +1,1635 @@
+{
+  "domain": "alam-cuaca",
+  "version": "1.0.0",
+  "count": 61,
+  "concepts": [
+    {
+      "id": "alam-cuaca-air",
+      "label": "Air",
+      "labelNorm": "air",
+      "synonyms": [
+        "air putih",
+        "air minum",
+        "bersih",
+        "makanan dan minuman"
+      ],
+      "labelEn": "water",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "tumbuhan-makanan",
+        "bina-diri",
+        "keterampilan-hidup"
+      ],
+      "groupId": "ipa",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/air.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Air\" pada kategori IPA, Lingkungan, Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2414"
+    },
+    {
+      "id": "alam-cuaca-air-9045",
+      "label": "air 9045",
+      "labelNorm": "air 9045",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "air 9045",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-air-9045"
+    },
+    {
+      "id": "alam-cuaca-air-terjun",
+      "label": "Air Terjun",
+      "labelNorm": "air terjun",
+      "synonyms": [
+        "curug",
+        "alam",
+        "lingkungan",
+        "bentang alam",
+        "perairan darat"
+      ],
+      "labelEn": "waterfall",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "tubuh-kesehatan",
+        "keluarga-sosial",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/air-terjun.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi air terjun deras yang jatuh dari tebing batu ke kolam sungai.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:air-terjun"
+    },
+    {
+      "id": "alam-cuaca-akar-tumbuhan",
+      "label": "Akar Tumbuhan",
+      "labelNorm": "akar tumbuhan",
+      "synonyms": [
+        "akar",
+        "tumbuhan",
+        "bagian tumbuhan",
+        "tanaman",
+        "menyerap air",
+        "anatomi tumbuhan"
+      ],
+      "labelEn": "root",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "ipa",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/akar-tumbuhan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi bagian akar tumbuhan di dalam tanah yang menyerap air dan mineral.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:akar-tumbuhan"
+    },
+    {
+      "id": "alam-cuaca-angin",
+      "label": "Angin",
+      "labelNorm": "angin",
+      "synonyms": [
+        "wind"
+      ],
+      "labelEn": "wind",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/angin.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Angin\" pada kategori IPA, Lingkungan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7259"
+    },
+    {
+      "id": "alam-cuaca-api",
+      "label": "Api",
+      "labelNorm": "api",
+      "synonyms": [
+        "nyala api",
+        "api unggun",
+        "bahaya api",
+        "energi panas",
+        "keselamatan dari api"
+      ],
+      "labelEn": "fire",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "transportasi-keselamatan",
+        "bina-diri",
+        "rumah-tempat"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/api.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi nyala api unggun berwarna merah dan jingga yang menghasilkan panas.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:api"
+    },
+    {
+      "id": "alam-cuaca-awan",
+      "label": "Awan",
+      "labelNorm": "awan",
+      "synonyms": [
+        "cloud",
+        "langit"
+      ],
+      "labelEn": "cloud",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/awan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Awan\" pada kategori IPA, Lingkungan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "34383"
+    },
+    {
+      "id": "alam-cuaca-batang-tumbuhan",
+      "label": "Batang Tumbuhan",
+      "labelNorm": "batang tumbuhan",
+      "synonyms": [
+        "batang",
+        "ranting",
+        "dahan",
+        "struktur tanaman"
+      ],
+      "labelEn": "stem",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "ipa",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/batang-tumbuhan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi bagian batang tumbuhan yang menopang daun dan menyalurkan air.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:batang-tumbuhan"
+    },
+    {
+      "id": "alam-cuaca-baterai",
+      "label": "Baterai",
+      "labelNorm": "baterai",
+      "synonyms": [
+        "batu baterai",
+        "daya listrik",
+        "energi",
+        "elektronik",
+        "ipa",
+        "sumber energi listrik"
+      ],
+      "labelEn": "battery",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "bina-diri",
+        "keterampilan-hidup"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/baterai.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi baterai penyimpan energi listrik dengan tanda kutub positif dan petir.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:baterai"
+    },
+    {
+      "id": "alam-cuaca-batu",
+      "label": "Batu",
+      "labelNorm": "batu",
+      "synonyms": [
+        "stone",
+        "rock",
+        "batuan"
+      ],
+      "labelEn": "stone",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/batu.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Batu\" pada kategori Lingkungan, IPA.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6594"
+    },
+    {
+      "id": "alam-cuaca-biji-tumbuhan",
+      "label": "Biji Tumbuhan",
+      "labelNorm": "biji tumbuhan",
+      "synonyms": [
+        "biji",
+        "benih",
+        "kecambah",
+        "tunas",
+        "pertumbuhan tanaman",
+        "perkembangbiakan"
+      ],
+      "labelEn": "seed",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "ipa",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/biji-tumbuhan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi biji tumbuhan di tanah yang mulai berkecambah menumbuhkan tunas dan akar.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:biji-tumbuhan"
+    },
+    {
+      "id": "alam-cuaca-bintang",
+      "label": "Bintang",
+      "labelNorm": "bintang",
+      "synonyms": [
+        "star"
+      ],
+      "labelEn": "star",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/bintang.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bintang\" pada kategori IPA, Lingkungan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2752"
+    },
+    {
+      "id": "alam-cuaca-bulan",
+      "label": "Bulan",
+      "labelNorm": "bulan",
+      "synonyms": [
+        "moon"
+      ],
+      "labelEn": "moon",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/bulan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bulan\" pada kategori IPA, Lingkungan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2933"
+    },
+    {
+      "id": "alam-cuaca-cuaca-badai-petir",
+      "label": "cuaca badai petir",
+      "labelNorm": "cuaca badai petir",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "cuaca badai petir",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-cuaca-badai-petir"
+    },
+    {
+      "id": "alam-cuaca-cuaca-berawan",
+      "label": "Cuaca Berawan",
+      "labelNorm": "cuaca berawan",
+      "synonyms": [
+        "berawan",
+        "mendung",
+        "keadaan cuaca"
+      ],
+      "labelEn": "cloudy",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/cuaca-berawan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi cuaca berawan dengan awan putih menutupi sebagian matahari.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:cuaca-berawan"
+    },
+    {
+      "id": "alam-cuaca-cuaca-cerah",
+      "label": "Cuaca Cerah",
+      "labelNorm": "cuaca cerah",
+      "synonyms": [
+        "cerah",
+        "terang"
+      ],
+      "labelEn": "sunny",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/cuaca-cerah.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi cuaca cerah dengan matahari bersinar terang di langit biru.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:cuaca-cerah"
+    },
+    {
+      "id": "alam-cuaca-cuaca-hujan-petir",
+      "label": "Cuaca Hujan Petir",
+      "labelNorm": "cuaca hujan petir",
+      "synonyms": [
+        "petir",
+        "badai",
+        "kilat",
+        "hujan petir",
+        "cuaca buruk",
+        "cuaca"
+      ],
+      "labelEn": "thunderstorm",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "transportasi-keselamatan",
+        "bina-diri"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/cuaca-badai-petir.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi cuaca badai hujan disertai awan gelap dan kilat petir.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:cuaca-badai-petir"
+    },
+    {
+      "id": "alam-cuaca-danau",
+      "label": "Danau",
+      "labelNorm": "danau",
+      "synonyms": [
+        "telaga",
+        "perairan"
+      ],
+      "labelEn": "lake",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "tubuh-kesehatan",
+        "keluarga-sosial"
+      ],
+      "groupId": "lingkungan",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/danau.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi danau air tawar yang luas dikelilingi pegunungan dan pepohonan.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:danau"
+    },
+    {
+      "id": "alam-cuaca-daun-hijau",
+      "label": "Daun Hijau",
+      "labelNorm": "daun hijau",
+      "synonyms": [
+        "daun",
+        "fotosintesis",
+        "klorofil"
+      ],
+      "labelEn": "leaf",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "ipa",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/daun-hijau.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi daun hijau dengan tulang daun sebagai tempat fotosintesis tumbuhan.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:daun-hijau"
+    },
+    {
+      "id": "alam-cuaca-dingin",
+      "label": "Dingin",
+      "labelNorm": "dingin",
+      "synonyms": [
+        "cold",
+        "cuaca dingin"
+      ],
+      "labelEn": "cold",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dingin.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Dingin\" pada kategori IPA, Lingkungan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4652"
+    },
+    {
+      "id": "alam-cuaca-gunung",
+      "label": "Gunung",
+      "labelNorm": "gunung",
+      "synonyms": [
+        "mountain"
+      ],
+      "labelEn": "mountain",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/gunung.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Gunung\" pada kategori Lingkungan, IPS, IPA.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2909"
+    },
+    {
+      "id": "alam-cuaca-hujan",
+      "label": "Hujan",
+      "labelNorm": "hujan",
+      "synonyms": [
+        "rain",
+        "air hujan"
+      ],
+      "labelEn": "rain",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "ipa",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/hujan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Hujan\" pada kategori IPA, Lingkungan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7148"
+    },
+    {
+      "id": "alam-cuaca-hutan",
+      "label": "Hutan",
+      "labelNorm": "hutan",
+      "synonyms": [
+        "pepohonan",
+        "rimba",
+        "ekosistem hutan",
+        "pelestarian"
+      ],
+      "labelEn": "forest",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "tumbuhan-makanan",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/hutan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi hutan lebat dengan berbagai pohon pinus dan pohon rindang.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:hutan"
+    },
+    {
+      "id": "alam-cuaca-isi-daya-baterai",
+      "label": "Isi Daya Baterai",
+      "labelNorm": "isi daya baterai",
+      "synonyms": [
+        "isi daya",
+        "cas baterai",
+        "recharge the battery",
+        "recharge",
+        "battery"
+      ],
+      "labelEn": "isi daya",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "bina-diri",
+        "keterampilan-hidup"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/recharge-the-battery.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Isi Daya Baterai\" pada kategori IPA, Kehidupan Sehari-hari.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38333"
+    },
+    {
+      "id": "alam-cuaca-jantung-organ",
+      "label": "jantung organ",
+      "labelNorm": "jantung organ",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "jantung organ",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-jantung-organ"
+    },
+    {
+      "id": "alam-cuaca-kaca-pembesar",
+      "label": "Kaca Pembesar",
+      "labelNorm": "kaca pembesar",
+      "synonyms": [
+        "lup",
+        "mengamati",
+        "alat sains",
+        "cari",
+        "alat pengamatan",
+        "cahaya dan optik"
+      ],
+      "labelEn": "magnifying glass",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/kaca-pembesar.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi kaca pembesar atau lup untuk mengamati benda-benda kecil.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:kaca-pembesar"
+    },
+    {
+      "id": "alam-cuaca-kayu",
+      "label": "Kayu",
+      "labelNorm": "kayu",
+      "synonyms": [
+        "batang kayu",
+        "gelondongan",
+        "bahan alam",
+        "sumber daya alam",
+        "bahan bangunan"
+      ],
+      "labelEn": "wood",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "tumbuhan-makanan",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/kayu.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi potongan batang kayu alami dari pohon.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:kayu"
+    },
+    {
+      "id": "alam-cuaca-kincir-angin",
+      "label": "Kincir Angin",
+      "labelNorm": "kincir angin",
+      "synonyms": [
+        "energi angin",
+        "desa",
+        "listrik",
+        "energi alternatif"
+      ],
+      "labelEn": "windmill",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/kincir-angin.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi kincir angin berputar memanfaatkan energi angin di pedesaan.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:kincir-angin"
+    },
+    {
+      "id": "alam-cuaca-laut",
+      "label": "Laut",
+      "labelNorm": "laut",
+      "synonyms": [
+        "sea",
+        "ocean"
+      ],
+      "labelEn": "sea",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "tubuh-kesehatan",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/laut.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Laut\" pada kategori Lingkungan, IPS, IPA.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2925"
+    },
+    {
+      "id": "alam-cuaca-magnet",
+      "label": "Magnet",
+      "labelNorm": "magnet",
+      "synonyms": [
+        "gaya magnet",
+        "kutub utara",
+        "kutub selatan",
+        "menarik logam",
+        "gaya dan gerak",
+        "benda magnetis"
+      ],
+      "labelEn": "magnet",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/magnet-tapal-kuda.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi magnet berbentuk tapal kuda dengan kutub utara (U) dan selatan (S).",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:magnet-tapal-kuda"
+    },
+    {
+      "id": "alam-cuaca-magnet-tapal-kuda",
+      "label": "magnet tapal kuda",
+      "labelNorm": "magnet tapal kuda",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "magnet tapal kuda",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-magnet-tapal-kuda"
+    },
+    {
+      "id": "alam-cuaca-mata-angin-barat",
+      "label": "Mata Angin Barat",
+      "labelNorm": "mata angin barat",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Mata Angin Barat",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-mata-angin-barat"
+    },
+    {
+      "id": "alam-cuaca-mata-angin-selatan",
+      "label": "Mata Angin Selatan",
+      "labelNorm": "mata angin selatan",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Mata Angin Selatan",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-mata-angin-selatan"
+    },
+    {
+      "id": "alam-cuaca-mata-angin-timur",
+      "label": "Mata Angin Timur",
+      "labelNorm": "mata angin timur",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Mata Angin Timur",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-mata-angin-timur"
+    },
+    {
+      "id": "alam-cuaca-mata-angin-utara",
+      "label": "Mata Angin Utara",
+      "labelNorm": "mata angin utara",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Mata Angin Utara",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-mata-angin-utara"
+    },
+    {
+      "id": "alam-cuaca-matahari",
+      "label": "Matahari",
+      "labelNorm": "matahari",
+      "synonyms": [
+        "sun",
+        "sinar"
+      ],
+      "labelEn": "sun",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/matahari.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Matahari\" pada kategori IPA, Lingkungan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7252"
+    },
+    {
+      "id": "alam-cuaca-musim-hujan",
+      "label": "Musim Hujan",
+      "labelNorm": "musim hujan",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Musim Hujan",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-musim-hujan"
+    },
+    {
+      "id": "alam-cuaca-musim-kemarau",
+      "label": "Musim Kemarau",
+      "labelNorm": "musim kemarau",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Musim Kemarau",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-musim-kemarau"
+    },
+    {
+      "id": "alam-cuaca-ombak-laut",
+      "label": "Ombak Laut",
+      "labelNorm": "ombak laut",
+      "synonyms": [
+        "ombak",
+        "gelombang",
+        "samudra",
+        "gelombang air"
+      ],
+      "labelEn": "wave",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "tubuh-kesehatan",
+        "keluarga-sosial",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/ombak-laut.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi ombak air laut bergulung di lautan biru.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:ombak-laut"
+    },
+    {
+      "id": "alam-cuaca-organ-jantung",
+      "label": "Organ Jantung",
+      "labelNorm": "organ jantung",
+      "synonyms": [
+        "jantung",
+        "peredaran darah",
+        "darah",
+        "organ tubuh",
+        "detak jantung",
+        "organ tubuh manusia"
+      ],
+      "labelEn": "heart",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/jantung-organ.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi organ jantung manusia yang memompa darah ke seluruh tubuh.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:jantung-organ"
+    },
+    {
+      "id": "alam-cuaca-organ-paru-paru",
+      "label": "Organ Paru-Paru",
+      "labelNorm": "organ paru paru",
+      "synonyms": [
+        "paru-paru",
+        "pernapasan",
+        "oksigen",
+        "udara",
+        "sistem pernapasan"
+      ],
+      "labelEn": "lungs",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/paru-paru.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi organ paru-paru manusia untuk bernapas menghirup oksigen.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:paru-paru"
+    },
+    {
+      "id": "alam-cuaca-otak",
+      "label": "Otak",
+      "labelNorm": "otak",
+      "synonyms": [
+        "organ otak",
+        "berpikir",
+        "sistem saraf"
+      ],
+      "labelEn": "brain",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/otak-manusia.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi organ otak manusia sebagai pusat berpikir dan sistem saraf.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:otak-manusia"
+    },
+    {
+      "id": "alam-cuaca-otak-manusia",
+      "label": "otak manusia",
+      "labelNorm": "otak manusia",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "otak manusia",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-otak-manusia"
+    },
+    {
+      "id": "alam-cuaca-panas",
+      "label": "Panas",
+      "labelNorm": "panas",
+      "synonyms": [
+        "hot",
+        "cuaca panas"
+      ],
+      "labelEn": "hot",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/panas.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Panas\" pada kategori IPA, Lingkungan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2300"
+    },
+    {
+      "id": "alam-cuaca-pantai",
+      "label": "Pantai",
+      "labelNorm": "pantai",
+      "synonyms": [
+        "beach"
+      ],
+      "labelEn": "beach",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "lingkungan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/pantai.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Pantai\" pada kategori Lingkungan, IPS.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2826"
+    },
+    {
+      "id": "alam-cuaca-paru-paru",
+      "label": "paru paru",
+      "labelNorm": "paru paru",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "paru paru",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-paru-paru"
+    },
+    {
+      "id": "alam-cuaca-pasir",
+      "label": "Pasir",
+      "labelNorm": "pasir",
+      "synonyms": [
+        "sand"
+      ],
+      "labelEn": "sand",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/pasir.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Pasir\" pada kategori Lingkungan, IPA.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4565"
+    },
+    {
+      "id": "alam-cuaca-pelangi",
+      "label": "Pelangi",
+      "labelNorm": "pelangi",
+      "synonyms": [
+        "rainbow"
+      ],
+      "labelEn": "rainbow",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "seni-olahraga"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/pelangi.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Pelangi\" pada kategori IPA, Lingkungan, Seni dan Budaya.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2986"
+    },
+    {
+      "id": "alam-cuaca-planet-tata-surya",
+      "label": "Planet / Tata Surya",
+      "labelNorm": "planet tata surya",
+      "synonyms": [
+        "tata surya",
+        "planet",
+        "antariksa",
+        "bumi",
+        "luar angkasa",
+        "astronomi"
+      ],
+      "labelEn": "solar system",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/tata-surya.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi tata surya dengan matahari di pusat dan planet-planet mengorbit.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:tata-surya"
+    },
+    {
+      "id": "alam-cuaca-pulau",
+      "label": "Pulau",
+      "labelNorm": "pulau",
+      "synonyms": [
+        "daratan",
+        "kelapa"
+      ],
+      "labelEn": "island",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "keluarga-sosial"
+      ],
+      "groupId": "lingkungan",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/pulau.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi pulau tropis dengan pohon kelapa di tengah laut biru.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:pulau"
+    },
+    {
+      "id": "alam-cuaca-recharge-the-battery",
+      "label": "recharge the battery",
+      "labelNorm": "recharge the battery",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "bina-diri",
+        "keterampilan-hidup"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "recharge the battery",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-recharge-the-battery"
+    },
+    {
+      "id": "alam-cuaca-sawah",
+      "label": "Sawah",
+      "labelNorm": "sawah",
+      "synonyms": [
+        "padi",
+        "pertanian"
+      ],
+      "labelEn": "rice field",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "tumbuhan-makanan",
+        "keterampilan-hidup"
+      ],
+      "groupId": "lingkungan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/sawah.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi hamparan sawah hijau bertingkat dengan tanaman padi di pedesaan.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:sawah"
+    },
+    {
+      "id": "alam-cuaca-siklus-air",
+      "label": "Siklus Air",
+      "labelNorm": "siklus air",
+      "synonyms": [
+        "daur air",
+        "penguapan",
+        "perubahan wujud",
+        "cuaca dan iklim"
+      ],
+      "labelEn": "water cycle",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "ipa",
+      "kind": "tumbuhan_makanan",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/siklus-air.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Diagram sederhana daur air: penguapan oleh matahari, awan, hujan, dan aliran air.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:siklus-air"
+    },
+    {
+      "id": "alam-cuaca-sistem-pencernaan",
+      "label": "Sistem Pencernaan",
+      "labelNorm": "sistem pencernaan",
+      "synonyms": [
+        "pencernaan",
+        "lambung",
+        "usus",
+        "kerongkongan",
+        "kesehatan tubuh"
+      ],
+      "labelEn": "digestive system",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "ipa",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/sistem-pencernaan.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi sederhana organ pencernaan manusia: kerongkongan, lambung, dan usus.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:sistem-pencernaan"
+    },
+    {
+      "id": "alam-cuaca-sungai",
+      "label": "Sungai",
+      "labelNorm": "sungai",
+      "synonyms": [
+        "river"
+      ],
+      "labelEn": "river",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "tubuh-kesehatan",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sungai.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sungai\" pada kategori Lingkungan, IPS, IPA.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2811"
+    },
+    {
+      "id": "alam-cuaca-taman",
+      "label": "Taman",
+      "labelNorm": "taman",
+      "synonyms": [
+        "park",
+        "garden",
+        "taman kota"
+      ],
+      "labelEn": "park",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "keluarga-sosial",
+        "seni-olahraga"
+      ],
+      "groupId": "lingkungan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/taman.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Taman\" pada kategori Lingkungan, Kegiatan Sosial.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5379"
+    },
+    {
+      "id": "alam-cuaca-tanah",
+      "label": "Tanah",
+      "labelNorm": "tanah",
+      "synonyms": [
+        "soil",
+        "ground"
+      ],
+      "labelEn": "soil",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "tubuh-kesehatan",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/tanah.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Tanah\" pada kategori Lingkungan, IPA, Tumbuhan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "3160"
+    },
+    {
+      "id": "alam-cuaca-tata-surya",
+      "label": "tata surya",
+      "labelNorm": "tata surya",
+      "synonyms": [],
+      "labelEn": null,
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "alam-cuaca",
+      "kind": "konsep",
+      "popularity": 40,
+      "assetId": null,
+      "assetUrl": null,
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "tata surya",
+      "status": "needs_review",
+      "source": "legacy",
+      "sourceRef": "seed-alam-cuaca-tata-surya"
+    },
+    {
+      "id": "alam-cuaca-termometer",
+      "label": "Termometer",
+      "labelNorm": "termometer",
+      "synonyms": [
+        "pengukur suhu",
+        "suhu",
+        "demam",
+        "pengukuran suhu",
+        "alat ukur ipa"
+      ],
+      "labelEn": "thermometer",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "bina-diri",
+        "matematika"
+      ],
+      "groupId": "ipa",
+      "kind": "matematika",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/termometer.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi termometer dengan skala untuk mengukur suhu panas dan dingin.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:termometer"
+    },
+    {
+      "id": "alam-cuaca-terumbu-karang",
+      "label": "Terumbu Karang",
+      "labelNorm": "terumbu karang",
+      "synonyms": [
+        "karang",
+        "bawah laut",
+        "ekosistem laut",
+        "biota laut"
+      ],
+      "labelEn": "coral reef",
+      "domains": [
+        "alam-cuaca",
+        "rumah-tempat",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "lingkungan",
+      "kind": "benda",
+      "popularity": 85,
+      "assetId": null,
+      "assetUrl": "/media/custom/terumbu-karang.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Ilustrasi terumbu karang warna-warni dan ikan kecil di dasar laut.",
+      "status": "active",
+      "source": "legacy",
+      "sourceRef": "custom:terumbu-karang"
+    },
+    {
+      "id": "alam-cuaca-water",
+      "label": "Water",
+      "labelNorm": "water",
+      "synonyms": [],
+      "labelEn": "water",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "tumbuhan-makanan",
+        "bina-diri",
+        "keterampilan-hidup"
+      ],
+      "groupId": "ipa",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/air-9045.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Air\" pada kategori IPA, Lingkungan, Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "9045"
+    }
+  ]
+}

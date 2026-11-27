@@ -251,4 +251,49 @@ describe("TVPlayer & TVQuiz", () => {
     expect(screen.getByRole("link", { name: /Keluar TV/i }).getAttribute("href")).toBe("/tv/123456");
     expect(container.textContent).not.toMatch(/\bkelas\b/i);
   });
+
+  it("tidak merender gambar maupun placeholder Icon Image di TVPlayer saat imageUrl null meski imageAlt terisi", () => {
+    const lessonWithAltOnly: LessonWithContent = {
+      ...mockLesson,
+      cards: [
+        {
+          ...mockLesson.cards[1]!,
+          id: "tv-no-url",
+          imageUrl: null,
+          imageAlt: "Placeholder yang tidak boleh tampil",
+        },
+      ],
+    };
+
+    const { container } = render(
+      <PreferencesProvider>
+        <TVPlayer lesson={lessonWithAltOnly} backHref="/tv/123456" />
+      </PreferencesProvider>
+    );
+
+    const cardImgs = Array.from(container.querySelectorAll("main img")).filter(
+      (img) => !img.getAttribute("src")?.startsWith("/signs/")
+    );
+    expect(cardImgs).toHaveLength(0);
+    expect(screen.queryByAltText("Placeholder yang tidak boleh tampil")).toBeNull();
+    expect(screen.queryByText("Placeholder yang tidak boleh tampil")).toBeNull();
+    expect(screen.getByAltText("Isyarat huruf L dalam SIBI")).toBeDefined();
+  });
+
+  it("menyembunyikan gambar TVPlayer yang gagal dimuat tanpa menampilkan ikon rusak atau placeholder", () => {
+    const { container } = render(
+      <PreferencesProvider>
+        <TVPlayer lesson={mockLesson} backHref="/tv/123456" />
+      </PreferencesProvider>
+    );
+
+    const img = screen.getByAltText("Buku terbuka");
+    fireEvent.error(img);
+
+    const cardImgs = Array.from(container.querySelectorAll("main img")).filter(
+      (el) => !el.getAttribute("src")?.startsWith("/signs/")
+    );
+    expect(cardImgs).toHaveLength(0);
+    expect(screen.queryByText("Buku terbuka")).toBeNull();
+  });
 });

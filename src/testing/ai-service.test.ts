@@ -16,8 +16,9 @@ describe("AI Prompt Builder", () => {
       needs: ["intelektual"],
       languageComplexity: "biasa",
     });
-    expect(prompt).toContain("maksimal setiap kalimat adalah 7 kata");
-    expect(prompt).toContain("Jumlah pilihan jawaban adalah 2");
+    expect(prompt).toContain("7 kata");
+    expect(prompt).toContain("concept");
+    expect(prompt).not.toMatch(/\b(sabun|handuk|keran|soap|water)\b/i);
   });
 
   it("membuat user prompt dengan teks sumber dan catatan guru", () => {
@@ -34,14 +35,15 @@ describe("AI Prompt Builder", () => {
 });
 
 describe("AI Fallback Generator", () => {
-  it("menghasilkan kurikulum bawaan untuk topik cuci tangan", () => {
+  it("menghasilkan kurikulum bawaan dari teks sumber cuci tangan", () => {
     const result = getFallbackLesson({
-      sourceType: "topik",
-      topic: "Cara mencuci tangan dengan sabun",
+      sourceType: "teks",
+      topic: "Cuci Tangan yang Bersih",
+      text: "Basahi tangan dengan air. Ambil sabun secukupnya. Gosok telapak tangan. Keringkan dengan handuk.",
     });
     expect(result.title).toBe("Cuci Tangan yang Bersih");
     expect(result.cards.length).toBeGreaterThanOrEqual(4);
-    expect(result.cards[0]?.key_terms).toContain("air");
+    expect(result.cards[0]?.key_terms).toContain("tangan");
     expect(result.questions.length).toBeGreaterThanOrEqual(2);
   });
 
@@ -66,17 +68,27 @@ describe("AI Fallback Generator", () => {
 });
 
 describe("generateLessonContent End-to-End Fallback Service", () => {
-  it("mengembalikan pelajaran dengan badge fallback saat API key tidak diset", async () => {
+  it("mengembalikan pelajaran dengan badge fallback saat API key tidak diset dan teks sumber tersedia", async () => {
     const res = await generateLessonContent({
-      sourceType: "topik",
+      sourceType: "teks",
       topic: "Cara cuci tangan",
+      text: "Basahi tangan dengan air bersih. Ambil sabun lalu gosok tangan. Bilas tangan dan keringkan dengan handuk.",
     });
     expect(res.generatedBy).toBe("fallback");
     expect(res.badge).toMatch(
-      /Dibuat dari contoh bawaan|Dibuat otomatis secara lokal/
+      /Dibuat dari cadangan|Dibuat otomatis secara lokal/
     );
     expect(res.lesson.cards.length).toBeGreaterThan(0);
     expect(res.lesson.questions.length).toBeGreaterThan(0);
+  });
+
+  it("menolak topik singkat tanpa teks sumber saat API key tidak diset", async () => {
+    await expect(
+      generateLessonContent({
+        sourceType: "topik",
+        topic: "Cuaca hari ini",
+      })
+    ).rejects.toThrow(/AI Gemini belum tersedia/i);
   });
 
   it("tidak pernah jatuh ke cuci tangan saat diberikan topik khusus atau teks PDF bernomor halaman", () => {

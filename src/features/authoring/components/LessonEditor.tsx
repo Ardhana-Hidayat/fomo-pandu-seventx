@@ -278,8 +278,22 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
 
   const [isSaving, setIsSaving] = useState(false);
   const [isSavingCard, setIsSavingCard] = useState(false);
+  const [isRegeneratingCard, setIsRegeneratingCard] = useState(false);
   const [isSavingQuestion, setIsSavingQuestion] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [teacherPickedCardIds, setTeacherPickedCardIds] = useState<Set<string>>(
+    () => new Set()
+  );
+  const [suggestionsState, setSuggestionsState] = useState<{
+    cardId: string | null;
+    items: Array<{
+      id: string;
+      assetId?: string | null;
+      label: string;
+      url: string;
+      alt_text?: string;
+    }>;
+  }>({ cardId: null, items: [] });
   const [lastDeletedCard, setLastDeletedCard] = useState<{
     card: (typeof cards)[number];
     index: number;
@@ -308,6 +322,16 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
     type: "benar" | "ulang" | "galat" | "info";
     message: string;
   } | null>(null);
+  const feedbackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (feedback) {
+      feedbackRef.current?.scrollIntoView?.({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }
+  }, [feedback]);
 
   // Modal states for media tools
   const [activeCardIndexForMedia, setActiveCardIndexForMedia] = useState<
@@ -320,6 +344,60 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
 
   const safeCardIdx = Math.min(activeCardIdx, Math.max(0, cards.length - 1));
   const activeCard = cards[safeCardIdx];
+
+  useEffect(() => {
+    if (!lastDeletedCard) return;
+    const timer = setTimeout(() => {
+      setLastDeletedCard(null);
+    }, 8000);
+    return () => clearTimeout(timer);
+  }, [lastDeletedCard]);
+
+  const autoSaveStatus: "tersimpan" | "menyimpan" | "belum_disimpan" =
+    isSavingCard || isSaving
+      ? "menyimpan"
+      : hasUnsavedChanges
+        ? "belum_disimpan"
+        : "tersimpan";
+
+  const catalogSuggestions =
+    activeCard && !activeCard.imageUrl && suggestionsState.cardId === activeCard.id
+      ? suggestionsState.items
+      : [];
+
+  useEffect(() => {
+    if (!activeCard || activeCard.imageUrl) {
+      return;
+    }
+    const query =
+      activeCard.keyTerms?.[0] ||
+      activeCard.text
+        .split(/\s+/)
+        .map((w) => w.replace(/[^a-zA-Z0-9]/g, ""))
+        .find((w) => w.length >= 3) ||
+      "";
+    if (!query) {
+      return;
+    }
+    const targetCardId = activeCard.id;
+    const controller = new AbortController();
+    fetch(`/api/catalog/assets?q=${encodeURIComponent(query)}&limit=3`, {
+      signal: controller.signal,
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.items && Array.isArray(data.items)) {
+          setSuggestionsState({
+            cardId: targetCardId,
+            items: data.items.slice(0, 3),
+          });
+        }
+      })
+      .catch(() => {
+        // Ignore abort/network errors for optional suggestions
+      });
+    return () => controller.abort();
+  }, [activeCard]);
 
   const safeQuestionIdx = Math.min(
     activeQuestionIdx,
@@ -370,17 +448,31 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
       return;
     }
     setIsSaving(true);
-    const res = await updateLessonAction(lesson.id, {
-      title: cleanTitle,
-      topic: topic.trim(),
-    });
-    setIsSaving(false);
-    if (res.ok) {
-      setIsEditingMeta(false);
-      setFeedback({ type: "benar", message: "Judul dan topik materi disimpan." });
-      router.refresh();
-    } else {
-      setFeedback({ type: "galat", message: res.error.message });
+    try {
+      const res = await updateLessonAction(lesson.id, {
+        title: cleanTitle,
+        topic: topic.trim(),
+      });
+      if (res.ok) {
+        setIsEditingMeta(false);
+        setFeedback({ type: "benar", message: "Judul dan topik materi disimpan." });
+        router.refresh();
+      } else {
+        setFeedback({
+          type: "galat",
+          message: res.error.message || "Gagal menyimpan judul dan topik materi.",
+        });
+      }
+    } catch (err) {
+      setFeedback({
+        type: "galat",
+        message:
+          err instanceof Error && err.message
+            ? `Gagal menyimpan judul materi: ${err.message}`
+            : "Terjadi kesalahan jaringan saat menyimpan judul materi.",
+      });
+    } finally {
+      setIsSaving(false);
     }
   }
 
@@ -429,18 +521,18 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
 
       try {
         const res = await fetch(
-          `/api/media/pictograms?q=${encodeURIComponent(primaryKeyword)}`,
+          `/api/media/pictograms?q=${encodeURIComponent(primaryKeyword)}&strict=1`,
           { signal: controller.signal }
         );
         if (!res.ok) return;
         const data = (await res.json()) as {
-          pictogram?: { id?: string; url?: string; alt?: string };
+          pictogram?: { id?: string; url?: string; alt?: string } | null;
         };
         const pic = data?.pictogram;
         if (pic?.url && !controller.signal.aborted) {
           setCards((prev) =>
             prev.map((c) =>
-              c.id === cardId
+              c.id === cardId && c.imageSource !== "upload"
                 ? {
                     ...c,
                     imageUrl: pic.url ?? null,
@@ -473,32 +565,116 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
     }
 
     setIsSavingCard(true);
-    const res = await saveCardAction(lesson.id, {
-      id: card.id,
-      position: card.position,
-      text: card.text.trim(),
-      keyTerms: card.keyTerms ?? [],
-      cardType:
-        (card.cardType as "vocabulary" | "instruction" | "step") ?? "instruction",
-      imageSource:
-        (card.imageSource as "upload" | "pictogram" | "ai") ?? "pictogram",
-      imageAlt: card.imageAlt ?? null,
-      imageAssetId: card.imageAssetId ?? null,
-      audioSource:
-        (card.audioSource as "tts" | "recording" | "none") ?? "none",
-      audioAssetId: card.audioAssetId ?? null,
-    });
-    setIsSavingCard(false);
+    try {
+      const res = await saveCardAction(lesson.id, {
+        id: card.id,
+        position: card.position,
+        text: card.text.trim(),
+        keyTerms: card.keyTerms ?? [],
+        cardType:
+          (card.cardType as "vocabulary" | "instruction" | "step") ?? "instruction",
+        imageSource:
+          (card.imageSource as "upload" | "pictogram" | "ai" | "none") ?? "pictogram",
+        imageAlt: card.imageAlt ?? null,
+        imageAssetId: card.imageAssetId ?? null,
+        audioSource:
+          (card.audioSource as "tts" | "recording" | "none") ?? "none",
+        audioAssetId: card.audioAssetId ?? null,
+      });
 
-    if (res.ok) {
+      if (res.ok) {
+        setCards((prev) =>
+          prev.map((c, i) => (i === idx ? { ...c, id: res.data.id } : c))
+        );
+        setHasUnsavedChanges(false);
+        setFeedback({ type: "benar", message: `Kartu #${card.position} berhasil disimpan.` });
+        router.refresh();
+      } else {
+        setFeedback({
+          type: "galat",
+          message: res.error.message || `Gagal menyimpan Kartu #${card.position}.`,
+        });
+      }
+    } catch (err) {
+      setFeedback({
+        type: "galat",
+        message:
+          err instanceof Error && err.message
+            ? `Gagal menyimpan Kartu #${card.position}: ${err.message}`
+            : `Terjadi kesalahan jaringan saat menyimpan Kartu #${card.position}.`,
+      });
+    } finally {
+      setIsSavingCard(false);
+    }
+  }
+
+  async function handleRegenerateCard(idx: number) {
+    const card = cards[idx];
+    if (!card || !card.text.trim()) return;
+    setIsRegeneratingCard(true);
+    try {
+      const res = await fetch("/api/ai/regenerate-card", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lessonId: lesson.id,
+          cardText: card.text,
+          topic,
+          level: lesson.level,
+        }),
+      });
+      const json = (await res.json()) as {
+        success?: boolean;
+        error?: string;
+        data?: {
+          text: string;
+          keyTerms: string[];
+          imageAssetId: string | null;
+          imageUrl: string | null;
+          imageAlt: string | null;
+          imageSource: "pictogram" | "none";
+        };
+      };
+      if (!res.ok || !json.success || !json.data) {
+        setFeedback({
+          type: "galat",
+          message: json.error || "Gagal membuat ulang kartu ini.",
+        });
+        return;
+      }
+      const next = json.data;
       setCards((prev) =>
-        prev.map((c, i) => (i === idx ? { ...c, id: res.data.id } : c))
+        prev.map((c, i) =>
+          i === idx
+            ? {
+                ...c,
+                text: next.text,
+                keyTerms: next.keyTerms,
+                imageAssetId: next.imageAssetId,
+                imageUrl: next.imageUrl,
+                imageAlt: next.imageAlt,
+                imageSource: next.imageSource,
+              }
+            : c
+        )
       );
-      setHasUnsavedChanges(false);
-      setFeedback({ type: "benar", message: `Kartu #${card.position} berhasil disimpan.` });
-      router.refresh();
-    } else {
-      setFeedback({ type: "galat", message: res.error.message });
+      setTeacherPickedCardIds((prev) => {
+        const copy = new Set(prev);
+        copy.delete(card.id);
+        return copy;
+      });
+      setHasUnsavedChanges(true);
+      setFeedback({
+        type: "info",
+        message: 'Kartu dibuat ulang. Klik "Simpan Kartu" untuk menyimpan perubahan.',
+      });
+    } catch {
+      setFeedback({
+        type: "galat",
+        message: "Terjadi gangguan jaringan saat membuat ulang kartu.",
+      });
+    } finally {
+      setIsRegeneratingCard(false);
     }
   }
 
@@ -605,6 +781,11 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
       },
     ]);
     setActiveCardIdx(cards.length);
+    setHasUnsavedChanges(true);
+    setFeedback({
+      type: "info",
+      message: `Kartu #${newPos} ditambahkan. Klik "Simpan Kartu" untuk menyimpan ke server.`,
+    });
   }
 
   // Quiz modifications
@@ -841,6 +1022,11 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
       },
     ]);
     setActiveQuestionIdx(questions.length);
+    setHasUnsavedChanges(true);
+    setFeedback({
+      type: "info",
+      message: `Soal #${questions.length + 1} ditambahkan. Klik "Simpan Soal" untuk menyimpan ke server.`,
+    });
   }
 
   function handleDeleteQuestion(idx: number) {
@@ -865,27 +1051,41 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
     }
 
     setIsSavingQuestion(true);
-    const res = await saveQuizQuestionAction(lesson.id, {
-      id: q.id,
-      position: q.position,
-      type: q.type,
-      prompt: q.prompt.trim(),
-      payload: q.payload as QuizQuestionPayload,
-      keyTerms: q.keyTerms ?? [],
-      linkedCardId: q.linkedCardId ?? null,
-      explanation: q.explanation ?? null,
-    });
-    setIsSavingQuestion(false);
+    try {
+      const res = await saveQuizQuestionAction(lesson.id, {
+        id: q.id,
+        position: q.position,
+        type: q.type,
+        prompt: q.prompt.trim(),
+        payload: q.payload as QuizQuestionPayload,
+        keyTerms: q.keyTerms ?? [],
+        linkedCardId: q.linkedCardId ?? null,
+        explanation: q.explanation ?? null,
+      });
 
-    if (res.ok) {
-      setQuestions((prev) =>
-        prev.map((item, i) => (i === idx ? { ...item, id: res.data.id } : item))
-      );
-      setHasUnsavedChanges(false);
-      setFeedback({ type: "benar", message: `Soal #${q.position} berhasil disimpan.` });
-      router.refresh();
-    } else {
-      setFeedback({ type: "galat", message: res.error.message });
+      if (res.ok) {
+        setQuestions((prev) =>
+          prev.map((item, i) => (i === idx ? { ...item, id: res.data.id } : item))
+        );
+        setHasUnsavedChanges(false);
+        setFeedback({ type: "benar", message: `Soal #${q.position} berhasil disimpan.` });
+        router.refresh();
+      } else {
+        setFeedback({
+          type: "galat",
+          message: res.error.message || `Gagal menyimpan Soal #${q.position}.`,
+        });
+      }
+    } catch (err) {
+      setFeedback({
+        type: "galat",
+        message:
+          err instanceof Error && err.message
+            ? `Gagal menyimpan Soal #${q.position}: ${err.message}`
+            : `Terjadi kesalahan jaringan saat menyimpan Soal #${q.position}.`,
+      });
+    } finally {
+      setIsSavingQuestion(false);
     }
   }
 
@@ -929,9 +1129,17 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                   Kode: {primaryShareCode}
                 </span>
               )}
-              {hasUnsavedChanges && (
+              {autoSaveStatus === "menyimpan" ? (
+                <span className="text-xs px-2.5 py-0.5 rounded-full font-bold border border-[var(--border)] bg-[var(--surface-2)] text-[var(--ink-2)]">
+                  Menyimpan...
+                </span>
+              ) : hasUnsavedChanges ? (
                 <span className="text-xs px-2.5 py-0.5 rounded-full font-bold border border-[var(--ulang-edge)] bg-[var(--ulang-bg)] text-[var(--ulang-ink)]">
                   Perubahan belum disimpan
+                </span>
+              ) : (
+                <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold border border-[var(--benar-edge)] bg-[var(--benar-bg)] text-[var(--benar-ink)]">
+                  Tersimpan
                 </span>
               )}
             </div>
@@ -1041,7 +1249,7 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
       </div>
 
       {feedback && (
-        <div className="flex items-start justify-between gap-2">
+        <div ref={feedbackRef} className="flex items-start justify-between gap-2">
           <div className="flex-1">
             <StatusMessage type={feedback.type}>{feedback.message}</StatusMessage>
           </div>
@@ -1095,7 +1303,10 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
       </div>
 
       {/* TAB 1: KARTU BELAJAR (Studio Split Layout + Live Preview) */}
-      {activeTab === "kartu" && (
+      {activeTab === "kartu" && (() => {
+        const cardsWithImageCount = cards.filter((c) => Boolean(c.imageUrl)).length;
+        const cardsWithoutImageCount = cards.length - cardsWithImageCount;
+        return (
         <section className="flex flex-col gap-5">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
@@ -1104,6 +1315,9 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
               </h2>
               <p className="text-sm text-[var(--ink-2)]">
                 Pilih kartu di daftar untuk menyunting kalimat, kata isyarat, gambar, dan suara.
+              </p>
+              <p className="mt-1 text-xs font-bold text-[var(--muted)]">
+                {cards.length} kartu: {cardsWithImageCount} dengan gambar, {cardsWithoutImageCount} tanpa gambar
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2 shrink-0">
@@ -1243,7 +1457,17 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          size="compact"
+                          loading={isRegeneratingCard}
+                          onClick={() => handleRegenerateCard(safeCardIdx)}
+                          icon={<Icon name="Sparkle" size={14} />}
+                        >
+                          Buat ulang kartu ini
+                        </Button>
                         <Button
                           type="button"
                           variant="primary"
@@ -1283,6 +1507,12 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                         </button>
                       </div>
                     </div>
+
+                    {feedback && (
+                      <StatusMessage type={feedback.type}>
+                        {feedback.message}
+                      </StatusMessage>
+                    )}
 
                     {/* Teks Kalimat Kartu */}
                     <div className="flex flex-col gap-1.5">
@@ -1394,9 +1624,27 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[var(--border)]">
                       {/* Gambar / Piktogram */}
                       <div className="flex flex-col gap-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)]/50 p-3.5">
-                        <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-                          Gambar / Piktogram
-                        </span>
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+                            Gambar / Piktogram
+                          </span>
+                          {activeCard.imageUrl ? (
+                            activeCard.imageSource === "upload" ||
+                            teacherPickedCardIds.has(activeCard.id) ? (
+                              <span className="rounded-full border border-[#0284C7]/30 bg-[#0284C7]/10 px-2 py-0.5 text-[11px] font-bold text-[#0284C7]">
+                                Dipilih guru
+                              </span>
+                            ) : (
+                              <span className="rounded-full border border-[var(--benar-edge)] bg-[var(--benar-bg)] px-2 py-0.5 text-[11px] font-bold text-[var(--benar-ink)]">
+                                Cocok
+                              </span>
+                            )
+                          ) : (
+                            <span className="rounded-full border border-[var(--border-strong)] bg-[var(--surface)] px-2 py-0.5 text-[11px] font-bold text-[var(--muted)]">
+                              Tanpa gambar
+                            </span>
+                          )}
+                        </div>
 
                         {activeCard.imageUrl ? (
                           <div className="flex flex-col gap-2">
@@ -1413,13 +1661,14 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                                 type="button"
                                 variant="secondary"
                                 size="compact"
+                                title="Buka pustaka gambar atau unggah gambar baru"
                                 onClick={() => {
                                   setActiveCardIndexForMedia(safeCardIdx);
                                   setIsPictoModalOpen(true);
                                 }}
-                                icon={<Icon name="Sparkle" size={14} />}
+                                icon={<Icon name="Image" size={14} />}
                               >
-                                Ganti
+                                Pilih gambar lain
                               </Button>
                               <Button
                                 type="button"
@@ -1435,6 +1684,7 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                                             imageUrl: null,
                                             imageAlt: null,
                                             imageAssetId: null,
+                                            imageSource: "none",
                                           }
                                         : item
                                     )
@@ -1465,19 +1715,93 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                             />
                           </div>
                         ) : (
-                          <div className="flex flex-wrap gap-2">
-                            <Button
-                              type="button"
-                              variant="secondary"
-                              size="compact"
-                              onClick={() => {
-                                setActiveCardIndexForMedia(safeCardIdx);
-                                setIsPictoModalOpen(true);
-                              }}
-                              icon={<Icon name="Sparkle" size={15} />}
-                            >
-                              Piktogram
-                            </Button>
+                          <div className="flex flex-col gap-2.5">
+                            <p className="text-xs text-[var(--ink-2)] rounded-lg border border-[var(--border)] bg-[var(--surface)] px-2.5 py-2">
+                              Gambar untuk &apos;{previewTerm || "kartu ini"}&apos; belum tersedia di pustaka. Pilih gambar lain atau biarkan tanpa gambar.
+                            </p>
+                            {catalogSuggestions.length > 0 && (
+                              <div className="flex flex-col gap-1.5">
+                                <span className="text-[11px] font-bold text-[var(--muted)]">
+                                  Saran gambar dari pustaka:
+                                </span>
+                                <div className="grid grid-cols-3 gap-2">
+                                  {catalogSuggestions.map((sug) => (
+                                    <div
+                                      key={sug.id}
+                                      className="flex flex-col items-center gap-1 rounded-lg border border-[var(--border)] bg-white p-1.5"
+                                    >
+                                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                                      <img
+                                        src={sug.url}
+                                        alt={sug.alt_text || sug.label}
+                                        className="h-12 w-12 object-contain"
+                                      />
+                                      <span className="text-[10px] font-semibold text-[var(--ink)] truncate max-w-full">
+                                        {sug.label}
+                                      </span>
+                                      <button
+                                        type="button"
+                                        onClick={async () => {
+                                          let dbAssetId: string | null = null;
+                                          try {
+                                            const r = await fetch("/api/catalog/resolve", {
+                                              method: "POST",
+                                              headers: { "Content-Type": "application/json" },
+                                              body: JSON.stringify({
+                                                assetId: sug.assetId ?? sug.id,
+                                                alt: sug.alt_text || sug.label,
+                                              }),
+                                            });
+                                            if (r.ok) {
+                                              const j = await r.json();
+                                              dbAssetId = j?.data?.id ?? null;
+                                            }
+                                          } catch {
+                                            // Keep preview URL even if resolve fails
+                                          }
+                                          setCards((prev) =>
+                                            prev.map((item, i) =>
+                                              i === safeCardIdx
+                                                ? {
+                                                    ...item,
+                                                    imageUrl: sug.url,
+                                                    imageAlt: sug.alt_text || sug.label,
+                                                    imageAssetId: dbAssetId,
+                                                    imageSource: "pictogram",
+                                                  }
+                                                : item
+                                            )
+                                          );
+                                          setTeacherPickedCardIds((prev) => {
+                                            const copy = new Set(prev);
+                                            copy.add(activeCard.id);
+                                            return copy;
+                                          });
+                                          setHasUnsavedChanges(true);
+                                        }}
+                                        className="w-full rounded bg-[var(--primary)] px-1.5 py-0.5 text-[10px] font-bold text-[var(--on-primary)] cursor-pointer hover:opacity-90"
+                                      >
+                                        Pakai
+                                      </button>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            <div className="flex flex-wrap gap-2">
+                              <Button
+                                type="button"
+                                variant="secondary"
+                                size="compact"
+                                title="Buka pustaka gambar atau unggah gambar baru"
+                                onClick={() => {
+                                  setActiveCardIndexForMedia(safeCardIdx);
+                                  setIsPictoModalOpen(true);
+                                }}
+                                icon={<Icon name="Image" size={15} />}
+                              >
+                                Pilih gambar lain
+                              </Button>
                             <Button
                               type="button"
                               variant="secondary"
@@ -1490,6 +1814,7 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                             >
                               Unggah Foto
                             </Button>
+                            </div>
                           </div>
                         )}
                       </div>
@@ -1635,7 +1960,8 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
             })()}
           </div>
         </section>
-      )}
+        );
+      })()}
 
       {/* TAB 2: KUIS LATIHAN (Studio Split Layout + Live Question Preview) */}
       {activeTab === "kuis" && (
@@ -1859,6 +2185,12 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                           </button>
                         </div>
                       </div>
+
+                      {feedback && (
+                        <StatusMessage type={feedback.type}>
+                          {feedback.message}
+                        </StatusMessage>
+                      )}
 
                       <Field
                         id={`q-prompt-${safeQuestionIdx}`}
@@ -2407,6 +2739,12 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
             sampleCard={cards[0]}
           />
 
+          {feedback && (
+            <StatusMessage type={feedback.type}>
+              {feedback.message}
+            </StatusMessage>
+          )}
+
           <div className="flex justify-end">
             <Button
               variant="primary"
@@ -2414,22 +2752,38 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
               loading={isSaving}
               onClick={async () => {
                 setIsSaving(true);
-                const res = await updatePresentationAction(lesson.id, {
-                  signSystem,
-                  signScope,
-                  signSpeed,
-                  voiceKey,
-                  voiceSpeed,
-                });
-                setIsSaving(false);
-                if (res.ok) {
-                  setFeedback({
-                    type: "benar",
-                    message: "Pengaturan isyarat dan suara berhasil disimpan!",
+                try {
+                  const res = await updatePresentationAction(lesson.id, {
+                    signSystem,
+                    signScope,
+                    signSpeed,
+                    voiceKey,
+                    voiceSpeed,
                   });
-                  router.refresh();
-                } else {
-                  setFeedback({ type: "galat", message: res.error.message });
+                  if (res.ok) {
+                    setFeedback({
+                      type: "benar",
+                      message: "Pengaturan isyarat dan suara berhasil disimpan!",
+                    });
+                    router.refresh();
+                  } else {
+                    setFeedback({
+                      type: "galat",
+                      message:
+                        res.error.message ||
+                        "Gagal menyimpan pengaturan isyarat dan suara.",
+                    });
+                  }
+                } catch (err) {
+                  setFeedback({
+                    type: "galat",
+                    message:
+                      err instanceof Error && err.message
+                        ? `Gagal menyimpan pengaturan: ${err.message}`
+                        : "Terjadi kesalahan jaringan saat menyimpan pengaturan isyarat dan suara.",
+                  });
+                } finally {
+                  setIsSaving(false);
                 }
               }}
               icon={<Icon name="CheckCircle" size={20} />}
@@ -2441,7 +2795,7 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
         </section>
       )}
 
-      {/* MODAL PIKTOGRAM */}
+      {/* MODAL PIKTOGRAM & PUSTAKA */}
       {isPictoModalOpen && (
         <PictogramModal
           isOpen={isPictoModalOpen}
@@ -2449,20 +2803,38 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
             setIsPictoModalOpen(false);
             setActiveCardIndexForMedia(null);
           }}
-          initialKeyword={
-            activeCardIndexForMedia !== null
-              ? cards[activeCardIndexForMedia]?.text.slice(0, 10)
-              : ""
-          }
-          onSelect={({ imageUrl, imageAlt }) => {
+          initialKeyword=""
+          onSelect={({ imageAssetId, imageUrl, imageAlt, imageSource }) => {
             if (activeCardIndexForMedia !== null) {
+              const targetCardId = cards[activeCardIndexForMedia]?.id;
+              if (targetCardId) {
+                setTeacherPickedCardIds((prev) => {
+                  const copy = new Set(prev);
+                  copy.add(targetCardId);
+                  return copy;
+                });
+              }
               setCards((prev) =>
                 prev.map((c, i) =>
                   i === activeCardIndexForMedia
-                    ? { ...c, imageUrl, imageAlt, imageSource: "pictogram" }
+                    ? {
+                        ...c,
+                        imageAssetId: imageAssetId ?? null,
+                        imageUrl,
+                        imageAlt,
+                        imageSource: imageSource ?? "pictogram",
+                      }
                     : c
                 )
               );
+              setHasUnsavedChanges(true);
+              setFeedback({
+                type: "info",
+                message:
+                  imageSource === "upload"
+                    ? 'Gambar baru diunggah dan dipasang. Klik "Simpan Kartu" untuk menyimpan perubahan.'
+                    : 'Gambar dipilih dari pustaka. Klik "Simpan Kartu" untuk menyimpan perubahan.',
+              });
             }
           }}
         />
@@ -2476,15 +2848,26 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
             setIsUploadModalOpen(false);
             setActiveCardIndexForMedia(null);
           }}
-          onUploadComplete={({ imageUrl, imageAlt }) => {
+          onUploadComplete={({ imageAssetId, imageUrl, imageAlt }) => {
             if (activeCardIndexForMedia !== null) {
               setCards((prev) =>
                 prev.map((c, i) =>
                   i === activeCardIndexForMedia
-                    ? { ...c, imageUrl, imageAlt, imageSource: "upload" }
+                    ? {
+                        ...c,
+                        imageAssetId: imageAssetId ?? null,
+                        imageUrl,
+                        imageAlt,
+                        imageSource: "upload",
+                      }
                     : c
                 )
               );
+              setHasUnsavedChanges(true);
+              setFeedback({
+                type: "info",
+                message: 'Foto berhasil dipasang. Klik "Simpan Kartu" untuk menyimpan perubahan.',
+              });
             }
           }}
         />
@@ -2512,9 +2895,43 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                     : c
                 )
               );
+              setHasUnsavedChanges(true);
+              setFeedback({
+                type: "info",
+                message: 'Rekaman suara dipasang. Klik "Simpan Kartu" untuk menyimpan perubahan.',
+              });
             }
           }}
         />
+      )}
+
+      {lastDeletedCard && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-xl border border-[var(--border-strong)] bg-[var(--surface)] px-4 py-3 shadow-lg"
+        >
+          <span className="text-sm font-semibold text-[var(--ink)]">
+            Kartu dihapus.
+          </span>
+          <Button
+            type="button"
+            variant="primary"
+            size="compact"
+            onClick={handleUndoDeleteCard}
+            icon={<Icon name="ArrowCounterClockwise" size={14} />}
+          >
+            Urungkan
+          </Button>
+          <button
+            type="button"
+            onClick={() => setLastDeletedCard(null)}
+            aria-label="Tutup toast urungkan hapus"
+            className="text-[var(--muted)] hover:text-[var(--ink)] cursor-pointer"
+          >
+            <Icon name="X" size={14} />
+          </button>
+        </div>
       )}
     </div>
   );

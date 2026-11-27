@@ -9,25 +9,25 @@ import {
 } from "../index";
 
 describe("Asset Catalog Integrity", () => {
-  it("validates all 1074 assets on disk with zero broken paths and 26 SIBI signs", () => {
+  it("validates all 1175 assets on disk with zero broken paths and 26 SIBI signs", () => {
     const report = validateCatalog();
     expect(report.missing_files).toEqual([]);
     expect(report.invalid_records).toEqual([]);
     expect(report.sibi_missing).toEqual([]);
     expect(report.valid).toBe(true);
-    expect(report.total_checked).toBe(1074);
+    expect(report.total_checked).toBe(1175);
   });
 
   it("reports accurate catalog statistics", () => {
     const stats = getCatalogStats();
-    expect(stats.total_assets).toBe(1074);
-    expect(stats.available_assets).toBe(1074);
+    expect(stats.total_assets).toBe(1175);
+    expect(stats.available_assets).toBe(1175);
     expect(stats.unavailable_assets).toBe(0);
     expect(stats.by_visual_type.pictogram).toBe(1050);
-    expect(stats.by_visual_type.illustration).toBe(24);
+    expect(stats.by_visual_type.illustration).toBe(125);
     expect(stats.sibi_signs_count).toBe(26);
     expect(stats.by_source["ARASAAC"]).toBe(1050);
-    expect(stats.by_source["panduin-custom"]).toBe(24);
+    expect(stats.by_source["panduin-custom"]).toBe(125);
   });
 
   it("retrieves individual assets by id with enriched metadata", () => {
@@ -165,5 +165,46 @@ describe("Hybrid Asset Retrieval across 12+ SDLB Topics", () => {
     expect(catFiltered.every((r) => r.asset.categories.includes("IPA"))).toBe(true);
 
     expect(searchAssets("")).toEqual([]);
+  });
+
+  it("retrieves expanded curriculum & daily-life domains accurately in Indonesian", () => {
+    const checks: Array<{ query: string; expectedIds: string[] }> = [
+      { query: "lautan", expectedIds: ["picto:laut", "custom:ombak-laut", "custom:ikan-paus", "custom:lumba-lumba"] },
+      { query: "terumbu karang", expectedIds: ["custom:terumbu-karang"] },
+      { query: "pedagang", expectedIds: ["custom:pedagang"] },
+      { query: "hotel", expectedIds: ["picto:hotel", "custom:kunci-kamar", "custom:koper"] },
+      { query: "resepsionis", expectedIds: ["picto:concierge"] },
+      { query: "apotek", expectedIds: ["picto:pharmacy"] },
+      { query: "timbangan", expectedIds: ["picto:weigh"] },
+      { query: "laptop", expectedIds: ["custom:laptop"] },
+      { query: "meja", expectedIds: ["picto:meja"] },
+      { query: "kursi", expectedIds: ["picto:kursi"] },
+      { query: "daun", expectedIds: ["custom:daun-hijau"] },
+      { query: "akar", expectedIds: ["custom:akar-tumbuhan"] },
+      { query: "pohon", expectedIds: ["picto:pohon"] },
+      { query: "harimau", expectedIds: ["custom:harimau"] },
+      { query: "lutut", expectedIds: ["custom:lutut"] },
+      { query: "otak", expectedIds: ["custom:otak-manusia"] },
+      { query: "jas hujan", expectedIds: ["custom:jas-hujan"] },
+      { query: "ambulans", expectedIds: ["custom:ambulans"] },
+      { query: "kompor", expectedIds: ["custom:kompor"] },
+      { query: "trotoar", expectedIds: ["custom:trotoar"] },
+      { query: "ayam goreng", expectedIds: ["custom:ayam-goreng"] },
+      { query: "tata surya", expectedIds: ["custom:tata-surya"] },
+      { query: "peta indonesia", expectedIds: ["custom:peta-indonesia"] },
+      { query: "lambang garuda", expectedIds: ["custom:lambang-garuda"] },
+      { query: "bola sepak", expectedIds: ["custom:bola-sepak"] },
+      { query: "catur", expectedIds: ["custom:catur"] },
+    ];
+
+    for (const { query, expectedIds } of checks) {
+      const results = searchAssets(query, { limit: 5 });
+      expect(results.length, `query=${query}`).toBeGreaterThanOrEqual(1);
+      const ids = results.map((r) => r.asset.asset_id);
+      expect(
+        ids.some((id) => expectedIds.includes(id)),
+        `Expected ${query} to match one of [${expectedIds.join(", ")}], got [${ids.join(", ")}]`
+      ).toBe(true);
+    }
   });
 });

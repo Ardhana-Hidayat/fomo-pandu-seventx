@@ -8,6 +8,7 @@ export interface SheetProps {
   onClose: () => void;
   title: string;
   description?: string;
+  maxWidthClass?: string;
   children: ReactNode;
 }
 
@@ -16,6 +17,7 @@ export function Sheet({
   onClose,
   title,
   description,
+  maxWidthClass = 'max-w-xl',
   children,
 }: SheetProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -61,7 +63,7 @@ export function Sheet({
         aria-modal="true"
         aria-labelledby="sheet-title"
         aria-describedby={description ? 'sheet-description' : undefined}
-        className="w-full max-w-xl flex flex-col max-h-[85dvh] sm:max-h-[88dvh] overflow-hidden rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] shadow-[0_8px_0_0_var(--border-strong)]"
+        className={`w-full ${maxWidthClass} flex flex-col max-h-[88dvh] sm:max-h-[90dvh] overflow-hidden rounded-[24px] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--ink)] shadow-[0_8px_0_0_var(--border-strong)]`}
       >
         <div className="flex shrink-0 items-start justify-between gap-4 border-b-2 border-[var(--border)] px-5 pt-5 pb-4 sm:px-6 sm:pt-6">
           <div className="min-w-0">

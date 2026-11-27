@@ -6,15 +6,22 @@ import { Button, StatusMessage } from "@/shared/ui";
 const GOOGLE_ERROR_MESSAGES: Record<string, string> = {
   google_not_configured:
     "Login Google belum dikonfigurasi di server. Pastikan GOOGLE_CLIENT_ID dan GOOGLE_CLIENT_SECRET sudah diisi di Environment Variables.",
-  google_cancelled: "Login Google dibatalkan. Silakan coba lagi.",
+  google_cancelled: "Login Google dibatalkan. Silakan klik tombol Masuk dengan Google untuk mencoba lagi.",
+  access_denied: "Akses login Google ditolak atau dibatalkan. Silakan coba lagi dan izinkan akses akun Google Anda.",
   google_invalid_state:
     "Sesi login Google tidak valid atau kedaluwarsa. Silakan coba masuk kembali.",
   google_token_failed:
-    "Gagal menukar kode otorisasi dengan Google. Periksa Authorized redirect URI di Google Cloud Console.",
-  google_userinfo_failed: "Gagal mengambil profil akun dari Google.",
+    "Gagal menukar kode otorisasi dengan Google. Periksa Authorized redirect URI di Google Cloud Console atau coba lagi.",
+  google_userinfo_failed:
+    "Gagal mengambil profil akun dari Google. Silakan coba masuk kembali.",
   google_email_unverified:
     "Email Google Anda belum terverifikasi. Gunakan akun Google yang sudah terverifikasi.",
-  google_session_failed: "Gagal membuat sesi guru setelah login Google.",
+  google_session_failed:
+    "Gagal membuat sesi guru setelah login Google. Silakan coba masuk kembali.",
+  session_expired:
+    "Sesi guru telah berakhir. Silakan masuk kembali dengan akun Google Anda.",
+  unauthorized:
+    "Anda belum masuk sebagai guru. Silakan masuk dengan akun Google Anda.",
 };
 
 function GoogleIcon() {
@@ -54,8 +61,10 @@ export function TeacherGoogleLoginButton({
 }) {
   const [loading, setLoading] = useState(false);
 
-  const errorMessage = errorCode
-    ? GOOGLE_ERROR_MESSAGES[errorCode] ?? "Gagal masuk dengan akun Google."
+  const normalizedErrorCode = errorCode?.trim();
+  const errorMessage = normalizedErrorCode
+    ? GOOGLE_ERROR_MESSAGES[normalizedErrorCode] ??
+      "Gagal masuk dengan akun Google. Silakan coba lagi atau periksa koneksi internet Anda."
     : null;
 
   return (

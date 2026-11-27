@@ -242,7 +242,7 @@ export function ShareLessonOverlay({
                 </span>
                 <div className="min-w-0">
                   <span className="block text-[11px] font-bold uppercase tracking-wide text-[var(--muted)]">
-                    Kode Materi
+                    Kode Materi (6 Angka)
                   </span>
                   <span className="font-mono text-xl sm:text-2xl font-extrabold tracking-[0.18em] text-[var(--link)] select-all">
                     {activeShare.shareCode}

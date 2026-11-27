@@ -1,7 +1,7 @@
 import type { LessonPlan } from "./planner";
 import type { CognitiveLevel, GenerateLessonOptions } from "./types";
 
-export const PROMPT_VERSION = "v2.0.0";
+export const PROMPT_VERSION = "v2.1.0";
 
 function getLevelGuidance(level?: CognitiveLevel): {
   label: string;
@@ -100,7 +100,7 @@ Aturan ketat kartu peraga:
 - "concept": id konsep persis dari DAFTAR ASET VISUAL KANDIDAT (format id|label|group) atau null.
   ATURAN CLOSED-VOCABULARY GROUNDING:
   1. Kamu HANYA BOLEH memilih nilai "concept" berupa <id_konsep> yang tercantum persis pada DAFTAR ASET VISUAL KANDIDAT di prompt pengguna.
-  2. Pilih <id_konsep> HANYA jika maknanya benar-benar sesuai dengan isi kartu tersebut.
+  2. Pilih <id_konsep> HANYA jika label Indonesianya secara langsung menggambarkan benda/aksi utama pada kartu tersebut (bukan sekadar kemiripan kata atau topik lain).
   3. Tidak ada gambar lebih baik daripada gambar yang salah: jika tidak ada <konsep> yang cocok di daftar kandidat, WAJIB setel "concept": null.
   4. DILARANG KERAS mengarang <id_konsep>, URL, atau memakai <konsep> dari topik lain yang tidak relevan.
 - "quote": kutipan singkat persis dari MATERI SUMBER yang mendukung isi kartu (kosongkan string jika tidak ada materi sumber).

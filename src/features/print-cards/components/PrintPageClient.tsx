@@ -4,6 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card, Icon, BrandLogo } from "@/shared/ui";
+import {
+  resolveRenderableQuizVisuals,
+  type NormalizedQuizStep,
+} from "@/shared/lib/quiz/visual-rule";
 import type { LessonWithContent } from "@/server/repos/lessons";
 import type { QuizQuestion } from "@/server/db/schema";
 
@@ -12,18 +16,6 @@ interface PrintPageClientProps {
   questions?: QuizQuestion[];
   shareUrl: string;
   shareCode?: string | null;
-}
-
-interface NormalizedOption {
-  id: string;
-  text: string;
-  imageUrl?: string;
-}
-
-interface NormalizedStep {
-  id: string;
-  text: string;
-  imageUrl?: string;
 }
 
 interface NormalizedPair {
@@ -53,50 +45,11 @@ function resolvePrimarySignWord(
   return (fallbackWord ?? "").toUpperCase();
 }
 
-function normalizeOptions(rawOptions: unknown): NormalizedOption[] {
-  if (!Array.isArray(rawOptions)) return [];
-  return rawOptions.map((rawOpt, idx) => {
-    if (typeof rawOpt === "string") {
-      return { id: `opt-${idx}`, text: rawOpt };
-    }
-    const opt = (rawOpt ?? {}) as {
-      id?: string;
-      text?: string;
-      label?: string;
-      imageUrl?: string;
-      image?: { url?: string };
-    };
-    return {
-      id: opt.id ?? `opt-${idx}`,
-      text: opt.text ?? opt.label ?? `Pilihan ${idx + 1}`,
-      imageUrl: opt.imageUrl ?? opt.image?.url,
-    };
-  });
-}
-
-function normalizeSteps(rawSteps: unknown): NormalizedStep[] {
-  if (!Array.isArray(rawSteps)) return [];
-  const items = rawSteps.map((rawSt, idx) => {
-    if (typeof rawSt === "string") {
-      return { id: `step-${idx}`, text: rawSt };
-    }
-    const st = (rawSt ?? {}) as {
-      id?: string;
-      text?: string;
-      imageUrl?: string;
-      image?: { url?: string };
-    };
-    return {
-      id: st.id ?? `step-${idx}`,
-      text: st.text ?? `Langkah ${idx + 1}`,
-      imageUrl: st.imageUrl ?? st.image?.url,
-    };
-  });
-
+function rotateStepsForPrint(items: NormalizedQuizStep[]): NormalizedQuizStep[] {
   // Putar deterministik agar siswa dapat mengisi nomor urutan secara mandiri di lembar cetak
   if (items.length <= 1) return items;
-  if (items.length === 2) return [items[1], items[0]];
-  return [...items.slice(1), items[0]];
+  if (items.length === 2) return [items[1]!, items[0]!];
+  return [...items.slice(1), items[0]!];
 }
 
 function normalizePairs(rawPairs: unknown): NormalizedPair[] {
@@ -618,8 +571,15 @@ export function PrintPageClient({
                     imageUrl?: string;
                   };
 
-                  const options = normalizeOptions(payload.options);
-                  const steps = normalizeSteps(payload.steps);
+                  const {
+                    promptImageUrl,
+                    options,
+                    steps: resolvedSteps,
+                  } = resolveRenderableQuizVisuals(
+                    q.type,
+                    payload as Record<string, unknown>
+                  );
+                  const steps = rotateStepsForPrint(resolvedSteps);
                   const pairs = normalizePairs(payload.pairs);
 
                   const isTrueFalse = q.type === "benar_salah";
@@ -632,8 +592,6 @@ export function PrintPageClient({
                     q.type === "matching" ||
                     q.type === "pasangkan";
 
-                  const promptImageUrl =
-                    payload.promptImageUrl ?? payload.imageUrl;
                   const signTargetWord =
                     payload.signWord ??
                     payload.sign_word ??

@@ -54,7 +54,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "air 9045",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-alam-cuaca-air-9045"
     },
@@ -123,9 +123,7 @@
       "id": "alam-cuaca-angin",
       "label": "Angin",
       "labelNorm": "angin",
-      "synonyms": [
-        "wind"
-      ],
+      "synonyms": [],
       "labelEn": "wind",
       "domains": [
         "alam-cuaca",
@@ -143,6 +141,36 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "7259"
+    },
+    {
+      "id": "alam-cuaca-water",
+      "label": "Angin Sepoi",
+      "labelNorm": "angin sepoi",
+      "synonyms": [
+        "hembusan angin",
+        "jendela terbuka",
+        "udara segar"
+      ],
+      "labelEn": "wind breeze",
+      "domains": [
+        "alam-cuaca",
+        "tubuh-kesehatan",
+        "rumah-tempat",
+        "tumbuhan-makanan",
+        "bina-diri",
+        "keterampilan-hidup"
+      ],
+      "groupId": "ipa",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/air-9045.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Angin Sepoi\" pada kategori IPA, Lingkungan, Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "9045"
     },
     {
       "id": "alam-cuaca-api",
@@ -180,7 +208,6 @@
       "label": "Awan",
       "labelNorm": "awan",
       "synonyms": [
-        "cloud",
         "langit"
       ],
       "labelEn": "cloud",
@@ -266,8 +293,6 @@
       "label": "Batu",
       "labelNorm": "batu",
       "synonyms": [
-        "stone",
-        "rock",
         "batuan"
       ],
       "labelEn": "stone",
@@ -322,9 +347,7 @@
       "id": "alam-cuaca-bintang",
       "label": "Bintang",
       "labelNorm": "bintang",
-      "synonyms": [
-        "star"
-      ],
+      "synonyms": [],
       "labelEn": "star",
       "domains": [
         "alam-cuaca",
@@ -347,9 +370,7 @@
       "id": "alam-cuaca-bulan",
       "label": "Bulan",
       "labelNorm": "bulan",
-      "synonyms": [
-        "moon"
-      ],
+      "synonyms": [],
       "labelEn": "moon",
       "domains": [
         "alam-cuaca",
@@ -389,7 +410,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "cuaca badai petir",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-alam-cuaca-cuaca-badai-petir"
     },
@@ -425,8 +446,7 @@
       "label": "Cuaca Cerah",
       "labelNorm": "cuaca cerah",
       "synonyms": [
-        "cerah",
-        "terang"
+        "cerah"
       ],
       "labelEn": "sunny",
       "domains": [
@@ -537,7 +557,6 @@
       "label": "Dingin",
       "labelNorm": "dingin",
       "synonyms": [
-        "cold",
         "cuaca dingin"
       ],
       "labelEn": "cold",
@@ -562,9 +581,7 @@
       "id": "alam-cuaca-gunung",
       "label": "Gunung",
       "labelNorm": "gunung",
-      "synonyms": [
-        "mountain"
-      ],
+      "synonyms": [],
       "labelEn": "mountain",
       "domains": [
         "alam-cuaca",
@@ -589,7 +606,6 @@
       "label": "Hujan",
       "labelNorm": "hujan",
       "synonyms": [
-        "rain",
         "air hujan"
       ],
       "labelEn": "rain",
@@ -647,11 +663,9 @@
       "synonyms": [
         "isi daya",
         "cas baterai",
-        "recharge the battery",
-        "recharge",
-        "battery"
+        "mengisi daya"
       ],
-      "labelEn": "isi daya",
+      "labelEn": "recharge battery",
       "domains": [
         "alam-cuaca",
         "tubuh-kesehatan",
@@ -689,7 +703,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "jantung organ",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-alam-cuaca-jantung-organ"
     },
@@ -787,10 +801,7 @@
       "id": "alam-cuaca-laut",
       "label": "Laut",
       "labelNorm": "laut",
-      "synonyms": [
-        "sea",
-        "ocean"
-      ],
+      "synonyms": [],
       "labelEn": "sea",
       "domains": [
         "alam-cuaca",
@@ -858,7 +869,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "magnet tapal kuda",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-alam-cuaca-magnet-tapal-kuda"
     },
@@ -951,7 +962,6 @@
       "label": "Matahari",
       "labelNorm": "matahari",
       "synonyms": [
-        "sun",
         "sinar"
       ],
       "labelEn": "sun",
@@ -1149,7 +1159,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "otak manusia",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-alam-cuaca-otak-manusia"
     },
@@ -1158,7 +1168,6 @@
       "label": "Panas",
       "labelNorm": "panas",
       "synonyms": [
-        "hot",
         "cuaca panas"
       ],
       "labelEn": "hot",
@@ -1183,9 +1192,7 @@
       "id": "alam-cuaca-pantai",
       "label": "Pantai",
       "labelNorm": "pantai",
-      "synonyms": [
-        "beach"
-      ],
+      "synonyms": [],
       "labelEn": "beach",
       "domains": [
         "alam-cuaca",
@@ -1223,7 +1230,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "paru paru",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-alam-cuaca-paru-paru"
     },
@@ -1231,9 +1238,7 @@
       "id": "alam-cuaca-pasir",
       "label": "Pasir",
       "labelNorm": "pasir",
-      "synonyms": [
-        "sand"
-      ],
+      "synonyms": [],
       "labelEn": "sand",
       "domains": [
         "alam-cuaca",
@@ -1256,9 +1261,7 @@
       "id": "alam-cuaca-pelangi",
       "label": "Pelangi",
       "labelNorm": "pelangi",
-      "synonyms": [
-        "rainbow"
-      ],
+      "synonyms": [],
       "labelEn": "rainbow",
       "domains": [
         "alam-cuaca",
@@ -1353,7 +1356,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "recharge the battery",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-alam-cuaca-recharge-the-battery"
     },
@@ -1447,9 +1450,7 @@
       "id": "alam-cuaca-sungai",
       "label": "Sungai",
       "labelNorm": "sungai",
-      "synonyms": [
-        "river"
-      ],
+      "synonyms": [],
       "labelEn": "river",
       "domains": [
         "alam-cuaca",
@@ -1475,8 +1476,6 @@
       "label": "Taman",
       "labelNorm": "taman",
       "synonyms": [
-        "park",
-        "garden",
         "taman kota"
       ],
       "labelEn": "park",
@@ -1502,10 +1501,7 @@
       "id": "alam-cuaca-tanah",
       "label": "Tanah",
       "labelNorm": "tanah",
-      "synonyms": [
-        "soil",
-        "ground"
-      ],
+      "synonyms": [],
       "labelEn": "soil",
       "domains": [
         "alam-cuaca",
@@ -1543,7 +1539,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "tata surya",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-alam-cuaca-tata-surya"
     },
@@ -1604,32 +1600,6 @@
       "status": "active",
       "source": "legacy",
       "sourceRef": "custom:terumbu-karang"
-    },
-    {
-      "id": "alam-cuaca-water",
-      "label": "Water",
-      "labelNorm": "water",
-      "synonyms": [],
-      "labelEn": "water",
-      "domains": [
-        "alam-cuaca",
-        "tubuh-kesehatan",
-        "rumah-tempat",
-        "tumbuhan-makanan",
-        "bina-diri",
-        "keterampilan-hidup"
-      ],
-      "groupId": "ipa",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/air-9045.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Air\" pada kategori IPA, Lingkungan, Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "9045"
     }
   ]
 }

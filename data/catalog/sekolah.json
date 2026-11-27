@@ -1,7 +1,7 @@
 {
   "domain": "sekolah",
   "version": "1.0.0",
-  "count": 56,
+  "count": 54,
   "concepts": [
     {
       "id": "sekolah-balok-susun",
@@ -41,7 +41,6 @@
       "label": "Buku",
       "labelNorm": "buku",
       "synonyms": [
-        "book",
         "baca",
         "alat tulis"
       ],
@@ -63,29 +62,6 @@
       "sourceRef": "25191"
     },
     {
-      "id": "sekolah-cut",
-      "label": "Cut",
-      "labelNorm": "cut",
-      "synonyms": [],
-      "labelEn": "potong",
-      "domains": [
-        "sekolah",
-        "bahasa",
-        "keterampilan-hidup"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/cut.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Cut\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "5975"
-    },
-    {
       "id": "sekolah-cut-25020",
       "label": "cut 25020",
       "labelNorm": "cut 25020",
@@ -103,7 +79,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "cut 25020",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-sekolah-cut-25020"
     },
@@ -125,179 +101,65 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "cut 27695",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-sekolah-cut-27695"
     },
     {
-      "id": "sekolah-cut-27696",
-      "label": "Cut 27696",
-      "labelNorm": "cut 27696",
-      "synonyms": [],
-      "labelEn": "potong",
-      "domains": [
-        "sekolah",
-        "bahasa",
-        "keterampilan-hidup"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/cut-27696.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Cut\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "27696"
-    },
-    {
-      "id": "sekolah-cut-8084",
-      "label": "Cut 8084",
-      "labelNorm": "cut 8084",
-      "synonyms": [],
-      "labelEn": "potong",
-      "domains": [
-        "sekolah",
-        "bahasa",
-        "keterampilan-hidup"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/cut-8084.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Cut\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8084"
-    },
-    {
-      "id": "sekolah-cut-food",
-      "label": "Cut Food",
-      "labelNorm": "cut food",
+      "id": "sekolah-pick-up-from-school",
+      "label": "Dijemput Pulang Sekolah",
+      "labelNorm": "dijemput pulang sekolah",
       "synonyms": [
-        "food"
+        "jemput sekolah"
       ],
-      "labelEn": "cut food",
+      "labelEn": "pick up from school",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/pick-up-from-school.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Dijemput Pulang Sekolah\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37047"
+    },
+    {
+      "id": "sekolah-school",
+      "label": "Gedung Sekolah",
+      "labelNorm": "gedung sekolah",
+      "synonyms": [
+        "bangunan sekolah"
+      ],
+      "labelEn": "school building",
       "domains": [
         "sekolah",
         "bahasa",
-        "tumbuhan-makanan",
-        "keterampilan-hidup"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/cut-food.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Cut Food\" pada kategori Benda di Sekolah, Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36632"
-    },
-    {
-      "id": "sekolah-cyberclassroom",
-      "label": "Cyberclassroom",
-      "labelNorm": "cyberclassroom",
-      "synonyms": [],
-      "labelEn": "cyberclassroom",
-      "domains": [
-        "sekolah",
-        "bahasa"
+        "rumah-tempat",
+        "keluarga-sosial"
       ],
       "groupId": "benda-di-sekolah",
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/cyberclassroom.webp",
+      "assetUrl": "/media/pictograms/school.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Cyberclassroom\" pada kategori Benda di Sekolah.",
+      "altText": "Piktogram visual untuk konsep \"Gedung Sekolah\" pada kategori Benda di Sekolah, IPS.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "22751"
-    },
-    {
-      "id": "sekolah-driving-school",
-      "label": "Driving School",
-      "labelNorm": "driving school",
-      "synonyms": [
-        "driving"
-      ],
-      "labelEn": "driving school",
-      "domains": [
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/driving-school.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Driving School\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "29961"
-    },
-    {
-      "id": "sekolah-file",
-      "label": "File",
-      "labelNorm": "file",
-      "synonyms": [],
-      "labelEn": "file",
-      "domains": [
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/file.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"File\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "10169"
-    },
-    {
-      "id": "sekolah-file-36553",
-      "label": "File 36553",
-      "labelNorm": "file 36553",
-      "synonyms": [],
-      "labelEn": "file",
-      "domains": [
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/file-36553.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"File\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36553"
+      "sourceRef": "6454"
     },
     {
       "id": "sekolah-gunting",
       "label": "Gunting",
       "labelNorm": "gunting",
-      "synonyms": [
-        "scissors"
-      ],
+      "synonyms": [],
       "labelEn": "scissors",
       "domains": [
         "sekolah",
@@ -339,12 +201,36 @@
       "sourceRef": "seed-sekolah-jadwal-pelajaran"
     },
     {
+      "id": "sekolah-shortcut",
+      "label": "Jalan Pintas",
+      "labelNorm": "jalan pintas",
+      "synonyms": [
+        "jalur cepat",
+        "peta jalan"
+      ],
+      "labelEn": "shortcut",
+      "domains": [
+        "sekolah",
+        "bahasa",
+        "matematika"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/shortcut.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Jalan Pintas\" pada kategori Benda di Sekolah, Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38284"
+    },
+    {
       "id": "sekolah-kantin",
       "label": "Kantin",
       "labelNorm": "kantin",
-      "synonyms": [
-        "canteen"
-      ],
+      "synonyms": [],
       "labelEn": "canteen",
       "domains": [
         "sekolah",
@@ -358,7 +244,9 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/kantin.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/dining-room-9824.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Kantin\" pada kategori Benda di Sekolah, Makanan dan Minuman.",
       "status": "active",
       "source": "arasaac",
@@ -387,12 +275,35 @@
       "sourceRef": "seed-sekolah-kantin-sekolah"
     },
     {
+      "id": "sekolah-cyberclassroom",
+      "label": "Kelas Daring",
+      "labelNorm": "kelas daring",
+      "synonyms": [
+        "belajar online",
+        "kelas komputer"
+      ],
+      "labelEn": "cyberclassroom",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/cyberclassroom.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kelas Daring\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "22751"
+    },
+    {
       "id": "sekolah-kertas",
       "label": "Kertas",
       "labelNorm": "kertas",
-      "synonyms": [
-        "paper"
-      ],
+      "synonyms": [],
       "labelEn": "paper",
       "domains": [
         "sekolah",
@@ -415,10 +326,7 @@
       "id": "sekolah-komputer",
       "label": "Komputer",
       "labelNorm": "komputer",
-      "synonyms": [
-        "computer",
-        "pc"
-      ],
+      "synonyms": [],
       "labelEn": "computer",
       "domains": [
         "sekolah",
@@ -443,8 +351,6 @@
       "label": "Kotak Pensil",
       "labelNorm": "kotak pensil",
       "synonyms": [
-        "pencil case",
-        "pencil",
         "tulis"
       ],
       "labelEn": "pencil case",
@@ -471,7 +377,6 @@
       "label": "Kursi",
       "labelNorm": "kursi",
       "synonyms": [
-        "chair",
         "tempat duduk"
       ],
       "labelEn": "chair",
@@ -548,7 +453,6 @@
       "label": "Lem",
       "labelNorm": "lem",
       "synonyms": [
-        "glue",
         "perekat"
       ],
       "labelEn": "glue",
@@ -570,36 +474,10 @@
       "sourceRef": "2709"
     },
     {
-      "id": "sekolah-library",
-      "label": "Library",
-      "labelNorm": "library",
-      "synonyms": [],
-      "labelEn": "perpustakaan",
-      "domains": [
-        "sekolah",
-        "bahasa",
-        "rumah-tempat",
-        "keluarga-sosial"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/library.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Library\" pada kategori Benda di Sekolah, Bahasa Indonesia, IPS.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6063"
-    },
-    {
       "id": "sekolah-meja",
       "label": "Meja",
       "labelNorm": "meja",
       "synonyms": [
-        "table",
-        "desk",
         "meja belajar",
         "meja makan"
       ],
@@ -624,11 +502,59 @@
       "sourceRef": "36285"
     },
     {
+      "id": "sekolah-thread-6489",
+      "label": "Memasang Benang",
+      "labelNorm": "memasang benang",
+      "synonyms": [
+        "benang ke jarum"
+      ],
+      "labelEn": "thread needle",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/thread-6489.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Memasang Benang\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6489"
+    },
+    {
+      "id": "sekolah-thread",
+      "label": "Memasukkan Benang",
+      "labelNorm": "memasukkan benang",
+      "synonyms": [
+        "pasang benang jarum"
+      ],
+      "labelEn": "thread needle",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/thread.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Memasukkan Benang\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5453"
+    },
+    {
       "id": "sekolah-memotong",
       "label": "Memotong",
       "labelNorm": "memotong",
       "synonyms": [],
-      "labelEn": "potong",
+      "labelEn": "cut",
       "domains": [
         "sekolah",
         "bahasa",
@@ -641,10 +567,207 @@
       "assetUrl": "/media/pictograms/cut-27695.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Cut\" pada kategori Benda di Sekolah.",
+      "altText": "Piktogram visual untuk konsep \"Memotong\" pada kategori Benda di Sekolah.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "27695"
+    },
+    {
+      "id": "sekolah-cut-food",
+      "label": "Memotong Makanan",
+      "labelNorm": "memotong makanan",
+      "synonyms": [
+        "potong makanan"
+      ],
+      "labelEn": "cut food",
+      "domains": [
+        "sekolah",
+        "bahasa",
+        "tumbuhan-makanan",
+        "keterampilan-hidup"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/cut-food.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Memotong Makanan\" pada kategori Benda di Sekolah, Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36632"
+    },
+    {
+      "id": "sekolah-paste",
+      "label": "Menempel",
+      "labelNorm": "menempel",
+      "synonyms": [
+        "mengelem",
+        "tempel kertas"
+      ],
+      "labelEn": "paste",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/paste.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menempel\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2511"
+    },
+    {
+      "id": "sekolah-take-to-school",
+      "label": "Mengantar ke Sekolah",
+      "labelNorm": "mengantar ke sekolah",
+      "synonyms": [
+        "antar sekolah"
+      ],
+      "labelEn": "take to school",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/take-to-school.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengantar ke Sekolah\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37036"
+    },
+    {
+      "id": "sekolah-cut",
+      "label": "Menggunting",
+      "labelNorm": "menggunting",
+      "synonyms": [],
+      "labelEn": "cut",
+      "domains": [
+        "sekolah",
+        "bahasa",
+        "keterampilan-hidup"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/cut.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/cut-8084.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Menggunting\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5975"
+    },
+    {
+      "id": "sekolah-cut-27696",
+      "label": "Menggunting Kertas",
+      "labelNorm": "menggunting kertas",
+      "synonyms": [
+        "gunting kertas"
+      ],
+      "labelEn": "cut paper",
+      "domains": [
+        "sekolah",
+        "bahasa",
+        "keterampilan-hidup"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/cut-27696.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menggunting Kertas\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "27696"
+    },
+    {
+      "id": "sekolah-file",
+      "label": "Mengikir Kuku",
+      "labelNorm": "mengikir kuku",
+      "synonyms": [
+        "kikir kuku"
+      ],
+      "labelEn": "file nails",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/file.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengikir Kuku\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "10169"
+    },
+    {
+      "id": "sekolah-spread",
+      "label": "Mengoles Mentega",
+      "labelNorm": "mengoles mentega",
+      "synonyms": [
+        "oles roti"
+      ],
+      "labelEn": "spread butter",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/spread.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengoles Mentega\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7292"
+    },
+    {
+      "id": "sekolah-spread-38678",
+      "label": "Mengoles Selai",
+      "labelNorm": "mengoles selai",
+      "synonyms": [
+        "oles di roti"
+      ],
+      "labelEn": "spread jam",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/spread-38678.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengoles Selai\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38678"
     },
     {
       "id": "sekolah-menjaga-kebersihan-kelas",
@@ -669,14 +792,13 @@
       "sourceRef": "seed-sekolah-menjaga-kebersihan-kelas"
     },
     {
-      "id": "sekolah-official-language-school",
-      "label": "Official Language School",
-      "labelNorm": "official language school",
+      "id": "sekolah-file-36553",
+      "label": "Merapikan Kuku",
+      "labelNorm": "merapikan kuku",
       "synonyms": [
-        "official",
-        "language"
+        "haluskan kuku"
       ],
-      "labelEn": "official language school",
+      "labelEn": "file nails",
       "domains": [
         "sekolah",
         "bahasa"
@@ -685,21 +807,19 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/official-language-school.webp",
+      "assetUrl": "/media/pictograms/file-36553.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Official Language School\" pada kategori Benda di Sekolah.",
+      "altText": "Piktogram visual untuk konsep \"Merapikan Kuku\" pada kategori Benda di Sekolah.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "29911"
+      "sourceRef": "36553"
     },
     {
       "id": "sekolah-papan-tulis",
       "label": "Papan Tulis",
       "labelNorm": "papan tulis",
       "synonyms": [
-        "blackboard",
-        "whiteboard",
         "kelas",
         "papan"
       ],
@@ -721,35 +841,36 @@
       "sourceRef": "2526"
     },
     {
-      "id": "sekolah-paste",
-      "label": "Paste",
-      "labelNorm": "paste",
+      "id": "sekolah-preschool",
+      "label": "PAUD / TK",
+      "labelNorm": "paud tk",
       "synonyms": [
-        "menempel"
+        "taman kanak-kanak"
       ],
-      "labelEn": "menempel",
+      "labelEn": "preschool",
       "domains": [
         "sekolah",
-        "bahasa"
+        "bahasa",
+        "rumah-tempat",
+        "keluarga-sosial"
       ],
       "groupId": "benda-di-sekolah",
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/paste.webp",
+      "assetUrl": "/media/pictograms/preschool.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Paste\" pada kategori Benda di Sekolah.",
+      "altText": "Piktogram visual untuk konsep \"PAUD / TK\" pada kategori Benda di Sekolah, IPS.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "2511"
+      "sourceRef": "29853"
     },
     {
       "id": "sekolah-penggaris",
       "label": "Penggaris",
       "labelNorm": "penggaris",
       "synonyms": [
-        "ruler",
         "ukur"
       ],
       "labelEn": "ruler",
@@ -774,9 +895,7 @@
       "id": "sekolah-penghapus",
       "label": "Penghapus",
       "labelNorm": "penghapus",
-      "synonyms": [
-        "eraser"
-      ],
+      "synonyms": [],
       "labelEn": "eraser",
       "domains": [
         "sekolah",
@@ -834,36 +953,13 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/perpustakaan.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/library.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Perpustakaan\" pada kategori Benda di Sekolah, Bahasa Indonesia, IPS.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "6063"
-    },
-    {
-      "id": "sekolah-pick-up-from-school",
-      "label": "Pick Up From School",
-      "labelNorm": "pick up from school",
-      "synonyms": [
-        "pick",
-        "from"
-      ],
-      "labelEn": "pick up from school",
-      "domains": [
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/pick-up-from-school.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Pick Up From School\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37047"
     },
     {
       "id": "sekolah-piket-kelas",
@@ -892,7 +988,7 @@
       "label": "Potong",
       "labelNorm": "potong",
       "synonyms": [],
-      "labelEn": "potong",
+      "labelEn": "cut",
       "domains": [
         "sekolah",
         "bahasa",
@@ -905,37 +1001,10 @@
       "assetUrl": "/media/pictograms/cut-25020.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Cut\" pada kategori Benda di Sekolah.",
+      "altText": "Piktogram visual untuk konsep \"Potong\" pada kategori Benda di Sekolah.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "25020"
-    },
-    {
-      "id": "sekolah-preschool",
-      "label": "Preschool",
-      "labelNorm": "preschool",
-      "synonyms": [
-        "paud",
-        "tk"
-      ],
-      "labelEn": "paud",
-      "domains": [
-        "sekolah",
-        "bahasa",
-        "rumah-tempat",
-        "keluarga-sosial"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/preschool.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Preschool\" pada kategori Benda di Sekolah, IPS.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "29853"
     },
     {
       "id": "sekolah-printer",
@@ -968,6 +1037,30 @@
       "sourceRef": "custom:printer"
     },
     {
+      "id": "sekolah-return-from-school",
+      "label": "Pulang Sekolah",
+      "labelNorm": "pulang sekolah",
+      "synonyms": [
+        "pulang dari sekolah"
+      ],
+      "labelEn": "return from school",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/return-from-school.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Pulang Sekolah\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "39738"
+    },
+    {
       "id": "sekolah-puzzle",
       "label": "Puzzle",
       "labelNorm": "puzzle",
@@ -996,57 +1089,6 @@
       "sourceRef": "custom:puzzle"
     },
     {
-      "id": "sekolah-ready-to-eat",
-      "label": "Ready To Eat",
-      "labelNorm": "ready to eat",
-      "synonyms": [
-        "ready",
-        "to"
-      ],
-      "labelEn": "ready to eat",
-      "domains": [
-        "sekolah",
-        "bahasa",
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/ready-to-eat.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ready To Eat\" pada kategori Benda di Sekolah, Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36655"
-    },
-    {
-      "id": "sekolah-return-from-school",
-      "label": "Return From School",
-      "labelNorm": "return from school",
-      "synonyms": [
-        "return"
-      ],
-      "labelEn": "return from school",
-      "domains": [
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/return-from-school.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Return From School\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39738"
-    },
-    {
       "id": "sekolah-ruang-uks",
       "label": "Ruang UKS",
       "labelNorm": "ruang uks",
@@ -1067,30 +1109,6 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-sekolah-ruang-uks"
-    },
-    {
-      "id": "sekolah-school",
-      "label": "School",
-      "labelNorm": "school",
-      "synonyms": [],
-      "labelEn": "sekolah",
-      "domains": [
-        "sekolah",
-        "bahasa",
-        "rumah-tempat",
-        "keluarga-sosial"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/school.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"School\" pada kategori Benda di Sekolah, IPS.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6454"
     },
     {
       "id": "sekolah-sekolah",
@@ -1119,11 +1137,58 @@
       "sourceRef": "32446"
     },
     {
+      "id": "sekolah-official-language-school",
+      "label": "Sekolah Bahasa",
+      "labelNorm": "sekolah bahasa",
+      "synonyms": [
+        "kursus bahasa"
+      ],
+      "labelEn": "language school",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/official-language-school.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sekolah Bahasa\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29911"
+    },
+    {
+      "id": "sekolah-driving-school",
+      "label": "Sekolah Mengemudi",
+      "labelNorm": "sekolah mengemudi",
+      "synonyms": [
+        "kursus setir"
+      ],
+      "labelEn": "driving school",
+      "domains": [
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "benda-di-sekolah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/driving-school.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sekolah Mengemudi\" pada kategori Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29961"
+    },
+    {
       "id": "sekolah-seragam",
       "label": "Seragam",
       "labelNorm": "seragam",
       "synonyms": [
-        "uniform",
         "seragam sekolah",
         "baju sekolah"
       ],
@@ -1147,34 +1212,37 @@
       "sourceRef": "3229"
     },
     {
-      "id": "sekolah-shortcut",
-      "label": "Shortcut",
-      "labelNorm": "shortcut",
-      "synonyms": [],
-      "labelEn": "shortcut",
+      "id": "sekolah-ready-to-eat",
+      "label": "Siap Makan",
+      "labelNorm": "siap makan",
+      "synonyms": [
+        "makan siang",
+        "siap santap"
+      ],
+      "labelEn": "ready to eat",
       "domains": [
         "sekolah",
         "bahasa",
-        "matematika"
+        "tumbuhan-makanan",
+        "bina-diri"
       ],
       "groupId": "benda-di-sekolah",
-      "kind": "matematika",
+      "kind": "tumbuhan_makanan",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/shortcut.webp",
+      "assetUrl": "/media/pictograms/ready-to-eat.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Shortcut\" pada kategori Benda di Sekolah, Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Siap Makan\" pada kategori Benda di Sekolah, Makanan dan Minuman.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "38284"
+      "sourceRef": "36655"
     },
     {
       "id": "sekolah-siswa",
       "label": "Siswa",
       "labelNorm": "siswa",
       "synonyms": [
-        "student",
         "murid",
         "pelajar"
       ],
@@ -1200,9 +1268,7 @@
       "id": "sekolah-spidol",
       "label": "Spidol",
       "labelNorm": "spidol",
-      "synonyms": [
-        "marker"
-      ],
+      "synonyms": [],
       "labelEn": "marker",
       "domains": [
         "sekolah",
@@ -1222,77 +1288,10 @@
       "sourceRef": "7807"
     },
     {
-      "id": "sekolah-spread",
-      "label": "Spread",
-      "labelNorm": "spread",
-      "synonyms": [],
-      "labelEn": "spread",
-      "domains": [
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/spread.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Spread\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7292"
-    },
-    {
-      "id": "sekolah-spread-38678",
-      "label": "Spread 38678",
-      "labelNorm": "spread 38678",
-      "synonyms": [],
-      "labelEn": "spread",
-      "domains": [
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/spread-38678.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Spread\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38678"
-    },
-    {
-      "id": "sekolah-take-to-school",
-      "label": "Take To School",
-      "labelNorm": "take to school",
-      "synonyms": [],
-      "labelEn": "take to school",
-      "domains": [
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/take-to-school.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Take To School\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37036"
-    },
-    {
       "id": "sekolah-tas",
       "label": "Tas",
       "labelNorm": "tas",
       "synonyms": [
-        "bag",
         "tas sekolah"
       ],
       "labelEn": "bag",
@@ -1311,50 +1310,6 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2475"
-    },
-    {
-      "id": "sekolah-thread",
-      "label": "Thread",
-      "labelNorm": "thread",
-      "synonyms": [],
-      "labelEn": "thread",
-      "domains": [
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/thread.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Thread\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "5453"
-    },
-    {
-      "id": "sekolah-thread-6489",
-      "label": "Thread 6489",
-      "labelNorm": "thread 6489",
-      "synonyms": [],
-      "labelEn": "thread",
-      "domains": [
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "benda-di-sekolah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/thread-6489.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Thread\" pada kategori Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6489"
     },
     {
       "id": "sekolah-upacara-hari-senin",

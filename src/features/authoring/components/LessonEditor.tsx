@@ -14,6 +14,10 @@ import {
 } from "@/shared/ui";
 import { SignCard } from "@/features/player";
 import {
+  resolveRenderableQuizVisuals,
+  sanitizeQuizPayloadVisualRule,
+} from "@/shared/lib/quiz/visual-rule";
+import {
   saveCardAction,
   saveQuizQuestionAction,
   updateLessonAction,
@@ -257,12 +261,16 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
   const [previewSelectedStepId, setPreviewSelectedStepId] = useState<
     string | null
   >(null);
+  const [failedPreviewImages, setFailedPreviewImages] = useState<
+    Record<string, true>
+  >({});
 
   function resetPreview() {
     setPreviewSelectedOptionId(null);
     setPreviewFeedback(null);
     setPreviewOrderIds(null);
     setPreviewSelectedStepId(null);
+    setFailedPreviewImages({});
   }
 
   // Pengaturan Isyarat & Suara (dikunci ke SIBI)
@@ -831,22 +839,26 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
           };
         }
         const existingOpts = extractOptions(currentPayload);
+        const rawNextPayload: Record<string, unknown> = {
+          ...currentPayload,
+          ...(nextType === "choice_sign"
+            ? { signWord: extractSignWord(q) || "BELAJAR" }
+            : {}),
+          options:
+            existingOpts.length >= 2
+              ? existingOpts
+              : [
+                  { id: "opt-1", text: "Jawaban Benar", correct: true },
+                  { id: "opt-2", text: "Pilihan Lain", correct: false },
+                ],
+        };
         return {
           ...q,
           type: nextType,
-          payload: {
-            ...currentPayload,
-            ...(nextType === "choice_sign"
-              ? { signWord: extractSignWord(q) || "BELAJAR" }
-              : {}),
-            options:
-              existingOpts.length >= 2
-                ? existingOpts
-                : [
-                    { id: "opt-1", text: "Jawaban Benar", correct: true },
-                    { id: "opt-2", text: "Pilihan Lain", correct: false },
-                  ],
-          },
+          payload: sanitizeQuizPayloadVisualRule(
+            nextType,
+            rawNextPayload
+          ) as QuizQuestionPayload,
         };
       })
     );
@@ -1052,12 +1064,16 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
 
     setIsSavingQuestion(true);
     try {
+      const safePayload = sanitizeQuizPayloadVisualRule(
+        q.type,
+        (q.payload as Record<string, unknown>) ?? {}
+      ) as QuizQuestionPayload;
       const res = await saveQuizQuestionAction(lesson.id, {
         id: q.id,
         position: q.position,
         type: q.type,
         prompt: q.prompt.trim(),
-        payload: q.payload as QuizQuestionPayload,
+        payload: safePayload,
         keyTerms: q.keyTerms ?? [],
         linkedCardId: q.linkedCardId ?? null,
         explanation: q.explanation ?? null,
@@ -1065,7 +1081,9 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
 
       if (res.ok) {
         setQuestions((prev) =>
-          prev.map((item, i) => (i === idx ? { ...item, id: res.data.id } : item))
+          prev.map((item, i) =>
+            i === idx ? { ...item, id: res.data.id, payload: safePayload } : item
+          )
         );
         setHasUnsavedChanges(false);
         setFeedback({ type: "benar", message: `Soal #${q.position} berhasil disimpan.` });
@@ -2090,14 +2108,23 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                 const payload =
                   (activeQuestion.payload as Record<string, unknown>) ?? {};
                 const qType = normalizeQuestionType(activeQuestion.type);
-                const options = extractOptions(payload);
-                const steps = extractSteps(payload);
+                const {
+                  promptImageUrl,
+                  options,
+                  steps,
+                } = resolveRenderableQuizVisuals(activeQuestion.type, payload);
                 const tfAnswer =
                   typeof payload.answer === "boolean" ? payload.answer : true;
                 const signWord = extractSignWord(activeQuestion);
-                const promptImageUrl =
-                  (payload.promptImageUrl as string | undefined) ??
-                  (payload.imageUrl as string | undefined);
+                const promptPreviewKey = promptImageUrl
+                  ? `${activeQuestion.id}:prompt:${promptImageUrl}`
+                  : null;
+                const visiblePromptImageUrl =
+                  promptImageUrl &&
+                  promptPreviewKey &&
+                  !failedPreviewImages[promptPreviewKey]
+                    ? promptImageUrl
+                    : undefined;
 
                 return (
                   <div className="lg:col-span-8 flex flex-col gap-5">
@@ -2469,12 +2496,18 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                       </div>
 
                       <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-4 sm:p-6 flex flex-col items-center gap-4 text-center">
-                        {promptImageUrl && (
+                        {visiblePromptImageUrl && promptPreviewKey && (
                           <div className="h-28 w-28 rounded-2xl border border-[var(--border)] bg-white p-2 flex items-center justify-center overflow-hidden">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                              src={promptImageUrl}
+                              src={visiblePromptImageUrl}
                               alt={activeQuestion.prompt}
+                              onError={() =>
+                                setFailedPreviewImages((prev) => ({
+                                  ...prev,
+                                  [promptPreviewKey]: true,
+                                }))
+                              }
                               className="h-full w-full object-contain"
                             />
                           </div>
@@ -2533,12 +2566,21 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
                                     }}
                                     className={`flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-xl border-2 px-3 py-3 text-sm font-bold cursor-pointer transition-colors ${optStyle}`}
                                   >
-                                    {opt.imageUrl && (
+                                    {opt.imageUrl &&
+                                      !failedPreviewImages[
+                                        `${activeQuestion.id}:opt:${opt.id}:${opt.imageUrl}`
+                                      ] && (
                                       <div className="h-14 w-14 rounded-lg bg-white p-1 border border-[var(--border)] flex items-center justify-center overflow-hidden">
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                         <img
                                           src={opt.imageUrl}
                                           alt={opt.text}
+                                          onError={() =>
+                                            setFailedPreviewImages((prev) => ({
+                                              ...prev,
+                                              [`${activeQuestion.id}:opt:${opt.id}:${opt.imageUrl}`]: true,
+                                            }))
+                                          }
                                           className="h-full w-full object-contain"
                                         />
                                       </div>

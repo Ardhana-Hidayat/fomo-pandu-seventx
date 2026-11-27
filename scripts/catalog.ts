@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
-import { desc } from "drizzle-orm";
+import { and, desc, isNull, ne } from "drizzle-orm";
 import { getCatalog } from "../src/server/services/assets/catalog";
 import type { AssetCategory, AssetRecord } from "../src/server/services/assets/types";
 import {
@@ -472,6 +472,7 @@ function verifyCatalogFiles(): { ok: boolean; summary: Record<string, unknown> }
   }
 
   const seenLabels = new Map<string, string>();
+  const seenNonHiddenLabels = new Map<string, string>();
   const seenSyns = new Map<string, string>();
   const mappedDiskPaths = new Set<string>();
   const domainActiveCounts = new Map<string, number>(seedsFile.domains.map((d) => [d.id, 0]));
@@ -482,9 +483,29 @@ function verifyCatalogFiles(): { ok: boolean; summary: Record<string, unknown> }
   }
 
   for (const c of concepts) {
-    if (c.status === "hidden") continue;
+    if (c.status === "hidden") {
+      if (c.assetUrl) {
+        const diskPath = path.join(process.cwd(), "public", c.assetUrl.replace(/^\/+/, ""));
+        if (fs.existsSync(diskPath)) mappedDiskPaths.add(c.assetUrl);
+      }
+      for (const alt of c.altUrls ?? []) {
+        const diskPath = path.join(process.cwd(), "public", alt.replace(/^\/+/, ""));
+        if (fs.existsSync(diskPath)) mappedDiskPaths.add(alt);
+      }
+      continue;
+    }
     for (const d of c.domains) {
       domainTotalCounts.set(d, (domainTotalCounts.get(d) ?? 0) + 1);
+    }
+    const nonHiddenNorm = c.labelNorm || normalize(c.label);
+    if (nonHiddenNorm) {
+      if (seenNonHiddenLabels.has(nonHiddenNorm)) {
+        errors.push(
+          `Duplicate non-hidden labelNorm "${nonHiddenNorm}": ${seenNonHiddenLabels.get(nonHiddenNorm)} vs ${c.id} (${c.status})`
+        );
+      } else {
+        seenNonHiddenLabels.set(nonHiddenNorm, `${c.id} (${c.status})`);
+      }
     }
   }
 
@@ -492,6 +513,8 @@ function verifyCatalogFiles(): { ok: boolean; summary: Record<string, unknown> }
     const labelNorm = c.labelNorm || normalize(c.label);
     if (!labelNorm) {
       errors.push(`Concept ${c.id} has empty labelNorm`);
+    } else if (/ \d{4,6}$/.test(c.label)) {
+      errors.push(`Active concept ${c.id} has numeric suffix in label "${c.label}"`);
     } else if (seenLabels.has(labelNorm)) {
       errors.push(`Duplicate active labelNorm "${labelNorm}": ${seenLabels.get(labelNorm)} vs ${c.id}`);
     } else {
@@ -613,30 +636,19 @@ async function syncToDb(): Promise<void> {
   const catalogHash = hashObj.digest("hex");
 
   const now = new Date();
-  for (const c of concepts) {
-    await db
-      .insert(visualConcepts)
-      .values({
-        id: c.id,
-        label: c.label,
-        labelNorm: c.labelNorm || normalize(c.label),
-        synonyms: c.synonyms ?? [],
-        labelEn: c.labelEn ?? null,
-        domains: c.domains ?? [],
-        groupId: c.groupId ?? null,
-        kind: c.kind ?? null,
-        popularity: c.popularity ?? 0,
-        assetId: null,
-        altAssetIds: [],
-        altText: c.altText ?? null,
-        status: c.status || "active",
-        source: c.source || "arasaac",
-        sourceRef: c.sourceRef ?? null,
-        updatedAt: now,
-      })
-      .onConflictDoUpdate({
-        target: visualConcepts.id,
-        set: {
+  await db.transaction(async (tx) => {
+    // Temporarily hide non-upload rows before upserting so merged/removed IDs and
+    // swapped label_norm values never violate visual_concepts_active_label_norm_idx.
+    await tx
+      .update(visualConcepts)
+      .set({ status: "hidden", updatedAt: now })
+      .where(and(ne(visualConcepts.source, "upload"), isNull(visualConcepts.uploadedBy)));
+
+    for (const c of concepts) {
+      await tx
+        .insert(visualConcepts)
+        .values({
+          id: c.id,
           label: c.label,
           labelNorm: c.labelNorm || normalize(c.label),
           synonyms: c.synonyms ?? [],
@@ -645,29 +657,49 @@ async function syncToDb(): Promise<void> {
           groupId: c.groupId ?? null,
           kind: c.kind ?? null,
           popularity: c.popularity ?? 0,
+          assetId: null,
+          altAssetIds: [],
           altText: c.altText ?? null,
           status: c.status || "active",
           source: c.source || "arasaac",
           sourceRef: c.sourceRef ?? null,
           updatedAt: now,
-        },
-      });
-  }
+        })
+        .onConflictDoUpdate({
+          target: visualConcepts.id,
+          set: {
+            label: c.label,
+            labelNorm: c.labelNorm || normalize(c.label),
+            synonyms: c.synonyms ?? [],
+            labelEn: c.labelEn ?? null,
+            domains: c.domains ?? [],
+            groupId: c.groupId ?? null,
+            kind: c.kind ?? null,
+            popularity: c.popularity ?? 0,
+            altText: c.altText ?? null,
+            status: c.status || "active",
+            source: c.source || "arasaac",
+            sourceRef: c.sourceRef ?? null,
+            updatedAt: now,
+          },
+        });
+    }
 
-  await db
-    .insert(catalogVersion)
-    .values({
-      id: "main",
-      hash: catalogHash,
-      updatedAt: now,
-    })
-    .onConflictDoUpdate({
-      target: catalogVersion.id,
-      set: {
+    await tx
+      .insert(catalogVersion)
+      .values({
+        id: "main",
         hash: catalogHash,
         updatedAt: now,
-      },
-    });
+      })
+      .onConflictDoUpdate({
+        target: catalogVersion.id,
+        set: {
+          hash: catalogHash,
+          updatedAt: now,
+        },
+      });
+  });
 
   console.log(`Synced ${concepts.length} concepts to DB (version hash=${catalogHash.slice(0, 12)}).`);
 }

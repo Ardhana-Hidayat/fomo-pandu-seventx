@@ -7,6 +7,9 @@ import {
 import { getConceptIndex } from "../catalog";
 import {
   ID_STOP_WORDS,
+  isHygieneConcept,
+  isHygieneContext,
+  isNoisyConcept,
   splitSourceIntoSentences,
   type LessonPlan,
 } from "./planner";
@@ -25,7 +28,7 @@ export interface FallbackGenerationConfig {
   exerciseType?: "match" | "order" | "both";
 }
 
-function pickContentKeywords(sentence: string, maxTerms = 2): string[] {
+function pickContentKeywords(sentence: string, maxTerms = 3): string[] {
   const words = sentence
     .split(/\s+/)
     .map((w) => w.replace(/[^a-zA-Z0-9-]/g, "").toLowerCase())
@@ -44,25 +47,46 @@ function findCocokConcept(
   sentence: string,
   terms: string[],
   index: ConceptIndex,
-  preferDomains?: string[]
+  preferDomains?: string[],
+  allowHygiene = false
 ): ConceptRecord | null {
+  const sentenceHygiene = allowHygiene || isHygieneContext("", sentence);
+  let bestConcept: ConceptRecord | null = null;
+  let bestScore = -1;
+
   for (const term of terms) {
     const hits = search(term, index, {
-      limit: 5,
-      minScore: 18,
+      limit: 6,
+      minScore: 40,
       requireImage: true,
       preferDomains,
     });
     for (const hit of hits) {
       if (hit.concept.status !== "active") continue;
       if (!hit.concept.assetUrl && !hit.concept.assetId) continue;
+      if (isNoisyConcept(hit.concept)) continue;
+      if (!sentenceHygiene && isHygieneConcept(hit.concept)) continue;
+
+      // Reject pure English cross-language hits when searching Indonesian terms
+      const isEnglishOnlyHit =
+        (hit.matchedOn.includes("exact_en") || hit.matchedOn.includes("en_tokens")) &&
+        !hit.matchedOn.includes("exact_label") &&
+        !hit.matchedOn.includes("exact_synonym") &&
+        !hit.matchedOn.includes("raw_tokens") &&
+        !hit.matchedOn.includes("stem_tokens");
+      if (isEnglishOnlyHit) continue;
+
       const fit = imageFit(sentence, hit.concept, { keyTerms: terms });
       if (fit.fit) {
-        return hit.concept;
+        const combined = hit.score + fit.score;
+        if (combined > bestScore) {
+          bestScore = combined;
+          bestConcept = hit.concept;
+        }
       }
     }
   }
-  return null;
+  return bestConcept;
 }
 
 function buildTopicSentences(topic: string, count: number): string[] {
@@ -107,10 +131,17 @@ function generateExtractiveFallback(
       ? sentences.slice(0, config.cardCount)
       : buildTopicSentences(title, config.cardCount);
 
+  const allowHygiene = isHygieneContext(title, rawText);
   const cards: GeneratedCard[] = selectedSentences.map((sentence) => {
-    const keyTerms = pickContentKeywords(sentence, 2);
+    const keyTerms = pickContentKeywords(sentence, 3);
     const primary = keyTerms[0] || "materi";
-    const matched = findCocokConcept(sentence, keyTerms, index, plan?.domains);
+    const matched = findCocokConcept(
+      sentence,
+      keyTerms,
+      index,
+      plan?.domains,
+      allowHygiene
+    );
 
     const visual: VisualRef | null = matched
       ? {

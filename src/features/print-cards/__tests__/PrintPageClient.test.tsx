@@ -160,7 +160,7 @@ describe("PrintPageClient Component", () => {
         id: "pub-1",
         lessonId: "l-1",
         classroomId: "cls-1",
-        shareCode: "ABC12345",
+        shareCode: "100101",
         visible: true,
         publishedAt: new Date(),
         createdAt: new Date(),
@@ -173,8 +173,8 @@ describe("PrintPageClient Component", () => {
       <PrintPageClient
         lesson={dummyLesson}
         questions={dummyQuestions}
-        shareUrl="http://localhost:3000/m/ABC12345"
-        shareCode="ABC12345"
+        shareUrl="http://localhost:3000/m/100101"
+        shareCode="100101"
       />
     );
 
@@ -185,7 +185,7 @@ describe("PrintPageClient Component", () => {
     ).toBeDefined();
     expect(screen.getByText(/1 Kartu Materi/i)).toBeDefined();
     expect(screen.getByText(/5 Soal Kuis/i)).toBeDefined();
-    expect(screen.getByText("ABC12345")).toBeDefined();
+    expect(screen.getByText("100101")).toBeDefined();
 
     // Form Identitas Siswa
     expect(screen.getByText("Identitas Siswa")).toBeDefined();
@@ -212,8 +212,8 @@ describe("PrintPageClient Component", () => {
       <PrintPageClient
         lesson={dummyLesson}
         questions={dummyQuestions}
-        shareUrl="http://localhost:3000/m/ABC12345"
-        shareCode="ABC12345"
+        shareUrl="http://localhost:3000/m/100101"
+        shareCode="100101"
       />
     );
 
@@ -262,7 +262,7 @@ describe("PrintPageClient Component", () => {
       <PrintPageClient
         lesson={dummyLesson}
         questions={dummyQuestions}
-        shareUrl="http://localhost:3000/m/ABC12345"
+        shareUrl="http://localhost:3000/m/100101"
       />
     );
 
@@ -279,8 +279,8 @@ describe("PrintPageClient Component", () => {
       <PrintPageClient
         lesson={dummyLesson}
         questions={dummyQuestions}
-        shareUrl="http://localhost:3000/m/ABC12345"
-        shareCode="ABC12345"
+        shareUrl="http://localhost:3000/m/100101"
+        shareCode="100101"
       />
     );
 
@@ -290,7 +290,7 @@ describe("PrintPageClient Component", () => {
     const quizToggle = screen.getByRole("checkbox", { name: /Lembar Kuis/i });
 
     fireEvent.click(qrToggle);
-    expect(screen.queryByText("ABC12345")).toBeNull();
+    expect(screen.queryByText("100101")).toBeNull();
 
     fireEvent.click(sibiToggle);
     expect(screen.queryByText(/Isyarat SIBI: WORTEL/i)).toBeNull();

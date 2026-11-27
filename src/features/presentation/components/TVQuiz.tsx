@@ -3,6 +3,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { Button, Card, Icon, DisplayPreferencesTrigger } from "@/shared/ui";
 import { SignCard } from "@/features/player";
+import {
+  resolveRenderableQuizVisuals,
+  type NormalizedQuizOption,
+  type NormalizedQuizStep,
+} from "@/shared/lib/quiz/visual-rule";
 import type { QuizQuestion } from "@/server/db/schema";
 
 interface TVQuizProps {
@@ -11,19 +16,6 @@ interface TVQuizProps {
   backHref: string;
   onBackToMaterial?: () => void;
   materialHref?: string;
-}
-
-interface NormalizedTVOption {
-  id: string;
-  text: string;
-  imageUrl?: string;
-  correct: boolean;
-}
-
-interface NormalizedTVStep {
-  id: string;
-  text: string;
-  imageUrl?: string;
 }
 
 function deterministicShuffle<T extends { id: string }>(items: T[], seed: string): T[] {
@@ -64,6 +56,7 @@ export function TVQuiz({
   const [feedbackByQ, setFeedbackByQ] = useState<
     Record<string, { ok: boolean; message: string }>
   >({});
+  const [failedImageKeys, setFailedImageKeys] = useState<Record<string, true>>({});
 
   const currentQ = questions[currentIndex];
   const total = questions.length;
@@ -76,6 +69,7 @@ export function TVQuiz({
     setSelectedOptionByQ({});
     setOrderedStepIdsByQ({});
     setFeedbackByQ({});
+    setFailedImageKeys({});
   }, []);
 
   const handlePrev = useCallback(() => {
@@ -222,7 +216,6 @@ export function TVQuiz({
       }
     | undefined;
 
-  const promptImageUrl = payload?.promptImageUrl ?? payload?.imageUrl;
   const isOrder =
     currentQ.type === "order" ||
     currentQ.type === "urutan" ||
@@ -236,47 +229,23 @@ export function TVQuiz({
     (Array.isArray(currentQ.keyTerms) ? currentQ.keyTerms[0] : "") ??
     "";
 
-  const rawOptions = Array.isArray(payload?.options) ? payload.options : [];
-  let options: NormalizedTVOption[] = rawOptions.map((rawOpt, idx) => {
-    if (typeof rawOpt === "string") {
-      const isCorrect =
-        payload?.answer !== undefined
-          ? String(payload.answer).trim().toLowerCase() ===
-            rawOpt.trim().toLowerCase()
-          : idx === 0;
-      return {
-        id: `opt-${idx}`,
-        text: rawOpt,
-        correct: isCorrect,
-      };
-    }
-    const opt = rawOpt as {
-      id?: string;
-      text?: string;
-      label?: string;
-      imageUrl?: string;
-      image?: { url?: string };
-      visual?: { url?: string } | null;
-      correct?: boolean;
-    };
-    const text = opt.text ?? opt.label ?? `Pilihan ${idx + 1}`;
-    const id = opt.id ?? `opt-${idx}`;
-    const isCorrect =
-      typeof opt.correct === "boolean"
-        ? opt.correct
-        : payload?.answer !== undefined
-        ? String(payload.answer).trim().toLowerCase() === text.trim().toLowerCase() ||
-          String(payload.answer).trim().toLowerCase() === id.toLowerCase()
-        : idx === 0;
+  const {
+    promptImageUrl,
+    options: resolvedOptions,
+    steps,
+  } = resolveRenderableQuizVisuals(
+    currentQ.type,
+    payload as Record<string, unknown> | undefined
+  );
+  const promptErrorKey = promptImageUrl
+    ? `${currentQ.id}:prompt:${promptImageUrl}`
+    : null;
+  const visiblePromptImageUrl =
+    promptImageUrl && promptErrorKey && !failedImageKeys[promptErrorKey]
+      ? promptImageUrl
+      : undefined;
 
-    return {
-      id,
-      text,
-      imageUrl: opt.visual?.url ?? opt.imageUrl ?? opt.image?.url,
-      correct: isCorrect,
-    };
-  });
-
+  let options: NormalizedQuizOption[] = resolvedOptions;
   if (isTrueFalse && options.length === 0) {
     const correctBool = payload?.answer !== false;
     options = [
@@ -285,25 +254,6 @@ export function TVQuiz({
     ];
   }
 
-  const rawSteps = Array.isArray(payload?.steps) ? payload.steps : [];
-  const steps: NormalizedTVStep[] = rawSteps.map((rawStep, idx) => {
-    if (typeof rawStep === "string") {
-      return { id: `step-${idx}`, text: rawStep };
-    }
-    const st = rawStep as {
-      id?: string;
-      text?: string;
-      imageUrl?: string;
-      image?: { url?: string };
-      visual?: { url?: string } | null;
-    };
-    return {
-      id: st.id ?? `step-${idx}`,
-      text: st.text ?? `Langkah ${idx + 1}`,
-      imageUrl: st.visual?.url ?? st.imageUrl ?? st.image?.url,
-    };
-  });
-
   const displaySteps = isRevealed
     ? steps
     : deterministicShuffle(steps, currentQ.id || `q-${currentIndex}`);
@@ -311,7 +261,7 @@ export function TVQuiz({
   const orderedIds = orderedStepIdsByQ[currentQ.id] ?? [];
   const feedback = feedbackByQ[currentQ.id];
 
-  const handleSelectOption = (opt: NormalizedTVOption) => {
+  const handleSelectOption = (opt: NormalizedQuizOption) => {
     setSelectedOptionByQ((prev) => ({ ...prev, [currentQ.id]: opt.id }));
     setFeedbackByQ((prev) => ({
       ...prev,
@@ -321,7 +271,7 @@ export function TVQuiz({
     }));
   };
 
-  const handleToggleStep = (step: NormalizedTVStep) => {
+  const handleToggleStep = (step: NormalizedQuizStep) => {
     if (isRevealed) return;
     const currentOrder = orderedStepIdsByQ[currentQ.id] ?? [];
     let nextOrder: string[];
@@ -404,14 +354,20 @@ export function TVQuiz({
             {currentQ.prompt}
           </h2>
 
-          {(promptImageUrl || (isSignMatch && signTargetWord)) && (
+          {(visiblePromptImageUrl || (isSignMatch && signTargetWord)) && (
             <div className="flex flex-wrap items-center justify-center gap-6">
-              {promptImageUrl && (
+              {visiblePromptImageUrl && promptErrorKey && (
                 <div className="w-40 h-40 sm:w-52 sm:h-52 rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] p-2 flex items-center justify-center overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={promptImageUrl}
+                    src={visiblePromptImageUrl}
                     alt={currentQ.prompt}
+                    onError={() =>
+                      setFailedImageKeys((prev) => ({
+                        ...prev,
+                        [promptErrorKey]: true,
+                      }))
+                    }
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -453,11 +409,17 @@ export function TVQuiz({
                     <span className="h-12 w-12 rounded-2xl bg-[var(--primary)] text-[var(--on-primary)] flex items-center justify-center font-extrabold text-xl shrink-0">
                       {badgeText}
                     </span>
-                    {st.imageUrl && (
+                    {st.imageUrl && !failedImageKeys[`${currentQ.id}:step:${st.id}:${st.imageUrl}`] && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={st.imageUrl}
                         alt={st.text}
+                        onError={() =>
+                          setFailedImageKeys((prev) => ({
+                            ...prev,
+                            [`${currentQ.id}:step:${st.id}:${st.imageUrl}`]: true,
+                          }))
+                        }
                         className="h-14 w-14 rounded-xl object-contain bg-[var(--surface-2)] p-1 shrink-0"
                       />
                     )}
@@ -510,11 +472,17 @@ export function TVQuiz({
                   <span className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-[var(--primary)] text-[var(--on-primary)] flex items-center justify-center font-extrabold text-xl sm:text-2xl shrink-0">
                     {idx + 1}
                   </span>
-                  {opt.imageUrl && (
+                  {opt.imageUrl && !failedImageKeys[`${currentQ.id}:opt:${opt.id}:${opt.imageUrl}`] && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={opt.imageUrl}
                       alt={opt.text}
+                      onError={() =>
+                        setFailedImageKeys((prev) => ({
+                          ...prev,
+                          [`${currentQ.id}:opt:${opt.id}:${opt.imageUrl}`]: true,
+                        }))
+                      }
                       className="h-14 w-14 rounded-xl object-contain bg-[var(--surface-2)] p-1 shrink-0"
                     />
                   )}

@@ -266,4 +266,199 @@ describe("visual-retrieval (Lampiran A)", () => {
     expect(res.reasons).toContain("quote_not_in_source");
     expect(res.reasons).toContain("no_lexical_grounding");
   });
+
+  describe("Regression: substring boundaries, cross-language collisions & primary concept alignment", () => {
+    const REGRESSION_CONCEPTS: ConceptRecord[] = [
+      ...SAMPLE_CONCEPTS,
+      {
+        id: "alam-cuaca-api",
+        label: "Api",
+        labelNorm: "api",
+        synonyms: ["nyala api"],
+        labelEn: "fire",
+        domains: ["alam-cuaca"],
+        groupId: "alam",
+        kind: "benda",
+        popularity: 80,
+        assetUrl: "/media/custom/api.webp",
+        status: "active",
+      },
+      {
+        id: "alam-cuaca-air",
+        label: "Air",
+        labelNorm: "air",
+        synonyms: ["air putih", "air minum", "bersih", "makanan dan minuman"],
+        labelEn: "water",
+        domains: ["alam-cuaca", "tumbuhan-makanan", "bina-diri"],
+        groupId: "alam",
+        kind: "benda",
+        popularity: 95,
+        assetUrl: "/media/pictograms/air.webp",
+        status: "active",
+      },
+      {
+        id: "alam-cuaca-udara",
+        label: "Udara",
+        labelNorm: "udara",
+        synonyms: ["angin"],
+        labelEn: "air",
+        domains: ["alam-cuaca"],
+        groupId: "alam",
+        kind: "benda",
+        popularity: 80,
+        assetUrl: "/media/pictograms/udara.webp",
+        status: "active",
+      },
+      {
+        id: "bina-diri-handuk",
+        label: "Handuk",
+        labelNorm: "handuk",
+        synonyms: ["lap"],
+        labelEn: "towel",
+        domains: ["bina-diri", "tubuh-kesehatan"],
+        groupId: "kebersihan",
+        kind: "benda",
+        popularity: 70,
+        assetUrl: "/media/pictograms/handuk.webp",
+        status: "active",
+      },
+      {
+        id: "noisy-the",
+        label: "The",
+        labelNorm: "the",
+        synonyms: [],
+        labelEn: "the",
+        domains: ["tubuh-kesehatan"],
+        groupId: "kebersihan",
+        kind: "benda",
+        popularity: 70,
+        assetUrl: "/media/pictograms/the.webp",
+        status: "active",
+      },
+      {
+        id: "noisy-soap-num",
+        label: "Soap 36910",
+        labelNorm: "soap 36910",
+        synonyms: [],
+        labelEn: "sabun",
+        domains: ["tubuh-kesehatan", "bina-diri"],
+        groupId: "kebersihan",
+        kind: "benda",
+        popularity: 70,
+        assetUrl: "/media/pictograms/soap-36910.webp",
+        status: "active",
+      },
+    ];
+    const regIndex = buildIndex(REGRESSION_CONCEPTS);
+
+    it("16. imageFit rejects substring matches inside unrelated words (api/sapi, air/mengalir, ikan/memberikan, lap/telapak)", () => {
+      const api = regIndex.byId.get("alam-cuaca-api")!;
+      const air = regIndex.byId.get("alam-cuaca-air")!;
+      const ikan = regIndex.byId.get("hewan-ikan")!;
+      const handuk = regIndex.byId.get("bina-diri-handuk")!;
+
+      expect(
+        imageFit("Sapi makan rumput di padang.", api, { keyTerms: ["sapi"] }).fit
+      ).toBe(false);
+      expect(
+        imageFit("Sungai mengalir jauh menuju laut.", air, {
+          keyTerms: ["sungai"],
+        }).fit
+      ).toBe(false);
+      expect(
+        imageFit("Pertunjukan berakhir dengan gembira.", air, {
+          keyTerms: ["berakhir"],
+        }).fit
+      ).toBe(false);
+      expect(
+        imageFit("Akar tumbuhan memberikan zat hara.", ikan, {
+          keyTerms: ["akar", "tumbuhan"],
+        }).fit
+      ).toBe(false);
+      expect(
+        imageFit("Telapak kaki menginjak rumput.", handuk, {
+          keyTerms: ["telapak", "kaki"],
+        }).fit
+      ).toBe(false);
+    });
+
+    it("17. imageFit rejects partial multi-word overlap, stopwords, and generic synonym collisions", () => {
+      const cuciTangan = regIndex.byId.get("kebersihan-cuci-tangan")!;
+      const air = regIndex.byId.get("alam-cuaca-air")!;
+      const noisyThe = regIndex.byId.get("noisy-the")!;
+
+      // "tangan" alone must not trigger "Cuci Tangan"
+      expect(
+        imageFit("Tangan kita memegang pensil di kelas.", cuciTangan, {
+          keyTerms: ["tangan", "pensil"],
+        }).fit
+      ).toBe(false);
+
+      // "makanan dan minuman" synonym on Air must not match "Daun membuat makanan untuk tumbuhan."
+      expect(
+        imageFit("Daun membuat makanan untuk tumbuhan.", air, {
+          keyTerms: ["daun", "makanan"],
+        }).fit
+      ).toBe(false);
+
+      // English stopword concept "The" must never fit
+      expect(
+        imageFit("The cat sleeps on the mat.", noisyThe).fit
+      ).toBe(false);
+    });
+
+    it("18. imageFit requires primary concept / keyTerms alignment and blocks cross-language labelEn collision", () => {
+      const akar = regIndex.byId.get("tumbuhan-akar")!;
+      const air = regIndex.byId.get("alam-cuaca-air")!;
+      const udara = regIndex.byId.get("alam-cuaca-udara")!;
+
+      // On an Akar card ("Akar menyerap air dari dalam tanah.", keyTerms: ["akar"]), Akar fits and incidental Air does not
+      expect(
+        imageFit("Akar menyerap air dari dalam tanah.", akar, {
+          keyTerms: ["akar"],
+        }).fit
+      ).toBe(true);
+      expect(
+        imageFit("Akar menyerap air dari dalam tanah.", air, {
+          keyTerms: ["akar"],
+        }).fit
+      ).toBe(false);
+
+      // When air IS in keyTerms, Air fits while Udara (labelEn: "air") does NOT
+      expect(
+        imageFit("Basahi kedua tangan dengan air bersih.", air, {
+          keyTerms: ["tangan", "air"],
+        }).fit
+      ).toBe(true);
+      expect(
+        imageFit("Basahi kedua tangan dengan air bersih.", udara, {
+          keyTerms: ["tangan", "air"],
+        }).fit
+      ).toBe(false);
+    });
+
+    it("19. search and selectVocabulary prioritize Indonesian labels over labelEn and ignore stopword/generic noise", () => {
+      const hitsAir = search("air", regIndex);
+      expect(hitsAir.length).toBeGreaterThan(0);
+      expect(hitsAir[0]!.concept.id).toBe("alam-cuaca-air");
+
+      const hitsSapi = search("sapi", regIndex);
+      expect(hitsSapi.some((h) => h.concept.id === "alam-cuaca-api")).toBe(false);
+
+      const plantVocab = selectVocabulary(
+        "Akar menyerap zat hara dari dalam tanah dan daun membuat makanan untuk bunga.",
+        regIndex,
+        { limit: 10, domains: ["tumbuhan-makanan"] }
+      );
+      const plantIds = plantVocab.map((c) => c.id);
+      expect(plantIds).toContain("tumbuhan-akar");
+      expect(plantIds).toContain("tumbuhan-daun");
+      expect(plantIds).toContain("tumbuhan-bunga");
+      // "dan" + "makanan dan minuman" must NOT pull Air or Soap or The into plant vocabulary
+      expect(plantIds).not.toContain("alam-cuaca-air");
+      expect(plantIds).not.toContain("kebersihan-sabun");
+      expect(plantIds).not.toContain("noisy-the");
+      expect(plantIds).not.toContain("noisy-soap-num");
+    });
+  });
 });

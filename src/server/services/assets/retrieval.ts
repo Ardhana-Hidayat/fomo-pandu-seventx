@@ -140,20 +140,25 @@ interface ExpandedQuery {
   synonymStems: Set<string>;
 }
 
+function containsWholePhrase(haystackNorm: string, phraseNorm: string): boolean {
+  if (!haystackNorm || !phraseNorm) return false;
+  return ` ${haystackNorm} `.includes(` ${phraseNorm} `);
+}
+
 function expandQuery(query: string): ExpandedQuery {
   const rawPhrase = normalizeText(query);
   const tokens = tokenize(query, true);
   const stems = new Set(tokens.map(stemToken));
   const synonyms = new Set<string>();
 
-  // Phrase-level topic expansion (exact & contained multi-word phrases)
+  // Phrase-level topic expansion (exact & whole-phrase contained multi-word phrases)
   if (TOPIC_SYNONYMS[rawPhrase]) {
     for (const s of TOPIC_SYNONYMS[rawPhrase]) {
       synonyms.add(normalizeText(s));
     }
   }
   for (const [phraseKey, syns] of Object.entries(TOPIC_SYNONYMS)) {
-    if (phraseKey.includes(" ") && rawPhrase.includes(phraseKey)) {
+    if (phraseKey.includes(" ") && containsWholePhrase(rawPhrase, phraseKey)) {
       for (const s of syns) synonyms.add(normalizeText(s));
     }
   }
@@ -197,52 +202,80 @@ function scoreAsset(asset: AssetRecord, q: ExpandedQuery): AssetSearchResult | n
   const displayNorm = normalizeText(asset.display_name);
   const canonicalNorm = normalizeText(asset.canonical_key);
   const idNorm = normalizeText(asset.asset_id.replace(/^(picto|custom):/, ""));
+  const displayTokens = tokenize(displayNorm, false);
 
-  // 1. Exact phrase match on display name / canonical key / id
+  // 1. Exact or whole-word phrase match on display name / canonical key / id (no arbitrary mid-word substrings!)
   if (displayNorm === q.rawPhrase || canonicalNorm === q.rawPhrase || idNorm === q.rawPhrase) {
-    score += 50;
+    score += 55;
     matchedOn.add("exact_name");
   } else if (
-    q.rawPhrase.length >= 3 &&
-    (displayNorm.includes(q.rawPhrase) || canonicalNorm.includes(q.rawPhrase))
+    q.rawPhrase.length >= 2 &&
+    (containsWholePhrase(displayNorm, q.rawPhrase) ||
+      containsWholePhrase(canonicalNorm, q.rawPhrase) ||
+      displayTokens.some((t) => q.rawPhrase.length >= 4 && t.startsWith(q.rawPhrase)))
   ) {
     score += 26;
     matchedOn.add("phrase_name");
   }
 
-  // 2. Keywords match (ID & EN)
-  const allKeywords = [...asset.keywords_id, ...asset.keywords_en];
-  const kwNorms = allKeywords.map(normalizeText);
-  const kwTokenStems = new Set<string>();
-  for (const kw of kwNorms) {
+  // 2. Keywords match (Indonesian prioritized over English to avoid cross-language collisions)
+  const kwIdNorms = asset.keywords_id.map(normalizeText).filter(Boolean);
+  const kwEnNorms = asset.keywords_en.map(normalizeText).filter(Boolean);
+  const kwIdSet = new Set(kwIdNorms);
+  const kwEnSet = new Set(kwEnNorms);
+
+  const kwIdStems = new Set<string>();
+  for (const kw of kwIdNorms) {
     for (const t of tokenize(kw, true)) {
-      kwTokenStems.add(stemToken(t));
+      kwIdStems.add(stemToken(t));
+    }
+  }
+  const kwEnStems = new Set<string>();
+  for (const kw of kwEnNorms) {
+    for (const t of tokenize(kw, true)) {
+      kwEnStems.add(stemToken(t));
     }
   }
 
-  if (kwNorms.includes(q.rawPhrase)) {
-    score += 34;
-    matchedOn.add("exact_keyword");
+  if (kwIdSet.has(q.rawPhrase)) {
+    score += 38;
+    matchedOn.add("exact_keyword_id");
+  } else if (kwEnSet.has(q.rawPhrase)) {
+    score += 24;
+    matchedOn.add("exact_keyword_en");
   }
 
   let directTokenHits = 0;
   for (const tok of q.tokens) {
     const stem = stemToken(tok);
-    if (kwNorms.includes(tok)) {
-      score += 18;
+    if (kwIdSet.has(tok)) {
+      score += 20;
       directTokenHits += 1;
       matchedOn.add(`kw:${tok}`);
-    } else if (kwTokenStems.has(stem)) {
-      score += 12;
+    } else if (kwIdStems.has(stem)) {
+      score += 14;
       directTokenHits += 1;
       matchedOn.add(`stem:${stem}`);
+    } else if (kwEnSet.has(tok)) {
+      score += 12;
+      directTokenHits += 1;
+      matchedOn.add(`kw_en:${tok}`);
+    } else if (kwEnStems.has(stem)) {
+      score += 8;
+      directTokenHits += 1;
+      matchedOn.add(`stem_en:${stem}`);
     }
   }
 
   // 3. Synonym & Topic expansion match
   let synHits = 0;
   for (const syn of q.synonyms) {
-    if (displayNorm === syn || canonicalNorm === syn || kwNorms.includes(syn)) {
+    if (
+      displayNorm === syn ||
+      canonicalNorm === syn ||
+      kwIdSet.has(syn) ||
+      kwEnSet.has(syn)
+    ) {
       score += 16;
       synHits += 1;
       matchedOn.add(`syn:${syn}`);
@@ -250,7 +283,7 @@ function scoreAsset(asset: AssetRecord, q: ExpandedQuery): AssetSearchResult | n
   }
   if (synHits === 0) {
     for (const synStem of q.synonymStems) {
-      if (kwTokenStems.has(synStem)) {
+      if (kwIdStems.has(synStem) || kwEnStems.has(synStem)) {
         score += 9;
         synHits += 1;
         matchedOn.add(`syn_stem:${synStem}`);
@@ -258,10 +291,10 @@ function scoreAsset(asset: AssetRecord, q: ExpandedQuery): AssetSearchResult | n
     }
   }
 
-  // 4. Category match
+  // 4. Category match (whole phrase or category token overlap, never arbitrary substrings)
   for (const cat of asset.categories) {
     const catNorm = normalizeText(cat);
-    if (catNorm === q.rawPhrase || q.rawPhrase.includes(catNorm) || catNorm.includes(q.rawPhrase)) {
+    if (catNorm === q.rawPhrase || containsWholePhrase(q.rawPhrase, catNorm)) {
       score += 18;
       matchedOn.add(`category:${cat}`);
     } else {
@@ -283,12 +316,12 @@ function scoreAsset(asset: AssetRecord, q: ExpandedQuery): AssetSearchResult | n
     }
   }
 
-  // 6. Fuzzy prefix fallback when nothing else matched strongly
+  // 6. Fuzzy prefix fallback when nothing else matched strongly (prefix of display token only)
   if (score === 0 && q.rawPhrase.length >= 4) {
     const nameTokens = tokenize(displayNorm, false);
     for (const nt of nameTokens) {
       for (const qt of q.tokens) {
-        if (qt.length >= 4 && (nt.startsWith(qt) || qt.startsWith(nt))) {
+        if (qt.length >= 4 && nt.startsWith(qt)) {
           score += 8;
           matchedOn.add(`prefix:${nt}`);
         }

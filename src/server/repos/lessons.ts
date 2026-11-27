@@ -20,6 +20,11 @@ import {
 import { ok, err, type Result, makeAppError } from "@/shared/lib/result";
 import { storage } from "../services/storage";
 import { searchAssets } from "../services/assets";
+import {
+  extractPromptImageUrl,
+  nonEmptyUrl,
+  sanitizeQuizPayloadVisualRule,
+} from "@/shared/lib/quiz/visual-rule";
 
 export type LessonCardWithMedia = LessonCard & {
   imageUrl?: string | null;
@@ -167,7 +172,10 @@ export async function createLesson(
             position: q.position,
             type: q.type,
             prompt: q.prompt,
-            payload: q.payload,
+            payload: sanitizeQuizPayloadVisualRule(
+              q.type,
+              q.payload as Record<string, unknown>
+            ) as QuizQuestionPayload,
             linkedCardId: q.linkedCardId,
             explanation: q.explanation,
           })
@@ -359,99 +367,181 @@ function enrichQuestionsWithMedia(
 ): QuizQuestion[] {
   const cardById = new Map(cards.map((c) => [c.id, c]));
   return questions.map((q) => {
-    const payload: Record<string, unknown> = { ...q.payload };
-    if (!payload.promptImageUrl) {
-      const rawPromptImg = payload.prompt_image;
-      if (typeof rawPromptImg === "string" && rawPromptImg) {
-        const slug = rawPromptImg.replace(/^\/media\/pictograms\//, "").replace(/\.webp$/, "");
-        payload.promptImageUrl = getPictoUrl(slug);
-      } else if (q.linkedCardId && cardById.has(q.linkedCardId)) {
+    const rawPayload: Record<string, unknown> = { ...q.payload };
+    const isImageOptionType =
+      q.type === "pilih_gambar" || rawPayload.variant === "pilih_gambar";
+    const isTrueFalse = q.type === "benar_salah";
+    const isSignMatch =
+      q.type === "cocokkan_isyarat" || q.type === "choice_sign";
+
+    const rawOptions = Array.isArray(rawPayload.options)
+      ? rawPayload.options
+      : undefined;
+    const hasExplicitOptionImages = Boolean(
+      rawOptions?.some((rawOpt) => {
+        if (!rawOpt || typeof rawOpt !== "object") return false;
+        const opt = rawOpt as {
+          imageUrl?: unknown;
+          image?: { url?: unknown } | null;
+          visual?: { url?: unknown } | null;
+        };
+        return Boolean(
+          nonEmptyUrl(opt.imageUrl) ||
+            nonEmptyUrl(opt.visual?.url) ||
+            nonEmptyUrl(opt.image?.url)
+        );
+      })
+    );
+
+    if (
+      !isImageOptionType &&
+      !hasExplicitOptionImages &&
+      !extractPromptImageUrl(rawPayload)
+    ) {
+      const rawPromptImg = rawPayload.prompt_image;
+      if (typeof rawPromptImg === "string" && rawPromptImg.trim()) {
+        const slug = rawPromptImg
+          .trim()
+          .replace(/^\/media\/pictograms\//, "")
+          .replace(/\.webp$/, "");
+        rawPayload.promptImageUrl = getPictoUrl(slug);
+      } else if (
+        rawPromptImg &&
+        typeof rawPromptImg === "object" &&
+        !isSignMatch &&
+        q.linkedCardId &&
+        cardById.has(q.linkedCardId)
+      ) {
         const linked = cardById.get(q.linkedCardId);
         if (linked?.imageUrl) {
-          payload.promptImageUrl = linked.imageUrl;
+          rawPayload.promptImageUrl = linked.imageUrl;
         }
       }
     }
-    if (payload.options && Array.isArray(payload.options)) {
-      payload.options = payload.options.map((rawOpt: unknown, idx: number) => {
+
+    const hasPromptImg = Boolean(extractPromptImageUrl(rawPayload));
+
+    if (rawOptions) {
+      rawPayload.options = rawOptions.map((rawOpt: unknown, idx: number) => {
         const isString = typeof rawOpt === "string";
-        const opt = (isString ? { text: rawOpt } : (rawOpt as Record<string, unknown>)) as {
+        const opt = (
+          isString ? { text: rawOpt } : (rawOpt as Record<string, unknown>)
+        ) as {
           id?: string;
           text?: string;
           label?: string;
           imageUrl?: string;
           image?: { url?: string; keyword_en?: string };
+          visual?: { url?: string } | null;
           correct?: boolean;
         };
 
         const text = opt.text ?? opt.label ?? (isString ? rawOpt : "");
         const textKey = text.toLowerCase().trim();
         const enKey = opt.image?.keyword_en?.toLowerCase().trim() || "";
-        const optVisual = (opt as { visual?: { url?: string } | null }).visual;
-        const groundedUrl = optVisual?.url || opt.imageUrl || opt.image?.url;
-        const picUrl =
-          optVisual === null
+        const optVisual = opt.visual;
+        const groundedUrl =
+          nonEmptyUrl(optVisual?.url) ||
+          nonEmptyUrl(opt.imageUrl) ||
+          nonEmptyUrl(opt.image?.url);
+
+        const allowOptionImage =
+          !hasPromptImg && !isTrueFalse && !isSignMatch;
+        const picUrl = !allowOptionImage
+          ? undefined
+          : optVisual === null
             ? undefined
-            : groundedUrl || resolveQuizVisualUrl(textKey, enKey);
+            : groundedUrl ||
+              (isImageOptionType
+                ? resolveQuizVisualUrl(textKey, enKey)
+                : undefined);
 
         const id = opt.id ?? `opt-${idx}`;
         const isCorrect =
           typeof opt.correct === "boolean"
             ? opt.correct
-            : payload.answer !== undefined
-            ? String(payload.answer).trim().toLowerCase() === textKey ||
-              String(payload.answer).trim().toLowerCase() === id.toLowerCase()
-            : idx === 0;
+            : rawPayload.answer !== undefined
+              ? String(rawPayload.answer).trim().toLowerCase() === textKey ||
+                String(rawPayload.answer).trim().toLowerCase() === id.toLowerCase()
+              : idx === 0;
 
-        const imageUrl = picUrl;
-
-        return {
+        const base = {
           ...opt,
           id,
           text,
-          imageUrl,
           correct: isCorrect,
-          ...(picUrl ? { image: { ...(opt.image ?? {}), url: picUrl } } : {}),
+        };
+        if (!picUrl) {
+          const stripped = { ...base };
+          delete stripped.imageUrl;
+          delete stripped.image;
+          delete stripped.visual;
+          return stripped;
+        }
+
+        return {
+          ...base,
+          imageUrl: picUrl,
+          image: { ...(opt.image ?? {}), url: picUrl },
         };
       });
     }
 
-    if (payload.steps && Array.isArray(payload.steps)) {
-      payload.steps = payload.steps.map((rawSt: unknown, sIdx: number) => {
+    if (rawPayload.steps && Array.isArray(rawPayload.steps)) {
+      rawPayload.steps = rawPayload.steps.map((rawSt: unknown, sIdx: number) => {
         const isString = typeof rawSt === "string";
-        const st = (isString ? { text: rawSt } : (rawSt as Record<string, unknown>)) as {
+        const st = (
+          isString ? { text: rawSt } : (rawSt as Record<string, unknown>)
+        ) as {
           id?: string;
           text?: string;
           imageUrl?: string;
           image?: { url?: string; keyword_en?: string };
+          visual?: { url?: string } | null;
         };
 
         const text = st.text ?? (isString ? rawSt : "");
         const textKey = text.toLowerCase().trim();
         const enKey = st.image?.keyword_en?.toLowerCase().trim() || "";
-        const stVisual = (st as { visual?: { url?: string } | null }).visual;
-        const groundedUrl = stVisual?.url || st.imageUrl || st.image?.url;
-        const picUrl =
-          stVisual === null
+        const stVisual = st.visual;
+        const groundedUrl =
+          nonEmptyUrl(stVisual?.url) ||
+          nonEmptyUrl(st.imageUrl) ||
+          nonEmptyUrl(st.image?.url);
+        const picUrl = hasPromptImg
+          ? undefined
+          : stVisual === null
             ? undefined
             : groundedUrl || resolveQuizVisualUrl(textKey, enKey);
 
         const id = st.id ?? `step-${sIdx}`;
-        const imageUrl = picUrl;
-
-        return {
+        const base = {
           ...st,
           id,
           text,
-          imageUrl,
-          ...(picUrl ? { image: { ...(st.image ?? {}), url: picUrl } } : {}),
+        };
+        if (!picUrl) {
+          const stripped = { ...base };
+          delete stripped.imageUrl;
+          delete stripped.image;
+          delete stripped.visual;
+          return stripped;
+        }
+
+        return {
+          ...base,
+          imageUrl: picUrl,
+          image: { ...(st.image ?? {}), url: picUrl },
         };
       });
     }
 
     return {
       ...q,
-      payload,
+      payload: sanitizeQuizPayloadVisualRule(
+        q.type,
+        rawPayload
+      ) as QuizQuestionPayload,
     };
   });
 }
@@ -852,6 +942,11 @@ export async function saveQuizQuestion(
       return err(makeAppError("FORBIDDEN", "Materi tidak ditemukan atau bukan milik Anda"));
     }
 
+    const sanitizedPayload = sanitizeQuizPayloadVisualRule(
+      input.type,
+      input.payload as Record<string, unknown>
+    ) as QuizQuestionPayload;
+
     if (input.id && !input.id.startsWith("q-new-")) {
       const updated = await db
         .update(quizQuestions)
@@ -859,7 +954,7 @@ export async function saveQuizQuestion(
           position: input.position,
           type: input.type,
           prompt: input.prompt,
-          payload: input.payload,
+          payload: sanitizedPayload,
           ...(input.keyTerms !== undefined ? { keyTerms: input.keyTerms } : {}),
           ...(input.linkedCardId !== undefined ? { linkedCardId: input.linkedCardId } : {}),
           ...(input.explanation !== undefined ? { explanation: input.explanation } : {}),
@@ -879,7 +974,7 @@ export async function saveQuizQuestion(
         position: input.position,
         type: input.type,
         prompt: input.prompt,
-        payload: input.payload,
+        payload: sanitizedPayload,
         keyTerms: input.keyTerms ?? [],
         linkedCardId: input.linkedCardId ?? undefined,
         explanation: input.explanation ?? undefined,

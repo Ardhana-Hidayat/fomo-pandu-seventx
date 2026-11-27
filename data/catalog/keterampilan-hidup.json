@@ -4,29 +4,6 @@
   "count": 33,
   "concepts": [
     {
-      "id": "keterampilan-hidup-benang",
-      "label": "Benang",
-      "labelNorm": "benang",
-      "synonyms": [],
-      "labelEn": "menjahit",
-      "domains": [
-        "keterampilan-hidup",
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "profesi",
-      "kind": "orang",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/sew-7068.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Menjahit\" pada kategori Profesi, Kehidupan Sehari-hari.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7068"
-    },
-    {
       "id": "keterampilan-hidup-cangkul",
       "label": "Cangkul",
       "labelNorm": "cangkul",
@@ -59,28 +36,6 @@
       "sourceRef": "custom:cangkul"
     },
     {
-      "id": "keterampilan-hidup-caretaker",
-      "label": "Caretaker",
-      "labelNorm": "caretaker",
-      "synonyms": [],
-      "labelEn": "caretaker",
-      "domains": [
-        "keterampilan-hidup",
-        "keluarga-sosial"
-      ],
-      "groupId": "profesi",
-      "kind": "orang",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/caretaker.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Caretaker\" pada kategori Profesi.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6995"
-    },
-    {
       "id": "keterampilan-hidup-concierge",
       "label": "concierge",
       "labelNorm": "concierge",
@@ -99,7 +54,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "concierge",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keterampilan-hidup-concierge"
     },
@@ -122,16 +77,19 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "concierge 37823",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keterampilan-hidup-concierge-37823"
     },
     {
       "id": "keterampilan-hidup-conductor",
-      "label": "Conductor",
-      "labelNorm": "conductor",
-      "synonyms": [],
-      "labelEn": "conductor",
+      "label": "Dirigen",
+      "labelNorm": "dirigen",
+      "synonyms": [
+        "dirigen musik",
+        "pemimpin paduan suara"
+      ],
+      "labelEn": "music conductor",
       "domains": [
         "keterampilan-hidup",
         "keluarga-sosial",
@@ -144,7 +102,7 @@
       "assetUrl": "/media/pictograms/conductor.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Conductor\" pada kategori Profesi, Transportasi.",
+      "altText": "Piktogram visual untuk konsep \"Dirigen\" pada kategori Profesi, Transportasi.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "34527"
@@ -153,9 +111,7 @@
       "id": "keterampilan-hidup-dokter",
       "label": "Dokter",
       "labelNorm": "dokter",
-      "synonyms": [
-        "doctor"
-      ],
+      "synonyms": [],
       "labelEn": "doctor",
       "domains": [
         "keterampilan-hidup",
@@ -176,11 +132,36 @@
       "sourceRef": "6561"
     },
     {
+      "id": "keterampilan-hidup-paediatric",
+      "label": "Dokter Anak",
+      "labelNorm": "dokter anak",
+      "synonyms": [
+        "konseling anak"
+      ],
+      "labelEn": "paediatrician",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/paediatric-psychiatrist-38879.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Dokter Anak\" pada kategori Profesi, Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38879"
+    },
+    {
       "id": "keterampilan-hidup-guru",
       "label": "Guru",
       "labelNorm": "guru",
       "synonyms": [
-        "teacher",
         "pengajar"
       ],
       "labelEn": "teacher",
@@ -238,10 +219,7 @@
       "id": "keterampilan-hidup-koki",
       "label": "Koki",
       "labelNorm": "koki",
-      "synonyms": [
-        "chef",
-        "cook"
-      ],
+      "synonyms": [],
       "labelEn": "chef",
       "domains": [
         "keterampilan-hidup",
@@ -259,6 +237,32 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "30526"
+    },
+    {
+      "id": "keterampilan-hidup-psychiatrist-38880",
+      "label": "Konselor Kesehatan",
+      "labelNorm": "konselor kesehatan",
+      "synonyms": [
+        "konsultasi psikologi"
+      ],
+      "labelEn": "psychiatrist",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/psychiatrist-38880.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Konselor Kesehatan\" pada kategori Profesi, Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38880"
     },
     {
       "id": "keterampilan-hidup-melipat-baju",
@@ -309,10 +313,10 @@
       "label": "Menjahit",
       "labelNorm": "menjahit",
       "synonyms": [
-        "jarum",
-        "sew"
+        "jarum jahit",
+        "benang jahit"
       ],
-      "labelEn": "menjahit",
+      "labelEn": "sew",
       "domains": [
         "keterampilan-hidup",
         "keluarga-sosial",
@@ -329,6 +333,31 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2722"
+    },
+    {
+      "id": "keterampilan-hidup-benang",
+      "label": "Menjahit Kain",
+      "labelNorm": "menjahit kain",
+      "synonyms": [
+        "jahit baju"
+      ],
+      "labelEn": "sew",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sew-7068.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menjahit Kain\" pada kategori Profesi, Kehidupan Sehari-hari.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7068"
     },
     {
       "id": "keterampilan-hidup-menyapu-lantai",
@@ -436,54 +465,6 @@
       "sourceRef": "custom:nelayan"
     },
     {
-      "id": "keterampilan-hidup-paediatric",
-      "label": "Paediatric",
-      "labelNorm": "paediatric",
-      "synonyms": [],
-      "labelEn": "paediatric psychiatrist",
-      "domains": [
-        "keterampilan-hidup",
-        "keluarga-sosial",
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "profesi",
-      "kind": "orang",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/paediatric-psychiatrist-38879.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Paediatric Psychiatrist\" pada kategori Profesi, Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38879"
-    },
-    {
-      "id": "keterampilan-hidup-paediatric-psychiatrist",
-      "label": "Paediatric Psychiatrist",
-      "labelNorm": "paediatric psychiatrist",
-      "synonyms": [],
-      "labelEn": "paediatric psychiatrist",
-      "domains": [
-        "keterampilan-hidup",
-        "keluarga-sosial",
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "profesi",
-      "kind": "orang",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/paediatric-psychiatrist.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Paediatric Psychiatrist\" pada kategori Profesi, Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38475"
-    },
-    {
       "id": "keterampilan-hidup-paediatric-psychiatrist-38879",
       "label": "paediatric psychiatrist 38879",
       "labelNorm": "paediatric psychiatrist 38879",
@@ -503,7 +484,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "paediatric psychiatrist 38879",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keterampilan-hidup-paediatric-psychiatrist-38879"
     },
@@ -567,6 +548,31 @@
       "sourceRef": "custom:pemadam-kebakaran"
     },
     {
+      "id": "keterampilan-hidup-caretaker",
+      "label": "Penjaga Resepsionis",
+      "labelNorm": "penjaga resepsionis",
+      "synonyms": [
+        "penjaga gedung",
+        "petugas meja"
+      ],
+      "labelEn": "caretaker",
+      "domains": [
+        "keterampilan-hidup",
+        "keluarga-sosial"
+      ],
+      "groupId": "profesi",
+      "kind": "orang",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/caretaker.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Penjaga Resepsionis\" pada kategori Profesi.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6995"
+    },
+    {
       "id": "keterampilan-hidup-penjahit",
       "label": "Penjahit",
       "labelNorm": "penjahit",
@@ -598,9 +604,7 @@
       "id": "keterampilan-hidup-petani",
       "label": "Petani",
       "labelNorm": "petani",
-      "synonyms": [
-        "farmer"
-      ],
+      "synonyms": [],
       "labelEn": "farmer",
       "domains": [
         "keterampilan-hidup",
@@ -651,9 +655,7 @@
       "id": "keterampilan-hidup-polisi",
       "label": "Polisi",
       "labelNorm": "polisi",
-      "synonyms": [
-        "police"
-      ],
+      "synonyms": [],
       "labelEn": "police",
       "domains": [
         "keterampilan-hidup",
@@ -676,9 +678,12 @@
     },
     {
       "id": "keterampilan-hidup-psychiatrist",
-      "label": "Psychiatrist",
-      "labelNorm": "psychiatrist",
-      "synonyms": [],
+      "label": "Psikiater",
+      "labelNorm": "psikiater",
+      "synonyms": [
+        "konselor",
+        "dokter jiwa"
+      ],
       "labelEn": "psychiatrist",
       "domains": [
         "keterampilan-hidup",
@@ -693,17 +698,19 @@
       "assetUrl": "/media/pictograms/psychiatrist.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Psychiatrist\" pada kategori Profesi, Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Psikiater\" pada kategori Profesi, Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "38474"
     },
     {
-      "id": "keterampilan-hidup-psychiatrist-38880",
-      "label": "Psychiatrist 38880",
-      "labelNorm": "psychiatrist 38880",
-      "synonyms": [],
-      "labelEn": "psychiatrist",
+      "id": "keterampilan-hidup-paediatric-psychiatrist",
+      "label": "Psikiater Anak",
+      "labelNorm": "psikiater anak",
+      "synonyms": [
+        "konselor anak"
+      ],
+      "labelEn": "paediatric psychiatrist",
       "domains": [
         "keterampilan-hidup",
         "keluarga-sosial",
@@ -714,13 +721,13 @@
       "kind": "orang",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/psychiatrist-38880.webp",
+      "assetUrl": "/media/pictograms/paediatric-psychiatrist.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Psychiatrist\" pada kategori Profesi, Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Psikiater Anak\" pada kategori Profesi, Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "38880"
+      "sourceRef": "38475"
     },
     {
       "id": "keterampilan-hidup-resepsionis",
@@ -728,10 +735,9 @@
       "labelNorm": "resepsionis",
       "synonyms": [
         "petugas hotel",
-        "pelayanan",
-        "concierge"
+        "pelayanan"
       ],
-      "labelEn": "resepsionis",
+      "labelEn": "receptionist",
       "domains": [
         "keterampilan-hidup",
         "keluarga-sosial",
@@ -754,7 +760,7 @@
       "label": "Resepsionis Hotel",
       "labelNorm": "resepsionis hotel",
       "synonyms": [],
-      "labelEn": "resepsionis",
+      "labelEn": "hotel receptionist",
       "domains": [
         "keterampilan-hidup",
         "keluarga-sosial",
@@ -767,7 +773,7 @@
       "assetUrl": "/media/pictograms/concierge-37823.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Resepsionis\" pada kategori Profesi, IPS.",
+      "altText": "Piktogram visual untuk konsep \"Resepsionis Hotel\" pada kategori Profesi, IPS.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "37823"
@@ -791,7 +797,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "sew",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keterampilan-hidup-sew"
     },
@@ -814,7 +820,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "sew 7068",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keterampilan-hidup-sew-7068"
     },

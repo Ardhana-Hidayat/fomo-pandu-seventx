@@ -11,7 +11,9 @@ export default async function DirectShareEntryPage({
   params: Promise<{ shareCode: string }>;
 }) {
   const { shareCode } = await params;
-  const pubRes = await getPublicationByShareCode(shareCode);
+  const cleanCode = shareCode.trim();
+  if (!/^\d{6}$/.test(cleanCode)) notFound();
+  const pubRes = await getPublicationByShareCode(cleanCode);
   if (!pubRes.ok) notFound();
 
   const pub = pubRes.data;

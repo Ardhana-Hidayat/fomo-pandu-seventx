@@ -1,15 +1,13 @@
 {
   "domain": "seni-olahraga",
   "version": "1.0.0",
-  "count": 58,
+  "count": 48,
   "concepts": [
     {
       "id": "seni-olahraga-abu-abu",
-      "label": "Abu Abu",
+      "label": "Abu-Abu",
       "labelNorm": "abu abu",
       "synonyms": [
-        "gray",
-        "grey",
         "warna",
         "abu",
         "seni dan budaya",
@@ -28,35 +26,10 @@
       "assetUrl": "/media/pictograms/abu-abu.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Abu Abu\" pada kategori Seni dan Budaya, Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Abu-Abu\" pada kategori Seni dan Budaya, Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "3340"
-    },
-    {
-      "id": "seni-olahraga-art-school",
-      "label": "Art School",
-      "labelNorm": "art school",
-      "synonyms": [
-        "art",
-        "belajar"
-      ],
-      "labelEn": "art school",
-      "domains": [
-        "seni-olahraga",
-        "sekolah"
-      ],
-      "groupId": "seni-dan-budaya",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/art-school.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Art School\" pada kategori Seni dan Budaya.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "29917"
     },
     {
       "id": "seni-olahraga-ayunan",
@@ -89,6 +62,33 @@
       "sourceRef": "custom:ayunan"
     },
     {
+      "id": "seni-olahraga-stand",
+      "label": "Berdiri Tegak",
+      "labelNorm": "berdiri tegak",
+      "synonyms": [
+        "sikap berdiri"
+      ],
+      "labelEn": "stand",
+      "domains": [
+        "seni-olahraga",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "pendidikan-jasmani",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/stand.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/stand-24036.webp",
+        "/media/pictograms/stand-26075.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Berdiri Tegak\" pada kategori Pendidikan Jasmani.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "24035"
+    },
+    {
       "id": "seni-olahraga-berenang",
       "label": "Berenang",
       "labelNorm": "berenang",
@@ -107,11 +107,87 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/berenang.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/swim.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Berenang\" pada kategori Pendidikan Jasmani.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "6568"
+    },
+    {
+      "id": "seni-olahraga-kneel",
+      "label": "Berlutut",
+      "labelNorm": "berlutut",
+      "synonyms": [
+        "duduk berlutut"
+      ],
+      "labelEn": "kneel",
+      "domains": [
+        "seni-olahraga",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "pendidikan-jasmani",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/kneel.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/kneel-8033.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Berlutut\" pada kategori Pendidikan Jasmani.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "8032"
+    },
+    {
+      "id": "seni-olahraga-kneel-36492",
+      "label": "Berlutut di Lantai",
+      "labelNorm": "berlutut di lantai",
+      "synonyms": [
+        "tekuk lutut"
+      ],
+      "labelEn": "kneel",
+      "domains": [
+        "seni-olahraga",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "pendidikan-jasmani",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/kneel-36492.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Berlutut di Lantai\" pada kategori Pendidikan Jasmani.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36492"
+    },
+    {
+      "id": "seni-olahraga-ski",
+      "label": "Bermain Ski",
+      "labelNorm": "bermain ski",
+      "synonyms": [
+        "olahraga salju"
+      ],
+      "labelEn": "ski",
+      "domains": [
+        "seni-olahraga",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "pendidikan-jasmani",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/ski.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bermain Ski\" pada kategori Pendidikan Jasmani.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "16701"
     },
     {
       "id": "seni-olahraga-bernyanyi",
@@ -130,7 +206,9 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/bernyanyi.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/sing.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Bernyanyi\" pada kategori Seni dan Budaya.",
       "status": "active",
       "source": "arasaac",
@@ -140,9 +218,7 @@
       "id": "seni-olahraga-biru",
       "label": "Biru",
       "labelNorm": "biru",
-      "synonyms": [
-        "blue"
-      ],
+      "synonyms": [],
       "labelEn": "blue",
       "domains": [
         "seni-olahraga",
@@ -166,7 +242,6 @@
       "label": "Bola",
       "labelNorm": "bola",
       "synonyms": [
-        "ball",
         "bulat"
       ],
       "labelEn": "ball",
@@ -247,50 +322,6 @@
       "sourceRef": "custom:catur"
     },
     {
-      "id": "seni-olahraga-climb",
-      "label": "Climb",
-      "labelNorm": "climb",
-      "synonyms": [],
-      "labelEn": "climb",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/climb.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Climb\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37248"
-    },
-    {
-      "id": "seni-olahraga-climb-37262",
-      "label": "Climb 37262",
-      "labelNorm": "climb 37262",
-      "synonyms": [],
-      "labelEn": "climb",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/climb-37262.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Climb\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37262"
-    },
-    {
       "id": "seni-olahraga-cokelat",
       "label": "Cokelat",
       "labelNorm": "cokelat",
@@ -314,98 +345,6 @@
       "sourceRef": "2923"
     },
     {
-      "id": "seni-olahraga-conservatory",
-      "label": "Conservatory",
-      "labelNorm": "conservatory",
-      "synonyms": [],
-      "labelEn": "conservatory",
-      "domains": [
-        "seni-olahraga"
-      ],
-      "groupId": "seni-dan-budaya",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/conservatory.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Conservatory\" pada kategori Seni dan Budaya.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "29907"
-    },
-    {
-      "id": "seni-olahraga-dance-and-music-school",
-      "label": "Dance And Music School",
-      "labelNorm": "dance and music school",
-      "synonyms": [
-        "dance",
-        "and",
-        "music"
-      ],
-      "labelEn": "dance and music school",
-      "domains": [
-        "seni-olahraga",
-        "sekolah"
-      ],
-      "groupId": "seni-dan-budaya",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dance-and-music-school.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dance And Music School\" pada kategori Seni dan Budaya.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37225"
-    },
-    {
-      "id": "seni-olahraga-dismount",
-      "label": "Dismount",
-      "labelNorm": "dismount",
-      "synonyms": [],
-      "labelEn": "dismount",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dismount.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dismount\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "33014"
-    },
-    {
-      "id": "seni-olahraga-draw",
-      "label": "Draw",
-      "labelNorm": "draw",
-      "synonyms": [],
-      "labelEn": "menggambar",
-      "domains": [
-        "seni-olahraga",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "seni-dan-budaya",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/draw.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Draw\" pada kategori Seni dan Budaya, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "5506"
-    },
-    {
       "id": "seni-olahraga-draw-8088",
       "label": "draw 8088",
       "labelNorm": "draw 8088",
@@ -424,60 +363,18 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "draw 8088",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-seni-olahraga-draw-8088"
     },
     {
-      "id": "seni-olahraga-gallop",
-      "label": "Gallop",
-      "labelNorm": "gallop",
-      "synonyms": [],
-      "labelEn": "gallop",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/gallop.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Gallop\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "34832"
-    },
-    {
-      "id": "seni-olahraga-gambar",
-      "label": "Gambar",
-      "labelNorm": "gambar",
-      "synonyms": [],
-      "labelEn": "menggambar",
-      "domains": [
-        "seni-olahraga",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "seni-dan-budaya",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/draw-8088.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Draw\" pada kategori Seni dan Budaya, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8088"
-    },
-    {
       "id": "seni-olahraga-gymnasium",
-      "label": "Gymnasium",
-      "labelNorm": "gymnasium",
-      "synonyms": [],
+      "label": "Gedung Olahraga",
+      "labelNorm": "gedung olahraga",
+      "synonyms": [
+        "ruang olahraga",
+        "gor"
+      ],
       "labelEn": "gymnasium",
       "domains": [
         "seni-olahraga",
@@ -490,7 +387,7 @@
       "assetUrl": "/media/pictograms/gymnasium.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Gymnasium\" pada kategori Pendidikan Jasmani.",
+      "altText": "Piktogram visual untuk konsep \"Gedung Olahraga\" pada kategori Pendidikan Jasmani.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "38476"
@@ -499,9 +396,7 @@
       "id": "seni-olahraga-hijau",
       "label": "Hijau",
       "labelNorm": "hijau",
-      "synonyms": [
-        "green"
-      ],
+      "synonyms": [],
       "labelEn": "green",
       "domains": [
         "seni-olahraga",
@@ -524,9 +419,7 @@
       "id": "seni-olahraga-hitam",
       "label": "Hitam",
       "labelNorm": "hitam",
-      "synonyms": [
-        "black"
-      ],
+      "synonyms": [],
       "labelEn": "black",
       "domains": [
         "seni-olahraga",
@@ -544,30 +437,6 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2886"
-    },
-    {
-      "id": "seni-olahraga-jump",
-      "label": "Jump",
-      "labelNorm": "jump",
-      "synonyms": [
-        "lompat"
-      ],
-      "labelEn": "melompat",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/jump.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Jump\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6607"
     },
     {
       "id": "seni-olahraga-kamera",
@@ -600,78 +469,10 @@
       "sourceRef": "custom:kamera"
     },
     {
-      "id": "seni-olahraga-kneel",
-      "label": "Kneel",
-      "labelNorm": "kneel",
-      "synonyms": [],
-      "labelEn": "kneel",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/kneel.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Kneel\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8032"
-    },
-    {
-      "id": "seni-olahraga-kneel-36492",
-      "label": "Kneel 36492",
-      "labelNorm": "kneel 36492",
-      "synonyms": [],
-      "labelEn": "kneel",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/kneel-36492.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Kneel\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36492"
-    },
-    {
-      "id": "seni-olahraga-kneel-8033",
-      "label": "Kneel 8033",
-      "labelNorm": "kneel 8033",
-      "synonyms": [],
-      "labelEn": "kneel",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/kneel-8033.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Kneel\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8033"
-    },
-    {
       "id": "seni-olahraga-kuning",
       "label": "Kuning",
       "labelNorm": "kuning",
-      "synonyms": [
-        "yellow"
-      ],
+      "synonyms": [],
       "labelEn": "yellow",
       "domains": [
         "seni-olahraga",
@@ -694,9 +495,7 @@
       "id": "seni-olahraga-lapangan",
       "label": "Lapangan",
       "labelNorm": "lapangan",
-      "synonyms": [
-        "field"
-      ],
+      "synonyms": [],
       "labelEn": "field",
       "domains": [
         "seni-olahraga",
@@ -734,7 +533,9 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/lari.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/run.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Lari\" pada kategori Pendidikan Jasmani.",
       "status": "active",
       "source": "arasaac",
@@ -760,6 +561,30 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-seni-olahraga-lari-estafet"
+    },
+    {
+      "id": "seni-olahraga-slalom",
+      "label": "Lari Zig-Zag",
+      "labelNorm": "lari zig zag",
+      "synonyms": [
+        "lari rintangan"
+      ],
+      "labelEn": "slalom",
+      "domains": [
+        "seni-olahraga",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "pendidikan-jasmani",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/slalom.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Lari Zig-Zag\" pada kategori Pendidikan Jasmani.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32520"
     },
     {
       "id": "seni-olahraga-layang-layang",
@@ -856,11 +681,85 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/melompat.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/jump.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Melompat\" pada kategori Pendidikan Jasmani.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "6607"
+    },
+    {
+      "id": "seni-olahraga-paint",
+      "label": "Melukis",
+      "labelNorm": "melukis",
+      "synonyms": [
+        "mewarnai",
+        "kuas cat"
+      ],
+      "labelEn": "paint",
+      "domains": [
+        "seni-olahraga",
+        "hewan"
+      ],
+      "groupId": "seni-dan-budaya",
+      "kind": "hewan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/paint.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Melukis\" pada kategori Seni dan Budaya.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2348"
+    },
+    {
+      "id": "seni-olahraga-draw",
+      "label": "Melukis Gambar",
+      "labelNorm": "melukis gambar",
+      "synonyms": [
+        "gambar pensil"
+      ],
+      "labelEn": "draw",
+      "domains": [
+        "seni-olahraga",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "seni-dan-budaya",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/draw.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Melukis Gambar\" pada kategori Seni dan Budaya, Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5506"
+    },
+    {
+      "id": "seni-olahraga-climb",
+      "label": "Memanjat",
+      "labelNorm": "memanjat",
+      "synonyms": [],
+      "labelEn": "climb",
+      "domains": [
+        "seni-olahraga",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "pendidikan-jasmani",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/climb.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Memanjat\" pada kategori Pendidikan Jasmani.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37248"
     },
     {
       "id": "seni-olahraga-menari",
@@ -903,7 +802,9 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/menggambar.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/draw-8088.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Menggambar\" pada kategori Seni dan Budaya, Benda di Sekolah.",
       "status": "active",
       "source": "arasaac",
@@ -932,12 +833,34 @@
       "sourceRef": "seed-seni-olahraga-menggunting-pola"
     },
     {
+      "id": "seni-olahraga-gallop",
+      "label": "Menunggang Kuda",
+      "labelNorm": "menunggang kuda",
+      "synonyms": [
+        "naik kuda"
+      ],
+      "labelEn": "gallop",
+      "domains": [
+        "seni-olahraga",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "pendidikan-jasmani",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/gallop.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menunggang Kuda\" pada kategori Pendidikan Jasmani.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "34832"
+    },
+    {
       "id": "seni-olahraga-merah",
       "label": "Merah",
       "labelNorm": "merah",
-      "synonyms": [
-        "red"
-      ],
+      "synonyms": [],
       "labelEn": "red",
       "domains": [
         "seni-olahraga",
@@ -961,7 +884,6 @@
       "label": "Merah Muda",
       "labelNorm": "merah muda",
       "synonyms": [
-        "pink",
         "muda"
       ],
       "labelEn": "pink",
@@ -1030,36 +952,37 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/oranye.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/jeruk.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Oranye\" pada kategori Seni dan Budaya, Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2888"
     },
     {
-      "id": "seni-olahraga-paint",
-      "label": "Paint",
-      "labelNorm": "paint",
+      "id": "seni-olahraga-climb-37262",
+      "label": "Panjat Tebing",
+      "labelNorm": "panjat tebing",
       "synonyms": [
-        "melukis",
-        "mewarnai"
+        "memanjat dinding"
       ],
-      "labelEn": "melukis",
+      "labelEn": "climb",
       "domains": [
         "seni-olahraga",
-        "hewan"
+        "tubuh-kesehatan"
       ],
-      "groupId": "seni-dan-budaya",
-      "kind": "hewan",
+      "groupId": "pendidikan-jasmani",
+      "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/paint.webp",
+      "assetUrl": "/media/pictograms/climb-37262.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Paint\" pada kategori Seni dan Budaya.",
+      "altText": "Piktogram visual untuk konsep \"Panjat Tebing\" pada kategori Pendidikan Jasmani.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "2348"
+      "sourceRef": "37262"
     },
     {
       "id": "seni-olahraga-pemanasan-olahraga",
@@ -1113,9 +1036,7 @@
       "id": "seni-olahraga-putih",
       "label": "Putih",
       "labelNorm": "putih",
-      "synonyms": [
-        "white"
-      ],
+      "synonyms": [],
       "labelEn": "white",
       "domains": [
         "seni-olahraga",
@@ -1135,26 +1056,76 @@
       "sourceRef": "8043"
     },
     {
-      "id": "seni-olahraga-run",
-      "label": "Run",
-      "labelNorm": "run",
-      "synonyms": [],
-      "labelEn": "lari",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
+      "id": "seni-olahraga-conservatory",
+      "label": "Sekolah Musik",
+      "labelNorm": "sekolah musik",
+      "synonyms": [
+        "kelas musik"
       ],
-      "groupId": "pendidikan-jasmani",
+      "labelEn": "music school",
+      "domains": [
+        "seni-olahraga"
+      ],
+      "groupId": "seni-dan-budaya",
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/run.webp",
+      "assetUrl": "/media/pictograms/conservatory.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Run\" pada kategori Pendidikan Jasmani.",
+      "altText": "Piktogram visual untuk konsep \"Sekolah Musik\" pada kategori Seni dan Budaya.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "6465"
+      "sourceRef": "29907"
+    },
+    {
+      "id": "seni-olahraga-art-school",
+      "label": "Sekolah Seni",
+      "labelNorm": "sekolah seni",
+      "synonyms": [
+        "sanggar seni",
+        "belajar melukis"
+      ],
+      "labelEn": "art school",
+      "domains": [
+        "seni-olahraga",
+        "sekolah"
+      ],
+      "groupId": "seni-dan-budaya",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/art-school.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sekolah Seni\" pada kategori Seni dan Budaya.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29917"
+    },
+    {
+      "id": "seni-olahraga-dance-and-music-school",
+      "label": "Sekolah Tari dan Musik",
+      "labelNorm": "sekolah tari dan musik",
+      "synonyms": [
+        "sanggar tari"
+      ],
+      "labelEn": "dance and music school",
+      "domains": [
+        "seni-olahraga",
+        "sekolah"
+      ],
+      "groupId": "seni-dan-budaya",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dance-and-music-school.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sekolah Tari dan Musik\" pada kategori Seni dan Budaya.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37225"
     },
     {
       "id": "seni-olahraga-senam-pagi",
@@ -1179,32 +1150,13 @@
       "sourceRef": "seed-seni-olahraga-senam-pagi"
     },
     {
-      "id": "seni-olahraga-sing",
-      "label": "Sing",
-      "labelNorm": "sing",
-      "synonyms": [],
-      "labelEn": "bernyanyi",
-      "domains": [
-        "seni-olahraga"
+      "id": "seni-olahraga-dismount",
+      "label": "Turun dari Kuda",
+      "labelNorm": "turun dari kuda",
+      "synonyms": [
+        "turun berkuda"
       ],
-      "groupId": "seni-dan-budaya",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/sing.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Sing\" pada kategori Seni dan Budaya.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6960"
-    },
-    {
-      "id": "seni-olahraga-ski",
-      "label": "Ski",
-      "labelNorm": "ski",
-      "synonyms": [],
-      "labelEn": "ski",
+      "labelEn": "dismount",
       "domains": [
         "seni-olahraga",
         "tubuh-kesehatan"
@@ -1213,153 +1165,19 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/ski.webp",
+      "assetUrl": "/media/pictograms/dismount.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ski\" pada kategori Pendidikan Jasmani.",
+      "altText": "Piktogram visual untuk konsep \"Turun dari Kuda\" pada kategori Pendidikan Jasmani.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "16701"
-    },
-    {
-      "id": "seni-olahraga-slalom",
-      "label": "Slalom",
-      "labelNorm": "slalom",
-      "synonyms": [],
-      "labelEn": "slalom",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/slalom.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Slalom\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32520"
-    },
-    {
-      "id": "seni-olahraga-stand",
-      "label": "Stand",
-      "labelNorm": "stand",
-      "synonyms": [],
-      "labelEn": "berdiri",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/stand.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Stand\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "24035"
-    },
-    {
-      "id": "seni-olahraga-stand-13370",
-      "label": "Stand 13370",
-      "labelNorm": "stand 13370",
-      "synonyms": [],
-      "labelEn": "berdiri",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/stand-13370.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Stand\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "13370"
-    },
-    {
-      "id": "seni-olahraga-stand-24036",
-      "label": "Stand 24036",
-      "labelNorm": "stand 24036",
-      "synonyms": [],
-      "labelEn": "berdiri",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/stand-24036.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Stand\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "24036"
-    },
-    {
-      "id": "seni-olahraga-stand-26075",
-      "label": "Stand 26075",
-      "labelNorm": "stand 26075",
-      "synonyms": [],
-      "labelEn": "berdiri",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/stand-26075.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Stand\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "26075"
-    },
-    {
-      "id": "seni-olahraga-swim",
-      "label": "Swim",
-      "labelNorm": "swim",
-      "synonyms": [],
-      "labelEn": "berenang",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/swim.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Swim\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6568"
+      "sourceRef": "33014"
     },
     {
       "id": "seni-olahraga-ungu",
       "label": "Ungu",
       "labelNorm": "ungu",
-      "synonyms": [
-        "purple"
-      ],
+      "synonyms": [],
       "labelEn": "purple",
       "domains": [
         "seni-olahraga",
@@ -1377,29 +1195,6 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2907"
-    },
-    {
-      "id": "seni-olahraga-walk",
-      "label": "Walk",
-      "labelNorm": "walk",
-      "synonyms": [],
-      "labelEn": "jalan",
-      "domains": [
-        "seni-olahraga",
-        "tubuh-kesehatan",
-        "transportasi-keselamatan"
-      ],
-      "groupId": "pendidikan-jasmani",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/walk.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Walk\" pada kategori Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6044"
     }
   ]
 }

@@ -1,17 +1,42 @@
 {
   "domain": "tubuh-kesehatan",
   "version": "1.0.0",
-  "count": 179,
+  "count": 134,
   "concepts": [
+    {
+      "id": "tubuh-kesehatan-lift-the-toilet-seat",
+      "label": "Angkat Tutup Toilet",
+      "labelNorm": "angkat tutup toilet",
+      "synonyms": [
+        "buka tutup kloset"
+      ],
+      "labelEn": "lift toilet seat",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "tumbuhan-makanan",
+        "rumah-tempat"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/lift-the-toilet-seat.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Angkat Tutup Toilet\" pada kategori Kesehatan dan Kebersihan, Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "10168"
+    },
     {
       "id": "tubuh-kesehatan-apotek",
       "label": "Apotek",
       "labelNorm": "apotek",
       "synonyms": [
-        "layanan kesehatan",
-        "pharmacy"
+        "layanan kesehatan"
       ],
-      "labelEn": "apotek",
+      "labelEn": "pharmacy",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri",
@@ -60,14 +85,38 @@
       "sourceRef": "custom:bahu"
     },
     {
-      "id": "tubuh-kesehatan-bath",
-      "label": "Bath",
-      "labelNorm": "bath",
+      "id": "tubuh-kesehatan-sweaty-36598",
+      "label": "Basah Keringat",
+      "labelNorm": "basah keringat",
       "synonyms": [
-        "bak mandi",
-        "kesehatan dan kebersihan"
+        "gerah"
       ],
-      "labelEn": "mandi",
+      "labelEn": "sweaty",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sweaty-36598.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Basah Keringat\" pada kategori Kesehatan dan Kebersihan, Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36598"
+    },
+    {
+      "id": "tubuh-kesehatan-bath",
+      "label": "Berendam",
+      "labelNorm": "berendam",
+      "synonyms": [
+        "bak mandi"
+      ],
+      "labelEn": "bath",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -79,106 +128,44 @@
       "assetUrl": "/media/pictograms/bath.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Bath\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Berendam\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31853"
     },
     {
-      "id": "tubuh-kesehatan-bathe",
-      "label": "Bathe",
-      "labelNorm": "bathe",
-      "synonyms": [],
-      "labelEn": "mandi",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
+      "id": "tubuh-kesehatan-sweaty",
+      "label": "Berkeringat",
+      "labelNorm": "berkeringat",
+      "synonyms": [
+        "keringat"
       ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/bathe.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Bathe\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6058"
-    },
-    {
-      "id": "tubuh-kesehatan-bathe-2271",
-      "label": "Bathe 2271",
-      "labelNorm": "bathe 2271",
-      "synonyms": [],
-      "labelEn": "mandi",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/bathe-2271.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Bathe\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "2271"
-    },
-    {
-      "id": "tubuh-kesehatan-bathe-36349",
-      "label": "Bathe 36349",
-      "labelNorm": "bathe 36349",
-      "synonyms": [],
-      "labelEn": "mandi",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/bathe-36349.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Bathe\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36349"
-    },
-    {
-      "id": "tubuh-kesehatan-body",
-      "label": "Body",
-      "labelNorm": "body",
-      "synonyms": [],
-      "labelEn": "soap one s body",
+      "labelEn": "sweaty",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri",
-        "matematika"
+        "tumbuhan-makanan"
       ],
       "groupId": "kesehatan-dan-kebersihan",
-      "kind": "matematika",
+      "kind": "tumbuhan_makanan",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/soap-one-s-body-21824.webp",
+      "assetUrl": "/media/pictograms/sweaty.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Soap One S Body\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Berkeringat\" pada kategori Kesehatan dan Kebersihan, Makanan dan Minuman.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "21824"
+      "sourceRef": "32125"
     },
     {
-      "id": "tubuh-kesehatan-brush-teeth",
-      "label": "Brush Teeth",
-      "labelNorm": "brush teeth",
-      "synonyms": [],
-      "labelEn": "sikat gigi",
+      "id": "tubuh-kesehatan-gargles",
+      "label": "Berkumur",
+      "labelNorm": "berkumur",
+      "synonyms": [
+        "kumur air"
+      ],
+      "labelEn": "gargle",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -187,13 +174,68 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/brush-teeth.webp",
+      "assetUrl": "/media/pictograms/gargles.webp",
       "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Brush Teeth\" pada kategori Kesehatan dan Kebersihan.",
+      "altUrls": [
+        "/media/pictograms/gargles-30039.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Berkumur\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "2326"
+      "sourceRef": "27784"
+    },
+    {
+      "id": "tubuh-kesehatan-rinse",
+      "label": "Bilas Air",
+      "labelNorm": "bilas air",
+      "synonyms": [
+        "membilas bersih"
+      ],
+      "labelEn": "rinse",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/rinse.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/rinse-21347.webp",
+        "/media/pictograms/rinse-28505.webp",
+        "/media/pictograms/rinse-39766.webp",
+        "/media/pictograms/rinse-8978.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Bilas Air\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "8560"
+    },
+    {
+      "id": "tubuh-kesehatan-rinse-21345",
+      "label": "Bilas Bersih",
+      "labelNorm": "bilas bersih",
+      "synonyms": [
+        "siram air bersih"
+      ],
+      "labelEn": "rinse",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/rinse-21345.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bilas Bersih\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "21345"
     },
     {
       "id": "tubuh-kesehatan-brush-teeth-27489",
@@ -213,7 +255,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "brush teeth 27489",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-brush-teeth-27489"
     },
@@ -235,16 +277,18 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "brush teeth 31880",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-brush-teeth-31880"
     },
     {
-      "id": "tubuh-kesehatan-brush-teeth-6971",
-      "label": "Brush Teeth 6971",
-      "labelNorm": "brush teeth 6971",
-      "synonyms": [],
-      "labelEn": "sikat gigi",
+      "id": "tubuh-kesehatan-pee",
+      "label": "Buang Air Kecil",
+      "labelNorm": "buang air kecil",
+      "synonyms": [
+        "pipis"
+      ],
+      "labelEn": "pee",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -253,20 +297,20 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/brush-teeth-6971.webp",
+      "assetUrl": "/media/pictograms/pee.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Brush Teeth\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Buang Air Kecil\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "6971"
+      "sourceRef": "32264"
     },
     {
       "id": "tubuh-kesehatan-bugar",
       "label": "Bugar",
       "labelNorm": "bugar",
       "synonyms": [],
-      "labelEn": "sehat",
+      "labelEn": "fit and healthy",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -278,82 +322,10 @@
       "assetUrl": "/media/pictograms/healthy-39515.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Healthy\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Bugar\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "39515"
-    },
-    {
-      "id": "tubuh-kesehatan-change-the-sanitary-towel",
-      "label": "Change The Sanitary Towel",
-      "labelNorm": "change the sanitary towel",
-      "synonyms": [
-        "change",
-        "towel"
-      ],
-      "labelEn": "change the sanitary towel",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "rumah-tempat"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/change-the-sanitary-towel.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Change The Sanitary Towel\" pada kategori Kesehatan dan Kebersihan, Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8054"
-    },
-    {
-      "id": "tubuh-kesehatan-classroom",
-      "label": "Classroom",
-      "labelNorm": "classroom",
-      "synonyms": [],
-      "labelEn": "hospital classroom",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/hospital-classroom-39050.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hospital Classroom\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39050"
-    },
-    {
-      "id": "tubuh-kesehatan-comb",
-      "label": "Comb",
-      "labelNorm": "comb",
-      "synonyms": [],
-      "labelEn": "sisir",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/comb.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Comb\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "2512"
     },
     {
       "id": "tubuh-kesehatan-comb-22029",
@@ -373,16 +345,18 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "comb 22029",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-comb-22029"
     },
     {
-      "id": "tubuh-kesehatan-cuci",
-      "label": "Cuci",
-      "labelNorm": "cuci",
-      "synonyms": [],
-      "labelEn": "put soap on",
+      "id": "tubuh-kesehatan-wash-the-face",
+      "label": "Cuci Muka",
+      "labelNorm": "cuci muka",
+      "synonyms": [
+        "basuh wajah"
+      ],
+      "labelEn": "wash face",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -391,22 +365,22 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/put-soap-on-36525.webp",
+      "assetUrl": "/media/pictograms/wash-the-face.webp",
       "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Put Soap On\" pada kategori Kesehatan dan Kebersihan.",
+      "altUrls": [
+        "/media/pictograms/wash-the-face-34777.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Cuci Muka\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "36525"
+      "sourceRef": "34611"
     },
     {
       "id": "tubuh-kesehatan-cuci-tangan",
       "label": "Cuci Tangan",
       "labelNorm": "cuci tangan",
       "synonyms": [
-        "wash hands",
-        "kebersihan",
-        "hand"
+        "kebersihan"
       ],
       "labelEn": "wash hands",
       "domains": [
@@ -426,11 +400,13 @@
       "sourceRef": "8975"
     },
     {
-      "id": "tubuh-kesehatan-dirty",
-      "label": "Dirty",
-      "labelNorm": "dirty",
-      "synonyms": [],
-      "labelEn": "dirty",
+      "id": "tubuh-kesehatan-lather-the-hands-35977",
+      "label": "Cuci Tangan Bersabun",
+      "labelNorm": "cuci tangan bersabun",
+      "synonyms": [
+        "gosok sabun di tangan"
+      ],
+      "labelEn": "lather hands",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -439,20 +415,22 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/dirty.webp",
+      "assetUrl": "/media/pictograms/lather-the-hands-35977.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dirty\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Cuci Tangan Bersabun\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "26459"
+      "sourceRef": "35977"
     },
     {
-      "id": "tubuh-kesehatan-dry",
-      "label": "Dry",
-      "labelNorm": "dry",
-      "synonyms": [],
-      "labelEn": "kering",
+      "id": "tubuh-kesehatan-ill-28742",
+      "label": "Demam Sakit",
+      "labelNorm": "demam sakit",
+      "synonyms": [
+        "badan sakit"
+      ],
+      "labelEn": "ill",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -461,13 +439,13 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/dry.webp",
+      "assetUrl": "/media/pictograms/ill-28742.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Demam Sakit\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "7239"
+      "sourceRef": "28742"
     },
     {
       "id": "tubuh-kesehatan-dry-16887",
@@ -487,391 +465,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "dry 16887",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-dry-16887"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-22104",
-      "label": "Dry 22104",
-      "labelNorm": "dry 22104",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-22104.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "22104"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-22105",
-      "label": "Dry 22105",
-      "labelNorm": "dry 22105",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-22105.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "22105"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-22106",
-      "label": "Dry 22106",
-      "labelNorm": "dry 22106",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-22106.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "22106"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-27485",
-      "label": "Dry 27485",
-      "labelNorm": "dry 27485",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-27485.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "27485"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-27486",
-      "label": "Dry 27486",
-      "labelNorm": "dry 27486",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-27486.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "27486"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-28503",
-      "label": "Dry 28503",
-      "labelNorm": "dry 28503",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-28503.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28503"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-28507",
-      "label": "Dry 28507",
-      "labelNorm": "dry 28507",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-28507.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28507"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-30520",
-      "label": "Dry 30520",
-      "labelNorm": "dry 30520",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-30520.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "30520"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-37049",
-      "label": "Dry 37049",
-      "labelNorm": "dry 37049",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-37049.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37049"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-37777",
-      "label": "Dry 37777",
-      "labelNorm": "dry 37777",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-37777.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37777"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-37835",
-      "label": "Dry 37835",
-      "labelNorm": "dry 37835",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-37835.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37835"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-38471",
-      "label": "Dry 38471",
-      "labelNorm": "dry 38471",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-38471.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38471"
-    },
-    {
-      "id": "tubuh-kesehatan-dry-8688",
-      "label": "Dry 8688",
-      "labelNorm": "dry 8688",
-      "synonyms": [],
-      "labelEn": "kering",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dry-8688.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8688"
-    },
-    {
-      "id": "tubuh-kesehatan-face",
-      "label": "Face",
-      "labelNorm": "face",
-      "synonyms": [],
-      "labelEn": "soap the face",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/soap-the-face-28621.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Soap The Face\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28621"
-    },
-    {
-      "id": "tubuh-kesehatan-fill",
-      "label": "Fill",
-      "labelNorm": "fill",
-      "synonyms": [],
-      "labelEn": "fill",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/fill.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Fill\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "16883"
-    },
-    {
-      "id": "tubuh-kesehatan-flush",
-      "label": "Flush",
-      "labelNorm": "flush",
-      "synonyms": [],
-      "labelEn": "flush the toilet",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "tumbuhan-makanan",
-        "rumah-tempat"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/flush-the-toilet-39547.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Flush The Toilet\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39547"
-    },
-    {
-      "id": "tubuh-kesehatan-flush-the-toilet",
-      "label": "Flush The Toilet",
-      "labelNorm": "flush the toilet",
-      "synonyms": [
-        "wc",
-        "kamar mandi",
-        "buang air"
-      ],
-      "labelEn": "flush the toilet",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "tumbuhan-makanan",
-        "rumah-tempat"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/flush-the-toilet.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Flush The Toilet\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "10184"
     },
     {
       "id": "tubuh-kesehatan-flush-the-toilet-39547",
@@ -891,133 +487,15 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "flush the toilet 39547",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-flush-the-toilet-39547"
-    },
-    {
-      "id": "tubuh-kesehatan-gargles",
-      "label": "Gargles",
-      "labelNorm": "gargles",
-      "synonyms": [],
-      "labelEn": "gargles",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/gargles.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Gargles\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "27784"
-    },
-    {
-      "id": "tubuh-kesehatan-gargles-30038",
-      "label": "Gargles 30038",
-      "labelNorm": "gargles 30038",
-      "synonyms": [],
-      "labelEn": "gargles",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/gargles-30038.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Gargles\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "30038"
-    },
-    {
-      "id": "tubuh-kesehatan-gargles-30039",
-      "label": "Gargles 30039",
-      "labelNorm": "gargles 30039",
-      "synonyms": [],
-      "labelEn": "gargles",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/gargles-30039.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Gargles\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "30039"
-    },
-    {
-      "id": "tubuh-kesehatan-get-into-the-bathtub",
-      "label": "Get Into The Bathtub",
-      "labelNorm": "get into the bathtub",
-      "synonyms": [
-        "into",
-        "bathtub"
-      ],
-      "labelEn": "get into the bathtub",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/get-into-the-bathtub.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Get Into The Bathtub\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39398"
-    },
-    {
-      "id": "tubuh-kesehatan-get-out-of-the-bathtub",
-      "label": "Get Out Of The Bathtub",
-      "labelNorm": "get out of the bathtub",
-      "synonyms": [
-        "out",
-        "of"
-      ],
-      "labelEn": "get out of the bathtub",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/get-out-of-the-bathtub.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Get Out Of The Bathtub\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39397"
     },
     {
       "id": "tubuh-kesehatan-gigi",
       "label": "Gigi",
       "labelNorm": "gigi",
-      "synonyms": [
-        "tooth"
-      ],
+      "synonyms": [],
       "labelEn": "tooth",
       "domains": [
         "tubuh-kesehatan",
@@ -1036,11 +514,37 @@
       "sourceRef": "2737"
     },
     {
+      "id": "tubuh-kesehatan-spread-the-soap-36918",
+      "label": "Gosok Busa Sabun",
+      "labelNorm": "gosok busa sabun",
+      "synonyms": [
+        "busa sabun"
+      ],
+      "labelEn": "spread soap",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/spread-the-soap-36918.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Gosok Busa Sabun\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36918"
+    },
+    {
       "id": "tubuh-kesehatan-gosok-gigi",
       "label": "Gosok Gigi",
       "labelNorm": "gosok gigi",
       "synonyms": [],
-      "labelEn": "sikat gigi",
+      "labelEn": "brush teeth",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -1051,8 +555,10 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/brush-teeth-27489.webp",
       "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Brush Teeth\" pada kategori Kesehatan dan Kebersihan.",
+      "altUrls": [
+        "/media/pictograms/brush-teeth-31880.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Gosok Gigi\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "27489"
@@ -1062,7 +568,6 @@
       "label": "Gosok Tangan",
       "labelNorm": "gosok tangan",
       "synonyms": [
-        "rub hands",
         "gosok"
       ],
       "labelEn": "rub hands",
@@ -1083,11 +588,13 @@
       "sourceRef": "2443"
     },
     {
-      "id": "tubuh-kesehatan-hair",
-      "label": "Hair",
-      "labelNorm": "hair",
-      "synonyms": [],
-      "labelEn": "wash hair",
+      "id": "tubuh-kesehatan-have-a-shower-32162",
+      "label": "Guyur Air",
+      "labelNorm": "guyur air",
+      "synonyms": [
+        "mandi guyur"
+      ],
+      "labelEn": "shower",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -1096,20 +603,22 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/wash-hair-8976.webp",
+      "assetUrl": "/media/pictograms/have-a-shower-32162.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wash Hair\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Guyur Air\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "8976"
+      "sourceRef": "32162"
     },
     {
-      "id": "tubuh-kesehatan-hands",
-      "label": "Hands",
-      "labelNorm": "hands",
-      "synonyms": [],
-      "labelEn": "lather the hands",
+      "id": "tubuh-kesehatan-dry-22106",
+      "label": "Handuk Kering",
+      "labelNorm": "handuk kering",
+      "synonyms": [
+        "handuk pengering"
+      ],
+      "labelEn": "dry",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -1118,57 +627,13 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/lather-the-hands-30506.webp",
+      "assetUrl": "/media/pictograms/dry-22106.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Lather The Hands\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Handuk Kering\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "30506"
-    },
-    {
-      "id": "tubuh-kesehatan-have",
-      "label": "Have",
-      "labelNorm": "have",
-      "synonyms": [],
-      "labelEn": "mandi",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/have-a-shower-27728.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Have A Shower\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "27728"
-    },
-    {
-      "id": "tubuh-kesehatan-have-a-shower",
-      "label": "Have A Shower",
-      "labelNorm": "have a shower",
-      "synonyms": [],
-      "labelEn": "mandi",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/have-a-shower.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Have A Shower\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "26803"
+      "sourceRef": "22106"
     },
     {
       "id": "tubuh-kesehatan-have-a-shower-2371",
@@ -1188,7 +653,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "have a shower 2371",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-have-a-shower-2371"
     },
@@ -1210,53 +675,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "have a shower 27728",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-have-a-shower-27728"
-    },
-    {
-      "id": "tubuh-kesehatan-have-a-shower-32162",
-      "label": "Have A Shower 32162",
-      "labelNorm": "have a shower 32162",
-      "synonyms": [],
-      "labelEn": "mandi",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/have-a-shower-32162.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Have A Shower\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32162"
-    },
-    {
-      "id": "tubuh-kesehatan-healthy",
-      "label": "Healthy",
-      "labelNorm": "healthy",
-      "synonyms": [],
-      "labelEn": "sehat",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/healthy.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Healthy\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "12293"
     },
     {
       "id": "tubuh-kesehatan-healthy-29648",
@@ -1276,7 +697,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "healthy 29648",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-healthy-29648"
     },
@@ -1298,7 +719,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "healthy 37797",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-healthy-37797"
     },
@@ -1320,7 +741,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "healthy 39515",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-healthy-39515"
     },
@@ -1329,7 +750,6 @@
       "label": "Hidung",
       "labelNorm": "hidung",
       "synonyms": [
-        "nose",
         "mencium",
         "pancaindra"
       ],
@@ -1351,54 +771,6 @@
       "sourceRef": "2887"
     },
     {
-      "id": "tubuh-kesehatan-hospital",
-      "label": "Hospital",
-      "labelNorm": "hospital",
-      "synonyms": [],
-      "labelEn": "hospital classroom",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/hospital-classroom-38393.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hospital Classroom\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38393"
-    },
-    {
-      "id": "tubuh-kesehatan-hospital-classroom",
-      "label": "Hospital Classroom",
-      "labelNorm": "hospital classroom",
-      "synonyms": [],
-      "labelEn": "hospital classroom",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/hospital-classroom.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hospital Classroom\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38392"
-    },
-    {
       "id": "tubuh-kesehatan-hospital-classroom-38393",
       "label": "hospital classroom 38393",
       "labelNorm": "hospital classroom 38393",
@@ -1418,7 +790,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "hospital classroom 38393",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-hospital-classroom-38393"
     },
@@ -1442,33 +814,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "hospital classroom 39050",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-hospital-classroom-39050"
-    },
-    {
-      "id": "tubuh-kesehatan-hurt",
-      "label": "Hurt",
-      "labelNorm": "hurt",
-      "synonyms": [
-        "nyeri"
-      ],
-      "labelEn": "terluka",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/hurt.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hurt\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "30620"
     },
     {
       "id": "tubuh-kesehatan-hurt-39428",
@@ -1488,31 +836,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "hurt 39428",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-hurt-39428"
-    },
-    {
-      "id": "tubuh-kesehatan-ill",
-      "label": "Ill",
-      "labelNorm": "ill",
-      "synonyms": [],
-      "labelEn": "sakit",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/ill.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ill\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "3308"
     },
     {
       "id": "tubuh-kesehatan-ill-28741",
@@ -1532,98 +858,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "ill 28741",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-ill-28741"
-    },
-    {
-      "id": "tubuh-kesehatan-ill-28742",
-      "label": "Ill 28742",
-      "labelNorm": "ill 28742",
-      "synonyms": [],
-      "labelEn": "sakit",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/ill-28742.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ill\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28742"
-    },
-    {
-      "id": "tubuh-kesehatan-ill-32296",
-      "label": "Ill 32296",
-      "labelNorm": "ill 32296",
-      "synonyms": [],
-      "labelEn": "sakit",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/ill-32296.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ill\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32296"
-    },
-    {
-      "id": "tubuh-kesehatan-ill-38481",
-      "label": "Ill 38481",
-      "labelNorm": "ill 38481",
-      "synonyms": [],
-      "labelEn": "sakit",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/ill-38481.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ill\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38481"
-    },
-    {
-      "id": "tubuh-kesehatan-infirmary",
-      "label": "Infirmary",
-      "labelNorm": "infirmary",
-      "synonyms": [],
-      "labelEn": "uks",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "rumah-tempat"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/infirmary.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Infirmary\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "9918"
     },
     {
       "id": "tubuh-kesehatan-infirmary-37311",
@@ -1643,7 +880,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "infirmary 37311",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-infirmary-37311"
     },
@@ -1665,7 +902,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "infirmary 37341",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-infirmary-37341"
     },
@@ -1687,39 +924,15 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "infirmary 37400",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-infirmary-37400"
-    },
-    {
-      "id": "tubuh-kesehatan-infirmary-38878",
-      "label": "Infirmary 38878",
-      "labelNorm": "infirmary 38878",
-      "synonyms": [],
-      "labelEn": "uks",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "rumah-tempat"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/infirmary-38878.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Infirmary\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38878"
     },
     {
       "id": "tubuh-kesehatan-jari",
       "label": "Jari",
       "labelNorm": "jari",
       "synonyms": [
-        "finger",
         "jari tangan"
       ],
       "labelEn": "finger",
@@ -1743,9 +956,7 @@
       "id": "tubuh-kesehatan-kacamata",
       "label": "Kacamata",
       "labelNorm": "kacamata",
-      "synonyms": [
-        "glasses"
-      ],
+      "synonyms": [],
       "labelEn": "glasses",
       "domains": [
         "tubuh-kesehatan",
@@ -1767,10 +978,7 @@
       "id": "tubuh-kesehatan-kaki",
       "label": "Kaki",
       "labelNorm": "kaki",
-      "synonyms": [
-        "foot",
-        "leg"
-      ],
+      "synonyms": [],
       "labelEn": "foot",
       "domains": [
         "tubuh-kesehatan",
@@ -1789,12 +997,87 @@
       "sourceRef": "25327"
     },
     {
+      "id": "tubuh-kesehatan-hospital-classroom",
+      "label": "Kelas Rumah Sakit",
+      "labelNorm": "kelas rumah sakit",
+      "synonyms": [
+        "belajar di rumah sakit"
+      ],
+      "labelEn": "hospital classroom",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/hospital-classroom.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/hospital-classroom-39050.webp",
+        "/media/pictograms/hospital-classroom-38393.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Kelas Rumah Sakit\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38392"
+    },
+    {
+      "id": "tubuh-kesehatan-get-out-of-the-bathtub",
+      "label": "Keluar Bak Mandi",
+      "labelNorm": "keluar bak mandi",
+      "synonyms": [
+        "keluar bak"
+      ],
+      "labelEn": "get out of bathtub",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-out-of-the-bathtub.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Keluar Bak Mandi\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "39397"
+    },
+    {
+      "id": "tubuh-kesehatan-pee-16713",
+      "label": "Kencing",
+      "labelNorm": "kencing",
+      "synonyms": [
+        "buang air"
+      ],
+      "labelEn": "pee",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/pee-16713.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kencing\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "16713"
+    },
+    {
       "id": "tubuh-kesehatan-kepala",
       "label": "Kepala",
       "labelNorm": "kepala",
-      "synonyms": [
-        "head"
-      ],
+      "synonyms": [],
       "labelEn": "head",
       "domains": [
         "tubuh-kesehatan",
@@ -1813,11 +1096,65 @@
       "sourceRef": "2673"
     },
     {
+      "id": "tubuh-kesehatan-wash-hair",
+      "label": "Keramas",
+      "labelNorm": "keramas",
+      "synonyms": [
+        "cuci rambut"
+      ],
+      "labelEn": "wash hair",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/wash-hair.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/wash-hair-8976.webp",
+        "/media/pictograms/wash-hair-35037.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Keramas\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "8616"
+    },
+    {
+      "id": "tubuh-kesehatan-lather-the-hair",
+      "label": "Keramas Bersampo",
+      "labelNorm": "keramas bersampo",
+      "synonyms": [
+        "busa sampo"
+      ],
+      "labelEn": "lather hair",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/lather-the-hair.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/lather-the-hair-26945.webp",
+        "/media/pictograms/lather-the-hair-38555.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Keramas Bersampo\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "8615"
+    },
+    {
       "id": "tubuh-kesehatan-kering",
       "label": "Kering",
       "labelNorm": "kering",
       "synonyms": [],
-      "labelEn": "kering",
+      "labelEn": "dry",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -1829,17 +1166,41 @@
       "assetUrl": "/media/pictograms/dry-16887.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dry\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Kering\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "16887"
+    },
+    {
+      "id": "tubuh-kesehatan-dry-22104",
+      "label": "Kering Bersih",
+      "labelNorm": "kering bersih",
+      "synonyms": [
+        "tidak basah"
+      ],
+      "labelEn": "dry clean",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dry-22104.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kering Bersih\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "22104"
     },
     {
       "id": "tubuh-kesehatan-kesehatan",
       "label": "Kesehatan",
       "labelNorm": "kesehatan",
       "synonyms": [],
-      "labelEn": "sehat",
+      "labelEn": "health",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -1851,17 +1212,41 @@
       "assetUrl": "/media/pictograms/healthy-37797.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Healthy\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Kesehatan\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "37797"
+    },
+    {
+      "id": "tubuh-kesehatan-shake-your-hands-dry",
+      "label": "Kibaskan Tangan Kering",
+      "labelNorm": "kibaskan tangan kering",
+      "synonyms": [
+        "keringkan tangan"
+      ],
+      "labelEn": "shake hands dry",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/shake-your-hands-dry.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kibaskan Tangan Kering\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37868"
     },
     {
       "id": "tubuh-kesehatan-klinik",
       "label": "Klinik",
       "labelNorm": "klinik",
       "synonyms": [],
-      "labelEn": "uks",
+      "labelEn": "clinic",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri",
@@ -1874,17 +1259,20 @@
       "assetUrl": "/media/pictograms/infirmary-37341.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Infirmary\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Klinik\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "37341"
     },
     {
-      "id": "tubuh-kesehatan-lather",
-      "label": "Lather",
-      "labelNorm": "lather",
-      "synonyms": [],
-      "labelEn": "lather the hair",
+      "id": "tubuh-kesehatan-dirty",
+      "label": "Kotor",
+      "labelNorm": "kotor",
+      "synonyms": [
+        "noda kotor",
+        "baju kotor"
+      ],
+      "labelEn": "dirty",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -1893,20 +1281,49 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/lather-the-hair-26945.webp",
+      "assetUrl": "/media/pictograms/dirty.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Lather The Hair\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Kotor\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "26945"
+      "sourceRef": "26459"
     },
     {
-      "id": "tubuh-kesehatan-lather-the-hair",
-      "label": "Lather The Hair",
-      "labelNorm": "lather the hair",
-      "synonyms": [],
-      "labelEn": "lather the hair",
+      "id": "tubuh-kesehatan-rinse-one-s-mouth",
+      "label": "Kumur Air Bersih",
+      "labelNorm": "kumur air bersih",
+      "synonyms": [
+        "berkumur bersih"
+      ],
+      "labelEn": "rinse mouth",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "matematika"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/rinse-one-s-mouth.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/rinse-the-mouth.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Kumur Air Bersih\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "30032"
+    },
+    {
+      "id": "tubuh-kesehatan-gargles-30038",
+      "label": "Kumur-Kumur",
+      "labelNorm": "kumur kumur",
+      "synonyms": [
+        "berkumur obat"
+      ],
+      "labelEn": "gargle",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -1915,13 +1332,37 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/lather-the-hair.webp",
+      "assetUrl": "/media/pictograms/gargles-30038.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Lather The Hair\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Kumur-Kumur\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "8615"
+      "sourceRef": "30038"
+    },
+    {
+      "id": "tubuh-kesehatan-dry-22105",
+      "label": "Lap Kering",
+      "labelNorm": "lap kering",
+      "synonyms": [
+        "mengelap kering"
+      ],
+      "labelEn": "dry",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dry-22105.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Lap Kering\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "22105"
     },
     {
       "id": "tubuh-kesehatan-lather-the-hair-26945",
@@ -1941,7 +1382,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "lather the hair 26945",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-lather-the-hair-26945"
     },
@@ -1963,31 +1404,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "lather the hair 38555",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-lather-the-hair-38555"
-    },
-    {
-      "id": "tubuh-kesehatan-lather-the-hands",
-      "label": "Lather The Hands",
-      "labelNorm": "lather the hands",
-      "synonyms": [],
-      "labelEn": "lather the hands",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/lather-the-hands.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Lather The Hands\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "29210"
     },
     {
       "id": "tubuh-kesehatan-lather-the-hands-30506",
@@ -2007,39 +1426,15 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "lather the hands 30506",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-lather-the-hands-30506"
-    },
-    {
-      "id": "tubuh-kesehatan-lather-the-hands-35977",
-      "label": "Lather The Hands 35977",
-      "labelNorm": "lather the hands 35977",
-      "synonyms": [],
-      "labelEn": "lather the hands",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/lather-the-hands-35977.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Lather The Hands\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "35977"
     },
     {
       "id": "tubuh-kesehatan-leher",
       "label": "Leher",
       "labelNorm": "leher",
-      "synonyms": [
-        "neck"
-      ],
+      "synonyms": [],
       "labelEn": "neck",
       "domains": [
         "tubuh-kesehatan",
@@ -2062,7 +1457,6 @@
       "label": "Lidah",
       "labelNorm": "lidah",
       "synonyms": [
-        "tongue",
         "mengecap"
       ],
       "labelEn": "tongue",
@@ -2081,56 +1475,6 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2944"
-    },
-    {
-      "id": "tubuh-kesehatan-lift-the-toilet-seat",
-      "label": "Lift The Toilet Seat",
-      "labelNorm": "lift the toilet seat",
-      "synonyms": [
-        "seat"
-      ],
-      "labelEn": "lift the toilet seat",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "tumbuhan-makanan",
-        "rumah-tempat"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/lift-the-toilet-seat.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Lift The Toilet Seat\" pada kategori Kesehatan dan Kebersihan, Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "10168"
-    },
-    {
-      "id": "tubuh-kesehatan-lower-the-toilet-seat",
-      "label": "Lower The Toilet Seat",
-      "labelNorm": "lower the toilet seat",
-      "synonyms": [],
-      "labelEn": "lower the toilet seat",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "tumbuhan-makanan",
-        "rumah-tempat"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/lower-the-toilet-seat.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Lower The Toilet Seat\" pada kategori Kesehatan dan Kebersihan, Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "10144"
     },
     {
       "id": "tubuh-kesehatan-lutut",
@@ -2161,12 +1505,132 @@
       "sourceRef": "custom:lutut"
     },
     {
+      "id": "tubuh-kesehatan-have-a-shower",
+      "label": "Mandi Air Hangat",
+      "labelNorm": "mandi air hangat",
+      "synonyms": [],
+      "labelEn": "have a shower",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/have-a-shower.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/have-a-shower-27728.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Mandi Air Hangat\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "26803"
+    },
+    {
+      "id": "tubuh-kesehatan-bathe-2271",
+      "label": "Mandi Bak",
+      "labelNorm": "mandi bak",
+      "synonyms": [
+        "mandi di bak"
+      ],
+      "labelEn": "bathe",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/bathe-2271.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mandi Bak\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2271"
+    },
+    {
+      "id": "tubuh-kesehatan-bathe",
+      "label": "Mandi Pancuran",
+      "labelNorm": "mandi pancuran",
+      "synonyms": [
+        "mandi shower"
+      ],
+      "labelEn": "bathe",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/bathe.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/bathe-36349.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Mandi Pancuran\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6058"
+    },
+    {
+      "id": "tubuh-kesehatan-showers",
+      "label": "Mandi Segar",
+      "labelNorm": "mandi segar",
+      "synonyms": [
+        "bersiram"
+      ],
+      "labelEn": "showers",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/showers.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mandi Segar\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32426"
+    },
+    {
+      "id": "tubuh-kesehatan-get-into-the-bathtub",
+      "label": "Masuk Bak Mandi",
+      "labelNorm": "masuk bak mandi",
+      "synonyms": [
+        "masuk bak"
+      ],
+      "labelEn": "get into bathtub",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-into-the-bathtub.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Masuk Bak Mandi\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "39398"
+    },
+    {
       "id": "tubuh-kesehatan-mata",
       "label": "Mata",
       "labelNorm": "mata",
-      "synonyms": [
-        "eye"
-      ],
+      "synonyms": [],
       "labelEn": "eye",
       "domains": [
         "tubuh-kesehatan",
@@ -2185,11 +1649,134 @@
       "sourceRef": "6573"
     },
     {
+      "id": "tubuh-kesehatan-peel-off-sanitary-napkin",
+      "label": "Melepas Pembalut",
+      "labelNorm": "melepas pembalut",
+      "synonyms": [
+        "lepas pembalut"
+      ],
+      "labelEn": "peel off sanitary pad",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/peel-off-sanitary-napkin.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Melepas Pembalut\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29030"
+    },
+    {
+      "id": "tubuh-kesehatan-take-off-the-sanitary-napkin",
+      "label": "Melepas Pembalut Bersih",
+      "labelNorm": "melepas pembalut bersih",
+      "synonyms": [
+        "lepas pembalut lama"
+      ],
+      "labelEn": "take off sanitary pad",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/take-off-the-sanitary-napkin.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Melepas Pembalut Bersih\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29024"
+    },
+    {
+      "id": "tubuh-kesehatan-put-soap-on",
+      "label": "Memakai Sabun",
+      "labelNorm": "memakai sabun",
+      "synonyms": [
+        "oles sabun"
+      ],
+      "labelEn": "put soap on",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/put-soap-on.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/put-soap-on-35729.webp",
+        "/media/pictograms/put-soap-on-39211.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Memakai Sabun\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29034"
+    },
+    {
+      "id": "tubuh-kesehatan-wash-the-face-34775",
+      "label": "Membasuh Muka",
+      "labelNorm": "membasuh muka",
+      "synonyms": [
+        "cuci wajah"
+      ],
+      "labelEn": "wash face",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/wash-the-face-34775.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Membasuh Muka\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "34775"
+    },
+    {
+      "id": "tubuh-kesehatan-soap-the-face-31991",
+      "label": "Membersihkan Wajah",
+      "labelNorm": "membersihkan wajah",
+      "synonyms": [
+        "sabun muka"
+      ],
+      "labelEn": "soap face",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/soap-the-face-31991.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Membersihkan Wajah\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "31991"
+    },
+    {
       "id": "tubuh-kesehatan-membilas",
       "label": "Membilas",
       "labelNorm": "membilas",
       "synonyms": [],
-      "labelEn": "bilas",
+      "labelEn": "rinse",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -2201,17 +1788,307 @@
       "assetUrl": "/media/pictograms/rinse-21343.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Rinse\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Membilas\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "21343"
+    },
+    {
+      "id": "tubuh-kesehatan-throw-sanitary-napkin-away",
+      "label": "Membuang Pembalut",
+      "labelNorm": "membuang pembalut",
+      "synonyms": [
+        "buang pembalut ke sampah"
+      ],
+      "labelEn": "throw sanitary pad away",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/throw-sanitary-napkin-away.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/throw-sanitary-napkin-away-38607.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Membuang Pembalut\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36671"
+    },
+    {
+      "id": "tubuh-kesehatan-put-toothpaste",
+      "label": "Menaruh Pasta Gigi",
+      "labelNorm": "menaruh pasta gigi",
+      "synonyms": [
+        "tuang odol"
+      ],
+      "labelEn": "put toothpaste",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/put-toothpaste.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/put-toothpaste-30086.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Menaruh Pasta Gigi\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "11961"
+    },
+    {
+      "id": "tubuh-kesehatan-wipe-the-pee",
+      "label": "Mengelap Setelah Pipis",
+      "labelNorm": "mengelap setelah pipis",
+      "synonyms": [
+        "lap bersih toilet"
+      ],
+      "labelEn": "wipe after toilet",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/wipe-the-pee.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/wipe-the-pee-36653.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Mengelap Setelah Pipis\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36555"
+    },
+    {
+      "id": "tubuh-kesehatan-dry",
+      "label": "Mengeringkan",
+      "labelNorm": "mengeringkan",
+      "synonyms": [],
+      "labelEn": "dry",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dry.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/dry-27485.webp",
+        "/media/pictograms/dry-27486.webp",
+        "/media/pictograms/dry-28503.webp",
+        "/media/pictograms/dry-28507.webp",
+        "/media/pictograms/dry-30520.webp",
+        "/media/pictograms/dry-37049.webp",
+        "/media/pictograms/dry-37777.webp",
+        "/media/pictograms/dry-37835.webp",
+        "/media/pictograms/dry-38471.webp",
+        "/media/pictograms/dry-8688.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Mengeringkan\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7239"
+    },
+    {
+      "id": "tubuh-kesehatan-change-the-sanitary-towel",
+      "label": "Mengganti Pembalut",
+      "labelNorm": "mengganti pembalut",
+      "synonyms": [
+        "ganti pembalut"
+      ],
+      "labelEn": "change sanitary pad",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "rumah-tempat"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/change-the-sanitary-towel.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengganti Pembalut\" pada kategori Kesehatan dan Kebersihan, Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "8054"
+    },
+    {
+      "id": "tubuh-kesehatan-soap-one-s-body-21826",
+      "label": "Menggosok Badan",
+      "labelNorm": "menggosok badan",
+      "synonyms": [
+        "gosok sabun badan"
+      ],
+      "labelEn": "soap body",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "matematika"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/soap-one-s-body-21826.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menggosok Badan\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "21826"
+    },
+    {
+      "id": "tubuh-kesehatan-put-soap-on-37409",
+      "label": "Menggosok Sabun",
+      "labelNorm": "menggosok sabun",
+      "synonyms": [
+        "gosok sabun"
+      ],
+      "labelEn": "put soap on",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/put-soap-on-37409.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menggosok Sabun\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37409"
+    },
+    {
+      "id": "tubuh-kesehatan-roll-up-sanitary-pad",
+      "label": "Menggulung Pembalut",
+      "labelNorm": "menggulung pembalut",
+      "synonyms": [
+        "gulung pembalut"
+      ],
+      "labelEn": "roll up sanitary pad",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/roll-up-sanitary-pad.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/roll-up-sanitary-pad-38670.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Menggulung Pembalut\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29026"
+    },
+    {
+      "id": "tubuh-kesehatan-fill",
+      "label": "Menghias Kue",
+      "labelNorm": "menghias kue",
+      "synonyms": [
+        "isi krim kue"
+      ],
+      "labelEn": "fill",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/fill.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menghias Kue\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "16883"
+    },
+    {
+      "id": "tubuh-kesehatan-brush-teeth",
+      "label": "Menyikat Gigi",
+      "labelNorm": "menyikat gigi",
+      "synonyms": [
+        "membersihkan gigi"
+      ],
+      "labelEn": "brush teeth",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/brush-teeth.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menyikat Gigi\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2326"
+    },
+    {
+      "id": "tubuh-kesehatan-flush-the-toilet",
+      "label": "Menyiram Toilet",
+      "labelNorm": "menyiram toilet",
+      "synonyms": [
+        "siram wc",
+        "pencet flush"
+      ],
+      "labelEn": "flush the toilet",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "tumbuhan-makanan",
+        "rumah-tempat"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/flush-the-toilet.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/flush-the-toilet-39547.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Menyiram Toilet\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "10184"
     },
     {
       "id": "tubuh-kesehatan-menyisir",
       "label": "Menyisir",
       "labelNorm": "menyisir",
       "synonyms": [],
-      "labelEn": "sisir",
+      "labelEn": "comb",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -2223,18 +2100,64 @@
       "assetUrl": "/media/pictograms/comb-22029.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Comb\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Menyisir\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "22029"
     },
     {
+      "id": "tubuh-kesehatan-comb",
+      "label": "Menyisir Rapi",
+      "labelNorm": "menyisir rapi",
+      "synonyms": [
+        "sisir rambut"
+      ],
+      "labelEn": "comb hair",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/comb.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menyisir Rapi\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2512"
+    },
+    {
+      "id": "tubuh-kesehatan-brush-teeth-6971",
+      "label": "Merawat Gigi",
+      "labelNorm": "merawat gigi",
+      "synonyms": [
+        "gosok gigi bersih"
+      ],
+      "labelEn": "brush teeth",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/brush-teeth-6971.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Merawat Gigi\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6971"
+    },
+    {
       "id": "tubuh-kesehatan-mulut",
       "label": "Mulut",
       "labelNorm": "mulut",
-      "synonyms": [
-        "mouth"
-      ],
+      "synonyms": [],
       "labelEn": "mouth",
       "domains": [
         "tubuh-kesehatan",
@@ -2255,11 +2178,14 @@
       "sourceRef": "2663"
     },
     {
-      "id": "tubuh-kesehatan-pancuran",
-      "label": "Pancuran",
-      "labelNorm": "pancuran",
-      "synonyms": [],
-      "labelEn": "mandi",
+      "id": "tubuh-kesehatan-hurt",
+      "label": "Nyeri",
+      "labelNorm": "nyeri",
+      "synonyms": [
+        "kesakitan",
+        "luka sakit"
+      ],
+      "labelEn": "hurt",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -2268,13 +2194,63 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/have-a-shower-2371.webp",
+      "assetUrl": "/media/pictograms/hurt.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Have A Shower\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Nyeri\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "2371"
+      "sourceRef": "30620"
+    },
+    {
+      "id": "tubuh-kesehatan-put-toothpaste-30087",
+      "label": "Oles Pasta Gigi",
+      "labelNorm": "oles pasta gigi",
+      "synonyms": [
+        "pasta di sikat"
+      ],
+      "labelEn": "put toothpaste",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/put-toothpaste-30087.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Oles Pasta Gigi\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "30087"
+    },
+    {
+      "id": "tubuh-kesehatan-shower",
+      "label": "Pancuran Mandi",
+      "labelNorm": "pancuran mandi",
+      "synonyms": [
+        "shower mandi"
+      ],
+      "labelEn": "shower",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/shower.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Pancuran Mandi\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "11244"
     },
     {
       "id": "tubuh-kesehatan-pasta-gigi",
@@ -2296,87 +2272,15 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "Pasta Gigi",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-pasta-gigi"
-    },
-    {
-      "id": "tubuh-kesehatan-pee",
-      "label": "Pee",
-      "labelNorm": "pee",
-      "synonyms": [],
-      "labelEn": "pee",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/pee.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Pee\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32264"
-    },
-    {
-      "id": "tubuh-kesehatan-pee-16713",
-      "label": "Pee 16713",
-      "labelNorm": "pee 16713",
-      "synonyms": [],
-      "labelEn": "pee",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/pee-16713.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Pee\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "16713"
-    },
-    {
-      "id": "tubuh-kesehatan-peel-off-sanitary-napkin",
-      "label": "Peel Off Sanitary Napkin",
-      "labelNorm": "peel off sanitary napkin",
-      "synonyms": [
-        "peel",
-        "napkin"
-      ],
-      "labelEn": "peel off sanitary napkin",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/peel-off-sanitary-napkin.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Peel Off Sanitary Napkin\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "29030"
     },
     {
       "id": "tubuh-kesehatan-perut",
       "label": "Perut",
       "labelNorm": "perut",
-      "synonyms": [
-        "stomach",
-        "belly"
-      ],
+      "synonyms": [],
       "labelEn": "stomach",
       "domains": [
         "tubuh-kesehatan",
@@ -2414,53 +2318,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "pharmacy",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-pharmacy"
-    },
-    {
-      "id": "tubuh-kesehatan-put",
-      "label": "Put",
-      "labelNorm": "put",
-      "synonyms": [],
-      "labelEn": "put soap on",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/put-soap-on-35729.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Put Soap On\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "35729"
-    },
-    {
-      "id": "tubuh-kesehatan-put-soap-on",
-      "label": "Put Soap On",
-      "labelNorm": "put soap on",
-      "synonyms": [],
-      "labelEn": "put soap on",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/put-soap-on.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Put Soap On\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "29034"
     },
     {
       "id": "tubuh-kesehatan-put-soap-on-35729",
@@ -2480,7 +2340,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "put soap on 35729",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-put-soap-on-35729"
     },
@@ -2502,77 +2362,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "put soap on 36525",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-put-soap-on-36525"
-    },
-    {
-      "id": "tubuh-kesehatan-put-soap-on-37409",
-      "label": "Put Soap On 37409",
-      "labelNorm": "put soap on 37409",
-      "synonyms": [],
-      "labelEn": "put soap on",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/put-soap-on-37409.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Put Soap On\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37409"
-    },
-    {
-      "id": "tubuh-kesehatan-put-soap-on-39211",
-      "label": "Put Soap On 39211",
-      "labelNorm": "put soap on 39211",
-      "synonyms": [],
-      "labelEn": "put soap on",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/put-soap-on-39211.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Put Soap On\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39211"
-    },
-    {
-      "id": "tubuh-kesehatan-put-toothpaste",
-      "label": "Put Toothpaste",
-      "labelNorm": "put toothpaste",
-      "synonyms": [],
-      "labelEn": "put toothpaste",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/put-toothpaste.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Put Toothpaste\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "11961"
     },
     {
       "id": "tubuh-kesehatan-put-toothpaste-30086",
@@ -2594,33 +2386,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "put toothpaste 30086",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-put-toothpaste-30086"
-    },
-    {
-      "id": "tubuh-kesehatan-put-toothpaste-30087",
-      "label": "Put Toothpaste 30087",
-      "labelNorm": "put toothpaste 30087",
-      "synonyms": [],
-      "labelEn": "put toothpaste",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/put-toothpaste-30087.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Put Toothpaste\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "30087"
     },
     {
       "id": "tubuh-kesehatan-rambut",
@@ -2645,26 +2413,33 @@
       "sourceRef": "2851"
     },
     {
-      "id": "tubuh-kesehatan-rinse",
-      "label": "Rinse",
-      "labelNorm": "rinse",
+      "id": "tubuh-kesehatan-spread-the-soap",
+      "label": "Ratakan Sabun",
+      "labelNorm": "ratakan sabun",
       "synonyms": [],
-      "labelEn": "bilas",
+      "labelEn": "spread soap",
       "domains": [
         "tubuh-kesehatan",
-        "bina-diri"
+        "bina-diri",
+        "sekolah",
+        "bahasa"
       ],
       "groupId": "kesehatan-dan-kebersihan",
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/rinse.webp",
+      "assetUrl": "/media/pictograms/spread-the-soap.webp",
       "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Rinse\" pada kategori Kesehatan dan Kebersihan.",
+      "altUrls": [
+        "/media/pictograms/spread-the-soap-37030.webp",
+        "/media/pictograms/spread-the-soap-37031.webp",
+        "/media/pictograms/spread-the-soap-37032.webp",
+        "/media/pictograms/spread-the-soap-37033.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Ratakan Sabun\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "8560"
+      "sourceRef": "36860"
     },
     {
       "id": "tubuh-kesehatan-rinse-21343",
@@ -2684,210 +2459,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "rinse 21343",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-rinse-21343"
-    },
-    {
-      "id": "tubuh-kesehatan-rinse-21345",
-      "label": "Rinse 21345",
-      "labelNorm": "rinse 21345",
-      "synonyms": [],
-      "labelEn": "bilas",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/rinse-21345.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Rinse\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "21345"
-    },
-    {
-      "id": "tubuh-kesehatan-rinse-21347",
-      "label": "Rinse 21347",
-      "labelNorm": "rinse 21347",
-      "synonyms": [],
-      "labelEn": "bilas",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/rinse-21347.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Rinse\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "21347"
-    },
-    {
-      "id": "tubuh-kesehatan-rinse-28505",
-      "label": "Rinse 28505",
-      "labelNorm": "rinse 28505",
-      "synonyms": [],
-      "labelEn": "bilas",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/rinse-28505.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Rinse\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28505"
-    },
-    {
-      "id": "tubuh-kesehatan-rinse-39766",
-      "label": "Rinse 39766",
-      "labelNorm": "rinse 39766",
-      "synonyms": [],
-      "labelEn": "bilas",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/rinse-39766.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Rinse\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39766"
-    },
-    {
-      "id": "tubuh-kesehatan-rinse-8978",
-      "label": "Rinse 8978",
-      "labelNorm": "rinse 8978",
-      "synonyms": [],
-      "labelEn": "bilas",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/rinse-8978.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Rinse\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8978"
-    },
-    {
-      "id": "tubuh-kesehatan-rinse-one-s-mouth",
-      "label": "Rinse One S Mouth",
-      "labelNorm": "rinse one s mouth",
-      "synonyms": [],
-      "labelEn": "rinse one s mouth",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "matematika"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/rinse-one-s-mouth.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Rinse One S Mouth\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "30032"
-    },
-    {
-      "id": "tubuh-kesehatan-rinse-the-mouth",
-      "label": "Rinse The Mouth",
-      "labelNorm": "rinse the mouth",
-      "synonyms": [],
-      "labelEn": "rinse the mouth",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/rinse-the-mouth.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Rinse The Mouth\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8559"
-    },
-    {
-      "id": "tubuh-kesehatan-roll",
-      "label": "Roll",
-      "labelNorm": "roll",
-      "synonyms": [],
-      "labelEn": "roll up sanitary pad",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/roll-up-sanitary-pad-38670.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Roll Up Sanitary Pad\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38670"
-    },
-    {
-      "id": "tubuh-kesehatan-roll-up-sanitary-pad",
-      "label": "Roll Up Sanitary Pad",
-      "labelNorm": "roll up sanitary pad",
-      "synonyms": [
-        "pad"
-      ],
-      "labelEn": "roll up sanitary pad",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/roll-up-sanitary-pad.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Roll Up Sanitary Pad\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "29026"
     },
     {
       "id": "tubuh-kesehatan-roll-up-sanitary-pad-38670",
@@ -2907,7 +2481,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "roll up sanitary pad 38670",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-roll-up-sanitary-pad-38670"
     },
@@ -2916,7 +2490,7 @@
       "label": "Ruang Kesehatan",
       "labelNorm": "ruang kesehatan",
       "synonyms": [],
-      "labelEn": "uks",
+      "labelEn": "health room",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri",
@@ -2929,18 +2503,66 @@
       "assetUrl": "/media/pictograms/infirmary-37400.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Infirmary\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Ruang Kesehatan\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "37400"
     },
     {
+      "id": "tubuh-kesehatan-infirmary-38878",
+      "label": "Ruang P3K",
+      "labelNorm": "ruang p3k",
+      "synonyms": [
+        "pertolongan pertama"
+      ],
+      "labelEn": "infirmary",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "rumah-tempat"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/infirmary-38878.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ruang P3K\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38878"
+    },
+    {
+      "id": "tubuh-kesehatan-infirmary",
+      "label": "Ruang Perawatan",
+      "labelNorm": "ruang perawatan",
+      "synonyms": [
+        "ruang periksa"
+      ],
+      "labelEn": "infirmary",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "rumah-tempat"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/infirmary.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ruang Perawatan\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "9918"
+    },
+    {
       "id": "tubuh-kesehatan-rumah-sakit",
       "label": "Rumah Sakit",
       "labelNorm": "rumah sakit",
-      "synonyms": [
-        "sick"
-      ],
+      "synonyms": [],
       "labelEn": "hospital",
       "domains": [
         "tubuh-kesehatan",
@@ -2961,11 +2583,13 @@
       "sourceRef": "6523"
     },
     {
-      "id": "tubuh-kesehatan-sanitary",
-      "label": "Sanitary",
-      "labelNorm": "sanitary",
-      "synonyms": [],
-      "labelEn": "throw sanitary napkin away",
+      "id": "tubuh-kesehatan-soap",
+      "label": "Sabun Batang",
+      "labelNorm": "sabun batang",
+      "synonyms": [
+        "sabun mandi"
+      ],
+      "labelEn": "soap",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -2974,20 +2598,146 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/throw-sanitary-napkin-away-38607.webp",
+      "assetUrl": "/media/pictograms/soap.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Throw Sanitary Napkin Away\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Sabun Batang\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "38607"
+      "sourceRef": "6547"
+    },
+    {
+      "id": "tubuh-kesehatan-soap-36910",
+      "label": "Sabun Cair",
+      "labelNorm": "sabun cair",
+      "synonyms": [
+        "sabun cuci"
+      ],
+      "labelEn": "soap",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/soap-36910.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sabun Cair\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36910"
+    },
+    {
+      "id": "tubuh-kesehatan-cuci",
+      "label": "Sabuni Badan",
+      "labelNorm": "sabuni badan",
+      "synonyms": [
+        "pakai sabun"
+      ],
+      "labelEn": "put soap on",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/put-soap-on-36525.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sabuni Badan\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36525"
+    },
+    {
+      "id": "tubuh-kesehatan-lather-the-hands",
+      "label": "Sabuni Tangan",
+      "labelNorm": "sabuni tangan",
+      "synonyms": [
+        "busa sabun tangan"
+      ],
+      "labelEn": "lather hands",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/lather-the-hands.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/lather-the-hands-30506.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Sabuni Tangan\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29210"
+    },
+    {
+      "id": "tubuh-kesehatan-soap-one-s-body",
+      "label": "Sabuni Tubuh",
+      "labelNorm": "sabuni tubuh",
+      "synonyms": [],
+      "labelEn": "soap body",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "matematika"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/soap-one-s-body.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/soap-one-s-body-21824.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Sabuni Tubuh\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "21822"
+    },
+    {
+      "id": "tubuh-kesehatan-soap-the-face",
+      "label": "Sabuni Wajah",
+      "labelNorm": "sabuni wajah",
+      "synonyms": [
+        "cuci muka sabun"
+      ],
+      "labelEn": "soap face",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/soap-the-face.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/soap-the-face-28621.webp",
+        "/media/pictograms/soap-the-face-6546.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Sabuni Wajah\" pada kategori Kesehatan dan Kebersihan.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4939"
     },
     {
       "id": "tubuh-kesehatan-sehat",
       "label": "Sehat",
       "labelNorm": "sehat",
       "synonyms": [],
-      "labelEn": "sehat",
+      "labelEn": "healthy",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -2999,34 +2749,10 @@
       "assetUrl": "/media/pictograms/healthy-29648.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Healthy\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Sehat\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29648"
-    },
-    {
-      "id": "tubuh-kesehatan-shake-your-hands-dry",
-      "label": "Shake Your Hands Dry",
-      "labelNorm": "shake your hands dry",
-      "synonyms": [
-        "shake"
-      ],
-      "labelEn": "shake your hands dry",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/shake-your-hands-dry.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Shake Your Hands Dry\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37868"
     },
     {
       "id": "tubuh-kesehatan-shave",
@@ -3045,8 +2771,8 @@
       "assetUrl": "/media/pictograms/shave.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Shave\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
+      "altText": "Konsep nonaktif (Shave)",
+      "status": "hidden",
       "source": "arasaac",
       "sourceRef": "32691"
     },
@@ -3067,8 +2793,8 @@
       "assetUrl": "/media/pictograms/shave-32810.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Shave\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
+      "altText": "Konsep nonaktif (Shave 32810)",
+      "status": "hidden",
       "source": "arasaac",
       "sourceRef": "32810"
     },
@@ -3089,61 +2815,16 @@
       "assetUrl": "/media/pictograms/shave-off.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Shave Off\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
+      "altText": "Konsep nonaktif (Shave Off)",
+      "status": "hidden",
       "source": "arasaac",
       "sourceRef": "37056"
-    },
-    {
-      "id": "tubuh-kesehatan-shower",
-      "label": "Shower",
-      "labelNorm": "shower",
-      "synonyms": [],
-      "labelEn": "shower",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/shower.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Shower\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "11244"
-    },
-    {
-      "id": "tubuh-kesehatan-showers",
-      "label": "Showers",
-      "labelNorm": "showers",
-      "synonyms": [],
-      "labelEn": "showers",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/showers.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Showers\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32426"
     },
     {
       "id": "tubuh-kesehatan-sikat-gigi",
       "label": "Sikat Gigi",
       "labelNorm": "sikat gigi",
       "synonyms": [
-        "toothbrush",
         "sikat"
       ],
       "labelEn": "toothbrush",
@@ -3191,73 +2872,6 @@
       "sourceRef": "custom:siku"
     },
     {
-      "id": "tubuh-kesehatan-soap",
-      "label": "Soap",
-      "labelNorm": "soap",
-      "synonyms": [],
-      "labelEn": "sabun",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/soap.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Soap\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6547"
-    },
-    {
-      "id": "tubuh-kesehatan-soap-36910",
-      "label": "Soap 36910",
-      "labelNorm": "soap 36910",
-      "synonyms": [],
-      "labelEn": "sabun",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/soap-36910.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Soap\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36910"
-    },
-    {
-      "id": "tubuh-kesehatan-soap-one-s-body",
-      "label": "Soap One S Body",
-      "labelNorm": "soap one s body",
-      "synonyms": [],
-      "labelEn": "soap one s body",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "matematika"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/soap-one-s-body.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Soap One S Body\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "21822"
-    },
-    {
       "id": "tubuh-kesehatan-soap-one-s-body-21824",
       "label": "soap one s body 21824",
       "labelNorm": "soap one s body 21824",
@@ -3275,54 +2889,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "soap one s body 21824",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-soap-one-s-body-21824"
-    },
-    {
-      "id": "tubuh-kesehatan-soap-one-s-body-21826",
-      "label": "Soap One S Body 21826",
-      "labelNorm": "soap one s body 21826",
-      "synonyms": [],
-      "labelEn": "soap one s body",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "matematika"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/soap-one-s-body-21826.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Soap One S Body\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "21826"
-    },
-    {
-      "id": "tubuh-kesehatan-soap-the-face",
-      "label": "Soap The Face",
-      "labelNorm": "soap the face",
-      "synonyms": [],
-      "labelEn": "soap the face",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/soap-the-face.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Soap The Face\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4939"
     },
     {
       "id": "tubuh-kesehatan-soap-the-face-28621",
@@ -3342,267 +2911,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "soap the face 28621",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-soap-the-face-28621"
-    },
-    {
-      "id": "tubuh-kesehatan-soap-the-face-31991",
-      "label": "Soap The Face 31991",
-      "labelNorm": "soap the face 31991",
-      "synonyms": [],
-      "labelEn": "soap the face",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/soap-the-face-31991.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Soap The Face\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "31991"
-    },
-    {
-      "id": "tubuh-kesehatan-soap-the-face-6546",
-      "label": "Soap The Face 6546",
-      "labelNorm": "soap the face 6546",
-      "synonyms": [],
-      "labelEn": "soap the face",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/soap-the-face-6546.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Soap The Face\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6546"
-    },
-    {
-      "id": "tubuh-kesehatan-spread-the-soap",
-      "label": "Spread The Soap",
-      "labelNorm": "spread the soap",
-      "synonyms": [],
-      "labelEn": "spread the soap",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/spread-the-soap.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Spread The Soap\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36860"
-    },
-    {
-      "id": "tubuh-kesehatan-spread-the-soap-36918",
-      "label": "Spread The Soap 36918",
-      "labelNorm": "spread the soap 36918",
-      "synonyms": [],
-      "labelEn": "spread the soap",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/spread-the-soap-36918.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Spread The Soap\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36918"
-    },
-    {
-      "id": "tubuh-kesehatan-spread-the-soap-37030",
-      "label": "Spread The Soap 37030",
-      "labelNorm": "spread the soap 37030",
-      "synonyms": [],
-      "labelEn": "spread the soap",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/spread-the-soap-37030.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Spread The Soap\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37030"
-    },
-    {
-      "id": "tubuh-kesehatan-spread-the-soap-37031",
-      "label": "Spread The Soap 37031",
-      "labelNorm": "spread the soap 37031",
-      "synonyms": [],
-      "labelEn": "spread the soap",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/spread-the-soap-37031.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Spread The Soap\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37031"
-    },
-    {
-      "id": "tubuh-kesehatan-spread-the-soap-37032",
-      "label": "Spread The Soap 37032",
-      "labelNorm": "spread the soap 37032",
-      "synonyms": [],
-      "labelEn": "spread the soap",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/spread-the-soap-37032.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Spread The Soap\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37032"
-    },
-    {
-      "id": "tubuh-kesehatan-spread-the-soap-37033",
-      "label": "Spread The Soap 37033",
-      "labelNorm": "spread the soap 37033",
-      "synonyms": [],
-      "labelEn": "spread the soap",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/spread-the-soap-37033.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Spread The Soap\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37033"
-    },
-    {
-      "id": "tubuh-kesehatan-sweaty",
-      "label": "Sweaty",
-      "labelNorm": "sweaty",
-      "synonyms": [],
-      "labelEn": "sweaty",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "tumbuhan-makanan"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/sweaty.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Sweaty\" pada kategori Kesehatan dan Kebersihan, Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32125"
-    },
-    {
-      "id": "tubuh-kesehatan-sweaty-36598",
-      "label": "Sweaty 36598",
-      "labelNorm": "sweaty 36598",
-      "synonyms": [],
-      "labelEn": "sweaty",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri",
-        "tumbuhan-makanan"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/sweaty-36598.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Sweaty\" pada kategori Kesehatan dan Kebersihan, Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36598"
-    },
-    {
-      "id": "tubuh-kesehatan-take-off-the-sanitary-napkin",
-      "label": "Take Off The Sanitary Napkin",
-      "labelNorm": "take off the sanitary napkin",
-      "synonyms": [
-        "take"
-      ],
-      "labelEn": "take off the sanitary napkin",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/take-off-the-sanitary-napkin.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Take Off The Sanitary Napkin\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "29024"
     },
     {
       "id": "tubuh-kesehatan-tangan",
@@ -3631,7 +2942,7 @@
       "label": "Tangan Bersih",
       "labelNorm": "tangan bersih",
       "synonyms": [],
-      "labelEn": "tangan bersih",
+      "labelEn": "clean hands",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri",
@@ -3650,34 +2961,10 @@
       "sourceRef": "26172"
     },
     {
-      "id": "tubuh-kesehatan-teeth",
-      "label": "Teeth",
-      "labelNorm": "teeth",
-      "synonyms": [],
-      "labelEn": "sikat gigi",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/brush-teeth-31880.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Brush Teeth\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "31880"
-    },
-    {
       "id": "tubuh-kesehatan-telinga",
       "label": "Telinga",
       "labelNorm": "telinga",
-      "synonyms": [
-        "ear"
-      ],
+      "synonyms": [],
       "labelEn": "ear",
       "domains": [
         "tubuh-kesehatan",
@@ -3701,7 +2988,7 @@
       "label": "Terluka",
       "labelNorm": "terluka",
       "synonyms": [],
-      "labelEn": "terluka",
+      "labelEn": "hurt",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -3713,56 +3000,10 @@
       "assetUrl": "/media/pictograms/hurt-39428.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hurt\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Terluka\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "39428"
-    },
-    {
-      "id": "tubuh-kesehatan-the",
-      "label": "The",
-      "labelNorm": "the",
-      "synonyms": [],
-      "labelEn": "lather the hair",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/lather-the-hair-38555.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Lather The Hair\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38555"
-    },
-    {
-      "id": "tubuh-kesehatan-throw-sanitary-napkin-away",
-      "label": "Throw Sanitary Napkin Away",
-      "labelNorm": "throw sanitary napkin away",
-      "synonyms": [
-        "away"
-      ],
-      "labelEn": "throw sanitary napkin away",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/throw-sanitary-napkin-away.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Throw Sanitary Napkin Away\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36671"
     },
     {
       "id": "tubuh-kesehatan-throw-sanitary-napkin-away-38607",
@@ -3782,7 +3023,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "throw sanitary napkin away 38607",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-throw-sanitary-napkin-away-38607"
     },
@@ -3791,7 +3032,7 @@
       "label": "Tidak Sehat",
       "labelNorm": "tidak sehat",
       "synonyms": [],
-      "labelEn": "sakit",
+      "labelEn": "unwell",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri"
@@ -3803,7 +3044,7 @@
       "assetUrl": "/media/pictograms/ill-28741.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ill\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"Tidak Sehat\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "28741"
@@ -3833,35 +3074,61 @@
       "sourceRef": "5921"
     },
     {
-      "id": "tubuh-kesehatan-toothpaste",
-      "label": "Toothpaste",
-      "labelNorm": "toothpaste",
-      "synonyms": [],
-      "labelEn": "put toothpaste",
+      "id": "tubuh-kesehatan-healthy",
+      "label": "Tubuh Sehat",
+      "labelNorm": "tubuh sehat",
+      "synonyms": [
+        "badan sehat"
+      ],
+      "labelEn": "healthy",
       "domains": [
         "tubuh-kesehatan",
-        "bina-diri",
-        "sekolah",
-        "bahasa"
+        "bina-diri"
       ],
       "groupId": "kesehatan-dan-kebersihan",
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/put-toothpaste-30086.webp",
+      "assetUrl": "/media/pictograms/healthy.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Put Toothpaste\" pada kategori Kesehatan dan Kebersihan, Benda di Sekolah.",
+      "altText": "Piktogram visual untuk konsep \"Tubuh Sehat\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "30086"
+      "sourceRef": "12293"
+    },
+    {
+      "id": "tubuh-kesehatan-lower-the-toilet-seat",
+      "label": "Turunkan Tutup Toilet",
+      "labelNorm": "turunkan tutup toilet",
+      "synonyms": [
+        "tutup kloset"
+      ],
+      "labelEn": "lower toilet seat",
+      "domains": [
+        "tubuh-kesehatan",
+        "bina-diri",
+        "tumbuhan-makanan",
+        "rumah-tempat"
+      ],
+      "groupId": "kesehatan-dan-kebersihan",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/lower-the-toilet-seat.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Turunkan Tutup Toilet\" pada kategori Kesehatan dan Kebersihan, Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "10144"
     },
     {
       "id": "tubuh-kesehatan-uks",
-      "label": "Uks",
+      "label": "UKS",
       "labelNorm": "uks",
       "synonyms": [],
-      "labelEn": "uks",
+      "labelEn": "school infirmary",
       "domains": [
         "tubuh-kesehatan",
         "bina-diri",
@@ -3874,54 +3141,10 @@
       "assetUrl": "/media/pictograms/infirmary-37311.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Infirmary\" pada kategori Kesehatan dan Kebersihan.",
+      "altText": "Piktogram visual untuk konsep \"UKS\" pada kategori Kesehatan dan Kebersihan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "37311"
-    },
-    {
-      "id": "tubuh-kesehatan-wash",
-      "label": "Wash",
-      "labelNorm": "wash",
-      "synonyms": [],
-      "labelEn": "wash hair",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/wash-hair-35037.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wash Hair\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "35037"
-    },
-    {
-      "id": "tubuh-kesehatan-wash-hair",
-      "label": "Wash Hair",
-      "labelNorm": "wash hair",
-      "synonyms": [],
-      "labelEn": "wash hair",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/wash-hair.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wash Hair\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8616"
     },
     {
       "id": "tubuh-kesehatan-wash-hair-35037",
@@ -3941,7 +3164,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "wash hair 35037",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-wash-hair-35037"
     },
@@ -3963,119 +3186,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "wash hair 8976",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-wash-hair-8976"
-    },
-    {
-      "id": "tubuh-kesehatan-wash-the-face",
-      "label": "Wash The Face",
-      "labelNorm": "wash the face",
-      "synonyms": [],
-      "labelEn": "wash the face",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/wash-the-face.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wash The Face\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "34611"
-    },
-    {
-      "id": "tubuh-kesehatan-wash-the-face-34775",
-      "label": "Wash The Face 34775",
-      "labelNorm": "wash the face 34775",
-      "synonyms": [],
-      "labelEn": "wash the face",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/wash-the-face-34775.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wash The Face\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "34775"
-    },
-    {
-      "id": "tubuh-kesehatan-wash-the-face-34777",
-      "label": "Wash The Face 34777",
-      "labelNorm": "wash the face 34777",
-      "synonyms": [],
-      "labelEn": "wash the face",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/wash-the-face-34777.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wash The Face\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "34777"
-    },
-    {
-      "id": "tubuh-kesehatan-wipe",
-      "label": "Wipe",
-      "labelNorm": "wipe",
-      "synonyms": [],
-      "labelEn": "wipe the pee",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/wipe-the-pee-36653.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wipe The Pee\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36653"
-    },
-    {
-      "id": "tubuh-kesehatan-wipe-the-pee",
-      "label": "Wipe The Pee",
-      "labelNorm": "wipe the pee",
-      "synonyms": [],
-      "labelEn": "wipe the pee",
-      "domains": [
-        "tubuh-kesehatan",
-        "bina-diri"
-      ],
-      "groupId": "kesehatan-dan-kebersihan",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/wipe-the-pee.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wipe The Pee\" pada kategori Kesehatan dan Kebersihan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36555"
     },
     {
       "id": "tubuh-kesehatan-wipe-the-pee-36653",
@@ -4095,7 +3208,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "wipe the pee 36653",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tubuh-kesehatan-wipe-the-pee-36653"
     }

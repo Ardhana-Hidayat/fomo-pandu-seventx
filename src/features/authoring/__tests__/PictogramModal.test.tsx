@@ -220,4 +220,68 @@ describe("PictogramModal (Pustaka Gambar + Direct Upload)", () => {
     expect(onUploadComplete).not.toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
   });
+
+  it("falls back to Supabase URL on image error and shows accessible placeholder when all sources fail", async () => {
+    const prevSupabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    process.env.NEXT_PUBLIC_SUPABASE_URL = "https://mock.supabase.co";
+
+    try {
+      vi.stubGlobal(
+        "fetch",
+        vi.fn(async (input: RequestInfo | URL) => {
+          const url = String(input);
+          if (url.includes("/api/catalog/assets")) {
+            return new Response(
+              JSON.stringify({
+                success: true,
+                items: [
+                  {
+                    id: "custom:tes-rusak",
+                    assetId: null,
+                    url: "/media/custom/tes-rusak.webp",
+                    label: "Tes Rusak",
+                    alt_text: "Ilustrasi tes rusak",
+                    domains: ["bina-diri"],
+                    group: "bina-diri",
+                    source: "custom",
+                  },
+                ],
+                total: 1,
+                domains: ["bina-diri"],
+                nextCursor: null,
+              }),
+              { status: 200 }
+            );
+          }
+          return new Response("{}", { status: 404 });
+        })
+      );
+
+      render(
+        <PictogramModal isOpen={true} onClose={vi.fn()} onSelect={vi.fn()} />
+      );
+
+      const img = (await screen.findByAltText(
+        "Ilustrasi tes rusak"
+      )) as HTMLImageElement;
+      expect(img.getAttribute("src")).toBe("/media/custom/tes-rusak.webp");
+
+      // First error switches src to Supabase public storage fallback
+      fireEvent.error(img);
+      expect(img.getAttribute("src")).toBe(
+        "https://mock.supabase.co/storage/v1/object/public/card-images/tes-rusak.webp"
+      );
+
+      // Second error shows clean accessible fallback instead of broken img icon
+      fireEvent.error(img);
+      expect(await screen.findByText("Gambar belum siap")).toBeTruthy();
+      expect(screen.queryByRole("img", { name: "Ilustrasi tes rusak" })).toBeTruthy();
+    } finally {
+      if (prevSupabaseUrl === undefined) {
+        delete process.env.NEXT_PUBLIC_SUPABASE_URL;
+      } else {
+        process.env.NEXT_PUBLIC_SUPABASE_URL = prevSupabaseUrl;
+      }
+    }
+  });
 });

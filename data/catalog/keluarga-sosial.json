@@ -1,14 +1,13 @@
 {
   "domain": "keluarga-sosial",
   "version": "1.0.0",
-  "count": 178,
+  "count": 170,
   "concepts": [
     {
       "id": "keluarga-sosial-adik",
       "label": "Adik",
       "labelNorm": "adik",
       "synonyms": [
-        "younger sibling",
         "kegiatan sosial"
       ],
       "labelEn": "younger sibling",
@@ -33,8 +32,6 @@
       "label": "Anak",
       "labelNorm": "anak",
       "synonyms": [
-        "child",
-        "kid",
         "anak kecil"
       ],
       "labelEn": "child",
@@ -55,13 +52,13 @@
       "sourceRef": "7176"
     },
     {
-      "id": "keluarga-sosial-angry",
-      "label": "Angry",
-      "labelNorm": "angry",
+      "id": "keluarga-sosial-cocky-39972",
+      "label": "Angkuh",
+      "labelNorm": "angkuh",
       "synonyms": [
-        "emosi dan perilaku"
+        "bangga diri"
       ],
-      "labelEn": "marah",
+      "labelEn": "cocky",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -70,13 +67,13 @@
       "kind": "sifat",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/angry.webp",
+      "assetUrl": "/media/pictograms/cocky-39972.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Angry\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Angkuh\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "2374"
+      "sourceRef": "39972"
     },
     {
       "id": "keluarga-sosial-angry-21820",
@@ -96,75 +93,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "angry 21820",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-angry-21820"
-    },
-    {
-      "id": "keluarga-sosial-angry-28671",
-      "label": "Angry 28671",
-      "labelNorm": "angry 28671",
-      "synonyms": [],
-      "labelEn": "marah",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/angry-28671.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Angry\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28671"
-    },
-    {
-      "id": "keluarga-sosial-angry-31101",
-      "label": "Angry 31101",
-      "labelNorm": "angry 31101",
-      "synonyms": [],
-      "labelEn": "marah",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/angry-31101.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Angry\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "31101"
-    },
-    {
-      "id": "keluarga-sosial-angry-31884",
-      "label": "Angry 31884",
-      "labelNorm": "angry 31884",
-      "synonyms": [],
-      "labelEn": "marah",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/angry-31884.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Angry\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "31884"
     },
     {
       "id": "keluarga-sosial-antre-tertib",
@@ -184,31 +115,33 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "Antre Tertib",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-antre-tertib"
     },
     {
-      "id": "keluarga-sosial-anxious",
-      "label": "Anxious",
-      "labelNorm": "anxious",
-      "synonyms": [],
-      "labelEn": "cemas",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
+      "id": "keluarga-sosial-wait-in-a-line",
+      "label": "Antre Tertib",
+      "labelNorm": "antre tertib",
+      "synonyms": [
+        "berbaris antre",
+        "tertib"
       ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
+      "labelEn": "wait in a line",
+      "domains": [
+        "keluarga-sosial"
+      ],
+      "groupId": "kegiatan-sosial",
+      "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/anxious.webp",
+      "assetUrl": "/media/pictograms/wait-in-a-line.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Anxious\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Antre Tertib\" pada kategori Kegiatan Sosial.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "30484"
+      "sourceRef": "36845"
     },
     {
       "id": "keluarga-sosial-anxious-30485",
@@ -228,7 +161,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "anxious 30485",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-anxious-30485"
     },
@@ -250,7 +183,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "anxious 37175",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-anxious-37175"
     },
@@ -272,31 +205,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "anxious 37176",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-anxious-37176"
-    },
-    {
-      "id": "keluarga-sosial-ashamed",
-      "label": "Ashamed",
-      "labelNorm": "ashamed",
-      "synonyms": [],
-      "labelEn": "malu",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/ashamed.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ashamed\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6922"
     },
     {
       "id": "keluarga-sosial-ashamed-11953",
@@ -316,7 +227,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "ashamed 11953",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-ashamed-11953"
     },
@@ -338,7 +249,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "ashamed 31919",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-ashamed-31919"
     },
@@ -346,10 +257,7 @@
       "id": "keluarga-sosial-ayah",
       "label": "Ayah",
       "labelNorm": "ayah",
-      "synonyms": [
-        "father",
-        "dad"
-      ],
+      "synonyms": [],
       "labelEn": "father",
       "domains": [
         "keluarga-sosial",
@@ -384,7 +292,7 @@
       "assetUrl": "/media/pictograms/happy-10192.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Happy\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Bahagia\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "10192"
@@ -394,7 +302,6 @@
       "label": "Bayi",
       "labelNorm": "bayi",
       "synonyms": [
-        "baby",
         "balita"
       ],
       "labelEn": "baby",
@@ -415,11 +322,34 @@
       "sourceRef": "6060"
     },
     {
+      "id": "keluarga-sosial-hate",
+      "label": "Benci",
+      "labelNorm": "benci",
+      "synonyms": [
+        "tidak senang sekali"
+      ],
+      "labelEn": "hate",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/hate.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Benci\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38936"
+    },
+    {
       "id": "keluarga-sosial-bendera",
       "label": "Bendera",
       "labelNorm": "bendera",
       "synonyms": [
-        "flag",
         "bendera indonesia",
         "merah putih",
         "pendidikan pancasila",
@@ -470,7 +400,6 @@
       "label": "Berdoa",
       "labelNorm": "berdoa",
       "synonyms": [
-        "pray",
         "doa",
         "ibadah"
       ],
@@ -492,11 +421,35 @@
       "sourceRef": "24368"
     },
     {
+      "id": "keluarga-sosial-sadden",
+      "label": "Berduka",
+      "labelNorm": "berduka",
+      "synonyms": [
+        "sedih mendalam"
+      ],
+      "labelEn": "sadden",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sadden.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Berduka\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7286"
+    },
+    {
       "id": "keluarga-sosial-berkunjung",
       "label": "Berkunjung",
       "labelNorm": "berkunjung",
       "synonyms": [],
-      "labelEn": "berkunjung",
+      "labelEn": "visit",
       "domains": [
         "keluarga-sosial",
         "seni-olahraga",
@@ -509,7 +462,7 @@
       "assetUrl": "/media/pictograms/visit-28187.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Visit\" pada kategori Kegiatan Sosial, Pendidikan Jasmani.",
+      "altText": "Piktogram visual untuk konsep \"Berkunjung\" pada kategori Kegiatan Sosial, Pendidikan Jasmani.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "28187"
@@ -539,11 +492,181 @@
       "sourceRef": "23392"
     },
     {
+      "id": "keluarga-sosial-play",
+      "label": "Bermain Bersama",
+      "labelNorm": "bermain bersama",
+      "synonyms": [
+        "main bersama"
+      ],
+      "labelEn": "play",
+      "domains": [
+        "keluarga-sosial",
+        "seni-olahraga"
+      ],
+      "groupId": "kegiatan-sosial",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/play.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bermain Bersama\" pada kategori Kegiatan Sosial.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6537"
+    },
+    {
+      "id": "keluarga-sosial-fun-36482",
+      "label": "Bermain Seru",
+      "labelNorm": "bermain seru",
+      "synonyms": [
+        "asyik"
+      ],
+      "labelEn": "fun",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri",
+        "seni-olahraga"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/fun-36482.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bermain Seru\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36482"
+    },
+    {
+      "id": "keluarga-sosial-pleasant-31764",
+      "label": "Bersahabat",
+      "labelNorm": "bersahabat",
+      "synonyms": [
+        "baik hati"
+      ],
+      "labelEn": "friendly",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/pleasant-31764.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bersahabat\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "31764"
+    },
+    {
+      "id": "keluarga-sosial-sad",
+      "label": "Bersedih",
+      "labelNorm": "bersedih",
+      "synonyms": [
+        "duka"
+      ],
+      "labelEn": "sad",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sad.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bersedih\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "11959"
+    },
+    {
+      "id": "keluarga-sosial-unfriendly-32150",
+      "label": "Bersikap Jutek",
+      "labelNorm": "bersikap jutek",
+      "synonyms": [
+        "jutek"
+      ],
+      "labelEn": "unfriendly",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/unfriendly-32150.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bersikap Jutek\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32150"
+    },
+    {
+      "id": "keluarga-sosial-rejoice",
+      "label": "Bersukacita",
+      "labelNorm": "bersukacita",
+      "synonyms": [
+        "riang"
+      ],
+      "labelEn": "rejoice",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/rejoice.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bersukacita\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "31186"
+    },
+    {
+      "id": "keluarga-sosial-visit",
+      "label": "Bertamu",
+      "labelNorm": "bertamu",
+      "synonyms": [
+        "silaturahmi"
+      ],
+      "labelEn": "visit",
+      "domains": [
+        "keluarga-sosial",
+        "seni-olahraga",
+        "tubuh-kesehatan"
+      ],
+      "groupId": "kegiatan-sosial",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/visit.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bertamu\" pada kategori Kegiatan Sosial, Pendidikan Jasmani.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "27568"
+    },
+    {
       "id": "keluarga-sosial-bingung",
       "label": "Bingung",
       "labelNorm": "bingung",
       "synonyms": [],
-      "labelEn": "bingung",
+      "labelEn": "confused",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -554,57 +677,13 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/confused-31855.webp",
       "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Confused\" pada kategori Emosi dan Perilaku.",
+      "altUrls": [
+        "/media/pictograms/confused.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Bingung\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31855"
-    },
-    {
-      "id": "keluarga-sosial-bored",
-      "label": "Bored",
-      "labelNorm": "bored",
-      "synonyms": [
-        "jenuh"
-      ],
-      "labelEn": "bosan",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/bored.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Bored\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "35531"
-    },
-    {
-      "id": "keluarga-sosial-boring",
-      "label": "Boring",
-      "labelNorm": "boring",
-      "synonyms": [],
-      "labelEn": "membosankan",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/boring.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Boring\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "2245"
     },
     {
       "id": "keluarga-sosial-boring-28705",
@@ -624,7 +703,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "boring 28705",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-boring-28705"
     },
@@ -646,7 +725,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "boring 31744",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-boring-31744"
     },
@@ -655,7 +734,7 @@
       "label": "Bosan",
       "labelNorm": "bosan",
       "synonyms": [],
-      "labelEn": "membosankan",
+      "labelEn": "bored",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -667,17 +746,19 @@
       "assetUrl": "/media/pictograms/boring-31744.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Boring\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Bosan\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31744"
     },
     {
-      "id": "keluarga-sosial-calm",
-      "label": "Calm",
-      "labelNorm": "calm",
-      "synonyms": [],
-      "labelEn": "tenang",
+      "id": "keluarga-sosial-boring",
+      "label": "Bosan Sekali",
+      "labelNorm": "bosan sekali",
+      "synonyms": [
+        "merasa jenuh"
+      ],
+      "labelEn": "boring",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -686,13 +767,13 @@
       "kind": "sifat",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/calm.webp",
+      "assetUrl": "/media/pictograms/boring.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Calm\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Bosan Sekali\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "37828"
+      "sourceRef": "2245"
     },
     {
       "id": "keluarga-sosial-calm-38931",
@@ -712,55 +793,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "calm 38931",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-calm-38931"
-    },
-    {
-      "id": "keluarga-sosial-calm-38932",
-      "label": "Calm 38932",
-      "labelNorm": "calm 38932",
-      "synonyms": [],
-      "labelEn": "tenang",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/calm-38932.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Calm\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38932"
-    },
-    {
-      "id": "keluarga-sosial-calm-down",
-      "label": "Calm Down",
-      "labelNorm": "calm down",
-      "synonyms": [
-        "down"
-      ],
-      "labelEn": "menenangkan diri",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/calm-down.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Calm Down\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32780"
     },
     {
       "id": "keluarga-sosial-calm-down-36688",
@@ -780,16 +815,40 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "calm down 36688",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-calm-down-36688"
+    },
+    {
+      "id": "keluarga-sosial-embarrass",
+      "label": "Canggung",
+      "labelNorm": "canggung",
+      "synonyms": [
+        "kikuk"
+      ],
+      "labelEn": "embarrassed",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/embarrass.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Canggung\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "30632"
     },
     {
       "id": "keluarga-sosial-capek",
       "label": "Capek",
       "labelNorm": "capek",
       "synonyms": [],
-      "labelEn": "lelah",
+      "labelEn": "tired",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -801,33 +860,10 @@
       "assetUrl": "/media/pictograms/tired-28709.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Tired\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Capek\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "28709"
-    },
-    {
-      "id": "keluarga-sosial-celebrate",
-      "label": "Celebrate",
-      "labelNorm": "celebrate",
-      "synonyms": [
-        "pesta"
-      ],
-      "labelEn": "merayakan",
-      "domains": [
-        "keluarga-sosial"
-      ],
-      "groupId": "kegiatan-sosial",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/celebrate.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Celebrate\" pada kategori Kegiatan Sosial.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "16475"
     },
     {
       "id": "keluarga-sosial-celebrate-16649",
@@ -846,7 +882,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "celebrate 16649",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-celebrate-16649"
     },
@@ -855,7 +891,7 @@
       "label": "Cemas",
       "labelNorm": "cemas",
       "synonyms": [],
-      "labelEn": "cemas",
+      "labelEn": "anxious",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -867,17 +903,89 @@
       "assetUrl": "/media/pictograms/anxious-30485.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Anxious\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Cemas\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "30485"
+    },
+    {
+      "id": "keluarga-sosial-worried-26986",
+      "label": "Cemas Menunggu",
+      "labelNorm": "cemas menunggu",
+      "synonyms": [
+        "gelisah menunggu"
+      ],
+      "labelEn": "worried",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/worried-26986.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Cemas Menunggu\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "26986"
+    },
+    {
+      "id": "keluarga-sosial-worried",
+      "label": "Cemas Sekali",
+      "labelNorm": "cemas sekali",
+      "synonyms": [
+        "terlalu khawatir"
+      ],
+      "labelEn": "worried",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/worried.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Cemas Sekali\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "26985"
+    },
+    {
+      "id": "keluarga-sosial-happy",
+      "label": "Ceria",
+      "labelNorm": "ceria",
+      "synonyms": [
+        "wajah ceria"
+      ],
+      "labelEn": "happy",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/happy.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ceria\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "3250"
     },
     {
       "id": "keluarga-sosial-cinta",
       "label": "Cinta",
       "labelNorm": "cinta",
       "synonyms": [],
-      "labelEn": "cinta",
+      "labelEn": "love",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -889,102 +997,10 @@
       "assetUrl": "/media/pictograms/love-11536.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Love\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Cinta\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "11536"
-    },
-    {
-      "id": "keluarga-sosial-cocky",
-      "label": "Cocky",
-      "labelNorm": "cocky",
-      "synonyms": [],
-      "labelEn": "cocky",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/cocky.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Cocky\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39971"
-    },
-    {
-      "id": "keluarga-sosial-cocky-39972",
-      "label": "Cocky 39972",
-      "labelNorm": "cocky 39972",
-      "synonyms": [],
-      "labelEn": "cocky",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/cocky-39972.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Cocky\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39972"
-    },
-    {
-      "id": "keluarga-sosial-confuse",
-      "label": "Confuse",
-      "labelNorm": "confuse",
-      "synonyms": [
-        "membingungkan"
-      ],
-      "labelEn": "bingung",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/confuse.webp",
-      "altAssetIds": [],
-      "altUrls": [
-        "/media/pictograms/confused-35541.webp"
-      ],
-      "altText": "Piktogram visual untuk konsep \"Confuse\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6992"
-    },
-    {
-      "id": "keluarga-sosial-confused",
-      "label": "Confused",
-      "labelNorm": "confused",
-      "synonyms": [],
-      "labelEn": "bingung",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/confused.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Confused\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "2352"
     },
     {
       "id": "keluarga-sosial-confused-31855",
@@ -1004,7 +1020,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "confused 31855",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-confused-31855"
     },
@@ -1026,7 +1042,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "confused 35521",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-confused-35521"
     },
@@ -1048,31 +1064,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "confused 35541",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-confused-35541"
-    },
-    {
-      "id": "keluarga-sosial-content",
-      "label": "Content",
-      "labelNorm": "content",
-      "synonyms": [],
-      "labelEn": "puas",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/content.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Content\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "35547"
     },
     {
       "id": "keluarga-sosial-content-28647",
@@ -1092,16 +1086,16 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "content 28647",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-content-28647"
     },
     {
-      "id": "keluarga-sosial-content-31923",
-      "label": "Content 31923",
-      "labelNorm": "content 31923",
+      "id": "keluarga-sosial-jitters",
+      "label": "Deg-Degan",
+      "labelNorm": "deg degan",
       "synonyms": [],
-      "labelEn": "puas",
+      "labelEn": "jitters",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -1110,101 +1104,13 @@
       "kind": "sifat",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/content-31923.webp",
+      "assetUrl": "/media/pictograms/jitters.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Content\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Deg-Degan\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "31923"
-    },
-    {
-      "id": "keluarga-sosial-content-32123",
-      "label": "Content 32123",
-      "labelNorm": "content 32123",
-      "synonyms": [],
-      "labelEn": "puas",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/content-32123.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Content\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32123"
-    },
-    {
-      "id": "keluarga-sosial-content-3245",
-      "label": "Content 3245",
-      "labelNorm": "content 3245",
-      "synonyms": [],
-      "labelEn": "puas",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/content-3245.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Content\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "3245"
-    },
-    {
-      "id": "keluarga-sosial-content-39814",
-      "label": "Content 39814",
-      "labelNorm": "content 39814",
-      "synonyms": [],
-      "labelEn": "puas",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/content-39814.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Content\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39814"
-    },
-    {
-      "id": "keluarga-sosial-content-9907",
-      "label": "Content 9907",
-      "labelNorm": "content 9907",
-      "synonyms": [],
-      "labelEn": "puas",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/content-9907.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Content\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "9907"
+      "sourceRef": "11312"
     },
     {
       "id": "keluarga-sosial-dewasa",
@@ -1237,28 +1143,6 @@
       "sourceRef": "custom:orang-dewasa"
     },
     {
-      "id": "keluarga-sosial-dislike",
-      "label": "Dislike",
-      "labelNorm": "dislike",
-      "synonyms": [],
-      "labelEn": "tidak suka",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dislike.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dislike\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37825"
-    },
-    {
       "id": "keluarga-sosial-dislike-31760",
       "label": "dislike 31760",
       "labelNorm": "dislike 31760",
@@ -1276,75 +1160,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "dislike 31760",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-dislike-31760"
-    },
-    {
-      "id": "keluarga-sosial-dislike-6155",
-      "label": "Dislike 6155",
-      "labelNorm": "dislike 6155",
-      "synonyms": [],
-      "labelEn": "tidak suka",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dislike-6155.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dislike\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6155"
-    },
-    {
-      "id": "keluarga-sosial-dislike-7179",
-      "label": "Dislike 7179",
-      "labelNorm": "dislike 7179",
-      "synonyms": [],
-      "labelEn": "tidak suka",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dislike-7179.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dislike\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7179"
-    },
-    {
-      "id": "keluarga-sosial-downhearted",
-      "label": "Downhearted",
-      "labelNorm": "downhearted",
-      "synonyms": [],
-      "labelEn": "murung",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/downhearted.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Downhearted\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32328"
     },
     {
       "id": "keluarga-sosial-downhearted-32329",
@@ -1364,7 +1182,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "downhearted 32329",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-downhearted-32329"
     },
@@ -1386,76 +1204,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "downhearted 37766",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-downhearted-37766"
-    },
-    {
-      "id": "keluarga-sosial-embarrass",
-      "label": "Embarrass",
-      "labelNorm": "embarrass",
-      "synonyms": [
-        "canggung"
-      ],
-      "labelEn": "malu",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/embarrass.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Embarrass\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "30632"
-    },
-    {
-      "id": "keluarga-sosial-everybody",
-      "label": "Everybody",
-      "labelNorm": "everybody",
-      "synonyms": [],
-      "labelEn": "everybody",
-      "domains": [
-        "keluarga-sosial"
-      ],
-      "groupId": "kegiatan-sosial",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/everybody.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Everybody\" pada kategori Kegiatan Sosial.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36081"
-    },
-    {
-      "id": "keluarga-sosial-frightened",
-      "label": "Frightened",
-      "labelNorm": "frightened",
-      "synonyms": [],
-      "labelEn": "takut",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/frightened.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Frightened\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "10208"
     },
     {
       "id": "keluarga-sosial-frightened-11951",
@@ -1475,54 +1226,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "frightened 11951",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-frightened-11951"
-    },
-    {
-      "id": "keluarga-sosial-frightened-26483",
-      "label": "Frightened 26483",
-      "labelNorm": "frightened 26483",
-      "synonyms": [],
-      "labelEn": "takut",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/frightened-26483.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Frightened\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "26483"
-    },
-    {
-      "id": "keluarga-sosial-fun",
-      "label": "Fun",
-      "labelNorm": "fun",
-      "synonyms": [],
-      "labelEn": "seru",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri",
-        "seni-olahraga"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/fun.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Fun\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "24733"
     },
     {
       "id": "keluarga-sosial-fun-24735",
@@ -1542,7 +1248,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "fun 24735",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-fun-24735"
     },
@@ -1564,64 +1270,16 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "fun 36481",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-fun-36481"
-    },
-    {
-      "id": "keluarga-sosial-fun-36482",
-      "label": "Fun 36482",
-      "labelNorm": "fun 36482",
-      "synonyms": [],
-      "labelEn": "seru",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri",
-        "seni-olahraga"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/fun-36482.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Fun\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36482"
-    },
-    {
-      "id": "keluarga-sosial-furious",
-      "label": "Furious",
-      "labelNorm": "furious",
-      "synonyms": [
-        "sangat marah",
-        "murka"
-      ],
-      "labelEn": "sangat marah",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/furious.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Furious\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38811"
     },
     {
       "id": "keluarga-sosial-gelisah",
       "label": "Gelisah",
       "labelNorm": "gelisah",
       "synonyms": [],
-      "labelEn": "cemas",
+      "labelEn": "anxious",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -1633,7 +1291,7 @@
       "assetUrl": "/media/pictograms/anxious-37175.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Anxious\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Gelisah\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "37175"
@@ -1643,7 +1301,7 @@
       "label": "Gemar",
       "labelNorm": "gemar",
       "synonyms": [],
-      "labelEn": "suka",
+      "labelEn": "like",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -1655,7 +1313,7 @@
       "assetUrl": "/media/pictograms/like-31861.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Like\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Gemar\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31861"
@@ -1665,7 +1323,7 @@
       "label": "Gembira",
       "labelNorm": "gembira",
       "synonyms": [],
-      "labelEn": "senang",
+      "labelEn": "happy",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -1677,17 +1335,65 @@
       "assetUrl": "/media/pictograms/happy-31849.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Happy\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Gembira\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31849"
+    },
+    {
+      "id": "keluarga-sosial-fun",
+      "label": "Gembira Sekali",
+      "labelNorm": "gembira sekali",
+      "synonyms": [
+        "riang gembira"
+      ],
+      "labelEn": "fun",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri",
+        "seni-olahraga"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/fun.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Gembira Sekali\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "24733"
+    },
+    {
+      "id": "keluarga-sosial-angry",
+      "label": "Geram",
+      "labelNorm": "geram",
+      "synonyms": [
+        "marah sekali"
+      ],
+      "labelEn": "angry",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/angry.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Geram\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2374"
     },
     {
       "id": "keluarga-sosial-gereja",
       "label": "Gereja",
       "labelNorm": "gereja",
       "synonyms": [
-        "church",
         "tempat ibadah"
       ],
       "labelEn": "church",
@@ -1707,30 +1413,6 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "3118"
-    },
-    {
-      "id": "keluarga-sosial-get-tired",
-      "label": "Get Tired",
-      "labelNorm": "get tired",
-      "synonyms": [],
-      "labelEn": "get tired",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/get-tired.webp",
-      "altAssetIds": [],
-      "altUrls": [
-        "/media/pictograms/tired-35537.webp"
-      ],
-      "altText": "Piktogram visual untuk konsep \"Get Tired\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6959"
     },
     {
       "id": "keluarga-sosial-gotong-royong",
@@ -1783,11 +1465,35 @@
       "sourceRef": "seed-keluarga-sosial-gotong-royong-masyarakat"
     },
     {
+      "id": "keluarga-sosial-nervous",
+      "label": "Grogi",
+      "labelNorm": "grogi",
+      "synonyms": [
+        "gemetar gugup"
+      ],
+      "labelEn": "nervous",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/nervous.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Grogi\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38929"
+    },
+    {
       "id": "keluarga-sosial-gugup",
       "label": "Gugup",
       "labelNorm": "gugup",
       "synonyms": [],
-      "labelEn": "gugup",
+      "labelEn": "nervous",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -1799,32 +1505,10 @@
       "assetUrl": "/media/pictograms/nervous-38930.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Nervous\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Gugup\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "38930"
-    },
-    {
-      "id": "keluarga-sosial-happy",
-      "label": "Happy",
-      "labelNorm": "happy",
-      "synonyms": [],
-      "labelEn": "senang",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/happy.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Happy\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "3250"
     },
     {
       "id": "keluarga-sosial-happy-10192",
@@ -1844,7 +1528,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "happy 10192",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-happy-10192"
     },
@@ -1866,40 +1550,16 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "happy 31849",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-happy-31849"
-    },
-    {
-      "id": "keluarga-sosial-hate",
-      "label": "Hate",
-      "labelNorm": "hate",
-      "synonyms": [
-        "benci"
-      ],
-      "labelEn": "benci",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/hate.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hate\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38936"
     },
     {
       "id": "keluarga-sosial-heran",
       "label": "Heran",
       "labelNorm": "heran",
       "synonyms": [],
-      "labelEn": "terkejut",
+      "labelEn": "surprised",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -1911,7 +1571,7 @@
       "assetUrl": "/media/pictograms/surprised-31099.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Surprised\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Heran\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31099"
@@ -1920,10 +1580,7 @@
       "id": "keluarga-sosial-ibu",
       "label": "Ibu",
       "labelNorm": "ibu",
-      "synonyms": [
-        "mother",
-        "mom"
-      ],
+      "synonyms": [],
       "labelEn": "mother",
       "domains": [
         "keluarga-sosial",
@@ -1942,35 +1599,13 @@
       "sourceRef": "2458"
     },
     {
-      "id": "keluarga-sosial-invite",
-      "label": "Invite",
-      "labelNorm": "invite",
+      "id": "keluarga-sosial-bored",
+      "label": "Jemu",
+      "labelNorm": "jemu",
       "synonyms": [
-        "mengundang",
-        "mengajak"
+        "jenuh"
       ],
-      "labelEn": "mengundang",
-      "domains": [
-        "keluarga-sosial"
-      ],
-      "groupId": "kegiatan-sosial",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/invite.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Invite\" pada kategori Kegiatan Sosial.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "16717"
-    },
-    {
-      "id": "keluarga-sosial-jitters",
-      "label": "Jitters",
-      "labelNorm": "jitters",
-      "synonyms": [],
-      "labelEn": "jitters",
+      "labelEn": "bored",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -1979,42 +1614,20 @@
       "kind": "sifat",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/jitters.webp",
+      "assetUrl": "/media/pictograms/bored.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Jitters\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Jemu\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "11312"
-    },
-    {
-      "id": "keluarga-sosial-jitters-31095",
-      "label": "Jitters 31095",
-      "labelNorm": "jitters 31095",
-      "synonyms": [],
-      "labelEn": "jitters",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/jitters-31095.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Jitters\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "31095"
+      "sourceRef": "35531"
     },
     {
       "id": "keluarga-sosial-kaget",
       "label": "Kaget",
       "labelNorm": "kaget",
       "synonyms": [],
-      "labelEn": "terkejut",
+      "labelEn": "surprised",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2026,7 +1639,7 @@
       "assetUrl": "/media/pictograms/surprised-2574.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Surprised\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Kaget\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2574"
@@ -2035,9 +1648,7 @@
       "id": "keluarga-sosial-kakak",
       "label": "Kakak",
       "labelNorm": "kakak",
-      "synonyms": [
-        "older sibling"
-      ],
+      "synonyms": [],
       "labelEn": "older sibling",
       "domains": [
         "keluarga-sosial",
@@ -2059,9 +1670,7 @@
       "id": "keluarga-sosial-kakek",
       "label": "Kakek",
       "labelNorm": "kakek",
-      "synonyms": [
-        "grandfather"
-      ],
+      "synonyms": [],
       "labelEn": "grandfather",
       "domains": [
         "keluarga-sosial",
@@ -2080,11 +1689,35 @@
       "sourceRef": "23718"
     },
     {
+      "id": "keluarga-sosial-love",
+      "label": "Kasih Sayang",
+      "labelNorm": "kasih sayang",
+      "synonyms": [
+        "saling menyayangi"
+      ],
+      "labelEn": "love",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/love.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kasih Sayang\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6600"
+    },
+    {
       "id": "keluarga-sosial-kebingungan",
       "label": "Kebingungan",
       "labelNorm": "kebingungan",
       "synonyms": [],
-      "labelEn": "bingung",
+      "labelEn": "confused",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2096,7 +1729,7 @@
       "assetUrl": "/media/pictograms/confused-35521.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Confused\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Kebingungan\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "35521"
@@ -2106,7 +1739,7 @@
       "label": "Kecewa",
       "labelNorm": "kecewa",
       "synonyms": [],
-      "labelEn": "murung",
+      "labelEn": "disappointed",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2118,7 +1751,7 @@
       "assetUrl": "/media/pictograms/downhearted-37766.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Downhearted\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Kecewa\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "37766"
@@ -2149,7 +1782,7 @@
       "label": "Kesal",
       "labelNorm": "kesal",
       "synonyms": [],
-      "labelEn": "marah",
+      "labelEn": "annoyed",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2161,7 +1794,7 @@
       "assetUrl": "/media/pictograms/angry-21820.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Angry\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Kesal\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "21820"
@@ -2171,7 +1804,7 @@
       "label": "Ketakutan",
       "labelNorm": "ketakutan",
       "synonyms": [],
-      "labelEn": "takut",
+      "labelEn": "scared",
       "domains": [
         "keluarga-sosial",
         "bina-diri",
@@ -2184,17 +1817,41 @@
       "assetUrl": "/media/pictograms/scared-31896.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Scared\" pada kategori Emosi dan Perilaku, Transportasi.",
+      "altText": "Piktogram visual untuk konsep \"Ketakutan\" pada kategori Emosi dan Perilaku, Transportasi.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31896"
+    },
+    {
+      "id": "keluarga-sosial-frightened",
+      "label": "Ketakutan Sekali",
+      "labelNorm": "ketakutan sekali",
+      "synonyms": [
+        "sangat takut"
+      ],
+      "labelEn": "frightened",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/frightened.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ketakutan Sekali\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "10208"
     },
     {
       "id": "keluarga-sosial-khawatir",
       "label": "Khawatir",
       "labelNorm": "khawatir",
       "synonyms": [],
-      "labelEn": "cemas",
+      "labelEn": "worried",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2205,11 +1862,57 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/anxious-37176.webp",
       "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Anxious\" pada kategori Emosi dan Perilaku.",
+      "altUrls": [
+        "/media/pictograms/worried-36341.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Khawatir\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "37176"
+    },
+    {
+      "id": "keluarga-sosial-unpleasant",
+      "label": "Kurang Ramah",
+      "labelNorm": "kurang ramah",
+      "synonyms": [],
+      "labelEn": "unpleasant",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/unpleasant.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kurang Ramah\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "10195"
+    },
+    {
+      "id": "keluarga-sosial-dislike",
+      "label": "Kurang Suka",
+      "labelNorm": "kurang suka",
+      "synonyms": [],
+      "labelEn": "dislike",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dislike.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kurang Suka\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37825"
     },
     {
       "id": "keluarga-sosial-lambang-garuda",
@@ -2230,7 +1933,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "lambang garuda",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-lambang-garuda"
     },
@@ -2240,7 +1943,6 @@
       "labelNorm": "lambang garuda pancasila",
       "synonyms": [
         "lambang garuda",
-        "garuda pancasila",
         "garuda",
         "lambang negara",
         "pkn",
@@ -2296,11 +1998,13 @@
       "sourceRef": "custom:lansia"
     },
     {
-      "id": "keluarga-sosial-like",
-      "label": "Like",
-      "labelNorm": "like",
-      "synonyms": [],
-      "labelEn": "suka",
+      "id": "keluarga-sosial-content",
+      "label": "Lega",
+      "labelNorm": "lega",
+      "synonyms": [
+        "merasa puas"
+      ],
+      "labelEn": "content",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2309,13 +2013,41 @@
       "kind": "sifat",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/like.webp",
+      "assetUrl": "/media/pictograms/content.webp",
       "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Like\" pada kategori Emosi dan Perilaku.",
+      "altUrls": [
+        "/media/pictograms/content-3245.webp",
+        "/media/pictograms/content-39814.webp",
+        "/media/pictograms/content-9907.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Lega\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "37721"
+      "sourceRef": "35547"
+    },
+    {
+      "id": "keluarga-sosial-tired",
+      "label": "Letih",
+      "labelNorm": "letih",
+      "synonyms": [
+        "kecapekan"
+      ],
+      "labelEn": "tired",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/tired.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Letih\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2314"
     },
     {
       "id": "keluarga-sosial-like-2418",
@@ -2335,7 +2067,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "like 2418",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-like-2418"
     },
@@ -2357,99 +2089,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "like 31861",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-like-31861"
-    },
-    {
-      "id": "keluarga-sosial-like-37758",
-      "label": "Like 37758",
-      "labelNorm": "like 37758",
-      "synonyms": [],
-      "labelEn": "suka",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/like-37758.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Like\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37758"
-    },
-    {
-      "id": "keluarga-sosial-like-37826",
-      "label": "Like 37826",
-      "labelNorm": "like 37826",
-      "synonyms": [],
-      "labelEn": "suka",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/like-37826.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Like\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37826"
-    },
-    {
-      "id": "keluarga-sosial-like-7124",
-      "label": "Like 7124",
-      "labelNorm": "like 7124",
-      "synonyms": [],
-      "labelEn": "suka",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/like-7124.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Like\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7124"
-    },
-    {
-      "id": "keluarga-sosial-love",
-      "label": "Love",
-      "labelNorm": "love",
-      "synonyms": [
-        "kasih"
-      ],
-      "labelEn": "cinta",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/love.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Love\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6600"
     },
     {
       "id": "keluarga-sosial-love-11536",
@@ -2469,7 +2111,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "love 11536",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-love-11536"
     },
@@ -2491,7 +2133,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "love 11538",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-love-11538"
     },
@@ -2500,7 +2142,7 @@
       "label": "Malu",
       "labelNorm": "malu",
       "synonyms": [],
-      "labelEn": "malu",
+      "labelEn": "shy",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2512,18 +2154,40 @@
       "assetUrl": "/media/pictograms/ashamed-11953.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ashamed\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Malu\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "11953"
     },
     {
+      "id": "keluarga-sosial-shy",
+      "label": "Malu-Malu",
+      "labelNorm": "malu malu",
+      "synonyms": [
+        "segan"
+      ],
+      "labelEn": "shy",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/shy.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Malu-Malu\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "8707"
+    },
+    {
       "id": "keluarga-sosial-masjid",
       "label": "Masjid",
       "labelNorm": "masjid",
-      "synonyms": [
-        "mosque"
-      ],
+      "synonyms": [],
       "labelEn": "mosque",
       "domains": [
         "keluarga-sosial",
@@ -2547,7 +2211,6 @@
       "label": "Membantu",
       "labelNorm": "membantu",
       "synonyms": [
-        "help",
         "menolong",
         "tolong"
       ],
@@ -2573,7 +2236,7 @@
       "label": "Membosankan",
       "labelNorm": "membosankan",
       "synonyms": [],
-      "labelEn": "membosankan",
+      "labelEn": "boring",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2585,7 +2248,7 @@
       "assetUrl": "/media/pictograms/boring-28705.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Boring\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Membosankan\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "28705"
@@ -2595,7 +2258,7 @@
       "label": "Menenangkan Diri",
       "labelNorm": "menenangkan diri",
       "synonyms": [],
-      "labelEn": "menenangkan diri",
+      "labelEn": "calm down",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2607,17 +2270,65 @@
       "assetUrl": "/media/pictograms/calm-down-36688.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Calm Down\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Menenangkan Diri\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "36688"
+    },
+    {
+      "id": "keluarga-sosial-calm-down",
+      "label": "Menenangkan Hati",
+      "labelNorm": "menenangkan hati",
+      "synonyms": [
+        "tarik napas tenang"
+      ],
+      "labelEn": "calm down",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/calm-down.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menenangkan Hati\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32780"
+    },
+    {
+      "id": "keluarga-sosial-angry-28671",
+      "label": "Mengamuk",
+      "labelNorm": "mengamuk",
+      "synonyms": [
+        "sangat kesal"
+      ],
+      "labelEn": "furious",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/angry-28671.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengamuk\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "28671"
     },
     {
       "id": "keluarga-sosial-mengantre",
       "label": "Mengantre",
       "labelNorm": "mengantre",
       "synonyms": [],
-      "labelEn": "antre",
+      "labelEn": "wait in a line",
       "domains": [
         "keluarga-sosial"
       ],
@@ -2628,7 +2339,7 @@
       "assetUrl": "/media/pictograms/wait-in-a-line-38410.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wait In A Line\" pada kategori Kegiatan Sosial.",
+      "altText": "Piktogram visual untuk konsep \"Mengantre\" pada kategori Kegiatan Sosial.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "38410"
@@ -2638,7 +2349,7 @@
       "label": "Mengantuk",
       "labelNorm": "mengantuk",
       "synonyms": [],
-      "labelEn": "lelah",
+      "labelEn": "sleepy",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2650,17 +2361,41 @@
       "assetUrl": "/media/pictograms/tired-31925.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Tired\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Mengantuk\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31925"
+    },
+    {
+      "id": "keluarga-sosial-invite",
+      "label": "Mengundang",
+      "labelNorm": "mengundang",
+      "synonyms": [
+        "mengajak",
+        "undangan"
+      ],
+      "labelEn": "invite",
+      "domains": [
+        "keluarga-sosial"
+      ],
+      "groupId": "kegiatan-sosial",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/invite.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengundang\" pada kategori Kegiatan Sosial.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "16717"
     },
     {
       "id": "keluarga-sosial-mengunjungi",
       "label": "Mengunjungi",
       "labelNorm": "mengunjungi",
       "synonyms": [],
-      "labelEn": "berkunjung",
+      "labelEn": "visit",
       "domains": [
         "keluarga-sosial",
         "seni-olahraga",
@@ -2673,17 +2408,41 @@
       "assetUrl": "/media/pictograms/visit-39936.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Visit\" pada kategori Kegiatan Sosial, Pendidikan Jasmani.",
+      "altText": "Piktogram visual untuk konsep \"Mengunjungi\" pada kategori Kegiatan Sosial, Pendidikan Jasmani.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "39936"
+    },
+    {
+      "id": "keluarga-sosial-dislike-6155",
+      "label": "Menolak",
+      "labelNorm": "menolak",
+      "synonyms": [
+        "enggan"
+      ],
+      "labelEn": "reject",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dislike-6155.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menolak\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6155"
     },
     {
       "id": "keluarga-sosial-menyenangkan",
       "label": "Menyenangkan",
       "labelNorm": "menyenangkan",
       "synonyms": [],
-      "labelEn": "seru",
+      "labelEn": "fun",
       "domains": [
         "keluarga-sosial",
         "bina-diri",
@@ -2696,17 +2455,41 @@
       "assetUrl": "/media/pictograms/fun-36481.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Fun\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Menyenangkan\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "36481"
+    },
+    {
+      "id": "keluarga-sosial-pleasant",
+      "label": "Menyenangkan Hati",
+      "labelNorm": "menyenangkan hati",
+      "synonyms": [
+        "ramah tamah"
+      ],
+      "labelEn": "pleasant",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/pleasant.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menyenangkan Hati\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7251"
     },
     {
       "id": "keluarga-sosial-menyesal",
       "label": "Menyesal",
       "labelNorm": "menyesal",
       "synonyms": [],
-      "labelEn": "malu",
+      "labelEn": "regretful",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2718,17 +2501,161 @@
       "assetUrl": "/media/pictograms/ashamed-31919.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ashamed\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Menyesal\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31919"
+    },
+    {
+      "id": "keluarga-sosial-like",
+      "label": "Menyukai",
+      "labelNorm": "menyukai",
+      "synonyms": [
+        "senang dengan"
+      ],
+      "labelEn": "like",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/like.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menyukai\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37721"
+    },
+    {
+      "id": "keluarga-sosial-like-7124",
+      "label": "Menyukai Ini",
+      "labelNorm": "menyukai ini",
+      "synonyms": [
+        "jempol suka"
+      ],
+      "labelEn": "like",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/like-7124.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menyukai Ini\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7124"
+    },
+    {
+      "id": "keluarga-sosial-worry",
+      "label": "Merasa Khawatir",
+      "labelNorm": "merasa khawatir",
+      "synonyms": [
+        "cemas hati"
+      ],
+      "labelEn": "worry",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/worry.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Merasa Khawatir\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "28713"
+    },
+    {
+      "id": "keluarga-sosial-get-tired",
+      "label": "Merasa Lelah",
+      "labelNorm": "merasa lelah",
+      "synonyms": [],
+      "labelEn": "get tired",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/get-tired.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/tired-35537.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Merasa Lelah\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6959"
+    },
+    {
+      "id": "keluarga-sosial-frightened-26483",
+      "label": "Merasa Takut",
+      "labelNorm": "merasa takut",
+      "synonyms": [
+        "rasa takut"
+      ],
+      "labelEn": "frightened",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/frightened-26483.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Merasa Takut\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "26483"
+    },
+    {
+      "id": "keluarga-sosial-jitters-31095",
+      "label": "Merasa Waswas",
+      "labelNorm": "merasa waswas",
+      "synonyms": [
+        "waswas"
+      ],
+      "labelEn": "jitters",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/jitters-31095.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Merasa Waswas\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "31095"
     },
     {
       "id": "keluarga-sosial-merayakan",
       "label": "Merayakan",
       "labelNorm": "merayakan",
       "synonyms": [],
-      "labelEn": "merayakan",
+      "labelEn": "celebrate",
       "domains": [
         "keluarga-sosial"
       ],
@@ -2739,17 +2666,63 @@
       "assetUrl": "/media/pictograms/celebrate-16649.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Celebrate\" pada kategori Kegiatan Sosial.",
+      "altText": "Piktogram visual untuk konsep \"Merayakan\" pada kategori Kegiatan Sosial.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "16649"
+    },
+    {
+      "id": "keluarga-sosial-celebrate",
+      "label": "Merayakan Pesta",
+      "labelNorm": "merayakan pesta",
+      "synonyms": [
+        "pesta",
+        "syukuran"
+      ],
+      "labelEn": "celebrate",
+      "domains": [
+        "keluarga-sosial"
+      ],
+      "groupId": "kegiatan-sosial",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/celebrate.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Merayakan Pesta\" pada kategori Kegiatan Sosial.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "16475"
+    },
+    {
+      "id": "keluarga-sosial-furious",
+      "label": "Murka",
+      "labelNorm": "murka",
+      "synonyms": [],
+      "labelEn": "furious",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/furious.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Murka\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38811"
     },
     {
       "id": "keluarga-sosial-murung",
       "label": "Murung",
       "labelNorm": "murung",
       "synonyms": [],
-      "labelEn": "murung",
+      "labelEn": "downhearted",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2761,7 +2734,7 @@
       "assetUrl": "/media/pictograms/downhearted-32329.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Downhearted\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Murung\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "32329"
@@ -2773,7 +2746,6 @@
       "synonyms": [
         "diskusi",
         "mufakat",
-        "rapat",
         "berpendapat",
         "sila keempat",
         "demokrasi anak"
@@ -2799,9 +2771,7 @@
       "id": "keluarga-sosial-nenek",
       "label": "Nenek",
       "labelNorm": "nenek",
-      "synonyms": [
-        "grandmother"
-      ],
+      "synonyms": [],
       "labelEn": "grandmother",
       "domains": [
         "keluarga-sosial",
@@ -2818,30 +2788,6 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "23710"
-    },
-    {
-      "id": "keluarga-sosial-nervous",
-      "label": "Nervous",
-      "labelNorm": "nervous",
-      "synonyms": [
-        "grogi"
-      ],
-      "labelEn": "gugup",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/nervous.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Nervous\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38929"
     },
     {
       "id": "keluarga-sosial-nervous-38930",
@@ -2861,9 +2807,57 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "nervous 38930",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-nervous-38930"
+    },
+    {
+      "id": "keluarga-sosial-terkejut",
+      "label": "Ngeri",
+      "labelNorm": "ngeri",
+      "synonyms": [
+        "sangat kaget"
+      ],
+      "labelEn": "frightened",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/frightened-11951.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ngeri\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "11951"
+    },
+    {
+      "id": "keluarga-sosial-pleasant-37800",
+      "label": "Nyaman Hati",
+      "labelNorm": "nyaman hati",
+      "synonyms": [
+        "merasa nyaman"
+      ],
+      "labelEn": "pleasant",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/pleasant-37800.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Nyaman Hati\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37800"
     },
     {
       "id": "keluarga-sosial-orang-dewasa",
@@ -2885,7 +2879,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "orang dewasa",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-orang-dewasa"
     },
@@ -2894,7 +2888,7 @@
       "label": "Pemalu",
       "labelNorm": "pemalu",
       "synonyms": [],
-      "labelEn": "malu",
+      "labelEn": "shy",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -2905,55 +2899,13 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/shy-31750.webp",
       "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Shy\" pada kategori Emosi dan Perilaku.",
+      "altUrls": [
+        "/media/pictograms/shy-37791.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Pemalu\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31750"
-    },
-    {
-      "id": "keluarga-sosial-play",
-      "label": "Play",
-      "labelNorm": "play",
-      "synonyms": [],
-      "labelEn": "bermain",
-      "domains": [
-        "keluarga-sosial",
-        "seni-olahraga"
-      ],
-      "groupId": "kegiatan-sosial",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/play.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Play\" pada kategori Kegiatan Sosial.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6537"
-    },
-    {
-      "id": "keluarga-sosial-pleasant",
-      "label": "Pleasant",
-      "labelNorm": "pleasant",
-      "synonyms": [],
-      "labelEn": "menyenangkan",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/pleasant.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Pleasant\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7251"
     },
     {
       "id": "keluarga-sosial-pleasant-10212",
@@ -2973,60 +2925,16 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "pleasant 10212",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-pleasant-10212"
-    },
-    {
-      "id": "keluarga-sosial-pleasant-31764",
-      "label": "Pleasant 31764",
-      "labelNorm": "pleasant 31764",
-      "synonyms": [],
-      "labelEn": "menyenangkan",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/pleasant-31764.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Pleasant\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "31764"
-    },
-    {
-      "id": "keluarga-sosial-pleasant-37800",
-      "label": "Pleasant 37800",
-      "labelNorm": "pleasant 37800",
-      "synonyms": [],
-      "labelEn": "menyenangkan",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/pleasant-37800.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Pleasant\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37800"
     },
     {
       "id": "keluarga-sosial-puas",
       "label": "Puas",
       "labelNorm": "puas",
       "synonyms": [],
-      "labelEn": "puas",
+      "labelEn": "content",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -3038,17 +2946,67 @@
       "assetUrl": "/media/pictograms/content-28647.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Content\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Puas\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "28647"
+    },
+    {
+      "id": "keluarga-sosial-content-32123",
+      "label": "Puas Hati",
+      "labelNorm": "puas hati",
+      "synonyms": [
+        "hati puas"
+      ],
+      "labelEn": "content",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/content-32123.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Puas Hati\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32123"
+    },
+    {
+      "id": "keluarga-sosial-confuse",
+      "label": "Ragu-Ragu",
+      "labelNorm": "ragu ragu",
+      "synonyms": [
+        "bimbang hati"
+      ],
+      "labelEn": "confused",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/confuse.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/confused-35541.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Ragu-Ragu\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6992"
     },
     {
       "id": "keluarga-sosial-ramah",
       "label": "Ramah",
       "labelNorm": "ramah",
       "synonyms": [],
-      "labelEn": "menyenangkan",
+      "labelEn": "friendly",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -3060,19 +3018,19 @@
       "assetUrl": "/media/pictograms/pleasant-10212.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Pleasant\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Ramah\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "10212"
     },
     {
-      "id": "keluarga-sosial-rejoice",
-      "label": "Rejoice",
-      "labelNorm": "rejoice",
+      "id": "keluarga-sosial-shy-37767",
+      "label": "Rasa Malu",
+      "labelNorm": "rasa malu",
       "synonyms": [
-        "bersukacita"
+        "merasa segan"
       ],
-      "labelEn": "bersukacita",
+      "labelEn": "shy",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -3081,21 +3039,20 @@
       "kind": "sifat",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/rejoice.webp",
+      "assetUrl": "/media/pictograms/shy-37767.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Rejoice\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Rasa Malu\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "31186"
+      "sourceRef": "37767"
     },
     {
       "id": "keluarga-sosial-remaja-muda",
       "label": "Remaja / Muda",
       "labelNorm": "remaja muda",
       "synonyms": [
-        "remaja",
-        "young"
+        "remaja"
       ],
       "labelEn": "muda",
       "domains": [
@@ -3115,11 +3072,35 @@
       "sourceRef": "26146"
     },
     {
+      "id": "keluarga-sosial-anxious",
+      "label": "Risau",
+      "labelNorm": "risau",
+      "synonyms": [
+        "bimbang"
+      ],
+      "labelEn": "anxious",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/anxious.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Risau\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "30484"
+    },
+    {
       "id": "keluarga-sosial-sabar",
       "label": "Sabar",
       "labelNorm": "sabar",
       "synonyms": [],
-      "labelEn": "tenang",
+      "labelEn": "patient",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -3131,63 +3112,19 @@
       "assetUrl": "/media/pictograms/calm-38931.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Calm\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Sabar\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "38931"
     },
     {
-      "id": "keluarga-sosial-sad",
-      "label": "Sad",
-      "labelNorm": "sad",
-      "synonyms": [],
-      "labelEn": "sedih",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/sad.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Sad\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "11959"
-    },
-    {
-      "id": "keluarga-sosial-sad-31939",
-      "label": "Sad 31939",
-      "labelNorm": "sad 31939",
-      "synonyms": [],
-      "labelEn": "sedih",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/sad-31939.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Sad\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "31939"
-    },
-    {
-      "id": "keluarga-sosial-sadden",
-      "label": "Sadden",
-      "labelNorm": "sadden",
+      "id": "keluarga-sosial-angry-31101",
+      "label": "Sangat Marah",
+      "labelNorm": "sangat marah",
       "synonyms": [
-        "bersedih"
+        "wajah marah"
       ],
-      "labelEn": "sedih",
+      "labelEn": "angry",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -3196,20 +3133,20 @@
       "kind": "sifat",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/sadden.webp",
+      "assetUrl": "/media/pictograms/angry-31101.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Sadden\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Sangat Marah\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "7286"
+      "sourceRef": "31101"
     },
     {
       "id": "keluarga-sosial-sayang",
       "label": "Sayang",
       "labelNorm": "sayang",
       "synonyms": [],
-      "labelEn": "cinta",
+      "labelEn": "love",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -3221,33 +3158,10 @@
       "assetUrl": "/media/pictograms/love-11538.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Love\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Sayang\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "11538"
-    },
-    {
-      "id": "keluarga-sosial-scared",
-      "label": "Scared",
-      "labelNorm": "scared",
-      "synonyms": [],
-      "labelEn": "takut",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri",
-        "transportasi-keselamatan"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/scared-2261.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Scared\" pada kategori Emosi dan Perilaku, Transportasi.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "2261"
     },
     {
       "id": "keluarga-sosial-scared-2261",
@@ -3268,7 +3182,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "scared 2261",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-scared-2261"
     },
@@ -3291,16 +3205,111 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "scared 31896",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-scared-31896"
+    },
+    {
+      "id": "keluarga-sosial-downhearted",
+      "label": "Sedih Sekali",
+      "labelNorm": "sedih sekali",
+      "synonyms": [
+        "berkecil hati"
+      ],
+      "labelEn": "downhearted",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/downhearted.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sedih Sekali\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32328"
+    },
+    {
+      "id": "keluarga-sosial-everybody",
+      "label": "Semua Orang",
+      "labelNorm": "semua orang",
+      "synonyms": [
+        "semua orang bersama"
+      ],
+      "labelEn": "everybody",
+      "domains": [
+        "keluarga-sosial"
+      ],
+      "groupId": "kegiatan-sosial",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/everybody.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Semua Orang\" pada kategori Kegiatan Sosial.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36081"
+    },
+    {
+      "id": "keluarga-sosial-content-31923",
+      "label": "Senang Hati",
+      "labelNorm": "senang hati",
+      "synonyms": [
+        "gembira hati"
+      ],
+      "labelEn": "pleased",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/content-31923.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Senang Hati\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "31923"
+    },
+    {
+      "id": "keluarga-sosial-like-37826",
+      "label": "Senang Sekali",
+      "labelNorm": "senang sekali",
+      "synonyms": [
+        "sangat suka"
+      ],
+      "labelEn": "like",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/like-37826.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Senang Sekali\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37826"
     },
     {
       "id": "keluarga-sosial-seru",
       "label": "Seru",
       "labelNorm": "seru",
       "synonyms": [],
-      "labelEn": "seru",
+      "labelEn": "fun",
       "domains": [
         "keluarga-sosial",
         "bina-diri",
@@ -3313,32 +3322,10 @@
       "assetUrl": "/media/pictograms/fun-24735.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Fun\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Seru\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "24735"
-    },
-    {
-      "id": "keluarga-sosial-shy",
-      "label": "Shy",
-      "labelNorm": "shy",
-      "synonyms": [],
-      "labelEn": "malu",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/shy.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Shy\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8707"
     },
     {
       "id": "keluarga-sosial-shy-31750",
@@ -3358,16 +3345,18 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "shy 31750",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-shy-31750"
     },
     {
-      "id": "keluarga-sosial-shy-37767",
-      "label": "Shy 37767",
-      "labelNorm": "shy 37767",
-      "synonyms": [],
-      "labelEn": "malu",
+      "id": "keluarga-sosial-cocky",
+      "label": "Sombong",
+      "labelNorm": "sombong",
+      "synonyms": [
+        "tinggi hati"
+      ],
+      "labelEn": "cocky",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -3376,35 +3365,13 @@
       "kind": "sifat",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/shy-37767.webp",
+      "assetUrl": "/media/pictograms/cocky.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Shy\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Sombong\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "37767"
-    },
-    {
-      "id": "keluarga-sosial-shy-37791",
-      "label": "Shy 37791",
-      "labelNorm": "shy 37791",
-      "synonyms": [],
-      "labelEn": "malu",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/shy-37791.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Shy\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37791"
+      "sourceRef": "39971"
     },
     {
       "id": "keluarga-sosial-sopan-santun",
@@ -3433,7 +3400,7 @@
       "label": "Suka",
       "labelNorm": "suka",
       "synonyms": [],
-      "labelEn": "suka",
+      "labelEn": "like",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -3445,32 +3412,10 @@
       "assetUrl": "/media/pictograms/like-2418.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Like\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Suka\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2418"
-    },
-    {
-      "id": "keluarga-sosial-surprised",
-      "label": "Surprised",
-      "labelNorm": "surprised",
-      "synonyms": [],
-      "labelEn": "terkejut",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/surprised.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Surprised\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "35529"
     },
     {
       "id": "keluarga-sosial-surprised-2574",
@@ -3490,7 +3435,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "surprised 2574",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-surprised-2574"
     },
@@ -3512,38 +3457,40 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "surprised 31099",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-surprised-31099"
     },
     {
-      "id": "keluarga-sosial-surprised-32170",
-      "label": "Surprised 32170",
-      "labelNorm": "surprised 32170",
-      "synonyms": [],
-      "labelEn": "terkejut",
+      "id": "keluarga-sosial-scared",
+      "label": "Takut Sekali",
+      "labelNorm": "takut sekali",
+      "synonyms": [
+        "terkejut takut"
+      ],
+      "labelEn": "scared",
       "domains": [
         "keluarga-sosial",
-        "bina-diri"
+        "bina-diri",
+        "transportasi-keselamatan"
       ],
       "groupId": "emosi-dan-perilaku",
       "kind": "sifat",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/surprised-32170.webp",
+      "assetUrl": "/media/pictograms/scared-2261.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Surprised\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Takut Sekali\" pada kategori Emosi dan Perilaku, Transportasi.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "32170"
+      "sourceRef": "2261"
     },
     {
       "id": "keluarga-sosial-teman",
       "label": "Teman",
       "labelNorm": "teman",
       "synonyms": [
-        "friend",
         "sahabat",
         "sosial"
       ],
@@ -3564,11 +3511,13 @@
       "sourceRef": "25790"
     },
     {
-      "id": "keluarga-sosial-terkejut",
-      "label": "Terkejut",
-      "labelNorm": "terkejut",
-      "synonyms": [],
-      "labelEn": "takut",
+      "id": "keluarga-sosial-calm-38932",
+      "label": "Tenang Sekali",
+      "labelNorm": "tenang sekali",
+      "synonyms": [
+        "hati damai"
+      ],
+      "labelEn": "calm",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -3577,20 +3526,89 @@
       "kind": "sifat",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/frightened-11951.webp",
+      "assetUrl": "/media/pictograms/calm-38932.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Frightened\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Tenang Sekali\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "11951"
+      "sourceRef": "38932"
+    },
+    {
+      "id": "keluarga-sosial-calm",
+      "label": "Tenteram",
+      "labelNorm": "tenteram",
+      "synonyms": [
+        "tenang hati"
+      ],
+      "labelEn": "calm",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/calm.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Tenteram\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37828"
+    },
+    {
+      "id": "keluarga-sosial-surprised",
+      "label": "Terkejut",
+      "labelNorm": "terkejut",
+      "synonyms": [],
+      "labelEn": "surprised",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/surprised.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Terkejut\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "35529"
+    },
+    {
+      "id": "keluarga-sosial-surprised-32170",
+      "label": "Terperanjat",
+      "labelNorm": "terperanjat",
+      "synonyms": [
+        "kaget sekali"
+      ],
+      "labelEn": "surprised",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/surprised-32170.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Terperanjat\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32170"
     },
     {
       "id": "keluarga-sosial-tersenyum",
       "label": "Tersenyum",
       "labelNorm": "tersenyum",
       "synonyms": [
-        "smile",
         "senyum"
       ],
       "labelEn": "smile",
@@ -3611,11 +3629,58 @@
       "sourceRef": "13354"
     },
     {
+      "id": "keluarga-sosial-ashamed",
+      "label": "Tersipu",
+      "labelNorm": "tersipu",
+      "synonyms": [
+        "merasa malu"
+      ],
+      "labelEn": "ashamed",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/ashamed.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Tersipu\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6922"
+    },
+    {
+      "id": "keluarga-sosial-like-37758",
+      "label": "Tertarik",
+      "labelNorm": "tertarik",
+      "synonyms": [
+        "menyukai sekali"
+      ],
+      "labelEn": "interested",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/like-37758.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Tertarik\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37758"
+    },
+    {
       "id": "keluarga-sosial-tertawa",
       "label": "Tertawa",
       "labelNorm": "tertawa",
       "synonyms": [
-        "laugh",
         "tawa"
       ],
       "labelEn": "laugh",
@@ -3636,11 +3701,57 @@
       "sourceRef": "30393"
     },
     {
+      "id": "keluarga-sosial-dislike-7179",
+      "label": "Tidak Berkenan",
+      "labelNorm": "tidak berkenan",
+      "synonyms": [],
+      "labelEn": "dislike",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dislike-7179.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Tidak Berkenan\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7179"
+    },
+    {
+      "id": "keluarga-sosial-unfriendly",
+      "label": "Tidak Ramah",
+      "labelNorm": "tidak ramah",
+      "synonyms": [
+        "bermusuhan"
+      ],
+      "labelEn": "unfriendly",
+      "domains": [
+        "keluarga-sosial",
+        "bina-diri"
+      ],
+      "groupId": "emosi-dan-perilaku",
+      "kind": "sifat",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/unfriendly.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Tidak Ramah\" pada kategori Emosi dan Perilaku.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6902"
+    },
+    {
       "id": "keluarga-sosial-tidak-suka",
       "label": "Tidak Suka",
       "labelNorm": "tidak suka",
       "synonyms": [],
-      "labelEn": "tidak suka",
+      "labelEn": "dislike",
       "domains": [
         "keluarga-sosial",
         "bina-diri"
@@ -3652,32 +3763,10 @@
       "assetUrl": "/media/pictograms/dislike-31760.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dislike\" pada kategori Emosi dan Perilaku.",
+      "altText": "Piktogram visual untuk konsep \"Tidak Suka\" pada kategori Emosi dan Perilaku.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31760"
-    },
-    {
-      "id": "keluarga-sosial-tired",
-      "label": "Tired",
-      "labelNorm": "tired",
-      "synonyms": [],
-      "labelEn": "lelah",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/tired.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Tired\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "2314"
     },
     {
       "id": "keluarga-sosial-tired-28709",
@@ -3697,7 +3786,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "tired 28709",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-tired-28709"
     },
@@ -3719,7 +3808,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "tired 31925",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-tired-31925"
     },
@@ -3741,75 +3830,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "tired 35537",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-tired-35537"
-    },
-    {
-      "id": "keluarga-sosial-unfriendly",
-      "label": "Unfriendly",
-      "labelNorm": "unfriendly",
-      "synonyms": [],
-      "labelEn": "unfriendly",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/unfriendly.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Unfriendly\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6902"
-    },
-    {
-      "id": "keluarga-sosial-unfriendly-32150",
-      "label": "Unfriendly 32150",
-      "labelNorm": "unfriendly 32150",
-      "synonyms": [],
-      "labelEn": "unfriendly",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/unfriendly-32150.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Unfriendly\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32150"
-    },
-    {
-      "id": "keluarga-sosial-unpleasant",
-      "label": "Unpleasant",
-      "labelNorm": "unpleasant",
-      "synonyms": [],
-      "labelEn": "unpleasant",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/unpleasant.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Unpleasant\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "10195"
     },
     {
       "id": "keluarga-sosial-upacara-bendera",
@@ -3844,29 +3867,6 @@
       "sourceRef": "custom:upacara-bendera"
     },
     {
-      "id": "keluarga-sosial-visit",
-      "label": "Visit",
-      "labelNorm": "visit",
-      "synonyms": [],
-      "labelEn": "berkunjung",
-      "domains": [
-        "keluarga-sosial",
-        "seni-olahraga",
-        "tubuh-kesehatan"
-      ],
-      "groupId": "kegiatan-sosial",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/visit.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Visit\" pada kategori Kegiatan Sosial, Pendidikan Jasmani.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "27568"
-    },
-    {
       "id": "keluarga-sosial-visit-28187",
       "label": "visit 28187",
       "labelNorm": "visit 28187",
@@ -3885,7 +3885,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "visit 28187",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-visit-28187"
     },
@@ -3908,34 +3908,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "visit 39936",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-visit-39936"
-    },
-    {
-      "id": "keluarga-sosial-wait-in-a-line",
-      "label": "Wait In A Line",
-      "labelNorm": "wait in a line",
-      "synonyms": [
-        "tertib",
-        "baris",
-        "line"
-      ],
-      "labelEn": "antre",
-      "domains": [
-        "keluarga-sosial"
-      ],
-      "groupId": "kegiatan-sosial",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/wait-in-a-line.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wait In A Line\" pada kategori Kegiatan Sosial.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36845"
     },
     {
       "id": "keluarga-sosial-wait-in-a-line-38410",
@@ -3954,97 +3929,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "wait in a line 38410",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-wait-in-a-line-38410"
-    },
-    {
-      "id": "keluarga-sosial-worried",
-      "label": "Worried",
-      "labelNorm": "worried",
-      "synonyms": [],
-      "labelEn": "khawatir",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/worried.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Worried\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "26985"
-    },
-    {
-      "id": "keluarga-sosial-worried-26986",
-      "label": "Worried 26986",
-      "labelNorm": "worried 26986",
-      "synonyms": [],
-      "labelEn": "khawatir",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/worried-26986.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Worried\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "26986"
-    },
-    {
-      "id": "keluarga-sosial-worried-36341",
-      "label": "Worried 36341",
-      "labelNorm": "worried 36341",
-      "synonyms": [],
-      "labelEn": "khawatir",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/worried-36341.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Worried\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36341"
-    },
-    {
-      "id": "keluarga-sosial-worry",
-      "label": "Worry",
-      "labelNorm": "worry",
-      "synonyms": [],
-      "labelEn": "khawatir",
-      "domains": [
-        "keluarga-sosial",
-        "bina-diri"
-      ],
-      "groupId": "emosi-dan-perilaku",
-      "kind": "sifat",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/worry.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Worry\" pada kategori Emosi dan Perilaku.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28713"
     },
     {
       "id": "keluarga-sosial-young",
@@ -4064,7 +3951,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "young",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-keluarga-sosial-young"
     }

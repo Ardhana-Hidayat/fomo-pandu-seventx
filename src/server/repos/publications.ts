@@ -14,13 +14,46 @@ export interface PublicationWithLesson extends Publication {
   lesson: Lesson;
 }
 
-function generateShareCode(): string {
-  const chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"; // Tanpa 0, 1, I, O untuk keterbacaan
-  let result = "";
-  for (let i = 0; i < 8; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
+const SHARE_CODE_REGEX = /^\d{6}$/;
+
+function isEasyShareCodePattern(code: string): boolean {
+  if (/^(\d)\1{5}$/.test(code)) return true;
+  const ascending = "0123456789012345";
+  const descending = "9876543210987654";
+  if (ascending.includes(code) || descending.includes(code)) return true;
+  if (/^(\d{2})\1{2}$/.test(code)) return true;
+  if (/^(\d{3})\1$/.test(code)) return true;
+  return false;
+}
+
+function generateShareCodeCandidate(): string {
+  for (let i = 0; i < 50; i++) {
+    const candidate = Math.floor(100000 + Math.random() * 900000).toString();
+    if (!isEasyShareCodePattern(candidate)) {
+      return candidate;
+    }
   }
-  return result;
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+async function generateUniqueShareCode(usedInBatch: Set<string>): Promise<string> {
+  for (let attempt = 0; attempt < 25; attempt++) {
+    const candidate = generateShareCodeCandidate();
+    if (usedInBatch.has(candidate)) continue;
+
+    const existing = await db
+      .select({ id: publications.id })
+      .from(publications)
+      .where(eq(publications.shareCode, candidate))
+      .limit(1);
+
+    if (existing.length === 0) {
+      usedInBatch.add(candidate);
+      return candidate;
+    }
+  }
+
+  throw new Error("Gagal menghasilkan kode materi 6 angka yang unik");
 }
 
 export async function publishLesson(
@@ -98,22 +131,23 @@ export async function publishLesson(
       visible: boolean;
     }> = [];
 
+    const allocatedCodes = new Set<string>();
     for (const cId of uniqueClassroomIds) {
       const existing = existingByClassroom.get(cId);
       if (existing) {
-        if (existing.shareCode) {
+        if (existing.shareCode && SHARE_CODE_REGEX.test(existing.shareCode)) {
           existingIdsToUpdate.push(existing.id);
         } else {
           existingMissingCodeUpdates.push({
             id: existing.id,
-            shareCode: generateShareCode(),
+            shareCode: await generateUniqueShareCode(allocatedCodes),
           });
         }
       } else {
         newPubValues.push({
           lessonId,
           classroomId: cId,
-          shareCode: generateShareCode(),
+          shareCode: await generateUniqueShareCode(allocatedCodes),
           visible: true,
         });
       }
@@ -233,6 +267,13 @@ export async function listPublicationsForClassroom(
 export async function getPublicationByShareCode(
   shareCode: string
 ): Promise<Result<PublicationWithLesson>> {
+  const cleanCode = shareCode.trim();
+  if (!SHARE_CODE_REGEX.test(cleanCode)) {
+    return err(
+      makeAppError("NOT_FOUND", "Materi atau tautan tidak ditemukan")
+    );
+  }
+
   try {
     const rows = await db
       .select({
@@ -243,7 +284,7 @@ export async function getPublicationByShareCode(
       .innerJoin(lessons, eq(publications.lessonId, lessons.id))
       .where(
         and(
-          eq(publications.shareCode, shareCode.trim().toUpperCase()),
+          eq(publications.shareCode, cleanCode),
           eq(publications.visible, true),
           eq(lessons.status, "published")
         )
@@ -252,8 +293,8 @@ export async function getPublicationByShareCode(
 
     let found = rows[0];
     if (!found && process.env.NODE_ENV !== "test") {
-      const DEMO_SHARE_CODES = ["DEMO1234", "HEWN1234"];
-      if (DEMO_SHARE_CODES.includes(shareCode.trim().toUpperCase())) {
+      const DEMO_SHARE_CODES = ["100101", "100102"];
+      if (DEMO_SHARE_CODES.includes(cleanCode)) {
         try {
           const { seedDatabase } = await import("../db/seed");
           await seedDatabase();
@@ -266,7 +307,7 @@ export async function getPublicationByShareCode(
             .innerJoin(lessons, eq(publications.lessonId, lessons.id))
             .where(
               and(
-                eq(publications.shareCode, shareCode.trim().toUpperCase()),
+                eq(publications.shareCode, cleanCode),
                 eq(publications.visible, true),
                 eq(lessons.status, "published")
               )

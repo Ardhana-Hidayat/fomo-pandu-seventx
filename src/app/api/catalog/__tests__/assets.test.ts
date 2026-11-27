@@ -1,7 +1,9 @@
 // @vitest-environment node
 import { describe, it, expect, beforeAll, vi } from "vitest";
+import { eq } from "drizzle-orm";
 import { migrate } from "drizzle-orm/pglite/migrator";
 import { db } from "@/server/db/client";
+import { assets, visualConcepts } from "@/server/db/schema";
 import { GET as getCatalogAssets } from "../assets/route";
 import * as catalogService from "@/server/services/catalog";
 import type { ConceptRecord } from "@/shared/lib/grounding/visual-retrieval";
@@ -117,6 +119,117 @@ describe("GET /api/catalog/assets (C3)", () => {
       };
       expect(json.success).toBe(true);
       expect(json.total).toBeGreaterThan(0);
+    }
+  });
+
+  it("ignores placeholder storageKeys and resolves missing-on-disk custom media to Supabase URL when STORAGE_DRIVER=supabase", async () => {
+    const prevDriver = process.env.STORAGE_DRIVER;
+    const prevSupabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    process.env.STORAGE_DRIVER = "supabase";
+    process.env.NEXT_PUBLIC_SUPABASE_URL = "https://mock.supabase.co";
+
+    const testPlaceholderId = "test-placeholder-skip-concept";
+    const testSupabaseId = "test-supabase-fallback-concept";
+    let placeholderAssetId: string | null = null;
+    let supabaseAssetId: string | null = null;
+
+    try {
+      const [phAsset] = await db
+        .insert(assets)
+        .values({
+          kind: "pictogram",
+          storageKey: "placeholder-test-broken.webp",
+          mime: "image/webp",
+          bytes: 532,
+          alt: "Placeholder broken",
+          source: "system-placeholder",
+          verified: false,
+        })
+        .returning({ id: assets.id });
+      placeholderAssetId = phAsset.id;
+
+      const [sbAsset] = await db
+        .insert(assets)
+        .values({
+          kind: "custom",
+          storageKey: "/media/custom/missing-on-disk-test-only.webp",
+          mime: "image/webp",
+          bytes: 12000,
+          alt: "Custom remote asset",
+          source: "custom",
+          verified: true,
+        })
+        .returning({ id: assets.id });
+      supabaseAssetId = sbAsset.id;
+
+      await db.insert(visualConcepts).values([
+        {
+          id: testPlaceholderId,
+          label: "Uji Placeholder",
+          labelNorm: "uji placeholder",
+          synonyms: [],
+          labelEn: "test placeholder",
+          domains: ["bina-diri"],
+          groupId: "bina-diri",
+          kind: "konsep",
+          popularity: 50,
+          assetId: placeholderAssetId,
+          altAssetIds: [],
+          altText: "Uji Placeholder",
+          status: "active",
+          source: "upload",
+        },
+        {
+          id: testSupabaseId,
+          label: "Uji Supabase Disk",
+          labelNorm: "uji supabase disk",
+          synonyms: [],
+          labelEn: "test supabase disk",
+          domains: ["bina-diri"],
+          groupId: "bina-diri",
+          kind: "konsep",
+          popularity: 50,
+          assetId: supabaseAssetId,
+          altAssetIds: [],
+          altText: "Uji Supabase Disk",
+          status: "active",
+          source: "upload",
+        },
+      ]);
+
+      const phRes = await getCatalogAssets(
+        new Request("http://localhost/api/catalog/assets?q=uji+placeholder&limit=20")
+      );
+      expect(phRes.status).toBe(200);
+      const phJson = (await phRes.json()) as {
+        items: Array<{ id: string; url: string }>;
+      };
+      expect(phJson.items.find((i) => i.id === testPlaceholderId)).toBeUndefined();
+
+      const sbRes = await getCatalogAssets(
+        new Request("http://localhost/api/catalog/assets?q=uji+supabase+disk&limit=20")
+      );
+      expect(sbRes.status).toBe(200);
+      const sbJson = (await sbRes.json()) as {
+        items: Array<{ id: string; url: string }>;
+      };
+      const found = sbJson.items.find((i) => i.id === testSupabaseId);
+      expect(found?.url).toBe(
+        "https://mock.supabase.co/storage/v1/object/public/card-images/missing-on-disk-test-only.webp"
+      );
+    } finally {
+      await db.delete(visualConcepts).where(eq(visualConcepts.id, testPlaceholderId));
+      await db.delete(visualConcepts).where(eq(visualConcepts.id, testSupabaseId));
+      if (placeholderAssetId) {
+        await db.delete(assets).where(eq(assets.id, placeholderAssetId));
+      }
+      if (supabaseAssetId) {
+        await db.delete(assets).where(eq(assets.id, supabaseAssetId));
+      }
+      if (prevDriver === undefined) delete process.env.STORAGE_DRIVER;
+      else process.env.STORAGE_DRIVER = prevDriver;
+      if (prevSupabaseUrl === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_URL;
+      else process.env.NEXT_PUBLIC_SUPABASE_URL = prevSupabaseUrl;
     }
   });
 });

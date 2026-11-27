@@ -35,10 +35,28 @@ export function loadCatalogFromDisk(catalogDir = getCatalogDir()): ConceptRecord
   const supabaseUrl = (
     process.env.NEXT_PUBLIC_SUPABASE_URL ||
     process.env.SUPABASE_URL ||
-    ""
+    (process.env.STORAGE_DRIVER === "supabase" || Boolean(process.env.VERCEL)
+      ? "https://vmailnuloaoonmqeguok.supabase.co"
+      : "")
   ).replace(/\/+$/, "");
   const useSupabaseForMissingLocal =
-    process.env.STORAGE_DRIVER === "supabase" && Boolean(supabaseUrl);
+    Boolean(supabaseUrl) &&
+    (process.env.STORAGE_DRIVER === "supabase" || Boolean(process.env.VERCEL));
+
+  const resolveMediaUrl = (url: string | null | undefined): string | null | undefined => {
+    if (
+      !useSupabaseForMissingLocal ||
+      !url ||
+      (!url.startsWith("/media/custom/") && !url.startsWith("/media/pictograms/"))
+    ) {
+      return url;
+    }
+    const localDiskPath = path.join(process.cwd(), "public", url.replace(/^\/+/, ""));
+    if (fs.existsSync(localDiskPath)) {
+      return url;
+    }
+    return `${supabaseUrl}/storage/v1/object/public/card-images/${encodeURIComponent(path.basename(url))}`;
+  };
 
   for (const file of files) {
     const fullPath = path.join(catalogDir, file);
@@ -49,22 +67,16 @@ export function loadCatalogFromDisk(catalogDir = getCatalogDir()): ConceptRecord
     for (const item of items) {
       if (!item || !item.id) continue;
       if (!byId.has(item.id)) {
-        let resolvedUrl = item.assetUrl;
-        if (
-          useSupabaseForMissingLocal &&
-          resolvedUrl &&
-          resolvedUrl.startsWith("/media/custom/")
-        ) {
-          const localDiskPath = path.join(
-            process.cwd(),
-            "public",
-            resolvedUrl.replace(/^\/+/, "")
-          );
-          if (!fs.existsSync(localDiskPath)) {
-            resolvedUrl = `${supabaseUrl}/storage/v1/object/public/card-images/${path.basename(resolvedUrl)}`;
-          }
-        }
-        byId.set(item.id, { ...item, assetUrl: resolvedUrl });
+        const resolvedUrl = resolveMediaUrl(item.assetUrl);
+        const rawAlts = (item as ConceptRecord & { altUrls?: string[] }).altUrls;
+        const resolvedAlts = Array.isArray(rawAlts)
+          ? rawAlts.map((u) => resolveMediaUrl(u) || u)
+          : undefined;
+        byId.set(item.id, {
+          ...item,
+          assetUrl: resolvedUrl,
+          ...(resolvedAlts ? { altUrls: resolvedAlts } : {}),
+        } as ConceptRecord);
       }
     }
   }

@@ -162,6 +162,14 @@ function formatError(err: unknown): string {
   return String(err);
 }
 
+function isValidWebpBuffer(buf: Buffer): boolean {
+  return (
+    buf.length >= 12 &&
+    buf.toString("ascii", 0, 4) === "RIFF" &&
+    buf.toString("ascii", 8, 12) === "WEBP"
+  );
+}
+
 async function uploadWebpFile(
   url: string,
   serviceKey: string,
@@ -170,6 +178,9 @@ async function uploadWebpFile(
 ): Promise<{ ok: boolean; bytes: number; error?: string }> {
   try {
     const buffer = fs.readFileSync(filePath);
+    if (!isValidWebpBuffer(buffer)) {
+      return { ok: false, bytes: 0, error: "Berkas bukan WebP yang valid atau kosong" };
+    }
     const endpoint = `${url}/storage/v1/object/${BUCKET}/${encodeURIComponent(filename)}`;
 
     const res = await requestWithRetry(endpoint, {

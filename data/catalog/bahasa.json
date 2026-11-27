@@ -1,74 +1,8 @@
 {
   "domain": "bahasa",
   "version": "1.0.0",
-  "count": 59,
+  "count": 57,
   "concepts": [
-    {
-      "id": "bahasa-after",
-      "label": "After",
-      "labelNorm": "after",
-      "synonyms": [],
-      "labelEn": "after",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/after.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"After\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32749"
-    },
-    {
-      "id": "bahasa-after-13080",
-      "label": "After 13080",
-      "labelNorm": "after 13080",
-      "synonyms": [],
-      "labelEn": "after",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/after-13080.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"After\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "13080"
-    },
-    {
-      "id": "bahasa-always",
-      "label": "Always",
-      "labelNorm": "always",
-      "synonyms": [],
-      "labelEn": "always",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/always.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Always\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "17322"
-    },
     {
       "id": "bahasa-antonim",
       "label": "Antonim",
@@ -91,11 +25,14 @@
       "sourceRef": "seed-bahasa-antonim"
     },
     {
-      "id": "bahasa-before",
-      "label": "Before",
-      "labelNorm": "before",
-      "synonyms": [],
-      "labelEn": "before",
+      "id": "bahasa-study",
+      "label": "Belajar",
+      "labelNorm": "belajar",
+      "synonyms": [
+        "giat belajar",
+        "menuntut ilmu"
+      ],
+      "labelEn": "study",
       "domains": [
         "bahasa",
         "sekolah"
@@ -104,35 +41,13 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/before.webp",
+      "assetUrl": "/media/pictograms/study.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Before\" pada kategori Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Belajar\" pada kategori Bahasa Indonesia, Benda di Sekolah.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "32745"
-    },
-    {
-      "id": "bahasa-before-13028",
-      "label": "Before 13028",
-      "labelNorm": "before 13028",
-      "synonyms": [],
-      "labelEn": "before",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/before-13028.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Before\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "13028"
+      "sourceRef": "6495"
     },
     {
       "id": "bahasa-bercerita",
@@ -176,6 +91,52 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-bahasa-berdiskusi"
+    },
+    {
+      "id": "bahasa-after-13080",
+      "label": "Berikutnya",
+      "labelNorm": "berikutnya",
+      "synonyms": [
+        "selanjutnya"
+      ],
+      "labelEn": "after",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/after-13080.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Berikutnya\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "13080"
+    },
+    {
+      "id": "bahasa-tomorrow",
+      "label": "Besok",
+      "labelNorm": "besok",
+      "synonyms": [],
+      "labelEn": "tomorrow",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/tomorrow.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Besok\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7152"
     },
     {
       "id": "bahasa-buku-cerita-bergambar",
@@ -243,6 +204,78 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-bahasa-dongeng"
+    },
+    {
+      "id": "bahasa-tomorrow-38278",
+      "label": "Esok Hari",
+      "labelNorm": "esok hari",
+      "synonyms": [
+        "hari esok"
+      ],
+      "labelEn": "tomorrow",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/tomorrow-38278.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Esok Hari\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38278"
+    },
+    {
+      "id": "bahasa-today",
+      "label": "Hari Ini",
+      "labelNorm": "hari ini",
+      "synonyms": [
+        "tanggal hari ini"
+      ],
+      "labelEn": "today",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/today.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Hari Ini\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7131"
+    },
+    {
+      "id": "bahasa-yesterday-38279",
+      "label": "Hari Kemarin",
+      "labelNorm": "hari kemarin",
+      "synonyms": [
+        "hari lalu"
+      ],
+      "labelEn": "yesterday",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/yesterday-38279.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Hari Kemarin\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38279"
     },
     {
       "id": "bahasa-huruf",
@@ -550,11 +583,11 @@
       "sourceRef": "seed-bahasa-kata-sifat"
     },
     {
-      "id": "bahasa-know",
-      "label": "Know",
-      "labelNorm": "know",
+      "id": "bahasa-yesterday",
+      "label": "Kemarin",
+      "labelNorm": "kemarin",
       "synonyms": [],
-      "labelEn": "know",
+      "labelEn": "yesterday",
       "domains": [
         "bahasa",
         "sekolah"
@@ -563,13 +596,37 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/know.webp",
+      "assetUrl": "/media/pictograms/yesterday.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Know\" pada kategori Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Kemarin\" pada kategori Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "16885"
+      "sourceRef": "6926"
+    },
+    {
+      "id": "bahasa-the-day-before-yesterday",
+      "label": "Kemarin Lusa",
+      "labelNorm": "kemarin lusa",
+      "synonyms": [
+        "dua hari lalu"
+      ],
+      "labelEn": "the day before yesterday",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/the-day-before-yesterday.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kemarin Lusa\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38272"
     },
     {
       "id": "bahasa-koma",
@@ -593,11 +650,36 @@
       "sourceRef": "seed-bahasa-koma"
     },
     {
+      "id": "bahasa-the-day-after-tomorrow",
+      "label": "Lusa",
+      "labelNorm": "lusa",
+      "synonyms": [
+        "dua hari lagi",
+        "besok lusa"
+      ],
+      "labelEn": "the day after tomorrow",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/the-day-after-tomorrow.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Lusa\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38277"
+    },
+    {
       "id": "bahasa-malam",
       "label": "Malam",
       "labelNorm": "malam",
       "synonyms": [],
-      "labelEn": "malam",
+      "labelEn": "night",
       "domains": [
         "bahasa",
         "sekolah"
@@ -630,7 +712,9 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/membaca.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/read.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Membaca\" pada kategori Bahasa Indonesia, Benda di Sekolah.",
       "status": "active",
       "source": "arasaac",
@@ -659,6 +743,31 @@
       "sourceRef": "seed-bahasa-membaca-nyaring"
     },
     {
+      "id": "bahasa-know",
+      "label": "Mengetahui",
+      "labelNorm": "mengetahui",
+      "synonyms": [
+        "mengerti",
+        "paham"
+      ],
+      "labelEn": "know",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/know.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengetahui\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "16885"
+    },
+    {
       "id": "bahasa-menulis",
       "label": "Menulis",
       "labelNorm": "menulis",
@@ -674,7 +783,9 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/menulis.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/write.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Menulis\" pada kategori Bahasa Indonesia, Benda di Sekolah.",
       "status": "active",
       "source": "arasaac",
@@ -724,11 +835,13 @@
       "sourceRef": "seed-bahasa-menyimak-cerita"
     },
     {
-      "id": "bahasa-never",
-      "label": "Never",
-      "labelNorm": "never",
-      "synonyms": [],
-      "labelEn": "never",
+      "id": "bahasa-today-38276",
+      "label": "Pada Hari Ini",
+      "labelNorm": "pada hari ini",
+      "synonyms": [
+        "sekarang hari ini"
+      ],
+      "labelEn": "today",
       "domains": [
         "bahasa",
         "sekolah"
@@ -737,64 +850,20 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/never.webp",
+      "assetUrl": "/media/pictograms/today-38276.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Never\" pada kategori Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Pada Hari Ini\" pada kategori Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "5527"
-    },
-    {
-      "id": "bahasa-now",
-      "label": "Now",
-      "labelNorm": "now",
-      "synonyms": [],
-      "labelEn": "now",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/now.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Now\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32747"
-    },
-    {
-      "id": "bahasa-now-13026",
-      "label": "Now 13026",
-      "labelNorm": "now 13026",
-      "synonyms": [],
-      "labelEn": "now",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/now-13026.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Now\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "13026"
+      "sourceRef": "38276"
     },
     {
       "id": "bahasa-pagi",
       "label": "Pagi",
       "labelNorm": "pagi",
       "synonyms": [],
-      "labelEn": "pagi",
+      "labelEn": "morning",
       "domains": [
         "bahasa",
         "sekolah"
@@ -875,11 +944,13 @@
       "sourceRef": "seed-bahasa-puisi"
     },
     {
-      "id": "bahasa-read",
-      "label": "Read",
-      "labelNorm": "read",
-      "synonyms": [],
-      "labelEn": "membaca",
+      "id": "bahasa-now-13026",
+      "label": "Saat Ini",
+      "labelNorm": "saat ini",
+      "synonyms": [
+        "sekarang juga"
+      ],
+      "labelEn": "now",
       "domains": [
         "bahasa",
         "sekolah"
@@ -888,20 +959,142 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/read.webp",
+      "assetUrl": "/media/pictograms/now-13026.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Read\" pada kategori Bahasa Indonesia, Benda di Sekolah.",
+      "altText": "Piktogram visual untuk konsep \"Saat Ini\" pada kategori Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "7141"
+      "sourceRef": "13026"
+    },
+    {
+      "id": "bahasa-before",
+      "label": "Sebelum",
+      "labelNorm": "sebelum",
+      "synonyms": [
+        "terlebih dahulu"
+      ],
+      "labelEn": "before",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/before.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sebelum\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32745"
+    },
+    {
+      "id": "bahasa-before-13028",
+      "label": "Sebelumnya",
+      "labelNorm": "sebelumnya",
+      "synonyms": [
+        "lebih dulu"
+      ],
+      "labelEn": "before",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/before-13028.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sebelumnya\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "13028"
+    },
+    {
+      "id": "bahasa-now",
+      "label": "Sekarang",
+      "labelNorm": "sekarang",
+      "synonyms": [
+        "kini"
+      ],
+      "labelEn": "now",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/now.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sekarang\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32747"
+    },
+    {
+      "id": "bahasa-always",
+      "label": "Selalu",
+      "labelNorm": "selalu",
+      "synonyms": [
+        "senantiasa",
+        "setiap waktu"
+      ],
+      "labelEn": "always",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/always.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Selalu\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "17322"
+    },
+    {
+      "id": "bahasa-after",
+      "label": "Sesudah",
+      "labelNorm": "sesudah",
+      "synonyms": [
+        "setelah",
+        "sesudahnya"
+      ],
+      "labelEn": "after",
+      "domains": [
+        "bahasa",
+        "sekolah"
+      ],
+      "groupId": "bahasa-indonesia",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/after.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sesudah\" pada kategori Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32749"
     },
     {
       "id": "bahasa-siang",
       "label": "Siang",
       "labelNorm": "siang",
       "synonyms": [],
-      "labelEn": "siang",
+      "labelEn": "afternoon",
       "domains": [
         "bahasa",
         "sekolah"
@@ -959,28 +1152,6 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-bahasa-spasi"
-    },
-    {
-      "id": "bahasa-study",
-      "label": "Study",
-      "labelNorm": "study",
-      "synonyms": [],
-      "labelEn": "belajar",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/study.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Study\" pada kategori Bahasa Indonesia, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6495"
     },
     {
       "id": "bahasa-suku-kata",
@@ -1067,13 +1238,13 @@
       "sourceRef": "seed-bahasa-tanda-tanya"
     },
     {
-      "id": "bahasa-the-day-after-tomorrow",
-      "label": "The Day After Tomorrow",
-      "labelNorm": "the day after tomorrow",
+      "id": "bahasa-never",
+      "label": "Tidak Pernah",
+      "labelNorm": "tidak pernah",
       "synonyms": [
-        "day"
+        "tak pernah"
       ],
-      "labelEn": "the day after tomorrow",
+      "labelEn": "never",
       "domains": [
         "bahasa",
         "sekolah"
@@ -1082,35 +1253,13 @@
       "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/the-day-after-tomorrow.webp",
+      "assetUrl": "/media/pictograms/never.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"The Day After Tomorrow\" pada kategori Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Tidak Pernah\" pada kategori Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "38277"
-    },
-    {
-      "id": "bahasa-the-day-before-yesterday",
-      "label": "The Day Before Yesterday",
-      "labelNorm": "the day before yesterday",
-      "synonyms": [],
-      "labelEn": "the day before yesterday",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/the-day-before-yesterday.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"The Day Before Yesterday\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38272"
+      "sourceRef": "5527"
     },
     {
       "id": "bahasa-titik",
@@ -1132,160 +1281,6 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-bahasa-titik"
-    },
-    {
-      "id": "bahasa-today",
-      "label": "Today",
-      "labelNorm": "today",
-      "synonyms": [],
-      "labelEn": "today",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/today.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Today\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7131"
-    },
-    {
-      "id": "bahasa-today-38276",
-      "label": "Today 38276",
-      "labelNorm": "today 38276",
-      "synonyms": [],
-      "labelEn": "today",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/today-38276.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Today\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38276"
-    },
-    {
-      "id": "bahasa-tomorrow",
-      "label": "Tomorrow",
-      "labelNorm": "tomorrow",
-      "synonyms": [],
-      "labelEn": "tomorrow",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/tomorrow.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Tomorrow\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7152"
-    },
-    {
-      "id": "bahasa-tomorrow-38278",
-      "label": "Tomorrow 38278",
-      "labelNorm": "tomorrow 38278",
-      "synonyms": [],
-      "labelEn": "tomorrow",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/tomorrow-38278.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Tomorrow\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38278"
-    },
-    {
-      "id": "bahasa-write",
-      "label": "Write",
-      "labelNorm": "write",
-      "synonyms": [],
-      "labelEn": "menulis",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/write.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Write\" pada kategori Bahasa Indonesia, Benda di Sekolah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "2380"
-    },
-    {
-      "id": "bahasa-yesterday",
-      "label": "Yesterday",
-      "labelNorm": "yesterday",
-      "synonyms": [],
-      "labelEn": "yesterday",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/yesterday.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Yesterday\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6926"
-    },
-    {
-      "id": "bahasa-yesterday-38279",
-      "label": "Yesterday 38279",
-      "labelNorm": "yesterday 38279",
-      "synonyms": [],
-      "labelEn": "yesterday",
-      "domains": [
-        "bahasa",
-        "sekolah"
-      ],
-      "groupId": "bahasa-indonesia",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/yesterday-38279.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Yesterday\" pada kategori Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38279"
     }
   ]
 }

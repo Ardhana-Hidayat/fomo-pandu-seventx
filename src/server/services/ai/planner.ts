@@ -1,6 +1,11 @@
 import "server-only";
-import type { ConceptRecord } from "@/shared/lib/grounding/visual-retrieval";
+import {
+  normalize,
+  search,
+  type ConceptRecord,
+} from "@/shared/lib/grounding/visual-retrieval";
 import { searchAssets } from "../assets/retrieval";
+import { getConceptIndex } from "../catalog";
 import { ingestSource } from "./ingest";
 import type { PDFExtractionResult } from "./pdf";
 import type { GenerateLessonOptions } from "./types";
@@ -43,7 +48,34 @@ export const ID_STOP_WORDS = new Set([
   "mengingat", "kembali", "berlatih", "menunjukkan", "mempraktikkan",
   "sebagai", "setelah", "sebelum", "sudah", "belum", "hanya", "semua",
   "banyak", "sedikit", "merupakan", "tersebut", "bukan", "tidak", "mana",
+  "kedua", "ketiga", "pertama", "berikut", "membuat", "menjaga", "melakukan",
+  "memberi", "mempunyai", "menjadi", "menggunakan", "memakai", "sebutkan",
+  "ceritakan", "amati", "mengamati", "tetap", "masih", "sambil", "sampai",
+  "menuju",
 ]);
+
+const HYGIENE_CONTEXT_RE =
+  /\b(kebersihan|cuci\s+tangan|mencuci\s+tangan|mandi|sabun|sikat\s+gigi|menyikat\s+gigi|pasta\s+gigi|gosok\s+tangan|keran|handuk|toilet|wc|sampo)\b/i;
+
+const HYGIENE_CONCEPT_ID_RE =
+  /(?:sabun|soap|cuci[-_ ]?tangan|gosok[-_ ]?tangan|handuk|sikat[-_ ]?gigi|pasta[-_ ]?gigi|keran|flush[-_ ]?the[-_ ]?toilet|bilas|sampo)/i;
+
+export function isHygieneContext(topic: string, text: string): boolean {
+  return HYGIENE_CONTEXT_RE.test(`${topic} ${text}`);
+}
+
+export function isHygieneConcept(concept: ConceptRecord): boolean {
+  if (concept.groupId === "kebersihan") return true;
+  return (
+    HYGIENE_CONCEPT_ID_RE.test(concept.id) ||
+    HYGIENE_CONCEPT_ID_RE.test(concept.labelNorm || normalize(concept.label))
+  );
+}
+
+export function isNoisyConcept(concept: ConceptRecord): boolean {
+  const labelNorm = concept.labelNorm || normalize(concept.label);
+  return /\b\d{4,}\b/.test(labelNorm);
+}
 
 const PDF_NOISE_LINE_PATTERNS = [
   /^(?:halaman|hal\.?|page|pg\.?)\s*\d+(?:\s*(?:dari|of|\/)\s*\d+)?$/i,
@@ -186,6 +218,7 @@ export function retrieveCandidateAssets(
 ): CandidateAsset[] {
   const seen = new Set<string>();
   const candidates: CandidateAsset[] = [];
+  const allowHygiene = isHygieneContext(topic, concepts.join(" "));
 
   const addHits = (query: string, limit: number, minScore: number) => {
     if (!query.trim()) return;
@@ -197,6 +230,9 @@ export function retrieveCandidateAssets(
     });
     for (const hit of hits) {
       if (seen.has(hit.asset.asset_id)) continue;
+      if (!allowHygiene && HYGIENE_CONCEPT_ID_RE.test(hit.asset.asset_id)) {
+        continue;
+      }
       seen.add(hit.asset.asset_id);
       candidates.push({
         asset_id: hit.asset.asset_id,
@@ -210,12 +246,12 @@ export function retrieveCandidateAssets(
   };
 
   if (topic.trim()) {
-    addHits(topic, 8, 8);
+    addHits(topic, 8, 12);
   }
 
   for (const concept of concepts.slice(0, 10)) {
     if (candidates.length >= maxTotal) break;
-    addHits(concept, 4, 10);
+    addHits(concept, 4, 14);
   }
 
   return candidates.slice(0, maxTotal);
@@ -252,6 +288,50 @@ export function planLessonContent(
       ? options.subject
       : inferSubject(topic, normalizedText);
   const concepts = extractConcepts(topic, sentences, 12);
+  const allowHygiene = isHygieneContext(topic, selectedText || normalizedText);
+
+  const filterVocabulary = (items: ConceptRecord[]): ConceptRecord[] =>
+    items.filter(
+      (c) =>
+        c.status === "active" &&
+        Boolean(c.assetUrl || c.assetId) &&
+        !isNoisyConcept(c) &&
+        (allowHygiene || !isHygieneConcept(c))
+    );
+
+  const vocabulary = filterVocabulary(ingest.vocabulary);
+
+  // If ingest vocabulary is sparse (e.g. topic-only prompt), supplement from verified Indonesian ConceptIndex
+  if (vocabulary.length < 4 && (topic || concepts.length > 0)) {
+    const index = getConceptIndex();
+    const seenIds = new Set(vocabulary.map((v) => v.id));
+    const queries = [topic, ...concepts.slice(0, 8)].filter(Boolean);
+    for (const q of queries) {
+      if (vocabulary.length >= 24) break;
+      const hits = search(q, index, {
+        limit: 6,
+        minScore: 40,
+        requireImage: true,
+        preferDomains: ingest.domains,
+      });
+      for (const hit of hits) {
+        if (seenIds.has(hit.concept.id)) continue;
+        if (isNoisyConcept(hit.concept)) continue;
+        if (!allowHygiene && isHygieneConcept(hit.concept)) continue;
+        if (
+          (hit.matchedOn.includes("exact_en") || hit.matchedOn.includes("en_tokens")) &&
+          !hit.matchedOn.includes("exact_label") &&
+          !hit.matchedOn.includes("exact_synonym") &&
+          !hit.matchedOn.includes("raw_tokens")
+        ) {
+          continue;
+        }
+        seenIds.add(hit.concept.id);
+        vocabulary.push(hit.concept);
+        if (vocabulary.length >= 24) break;
+      }
+    }
+  }
 
   let recommendedCardCount = requestedCardCount;
   if (normalizedText.length >= 10 && sentences.length > 0) {
@@ -264,10 +344,14 @@ export function planLessonContent(
     }
   }
 
+  const vocabularyLines = vocabulary.map(
+    (c) => `${c.id}|${c.label}|${c.groupId ?? "umum"}`
+  );
+
   const candidateAssets =
-    ingest.vocabulary.length > 0
-      ? ingest.vocabulary.slice(0, 24).map((c) => ({
-          asset_id: c.assetId || c.id,
+    vocabulary.length > 0
+      ? vocabulary.slice(0, 24).map((c) => ({
+          asset_id: c.id,
           display_name: c.label,
           description: c.synonyms.slice(0, 3).join(", ") || c.label,
           visual_type: "pictogram" as const,
@@ -285,8 +369,8 @@ export function planLessonContent(
     errorMessage: ingest.errorMessage,
     sentences,
     concepts,
-    vocabulary: ingest.vocabulary,
-    vocabularyLines: ingest.vocabularyLines,
+    vocabulary,
+    vocabularyLines,
     domains: ingest.domains,
     recommendedCardCount,
     requestedCardCount,

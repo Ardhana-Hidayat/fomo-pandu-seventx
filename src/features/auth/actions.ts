@@ -42,9 +42,9 @@ export async function joinClassroomAction(
   const cleanCode = joinCode.trim();
   const cleanName = studentName.trim();
 
-  if (cleanCode.length < 6 || !/^[a-zA-Z0-9_-]{6,16}$/.test(cleanCode)) {
+  if (!/^\d{6}$/.test(cleanCode)) {
     return err(
-      makeAppError("INVALID_CODE", "Kode materi minimal 6 karakter huruf atau angka.")
+      makeAppError("INVALID_CODE", "Kode belajar harus terdiri dari 6 angka.")
     );
   }
 
@@ -54,7 +54,7 @@ export async function joinClassroomAction(
     );
   }
 
-  // 1. Cari publikasi materi berdasarkan shareCode terlebih dahulu, lalu fallback ke joinCode 6 angka
+  // 1. Cari publikasi materi berdasarkan shareCode 6 angka terlebih dahulu, lalu fallback ke joinCode 6 angka
   let targetLessonId: string | undefined;
   let classroom: typeof classrooms.$inferSelect | undefined;
 
@@ -64,7 +64,7 @@ export async function joinClassroomAction(
       classroomId: publications.classroomId,
     })
     .from(publications)
-    .where(eq(sql`lower(${publications.shareCode})`, cleanCode.toLowerCase()))
+    .where(and(eq(publications.shareCode, cleanCode), eq(publications.visible, true)))
     .limit(1)
     .then((rows) => rows[0]);
 
@@ -78,7 +78,7 @@ export async function joinClassroomAction(
       .then((rows) => rows[0]);
   }
 
-  if (!classroom && /^\d{6}$/.test(cleanCode)) {
+  if (!classroom) {
     classroom = await db
       .select()
       .from(classrooms)
@@ -87,16 +87,38 @@ export async function joinClassroomAction(
       .then((rows) => rows[0]);
   }
 
-  const DEMO_CODES = ["123456", "222333"];
-  if (!classroom && DEMO_CODES.includes(cleanCode)) {
+  const DEMO_CLASS_CODES = ["123456", "222333"];
+  const DEMO_SHARE_CODES = ["100101", "100102"];
+  if (!classroom && (DEMO_CLASS_CODES.includes(cleanCode) || DEMO_SHARE_CODES.includes(cleanCode))) {
     const { seedDatabase } = await import("@/server/db/seed");
     await seedDatabase();
-    classroom = await db
-      .select()
-      .from(classrooms)
-      .where(and(eq(classrooms.joinCode, cleanCode), isNull(classrooms.archivedAt)))
-      .limit(1)
-      .then((rows) => rows[0]);
+    if (DEMO_SHARE_CODES.includes(cleanCode)) {
+      const seededPub = await db
+        .select({
+          lessonId: publications.lessonId,
+          classroomId: publications.classroomId,
+        })
+        .from(publications)
+        .where(and(eq(publications.shareCode, cleanCode), eq(publications.visible, true)))
+        .limit(1)
+        .then((rows) => rows[0]);
+      if (seededPub) {
+        targetLessonId = seededPub.lessonId;
+        classroom = await db
+          .select()
+          .from(classrooms)
+          .where(and(eq(classrooms.id, seededPub.classroomId), isNull(classrooms.archivedAt)))
+          .limit(1)
+          .then((rows) => rows[0]);
+      }
+    } else {
+      classroom = await db
+        .select()
+        .from(classrooms)
+        .where(and(eq(classrooms.joinCode, cleanCode), isNull(classrooms.archivedAt)))
+        .limit(1)
+        .then((rows) => rows[0]);
+    }
   }
 
   if (!classroom) {

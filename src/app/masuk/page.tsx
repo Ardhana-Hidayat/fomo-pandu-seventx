@@ -10,7 +10,7 @@ function StudentLoginForm() {
   const searchParams = useSearchParams();
   const codeParam = searchParams.get("kode")?.trim() ?? "";
   const materiParam = searchParams.get("materi")?.trim() ?? "";
-  const hasValidCodeParam = codeParam.length >= 6 && /^[a-zA-Z0-9_-]{6,16}$/.test(codeParam);
+  const hasValidCodeParam = /^\d{6}$/.test(codeParam);
 
   const [joinCode, setJoinCode] = useState(hasValidCodeParam ? codeParam : "");
   const [studentName, setStudentName] = useState("");
@@ -21,8 +21,8 @@ function StudentLoginForm() {
   function handleCodeSubmit(e: React.FormEvent) {
     e.preventDefault();
     const clean = joinCode.trim();
-    if (clean.length < 6 || !/^[a-zA-Z0-9_-]{6,16}$/.test(clean)) {
-      setErrorMsg("Kode belajar minimal 6 karakter huruf atau angka.");
+    if (!/^\d{6}$/.test(clean)) {
+      setErrorMsg("Kode belajar harus terdiri dari 6 angka.");
       return;
     }
     setErrorMsg(null);
@@ -74,16 +74,20 @@ function StudentLoginForm() {
               Mulai Belajar
             </h1>
             <p className="mt-1 text-sm text-[var(--ink-2)]">
-              Ketik kode materi yang diberikan oleh guru.
+              Ketik 6 angka kode materi atau kode kelas yang diberikan oleh guru.
             </p>
           </div>
 
           <Field
             id="kode-materi"
             label="Kode materi"
-            placeholder="Contoh: Ab12Cd34 atau 123456"
+            placeholder="Contoh: 100101"
+            codeMode
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={6}
             value={joinCode}
-            onChange={(e) => setJoinCode(e.target.value)}
+            onChange={(e) => setJoinCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
             error={errorMsg ?? undefined}
             autoFocus
           />

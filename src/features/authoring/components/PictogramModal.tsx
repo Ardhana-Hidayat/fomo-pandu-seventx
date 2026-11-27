@@ -30,6 +30,73 @@ interface PictogramModalProps {
 
 const LIBRARY_PAGE_SIZE = 60;
 
+function getSupabaseFallbackUrl(url: string): string | null {
+  if (!url.startsWith("/media/custom/") && !url.startsWith("/media/pictograms/")) {
+    return null;
+  }
+  const base = (process.env.NEXT_PUBLIC_SUPABASE_URL || "").replace(/\/+$/, "");
+  if (!base) return null;
+  const filename = url.split("/").pop();
+  if (!filename) return null;
+  return `${base}/storage/v1/object/public/card-images/${encodeURIComponent(filename)}`;
+}
+
+function CatalogThumbnailImageInner({
+  src,
+  alt,
+  className = "h-full w-full object-contain",
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  const [activeSrc, setActiveSrc] = useState(src);
+  const [triedFallback, setTriedFallback] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  if (failed || !activeSrc) {
+    return (
+      <div
+        role="img"
+        aria-label={alt}
+        className="flex flex-col items-center justify-center gap-1 text-[var(--muted)] p-1"
+      >
+        <Icon name="Image" size={24} />
+        <span className="text-[10px] font-semibold leading-tight">Gambar belum siap</span>
+      </div>
+    );
+  }
+
+  return (
+    /* eslint-disable-next-line @next/next/no-img-element */
+    <img
+      src={activeSrc}
+      alt={alt}
+      loading="lazy"
+      className={className}
+      onError={() => {
+        if (!triedFallback) {
+          const fallback = getSupabaseFallbackUrl(src);
+          if (fallback && fallback !== activeSrc) {
+            setTriedFallback(true);
+            setActiveSrc(fallback);
+            return;
+          }
+        }
+        setFailed(true);
+      }}
+    />
+  );
+}
+
+function CatalogThumbnailImage(props: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  return <CatalogThumbnailImageInner key={props.src} {...props} />;
+}
+
 export function PictogramModal({
   isOpen,
   onClose,
@@ -674,12 +741,9 @@ export function PictogramModal({
                           }`}
                         >
                           <div className="w-full aspect-square max-h-24 rounded-lg bg-white border border-[var(--border)] flex items-center justify-center p-1.5 overflow-hidden">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
+                            <CatalogThumbnailImage
                               src={item.url}
                               alt={item.alt_text || item.label}
-                              loading="lazy"
-                              className="h-full w-full object-contain"
                             />
                           </div>
                           <div className="flex flex-col items-center gap-1 w-full min-w-0">
@@ -772,12 +836,12 @@ export function PictogramModal({
               <div className="flex flex-col gap-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3">
                 <StatusMessage type="info">{duplicatePreview.message}</StatusMessage>
                 <div className="flex items-center gap-3">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={duplicatePreview.url}
-                    alt={duplicatePreview.alt}
-                    className="h-16 w-16 rounded-lg border border-[var(--border)] bg-white object-contain p-1"
-                  />
+                  <div className="h-16 w-16 rounded-lg border border-[var(--border)] bg-white flex items-center justify-center p-1 overflow-hidden">
+                    <CatalogThumbnailImage
+                      src={duplicatePreview.url}
+                      alt={duplicatePreview.alt}
+                    />
+                  </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-bold text-[var(--ink)] truncate">
                       {duplicatePreview.alt}

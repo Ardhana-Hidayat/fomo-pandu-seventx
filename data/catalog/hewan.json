@@ -50,7 +50,6 @@
       "label": "Anjing",
       "labelNorm": "anjing",
       "synonyms": [
-        "dog",
         "hewan peliharaan"
       ],
       "labelEn": "dog",
@@ -96,9 +95,7 @@
       "id": "hewan-ayam",
       "label": "Ayam",
       "labelNorm": "ayam",
-      "synonyms": [
-        "chicken"
-      ],
+      "synonyms": [],
       "labelEn": "chicken",
       "domains": [
         "hewan",
@@ -206,9 +203,7 @@
       "id": "hewan-bebek",
       "label": "Bebek",
       "labelNorm": "bebek",
-      "synonyms": [
-        "duck"
-      ],
+      "synonyms": [],
       "labelEn": "duck",
       "domains": [
         "hewan",
@@ -295,7 +290,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "belalai gajah",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-belalai-gajah"
     },
@@ -429,9 +424,7 @@
       "id": "hewan-burung",
       "label": "Burung",
       "labelNorm": "burung",
-      "synonyms": [
-        "bird"
-      ],
+      "synonyms": [],
       "labelEn": "bird",
       "domains": [
         "hewan",
@@ -511,7 +504,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "burung elang",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-burung-elang"
     },
@@ -707,7 +700,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "cakar hewan",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-cakar-hewan"
     },
@@ -885,7 +878,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "ekor hewan",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-ekor-hewan"
     },
@@ -943,9 +936,7 @@
       "id": "hewan-gajah",
       "label": "Gajah",
       "labelNorm": "gajah",
-      "synonyms": [
-        "elephant"
-      ],
+      "synonyms": [],
       "labelEn": "elephant",
       "domains": [
         "hewan",
@@ -1147,7 +1138,6 @@
       "label": "Ikan",
       "labelNorm": "ikan",
       "synonyms": [
-        "fish",
         "hewan air"
       ],
       "labelEn": "fish",
@@ -1189,7 +1179,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "ikan paus",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-ikan-paus"
     },
@@ -1241,7 +1231,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "insang ikan",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-insang-ikan"
     },
@@ -1361,7 +1351,6 @@
       "label": "Kambing",
       "labelNorm": "kambing",
       "synonyms": [
-        "goat",
         "ternak"
       ],
       "labelEn": "goat",
@@ -1491,9 +1480,7 @@
       "id": "hewan-kelinci",
       "label": "Kelinci",
       "labelNorm": "kelinci",
-      "synonyms": [
-        "rabbit"
-      ],
+      "synonyms": [],
       "labelEn": "rabbit",
       "domains": [
         "hewan",
@@ -1608,7 +1595,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "kerang laut",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-kerang-laut"
     },
@@ -1721,9 +1708,7 @@
       "id": "hewan-kucing",
       "label": "Kucing",
       "labelNorm": "kucing",
-      "synonyms": [
-        "cat"
-      ],
+      "synonyms": [],
       "labelEn": "cat",
       "domains": [
         "hewan",
@@ -1747,9 +1732,7 @@
       "id": "hewan-kuda",
       "label": "Kuda",
       "labelNorm": "kuda",
-      "synonyms": [
-        "horse"
-      ],
+      "synonyms": [],
       "labelEn": "horse",
       "domains": [
         "hewan",
@@ -1833,10 +1816,9 @@
     },
     {
       "id": "hewan-kupu-kupu",
-      "label": "Kupu Kupu",
+      "label": "Kupu-Kupu",
       "labelNorm": "kupu kupu",
       "synonyms": [
-        "butterfly",
         "kupu"
       ],
       "labelEn": "butterfly",
@@ -1853,7 +1835,7 @@
       "assetUrl": "/media/pictograms/kupu-kupu.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Kupu Kupu\" pada kategori Hewan, IPA, Lingkungan.",
+      "altText": "Piktogram visual untuk konsep \"Kupu-Kupu\" pada kategori Hewan, IPA, Lingkungan.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2465"
@@ -2086,9 +2068,7 @@
       "id": "hewan-monyet",
       "label": "Monyet",
       "labelNorm": "monyet",
-      "synonyms": [
-        "monkey"
-      ],
+      "synonyms": [],
       "labelEn": "monkey",
       "domains": [
         "hewan",
@@ -2279,7 +2259,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "paruh burung",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-paruh-burung"
     },
@@ -2475,9 +2455,7 @@
       "id": "hewan-sapi",
       "label": "Sapi",
       "labelNorm": "sapi",
-      "synonyms": [
-        "cow"
-      ],
+      "synonyms": [],
       "labelEn": "cow",
       "domains": [
         "hewan",
@@ -2503,7 +2481,6 @@
       "synonyms": [
         "sayap burung",
         "bulu",
-        "terbang",
         "gerak hewan"
       ],
       "labelEn": "wing",
@@ -2543,7 +2520,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "sayap burung",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-sayap-burung"
     },
@@ -2719,7 +2696,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "sirip ikan",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-sirip-ikan"
     },
@@ -2770,7 +2747,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "sisik ikan",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-sisik-ikan"
     },
@@ -2820,7 +2797,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "tanduk hewan",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-hewan-tanduk-hewan"
     },

@@ -5,6 +5,11 @@ import {
   sanitizeAndValidateLesson,
   type CognitiveLevel,
 } from "@/server/services/ai";
+import { enforceQuestionVisualRule } from "@/server/services/ai/quiz-builder";
+import {
+  extractPromptImageUrl,
+  sanitizeQuizPayloadVisualRule,
+} from "@/shared/lib/quiz/visual-rule";
 import { getCurrentTeacher } from "@/features/auth";
 import {
   createLesson,
@@ -214,7 +219,10 @@ export async function POST(request: Request) {
       subject,
       skipRecordVisualGap: true,
     });
-    const finalLesson = validation.lesson;
+    const finalLesson = {
+      ...validation.lesson,
+      questions: validation.lesson.questions.map(enforceQuestionVisualRule),
+    };
     const warnings = Array.from(
       new Set([...(aiResult.warnings ?? []), ...validation.warnings])
     );
@@ -268,11 +276,13 @@ export async function POST(request: Request) {
       const questionsToInsert: CreateQuestionInput[] =
         questionCount === 0
           ? []
-          : finalLesson.questions.slice(0, questionCount).map((q, i) => ({
-              position: i + 1,
-              type: q.type,
-              prompt: q.prompt,
-              payload: {
+          : finalLesson.questions.slice(0, questionCount).map((q, i) => {
+              const promptImageUrl = extractPromptImageUrl(
+                q as unknown as Record<string, unknown>
+              );
+              const rawPayload: Record<string, unknown> = {
+                ...(q.variant ? { variant: q.variant } : {}),
+                ...(promptImageUrl ? { promptImageUrl } : {}),
                 options: q.options?.slice(0, optionCount).map((opt, optIdx) => ({
                   id: opt.id || String.fromCharCode(97 + optIdx),
                   text: opt.text,
@@ -301,9 +311,16 @@ export async function POST(request: Request) {
                     : step.image,
                 })),
                 answer: q.answer,
-              },
-              linkedCardId: undefined,
-            }));
+              };
+
+              return {
+                position: i + 1,
+                type: q.type,
+                prompt: q.prompt,
+                payload: sanitizeQuizPayloadVisualRule(q.type, rawPayload),
+                linkedCardId: undefined,
+              };
+            });
 
       const dbRes = await createLesson(teacher.id, {
         title: finalLesson.title || topic || "Materi Baru",

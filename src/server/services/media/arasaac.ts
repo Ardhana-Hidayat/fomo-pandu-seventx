@@ -11,6 +11,8 @@ import {
 } from "../../repos/assets";
 import { getAssetById } from "../assets/catalog";
 import { searchAssets } from "../assets/retrieval";
+import { getConceptIndex } from "../catalog";
+import { normalize, search } from "@/shared/lib/grounding/visual-retrieval";
 import { ok, err, type Result, makeAppError } from "@/shared/lib/result";
 import type { Asset } from "../../db/schema";
 
@@ -236,46 +238,98 @@ const CURATED_ARASAAC_IDS: Record<string, number> = {
   "clean hands": 26172,
 };
 
+function hasExactKeywordSegment(
+  assetKeyword: string | null | undefined,
+  target: string
+): boolean {
+  if (!assetKeyword) return false;
+  const targetNorm = normalize(target);
+  if (!targetNorm) return false;
+  const segments = assetKeyword
+    .split("|")
+    .map((s) => normalize(s))
+    .filter(Boolean);
+  return segments.includes(targetNorm);
+}
+
 export async function resolveCatalogAssetToDb(
   assetId: string,
   customAlt?: string
 ): Promise<Result<Asset>> {
   try {
-    const record = getAssetById(assetId);
+    let record = getAssetById(assetId);
+    let conceptFallbackUrl: string | null = null;
+    let conceptLabel = "";
+    let conceptKeywords: string[] = [];
+    let conceptSource = "arasaac";
+
     if (!record || !record.available) {
+      const concept = getConceptIndex().byId.get(assetId);
+      if (concept && concept.status === "active" && concept.assetUrl) {
+        const url = concept.assetUrl;
+        const base = path.basename(url, path.extname(url));
+        if (url.includes("/media/custom/")) {
+          record = getAssetById(`custom:${base}`);
+        } else if (url.includes("/media/pictograms/")) {
+          record = getAssetById(`picto:${base}`);
+        } else if (concept.assetId) {
+          record = getAssetById(concept.assetId);
+        }
+
+        if (!record || !record.available) {
+          conceptFallbackUrl = url;
+          conceptLabel = concept.label;
+          conceptKeywords = [
+            concept.label.toLowerCase(),
+            ...(concept.synonyms ?? []).slice(0, 3).map((s) => s.toLowerCase()),
+          ];
+          conceptSource = concept.source || "arasaac";
+        }
+      }
+    }
+
+    if ((!record || !record.available) && !conceptFallbackUrl) {
       return err(
         makeAppError("NOT_FOUND", `Aset katalog '${assetId}' tidak ditemukan`)
       );
     }
 
-    const diskPath = path.join(
-      process.cwd(),
-      "public",
-      record.file_path.replace(/^\/+/, "")
-    );
-    const hasDiskFile = fs.existsSync(diskPath);
-    const isSupabaseRemoteCustom =
-      !hasDiskFile &&
-      process.env.STORAGE_DRIVER === "supabase" &&
-      record.file_path.startsWith("/media/custom/");
+    const filePathOrUrl = record ? record.file_path : conceptFallbackUrl!;
+    const isRemoteUrl = /^https?:\/\//i.test(filePathOrUrl);
+    const diskPath = isRemoteUrl
+      ? ""
+      : path.join(process.cwd(), "public", filePathOrUrl.replace(/^\/+/, ""));
+    const hasDiskFile = !isRemoteUrl && fs.existsSync(diskPath);
+    const isSupabaseRemote =
+      isRemoteUrl ||
+      (!hasDiskFile &&
+        process.env.STORAGE_DRIVER === "supabase" &&
+        (filePathOrUrl.startsWith("/media/custom/") ||
+          filePathOrUrl.startsWith("/media/pictograms/")));
 
-    const storageKey = isSupabaseRemoteCustom
-      ? path.basename(record.file_path)
-      : record.file_path;
+    const storageKey = isSupabaseRemote
+      ? path.basename(filePathOrUrl.split("?")[0]!)
+      : filePathOrUrl;
 
     const existing = await getAssetByStorageKey(storageKey);
     if (existing.ok && existing.data) {
       return ok(existing.data);
     }
 
-    if (!hasDiskFile && !isSupabaseRemoteCustom) {
+    if (!hasDiskFile && !isSupabaseRemote) {
       return err(
-        makeAppError("NOT_FOUND", `Berkas aset '${record.file_path}' tidak ada di disk`)
+        makeAppError(
+          "NOT_FOUND",
+          `Berkas aset '${filePathOrUrl}' tidak ada di disk`
+        )
       );
     }
 
     const bytes = hasDiskFile ? fs.statSync(diskPath).size : 6000;
-    const ext = path.extname(record.filename).toLowerCase();
+    const filename = record
+      ? record.filename
+      : path.basename(filePathOrUrl.split("?")[0]!);
+    const ext = path.extname(filename).toLowerCase();
     const mime =
       ext === ".png"
         ? "image/png"
@@ -285,20 +339,36 @@ export async function resolveCatalogAssetToDb(
             ? "image/svg+xml"
             : "image/webp";
 
-    const keyword = Array.from(
-      new Set([record.display_name.toLowerCase(), ...record.keywords_id.slice(0, 3)])
-    ).join(" | ");
+    const keyword = record
+      ? Array.from(
+          new Set([
+            record.display_name.toLowerCase(),
+            ...record.keywords_id.slice(0, 3),
+          ])
+        ).join(" | ")
+      : Array.from(new Set(conceptKeywords)).join(" | ");
+
+    const isCustom =
+      record?.visual_type === "illustration" ||
+      filePathOrUrl.includes("/custom/") ||
+      conceptSource === "panduin-custom";
 
     return saveAsset({
-      kind: record.visual_type === "illustration" ? "gambar" : "piktogram",
+      kind: isCustom ? "gambar" : "piktogram",
       storageKey,
       mime,
       bytes,
       keyword,
-      alt: customAlt?.trim() || record.display_name,
-      source: record.source,
-      license: record.license,
-      attribution: record.attribution,
+      alt: customAlt?.trim() || record?.display_name || conceptLabel,
+      source: record?.source || conceptSource,
+      license:
+        record?.license ||
+        (isCustom ? "CC0 / PanduIn" : "CC BY-NC-SA 4.0"),
+      attribution:
+        record?.attribution ||
+        (isCustom
+          ? "Ilustrasi edukasi kustom oleh PanduIn (CC0)."
+          : "Piktogram: ARASAAC (arasaac.org), Pemerintah Aragon, penulis Sergio Palao. Lisensi CC BY-NC-SA 4.0."),
       verified: true,
     });
   } catch (error) {
@@ -314,30 +384,68 @@ export async function findOrFetchPictogram(
 ): Promise<Result<Asset>> {
   const cleanId = keywordId.trim().toLowerCase();
   const cleanEn = keywordEn?.trim().toLowerCase();
+  if (!cleanId && !cleanEn) {
+    return err(
+      makeAppError("VALIDATION_ERROR", "Kata kunci piktogram tidak boleh kosong")
+    );
+  }
 
-  // 0. Jika langsung berupa asset_id katalog lokal, resolusikan langsung
-  if (cleanId.startsWith("picto:") || cleanId.startsWith("custom:")) {
+  // 0. Jika langsung berupa asset_id katalog lokal atau concept ID terverifikasi, resolusikan langsung
+  if (
+    cleanId.startsWith("picto:") ||
+    cleanId.startsWith("custom:") ||
+    getConceptIndex().byId.has(keywordId.trim())
+  ) {
     const resolved = await resolveCatalogAssetToDb(keywordId.trim());
     if (resolved.ok) return resolved;
   }
 
-  // 1. Cek cache lokal di tabel assets (idempoten)
-  const cached = await findPictogram(cleanId);
-  if (cached.ok && cached.data) {
-    return ok(cached.data);
+  // 1. Cek cache lokal di tabel assets secara idempoten (hanya kecocokan segmen persis, bukan %substring%!)
+  if (cleanId) {
+    const cached = await findPictogram(cleanId);
+    if (
+      cached.ok &&
+      cached.data &&
+      hasExactKeywordSegment(cached.data.keyword, cleanId)
+    ) {
+      return ok(cached.data);
+    }
   }
 
   if (cleanEn) {
     const cachedEn = await findAssetByKeyword(cleanEn, "piktogram");
-    if (cachedEn.ok && cachedEn.data) {
+    if (
+      cachedEn.ok &&
+      cachedEn.data &&
+      cachedEn.data.source !== "system-placeholder" &&
+      hasExactKeywordSegment(cachedEn.data.keyword, cleanEn)
+    ) {
       return ok(cachedEn.data);
     }
   }
 
-  // 1a. Cari di katalog lokal sebelum memanggil ARASAAC API
+  // 2. Cari di katalog konsep terverifikasi Bahasa Indonesia
+  const index = getConceptIndex();
+  const conceptHits = search(cleanId || cleanEn || "", index, {
+    limit: 3,
+    minScore: 45,
+    requireImage: true,
+  }).filter(
+    (h) =>
+      h.concept.status === "active" &&
+      !/\b\d{4,}\b/.test(h.concept.labelNorm || normalize(h.concept.label)) &&
+      !h.matchedOn.includes("exact_en") &&
+      !h.matchedOn.includes("en_tokens")
+  );
+  if (conceptHits[0]) {
+    const resolved = await resolveCatalogAssetToDb(conceptHits[0].concept.id);
+    if (resolved.ok) return resolved;
+  }
+
+  // 2a. Cari di katalog aset lokal dengan skor ketat (hindari kecocokan lemah/subkata)
   const catalogHits = searchAssets(cleanId || cleanEn || "", {
     limit: 1,
-    minScore: 18,
+    minScore: 30,
     onlyAvailable: true,
   });
   if (catalogHits[0]) {
@@ -345,8 +453,10 @@ export async function findOrFetchPictogram(
     if (resolved.ok) return resolved;
   }
 
-  // 1b. Cek curated mapping agar ID akurat dan tidak tertukar (misal cuci tangan tidak tertukar cuci mobil)
-  const curatedId = CURATED_ARASAAC_IDS[cleanId] ?? (cleanEn ? CURATED_ARASAAC_IDS[cleanEn] : undefined);
+  // 2b. Cek curated mapping agar ID akurat dan tidak tertukar
+  const curatedId =
+    CURATED_ARASAAC_IDS[cleanId] ??
+    (cleanEn ? CURATED_ARASAAC_IDS[cleanEn] : undefined);
   if (curatedId) {
     const curatedAsset = await downloadAndCacheArasaacPictogram(
       curatedId,
@@ -358,25 +468,30 @@ export async function findOrFetchPictogram(
     }
   }
 
-  // 2. Lookup ARASAAC API (Bahasa Indonesia dulu)
+  // 3. Lookup ARASAAC API (Bahasa Indonesia dulu)
   let results = await searchArasaacApi(cleanId, "id");
 
-  // 3. Fallback ARASAAC API (Bahasa Inggris)
+  // 4. Fallback ARASAAC API (Bahasa Inggris)
   if (results.length === 0 && cleanEn) {
     results = await searchArasaacApi(cleanEn, "en");
   }
 
-  // 4. Jika ditemukan di ARASAAC, cari yang keyword-nya paling tepat
+  // 5. Hanya gunakan hasil ARASAAC jika ada kata kunci yang benar-benar cocok
   if (results.length > 0) {
+    const targetNormId = normalize(cleanId);
+    const targetNormEn = cleanEn ? normalize(cleanEn) : "";
     const exactMatch = results.find((r) =>
-      r.keywords?.some((k) =>
-        cleanEn ? k.keyword.toLowerCase() === cleanEn : k.keyword.toLowerCase() === cleanId
-      )
+      r.keywords?.some((k) => {
+        const kwNorm = normalize(k.keyword);
+        return (
+          kwNorm === targetNormId ||
+          (targetNormEn !== "" && kwNorm === targetNormEn)
+        );
+      })
     );
-    const selectedMatch = exactMatch ?? results[0];
-    if (selectedMatch) {
+    if (exactMatch) {
       const cachedAsset = await downloadAndCacheArasaacPictogram(
-        selectedMatch._id,
+        exactMatch._id,
         cleanId,
         cleanEn
       );
@@ -386,8 +501,13 @@ export async function findOrFetchPictogram(
     }
   }
 
-  // 5. Fallback ke placeholder lokal terstandarisasi
-  return createPlaceholderPictogram(cleanId);
+  // 6. Jangan membuat gambar placeholder abu-abu kosong — kembalikan NOT_FOUND agar kartu tetap tanpa_gambar (null)
+  return err(
+    makeAppError(
+      "NOT_FOUND",
+      `Piktogram terverifikasi untuk '${cleanId || cleanEn}' tidak ditemukan`
+    )
+  );
 }
 
 // Pre-bundling piktogram materi demo agar siap pakai offline

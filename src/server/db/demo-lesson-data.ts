@@ -88,7 +88,7 @@ export const demoCurriculumUnits: DemoLessonData[] = [
     classroomId: DEMO_CLASSROOM_ID,
     lessonId: DEMO_LESSON_ID,
     publicationId: DEMO_PUBLICATION_ID,
-    shareCode: "DEMO1234",
+    shareCode: "100101",
     classroom: {
       name: "Kelas Inklusif A",
       level: "sdlb",
@@ -204,7 +204,7 @@ export const demoCurriculumUnits: DemoLessonData[] = [
     classroomId: DEMO_CLASS_2B_ID,
     lessonId: DEMO_LESSON_2B_ID,
     publicationId: DEMO_PUB_2B_ID,
-    shareCode: "HEWN1234",
+    shareCode: "100102",
     classroom: {
       name: "Kelas Inklusif B (BISINDO)",
       level: "sdlb",

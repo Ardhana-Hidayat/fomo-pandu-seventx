@@ -1,7 +1,7 @@
 {
   "domain": "rumah-tempat",
   "version": "1.0.0",
-  "count": 111,
+  "count": 106,
   "concepts": [
     {
       "id": "rumah-tempat-alun-alun",
@@ -25,99 +25,6 @@
       "sourceRef": "seed-rumah-tempat-alun-alun"
     },
     {
-      "id": "rumah-tempat-at",
-      "label": "At",
-      "labelNorm": "at",
-      "synonyms": [],
-      "labelEn": "at your house",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/at-your-house-39999.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"At Your House\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39999"
-    },
-    {
-      "id": "rumah-tempat-at-my-house",
-      "label": "At My House",
-      "labelNorm": "at my house",
-      "synonyms": [
-        "my",
-        "benda di rumah"
-      ],
-      "labelEn": "at my house",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/at-my-house.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"At My House\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "40003"
-    },
-    {
-      "id": "rumah-tempat-at-our-house",
-      "label": "At Our House",
-      "labelNorm": "at our house",
-      "synonyms": [
-        "our"
-      ],
-      "labelEn": "at our house",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/at-our-house.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"At Our House\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "40002"
-    },
-    {
-      "id": "rumah-tempat-at-your-house",
-      "label": "At Your House",
-      "labelNorm": "at your house",
-      "synonyms": [],
-      "labelEn": "at your house",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/at-your-house.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"At Your House\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39998"
-    },
-    {
       "id": "rumah-tempat-at-your-house-39999",
       "label": "at your house 39999",
       "labelNorm": "at your house 39999",
@@ -135,7 +42,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "at your house 39999",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-at-your-house-39999"
     },
@@ -157,7 +64,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "at your house 40000",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-at-your-house-40000"
     },
@@ -179,7 +86,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "at your house 40001",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-at-your-house-40001"
     },
@@ -201,7 +108,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "Bandara",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-bandara"
     },
@@ -251,7 +158,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "bedroom",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-bedroom"
     },
@@ -260,7 +167,7 @@
       "label": "Berpakaian",
       "labelNorm": "berpakaian",
       "synonyms": [],
-      "labelEn": "berpakaian",
+      "labelEn": "get dressed",
       "domains": [
         "rumah-tempat",
         "bina-diri"
@@ -272,36 +179,10 @@
       "assetUrl": "/media/pictograms/dress-2781.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dress\" pada kategori Benda di Rumah.",
+      "altText": "Piktogram visual untuk konsep \"Berpakaian\" pada kategori Benda di Rumah.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2781"
-    },
-    {
-      "id": "rumah-tempat-cleaning-products-storehouse",
-      "label": "Cleaning Products Storehouse",
-      "labelNorm": "cleaning products storehouse",
-      "synonyms": [
-        "cleaning",
-        "products",
-        "storehouse"
-      ],
-      "labelEn": "cleaning products storehouse",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/cleaning-products-storehouse.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Cleaning Products Storehouse\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "15836"
     },
     {
       "id": "rumah-tempat-colokan-listrik",
@@ -309,10 +190,9 @@
       "labelNorm": "colokan listrik",
       "synonyms": [
         "colokan",
-        "colok listrik",
-        "plug"
+        "colok listrik"
       ],
-      "labelEn": "colokan",
+      "labelEn": "plug",
       "domains": [
         "rumah-tempat",
         "bina-diri",
@@ -336,10 +216,9 @@
       "label": "Cuci Baju",
       "labelNorm": "cuci baju",
       "synonyms": [
-        "mencuci",
-        "laundry"
+        "mencuci"
       ],
-      "labelEn": "cuci baju",
+      "labelEn": "laundry",
       "domains": [
         "rumah-tempat",
         "bina-diri",
@@ -362,7 +241,7 @@
       "label": "Dapur",
       "labelNorm": "dapur",
       "synonyms": [],
-      "labelEn": "dapur",
+      "labelEn": "kitchen",
       "domains": [
         "rumah-tempat",
         "bina-diri",
@@ -381,27 +260,101 @@
       "sourceRef": "10752"
     },
     {
-      "id": "rumah-tempat-dining-room",
-      "label": "Dining Room",
-      "labelNorm": "dining room",
-      "synonyms": [],
-      "labelEn": "ruang makan",
+      "id": "rumah-tempat-at-our-house",
+      "label": "Di Rumah Kami",
+      "labelNorm": "di rumah kami",
+      "synonyms": [
+        "rumah kita"
+      ],
+      "labelEn": "at our house",
       "domains": [
         "rumah-tempat",
-        "bina-diri",
-        "tumbuhan-makanan"
+        "bina-diri"
       ],
       "groupId": "benda-di-rumah",
-      "kind": "tumbuhan_makanan",
+      "kind": "benda",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/dining-room-9824.webp",
+      "assetUrl": "/media/pictograms/at-our-house.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Ruang Makan\" pada kategori Benda di Rumah, Makanan dan Minuman.",
+      "altText": "Piktogram visual untuk konsep \"Di Rumah Kami\" pada kategori Benda di Rumah.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "9824"
+      "sourceRef": "40002"
+    },
+    {
+      "id": "rumah-tempat-at-my-house",
+      "label": "Di Rumahku",
+      "labelNorm": "di rumahku",
+      "synonyms": [
+        "rumah saya"
+      ],
+      "labelEn": "at my house",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/at-my-house.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Di Rumahku\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "40003"
+    },
+    {
+      "id": "rumah-tempat-at-your-house",
+      "label": "Di Rumahmu",
+      "labelNorm": "di rumahmu",
+      "synonyms": [
+        "rumah kamu"
+      ],
+      "labelEn": "at your house",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/at-your-house.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/at-your-house-40001.webp",
+        "/media/pictograms/at-your-house-40000.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Di Rumahmu\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "39998"
+    },
+    {
+      "id": "rumah-tempat-at",
+      "label": "Di Rumahnya",
+      "labelNorm": "di rumahnya",
+      "synonyms": [],
+      "labelEn": "at their house",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/at-your-house-39999.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Di Rumahnya\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "39999"
     },
     {
       "id": "rumah-tempat-dining-room-9824",
@@ -422,31 +375,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "dining room 9824",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-dining-room-9824"
-    },
-    {
-      "id": "rumah-tempat-dress",
-      "label": "Dress",
-      "labelNorm": "dress",
-      "synonyms": [],
-      "labelEn": "berpakaian",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dress.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dress\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6627"
     },
     {
       "id": "rumah-tempat-dress-2781",
@@ -466,7 +397,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "dress 2781",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-dress-2781"
     },
@@ -488,7 +419,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "dress 32135",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-dress-32135"
     },
@@ -510,31 +441,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "dress 34569",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-dress-34569"
-    },
-    {
-      "id": "rumah-tempat-dressed",
-      "label": "Dressed",
-      "labelNorm": "dressed",
-      "synonyms": [],
-      "labelEn": "berpakaian",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/dressed.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dressed\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "34735"
     },
     {
       "id": "rumah-tempat-dressed-34737",
@@ -554,9 +463,33 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "dressed 34737",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-dressed-34737"
+    },
+    {
+      "id": "rumah-tempat-hang-28691",
+      "label": "Gantung Baju",
+      "labelNorm": "gantung baju",
+      "synonyms": [
+        "menggantung pakaian"
+      ],
+      "labelEn": "hang clothes",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/hang-28691.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Gantung Baju\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "28691"
     },
     {
       "id": "rumah-tempat-garage",
@@ -577,7 +510,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "garage",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-garage"
     },
@@ -585,10 +518,8 @@
       "id": "rumah-tempat-garasi",
       "label": "Garasi",
       "labelNorm": "garasi",
-      "synonyms": [
-        "garage"
-      ],
-      "labelEn": "garasi",
+      "synonyms": [],
+      "labelEn": "garage",
       "domains": [
         "rumah-tempat",
         "bina-diri",
@@ -611,7 +542,6 @@
       "label": "Garpu",
       "labelNorm": "garpu",
       "synonyms": [
-        "fork",
         "alat makan"
       ],
       "labelEn": "fork",
@@ -637,7 +567,7 @@
       "label": "Gaun",
       "labelNorm": "gaun",
       "synonyms": [],
-      "labelEn": "berpakaian",
+      "labelEn": "dress",
       "domains": [
         "rumah-tempat",
         "bina-diri"
@@ -649,7 +579,7 @@
       "assetUrl": "/media/pictograms/dress-32135.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dress\" pada kategori Benda di Rumah.",
+      "altText": "Piktogram visual untuk konsep \"Gaun\" pada kategori Benda di Rumah.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "32135"
@@ -689,7 +619,6 @@
       "label": "Gelas",
       "labelNorm": "gelas",
       "synonyms": [
-        "cup",
         "alat minum"
       ],
       "labelEn": "glass",
@@ -709,6 +638,55 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2610"
+    },
+    {
+      "id": "rumah-tempat-warehouse",
+      "label": "Gudang",
+      "labelNorm": "gudang",
+      "synonyms": [
+        "gudang barang",
+        "rak penyimpanan"
+      ],
+      "labelEn": "warehouse",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/warehouse.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Gudang\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6896"
+    },
+    {
+      "id": "rumah-tempat-cleaning-products-storehouse",
+      "label": "Gudang Alat Kebersihan",
+      "labelNorm": "gudang alat kebersihan",
+      "synonyms": [
+        "rak alat bersih"
+      ],
+      "labelEn": "cleaning products storehouse",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/cleaning-products-storehouse.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Gudang Alat Kebersihan\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "15836"
     },
     {
       "id": "rumah-tempat-halaman-rumah",
@@ -732,50 +710,6 @@
       "sourceRef": "seed-rumah-tempat-halaman-rumah"
     },
     {
-      "id": "rumah-tempat-hang",
-      "label": "Hang",
-      "labelNorm": "hang",
-      "synonyms": [],
-      "labelEn": "hang",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/hang.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hang\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37895"
-    },
-    {
-      "id": "rumah-tempat-hang-28691",
-      "label": "Hang 28691",
-      "labelNorm": "hang 28691",
-      "synonyms": [],
-      "labelEn": "hang",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/hang-28691.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hang\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28691"
-    },
-    {
       "id": "rumah-tempat-hotel",
       "label": "Hotel",
       "labelNorm": "hotel",
@@ -783,7 +717,7 @@
         "penginapan",
         "kamar hotel"
       ],
-      "labelEn": "penginapan",
+      "labelEn": "hotel",
       "domains": [
         "rumah-tempat",
         "keluarga-sosial",
@@ -801,28 +735,6 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "15730"
-    },
-    {
-      "id": "rumah-tempat-house",
-      "label": "House",
-      "labelNorm": "house",
-      "synonyms": [],
-      "labelEn": "at your house",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/at-your-house-40001.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"At Your House\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "40001"
     },
     {
       "id": "rumah-tempat-jembatan",
@@ -857,10 +769,9 @@
       "label": "Kamar Tidur",
       "labelNorm": "kamar tidur",
       "synonyms": [
-        "ruang tidur",
-        "bedroom"
+        "ruang tidur"
       ],
-      "labelEn": "kamar tidur",
+      "labelEn": "bedroom",
       "domains": [
         "rumah-tempat",
         "bina-diri",
@@ -981,29 +892,6 @@
       "sourceRef": "custom:kipas-angin"
     },
     {
-      "id": "rumah-tempat-kitchen",
-      "label": "Kitchen",
-      "labelNorm": "kitchen",
-      "synonyms": [],
-      "labelEn": "dapur",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri",
-        "tumbuhan-makanan"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/kitchen-5965.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dapur\" pada kategori Benda di Rumah, Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "5965"
-    },
-    {
       "id": "rumah-tempat-kitchen-10753",
       "label": "kitchen 10753",
       "labelNorm": "kitchen 10753",
@@ -1022,7 +910,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "kitchen 10753",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-kitchen-10753"
     },
@@ -1045,7 +933,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "kitchen 5965",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-kitchen-5965"
     },
@@ -1070,28 +958,6 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-klenteng"
-    },
-    {
-      "id": "rumah-tempat-knock",
-      "label": "Knock",
-      "labelNorm": "knock",
-      "synonyms": [],
-      "labelEn": "knock",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/knock.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Knock\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4687"
     },
     {
       "id": "rumah-tempat-kolam-renang",
@@ -1208,7 +1074,6 @@
       "label": "Lampu",
       "labelNorm": "lampu",
       "synonyms": [
-        "lamp",
         "light",
         "lampu listrik",
         "bohlam",
@@ -1335,7 +1200,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "laundry",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-laundry"
     },
@@ -1373,7 +1238,6 @@
       "label": "Lift",
       "labelNorm": "lift",
       "synonyms": [
-        "elevator",
         "naik lantai",
         "fasilitas",
         "fasilitas gedung",
@@ -1418,31 +1282,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "lift elevator",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-lift-elevator"
-    },
-    {
-      "id": "rumah-tempat-lighted",
-      "label": "Lighted",
-      "labelNorm": "lighted",
-      "synonyms": [],
-      "labelEn": "lighted",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/lighted.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Lighted\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4640"
     },
     {
       "id": "rumah-tempat-masjid-raya",
@@ -1467,11 +1309,87 @@
       "sourceRef": "seed-rumah-tempat-masjid-raya"
     },
     {
+      "id": "rumah-tempat-undress",
+      "label": "Melepas Baju",
+      "labelNorm": "melepas baju",
+      "synonyms": [
+        "ganti baju",
+        "buka pakaian"
+      ],
+      "labelEn": "undress",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/undress.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/undress-15371.webp",
+        "/media/pictograms/undress-34019.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Melepas Baju\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "11232"
+    },
+    {
+      "id": "rumah-tempat-unfasten-32321",
+      "label": "Melepas Kancing",
+      "labelNorm": "melepas kancing",
+      "synonyms": [
+        "buka kancing baju"
+      ],
+      "labelEn": "unfasten",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/unfasten-32321.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Melepas Kancing\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32321"
+    },
+    {
+      "id": "rumah-tempat-unbuckle",
+      "label": "Melepas Sabuk",
+      "labelNorm": "melepas sabuk",
+      "synonyms": [
+        "buka sabuk pengaman"
+      ],
+      "labelEn": "unbuckle",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/unbuckle.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Melepas Sabuk\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "34659"
+    },
+    {
       "id": "rumah-tempat-memakai-baju",
       "label": "Memakai Baju",
       "labelNorm": "memakai baju",
       "synonyms": [],
-      "labelEn": "berpakaian",
+      "labelEn": "put on clothes",
       "domains": [
         "rumah-tempat",
         "bina-diri"
@@ -1483,17 +1401,41 @@
       "assetUrl": "/media/pictograms/dressed-34737.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dressed\" pada kategori Benda di Rumah.",
+      "altText": "Piktogram visual untuk konsep \"Memakai Baju\" pada kategori Benda di Rumah.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "34737"
     },
     {
+      "id": "rumah-tempat-dress",
+      "label": "Memakai Pakaian",
+      "labelNorm": "memakai pakaian",
+      "synonyms": [
+        "mengenakan baju"
+      ],
+      "labelEn": "dress",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dress.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Memakai Pakaian\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6627"
+    },
+    {
       "id": "rumah-tempat-memasak",
-      "label": "Memasak",
-      "labelNorm": "memasak",
+      "label": "Memasak di Dapur",
+      "labelNorm": "memasak di dapur",
       "synonyms": [],
-      "labelEn": "dapur",
+      "labelEn": "cook in kitchen",
       "domains": [
         "rumah-tempat",
         "bina-diri",
@@ -1506,10 +1448,253 @@
       "assetUrl": "/media/pictograms/kitchen-10753.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dapur\" pada kategori Benda di Rumah, Makanan dan Minuman.",
+      "altText": "Piktogram visual untuk konsep \"Memasak di Dapur\" pada kategori Benda di Rumah, Makanan dan Minuman.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "10753"
+    },
+    {
+      "id": "rumah-tempat-unclog",
+      "label": "Membersihkan Saluran",
+      "labelNorm": "membersihkan saluran",
+      "synonyms": [
+        "pompa wastafel"
+      ],
+      "labelEn": "unclog",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/unclog.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Membersihkan Saluran\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "28607"
+    },
+    {
+      "id": "rumah-tempat-undress-11233",
+      "label": "Membuka Baju",
+      "labelNorm": "membuka baju",
+      "synonyms": [
+        "lepas baju"
+      ],
+      "labelEn": "undress",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/undress-11233.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Membuka Baju\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "11233"
+    },
+    {
+      "id": "rumah-tempat-unfasten",
+      "label": "Membuka Kancing",
+      "labelNorm": "membuka kancing",
+      "synonyms": [
+        "lepas kancing"
+      ],
+      "labelEn": "unfasten",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/unfasten.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Membuka Kancing\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32320"
+    },
+    {
+      "id": "rumah-tempat-unzip",
+      "label": "Membuka Resleting",
+      "labelNorm": "membuka resleting",
+      "synonyms": [
+        "buka ritsleting"
+      ],
+      "labelEn": "unzip",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/unzip.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Membuka Resleting\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37414"
+    },
+    {
+      "id": "rumah-tempat-select",
+      "label": "Memilih Baju",
+      "labelNorm": "memilih baju",
+      "synonyms": [],
+      "labelEn": "choose clothes",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri",
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/select-clothing-36724.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Memilih Baju\" pada kategori Benda di Rumah, Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36724"
+    },
+    {
+      "id": "rumah-tempat-select-clothing",
+      "label": "Memilih Pakaian",
+      "labelNorm": "memilih pakaian",
+      "synonyms": [
+        "pilih baju"
+      ],
+      "labelEn": "select clothing",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri",
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/select-clothing.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Memilih Pakaian\" pada kategori Benda di Rumah, Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "22110"
+    },
+    {
+      "id": "rumah-tempat-knock",
+      "label": "Mengetuk Pintu",
+      "labelNorm": "mengetuk pintu",
+      "synonyms": [
+        "ketuk pintu"
+      ],
+      "labelEn": "knock",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/knock.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengetuk Pintu\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4687"
+    },
+    {
+      "id": "rumah-tempat-hang",
+      "label": "Menggantung Baju",
+      "labelNorm": "menggantung baju",
+      "synonyms": [
+        "gantung jaket"
+      ],
+      "labelEn": "hang clothes",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/hang.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menggantung Baju\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37895"
+    },
+    {
+      "id": "rumah-tempat-unzip-37429",
+      "label": "Menurunkan Resleting",
+      "labelNorm": "menurunkan resleting",
+      "synonyms": [
+        "lepas resleting"
+      ],
+      "labelEn": "unzip",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/unzip-37429.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menurunkan Resleting\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37429"
+    },
+    {
+      "id": "rumah-tempat-lighted",
+      "label": "Menyala",
+      "labelNorm": "menyala",
+      "synonyms": [
+        "lilin menyala",
+        "api menyala"
+      ],
+      "labelEn": "lighted",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/lighted.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menyala\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4640"
     },
     {
       "id": "rumah-tempat-mercusuar",
@@ -1604,7 +1789,7 @@
       "label": "Pakaian",
       "labelNorm": "pakaian",
       "synonyms": [],
-      "labelEn": "berpakaian",
+      "labelEn": "clothing",
       "domains": [
         "rumah-tempat",
         "bina-diri"
@@ -1616,7 +1801,7 @@
       "assetUrl": "/media/pictograms/dress-34569.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Dress\" pada kategori Benda di Rumah.",
+      "altText": "Piktogram visual untuk konsep \"Pakaian\" pada kategori Benda di Rumah.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "34569"
@@ -1653,8 +1838,7 @@
       "label": "Panci",
       "labelNorm": "panci",
       "synonyms": [
-        "alat masak",
-        "merebus"
+        "alat masak"
       ],
       "labelEn": "pot",
       "domains": [
@@ -1679,9 +1863,7 @@
       "id": "rumah-tempat-pasar",
       "label": "Pasar",
       "labelNorm": "pasar",
-      "synonyms": [
-        "market"
-      ],
+      "synonyms": [],
       "labelEn": "market",
       "domains": [
         "rumah-tempat",
@@ -1830,9 +2012,7 @@
       "id": "rumah-tempat-piring",
       "label": "Piring",
       "labelNorm": "piring",
-      "synonyms": [
-        "plate"
-      ],
+      "synonyms": [],
       "labelEn": "plate",
       "domains": [
         "rumah-tempat",
@@ -1871,7 +2051,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "plug",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-plug"
     },
@@ -1920,6 +2100,29 @@
       "sourceRef": "seed-rumah-tempat-puskesmas"
     },
     {
+      "id": "rumah-tempat-kitchen",
+      "label": "Ruang Dapur",
+      "labelNorm": "ruang dapur",
+      "synonyms": [],
+      "labelEn": "kitchen",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri",
+        "tumbuhan-makanan"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/kitchen-5965.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ruang Dapur\" pada kategori Benda di Rumah, Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5965"
+    },
+    {
       "id": "rumah-tempat-ruang-keluarga",
       "label": "Ruang Keluarga",
       "labelNorm": "ruang keluarga",
@@ -1948,7 +2151,7 @@
         "dining",
         "room"
       ],
-      "labelEn": "ruang makan",
+      "labelEn": "dining room",
       "domains": [
         "rumah-tempat",
         "bina-diri",
@@ -2002,8 +2205,7 @@
       "labelNorm": "rumah desa",
       "synonyms": [
         "kampung",
-        "rumah tradisional",
-        "tempat tinggal"
+        "rumah tradisional"
       ],
       "labelEn": "village house",
       "domains": [
@@ -2025,56 +2227,6 @@
       "sourceRef": "custom:rumah-desa"
     },
     {
-      "id": "rumah-tempat-select",
-      "label": "Select",
-      "labelNorm": "select",
-      "synonyms": [],
-      "labelEn": "select clothing",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri",
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/select-clothing-36724.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Select Clothing\" pada kategori Benda di Rumah, Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36724"
-    },
-    {
-      "id": "rumah-tempat-select-clothing",
-      "label": "Select Clothing",
-      "labelNorm": "select clothing",
-      "synonyms": [
-        "clothing"
-      ],
-      "labelEn": "select clothing",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri",
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/select-clothing.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Select Clothing\" pada kategori Benda di Rumah, Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "22110"
-    },
-    {
       "id": "rumah-tempat-select-clothing-36724",
       "label": "select clothing 36724",
       "labelNorm": "select clothing 36724",
@@ -2094,7 +2246,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "select clothing 36724",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-rumah-tempat-select-clothing-36724"
     },
@@ -2127,9 +2279,7 @@
       "id": "rumah-tempat-sendok",
       "label": "Sendok",
       "labelNorm": "sendok",
-      "synonyms": [
-        "spoon"
-      ],
+      "synonyms": [],
       "labelEn": "spoon",
       "domains": [
         "rumah-tempat",
@@ -2228,6 +2378,30 @@
       "sourceRef": "seed-rumah-tempat-stasiun-kereta-api"
     },
     {
+      "id": "rumah-tempat-dressed",
+      "label": "Sudah Berpakaian",
+      "labelNorm": "sudah berpakaian",
+      "synonyms": [
+        "rapi berpakaian"
+      ],
+      "labelEn": "dressed",
+      "domains": [
+        "rumah-tempat",
+        "bina-diri"
+      ],
+      "groupId": "benda-di-rumah",
+      "kind": "benda",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/dressed.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sudah Berpakaian\" pada kategori Benda di Rumah.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "34735"
+    },
+    {
       "id": "rumah-tempat-supermarket",
       "label": "Supermarket",
       "labelNorm": "supermarket",
@@ -2305,7 +2479,6 @@
       "label": "Tempat Tidur",
       "labelNorm": "tempat tidur",
       "synonyms": [
-        "bed",
         "kasur",
         "ranjang",
         "tempat"
@@ -2375,10 +2548,7 @@
       "id": "rumah-tempat-toko",
       "label": "Toko",
       "labelNorm": "toko",
-      "synonyms": [
-        "shop",
-        "store"
-      ],
+      "synonyms": [],
       "labelEn": "shop",
       "domains": [
         "rumah-tempat",
@@ -2397,226 +2567,6 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "35695"
-    },
-    {
-      "id": "rumah-tempat-unbuckle",
-      "label": "Unbuckle",
-      "labelNorm": "unbuckle",
-      "synonyms": [],
-      "labelEn": "unbuckle",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/unbuckle.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Unbuckle\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "34659"
-    },
-    {
-      "id": "rumah-tempat-unclog",
-      "label": "Unclog",
-      "labelNorm": "unclog",
-      "synonyms": [],
-      "labelEn": "unclog",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/unclog.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Unclog\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28607"
-    },
-    {
-      "id": "rumah-tempat-undress",
-      "label": "Undress",
-      "labelNorm": "undress",
-      "synonyms": [],
-      "labelEn": "undress",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/undress.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Undress\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "11232"
-    },
-    {
-      "id": "rumah-tempat-undress-11233",
-      "label": "Undress 11233",
-      "labelNorm": "undress 11233",
-      "synonyms": [],
-      "labelEn": "undress",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/undress-11233.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Undress\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "11233"
-    },
-    {
-      "id": "rumah-tempat-undress-15371",
-      "label": "Undress 15371",
-      "labelNorm": "undress 15371",
-      "synonyms": [],
-      "labelEn": "undress",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/undress-15371.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Undress\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "15371"
-    },
-    {
-      "id": "rumah-tempat-undress-34019",
-      "label": "Undress 34019",
-      "labelNorm": "undress 34019",
-      "synonyms": [],
-      "labelEn": "undress",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/undress-34019.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Undress\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "34019"
-    },
-    {
-      "id": "rumah-tempat-unfasten",
-      "label": "Unfasten",
-      "labelNorm": "unfasten",
-      "synonyms": [],
-      "labelEn": "unfasten",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/unfasten.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Unfasten\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32320"
-    },
-    {
-      "id": "rumah-tempat-unfasten-32321",
-      "label": "Unfasten 32321",
-      "labelNorm": "unfasten 32321",
-      "synonyms": [],
-      "labelEn": "unfasten",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/unfasten-32321.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Unfasten\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32321"
-    },
-    {
-      "id": "rumah-tempat-unzip",
-      "label": "Unzip",
-      "labelNorm": "unzip",
-      "synonyms": [],
-      "labelEn": "unzip",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/unzip.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Unzip\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37414"
-    },
-    {
-      "id": "rumah-tempat-unzip-37429",
-      "label": "Unzip 37429",
-      "labelNorm": "unzip 37429",
-      "synonyms": [],
-      "labelEn": "unzip",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/unzip-37429.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Unzip\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37429"
     },
     {
       "id": "rumah-tempat-vihara",
@@ -2646,8 +2596,7 @@
       "labelNorm": "wajan",
       "synonyms": [
         "penggorengan",
-        "teflon",
-        "menggoreng"
+        "teflon"
       ],
       "labelEn": "frying pan",
       "domains": [
@@ -2667,50 +2616,6 @@
       "status": "active",
       "source": "legacy",
       "sourceRef": "custom:wajan"
-    },
-    {
-      "id": "rumah-tempat-warehouse",
-      "label": "Warehouse",
-      "labelNorm": "warehouse",
-      "synonyms": [],
-      "labelEn": "warehouse",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/warehouse.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Warehouse\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6896"
-    },
-    {
-      "id": "rumah-tempat-your",
-      "label": "Your",
-      "labelNorm": "your",
-      "synonyms": [],
-      "labelEn": "at your house",
-      "domains": [
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "benda-di-rumah",
-      "kind": "benda",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/at-your-house-40000.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"At Your House\" pada kategori Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "40000"
     }
   ]
 }

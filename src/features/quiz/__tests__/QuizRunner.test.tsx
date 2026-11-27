@@ -294,4 +294,217 @@ describe("QuizRunner Component", () => {
     fireEvent.click(screen.getByRole("button", { name: "Buku" }));
     expect(screen.getByText(/Tepat! Jawabanmu benar/i)).toBeDefined();
   });
+
+  it("aturan timbal-balik: jika soal memiliki gambar (promptImageUrl), opsi jawaban WAJIB hanya teks saja", () => {
+    const imagePromptQuestions = [
+      {
+        id: "q-img-prompt",
+        lessonId: "l-rule",
+        position: 1,
+        type: "pilih_kata",
+        prompt: "Hewan apa pada gambar ini?",
+        payload: {
+          promptImageUrl: "/media/pictograms/kucing.webp",
+          options: [
+            {
+              id: "opt-1",
+              text: "Kucing",
+              imageUrl: "/media/pictograms/kucing.webp",
+              correct: true,
+            },
+            {
+              id: "opt-2",
+              text: "Ikan",
+              imageUrl: "/media/pictograms/ikan.webp",
+              correct: false,
+            },
+          ],
+        },
+        linkedCardId: null,
+        explanation: null,
+        keyTerms: [] as string[],
+        signOverride: null,
+        createdAt: new Date(),
+      },
+    ];
+
+    const { container } = render(
+      <PreferencesProvider>
+        <QuizRunner
+          lessonTitle="Hewan"
+          questions={imagePromptQuestions}
+          backHref="/"
+        />
+      </PreferencesProvider>
+    );
+
+    // Gambar soal tampil
+    const imgs = Array.from(container.querySelectorAll("img"));
+    expect(imgs).toHaveLength(1);
+    expect(imgs[0]?.getAttribute("src")).toBe("/media/pictograms/kucing.webp");
+    expect(imgs[0]?.getAttribute("alt")).toBe("Hewan apa pada gambar ini?");
+
+    // Opsi tetap tampil teks saja tanpa gambar opsi
+    expect(screen.getByRole("button", { name: "Kucing" })).toBeDefined();
+    expect(screen.getByRole("button", { name: "Ikan" })).toBeDefined();
+    expect(screen.queryByAltText("Kucing")).toBeNull();
+    expect(screen.queryByAltText("Ikan")).toBeNull();
+  });
+
+  it("aturan timbal-balik: pada pilih_gambar dengan gambar opsi, soal WAJIB hanya teks saja meski promptImageUrl tersimpan di DB", () => {
+    const imageOptionsQuestions = [
+      {
+        id: "q-img-opts",
+        lessonId: "l-rule",
+        position: 1,
+        type: "pilih_gambar",
+        prompt: 'Mana gambar yang menunjukkan "kucing"?',
+        payload: {
+          promptImageUrl: "/media/pictograms/kucing.webp",
+          imageUrl: "/media/pictograms/kucing.webp",
+          options: [
+            {
+              id: "opt-1",
+              text: "kucing",
+              imageUrl: "/media/pictograms/kucing.webp",
+              correct: true,
+            },
+            {
+              id: "opt-2",
+              text: "burung",
+              imageUrl: "/media/pictograms/burung.webp",
+              correct: false,
+            },
+          ],
+        },
+        linkedCardId: null,
+        explanation: null,
+        keyTerms: [] as string[],
+        signOverride: null,
+        createdAt: new Date(),
+      },
+    ];
+
+    render(
+      <PreferencesProvider>
+        <QuizRunner
+          lessonTitle="Hewan"
+          questions={imageOptionsQuestions}
+          backHref="/"
+        />
+      </PreferencesProvider>
+    );
+
+    // Gambar prompt tidak boleh tampil
+    expect(
+      screen.queryByAltText('Mana gambar yang menunjukkan "kucing"?')
+    ).toBeNull();
+
+    // Gambar opsi tampil dengan label bahasa Indonesia
+    expect(screen.getByAltText("kucing")).toBeDefined();
+    expect(screen.getByAltText("burung")).toBeDefined();
+    expect(screen.getByText("kucing")).toBeDefined();
+    expect(screen.getByText("burung")).toBeDefined();
+  });
+
+  it("menyembunyikan gambar opsi yang gagal dimuat tanpa menampilkan ikon rusak dan tetap menampilkan teks opsi", () => {
+    const brokenImageQuestions = [
+      {
+        id: "q-broken-opt",
+        lessonId: "l-broken",
+        position: 1,
+        type: "pilih_gambar",
+        prompt: "Mana gambar apel?",
+        payload: {
+          options: [
+            {
+              id: "opt-1",
+              text: "apel",
+              imageUrl: "/media/pictograms/tidak-ada.webp",
+              correct: true,
+            },
+            {
+              id: "opt-2",
+              text: "jeruk",
+              imageUrl: "/media/pictograms/jeruk.webp",
+              correct: false,
+            },
+          ],
+        },
+        linkedCardId: null,
+        explanation: null,
+        keyTerms: [] as string[],
+        signOverride: null,
+        createdAt: new Date(),
+      },
+    ];
+
+    render(
+      <PreferencesProvider>
+        <QuizRunner
+          lessonTitle="Buah"
+          questions={brokenImageQuestions}
+          backHref="/"
+        />
+      </PreferencesProvider>
+    );
+
+    const brokenImg = screen.getByAltText("apel");
+    fireEvent.error(brokenImg);
+
+    // Gambar rusak disembunyikan, label teks opsi tetap tampil & dapat diklik
+    expect(screen.queryByAltText("apel")).toBeNull();
+    expect(screen.getByAltText("jeruk")).toBeDefined();
+    const apelBtn = screen.getByRole("button", { name: "apel" });
+    fireEvent.click(apelBtn);
+    expect(screen.getByText(/Tepat! Jawabanmu benar/i)).toBeDefined();
+  });
+
+  it("aturan timbal-balik pada arrange_steps: jika prompt bergambar, langkah dirender teks saja", () => {
+    const orderWithPromptImg = [
+      {
+        id: "q-order-img",
+        lessonId: "l-order",
+        position: 1,
+        type: "arrange_steps",
+        prompt: "Susun langkah mencuci tangan.",
+        payload: {
+          promptImageUrl: "/media/pictograms/cuci-tangan.webp",
+          steps: [
+            {
+              id: "s1",
+              text: "Basahi tangan",
+              imageUrl: "/media/pictograms/air.webp",
+            },
+            {
+              id: "s2",
+              text: "Gosok dengan sabun",
+              imageUrl: "/media/pictograms/sabun.webp",
+            },
+          ],
+        },
+        linkedCardId: null,
+        explanation: null,
+        keyTerms: [] as string[],
+        signOverride: null,
+        createdAt: new Date(),
+      },
+    ];
+
+    const { container } = render(
+      <PreferencesProvider>
+        <QuizRunner
+          lessonTitle="Cuci Tangan"
+          questions={orderWithPromptImg}
+          backHref="/"
+        />
+      </PreferencesProvider>
+    );
+
+    const imgs = Array.from(container.querySelectorAll("img"));
+    expect(imgs).toHaveLength(1);
+    expect(imgs[0]?.getAttribute("src")).toBe("/media/pictograms/cuci-tangan.webp");
+    expect(screen.getByText("Basahi tangan")).toBeDefined();
+    expect(screen.getByText("Gosok dengan sabun")).toBeDefined();
+  });
 });

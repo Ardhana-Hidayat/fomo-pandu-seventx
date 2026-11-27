@@ -1,8 +1,32 @@
 {
   "domain": "tumbuhan-makanan",
   "version": "1.0.0",
-  "count": 176,
+  "count": 166,
   "concepts": [
+    {
+      "id": "tumbuhan-makanan-drinkable",
+      "label": "Air Layak Minum",
+      "labelNorm": "air layak minum",
+      "synonyms": [
+        "bisa diminum",
+        "air minum bersih"
+      ],
+      "labelEn": "drinkable",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/drinkable.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Air Layak Minum\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "30932"
+    },
     {
       "id": "tumbuhan-makanan-air-mineral",
       "label": "Air Mineral",
@@ -70,9 +94,7 @@
       "id": "tumbuhan-makanan-apel",
       "label": "Apel",
       "labelNorm": "apel",
-      "synonyms": [
-        "apple"
-      ],
+      "synonyms": [],
       "labelEn": "apple",
       "domains": [
         "tumbuhan-makanan"
@@ -109,6 +131,29 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-tumbuhan-makanan-apel-merah"
+    },
+    {
+      "id": "tumbuhan-makanan-salty",
+      "label": "Asin",
+      "labelNorm": "asin",
+      "synonyms": [
+        "rasa asin"
+      ],
+      "labelEn": "salty",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/salty.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Asin\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32524"
     },
     {
       "id": "tumbuhan-makanan-ayam-goreng",
@@ -247,10 +292,7 @@
       "id": "tumbuhan-makanan-biskuit",
       "label": "Biskuit",
       "labelNorm": "biskuit",
-      "synonyms": [
-        "biscuit",
-        "cookie"
-      ],
+      "synonyms": [],
       "labelEn": "biscuit",
       "domains": [
         "tumbuhan-makanan"
@@ -266,27 +308,6 @@
       "status": "active",
       "source": "arasaac",
       "sourceRef": "8312"
-    },
-    {
-      "id": "tumbuhan-makanan-boil",
-      "label": "Boil",
-      "labelNorm": "boil",
-      "synonyms": [],
-      "labelEn": "boil",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/boil.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Boil\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "5485"
     },
     {
       "id": "tumbuhan-makanan-brokoli",
@@ -314,7 +335,6 @@
       "label": "Buah",
       "labelNorm": "buah",
       "synonyms": [
-        "fruit",
         "buah-buahan"
       ],
       "labelEn": "fruit",
@@ -381,9 +401,7 @@
       "id": "tumbuhan-makanan-bunga",
       "label": "Bunga",
       "labelNorm": "bunga",
-      "synonyms": [
-        "flower"
-      ],
+      "synonyms": [],
       "labelEn": "flower",
       "domains": [
         "tumbuhan-makanan",
@@ -534,7 +552,6 @@
       "label": "Cabai",
       "labelNorm": "cabai",
       "synonyms": [
-        "chili",
         "pedas"
       ],
       "labelEn": "chili",
@@ -599,9 +616,7 @@
       "id": "tumbuhan-makanan-daging",
       "label": "Daging",
       "labelNorm": "daging",
-      "synonyms": [
-        "meat"
-      ],
+      "synonyms": [],
       "labelEn": "meat",
       "domains": [
         "tumbuhan-makanan"
@@ -682,28 +697,6 @@
       "sourceRef": "seed-tumbuhan-makanan-donat"
     },
     {
-      "id": "tumbuhan-makanan-drink",
-      "label": "Drink",
-      "labelNorm": "drink",
-      "synonyms": [],
-      "labelEn": "minum",
-      "domains": [
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/drink.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Drink\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6061"
-    },
-    {
       "id": "tumbuhan-makanan-drink-2276",
       "label": "drink 2276",
       "labelNorm": "drink 2276",
@@ -720,74 +713,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "drink 2276",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tumbuhan-makanan-drink-2276"
-    },
-    {
-      "id": "tumbuhan-makanan-drink-29716",
-      "label": "Drink 29716",
-      "labelNorm": "drink 29716",
-      "synonyms": [],
-      "labelEn": "minum",
-      "domains": [
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/drink-29716.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Drink\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "29716"
-    },
-    {
-      "id": "tumbuhan-makanan-drink-37528",
-      "label": "Drink 37528",
-      "labelNorm": "drink 37528",
-      "synonyms": [],
-      "labelEn": "minum",
-      "domains": [
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/drink-37528.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Drink\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37528"
-    },
-    {
-      "id": "tumbuhan-makanan-drinkable",
-      "label": "Drinkable",
-      "labelNorm": "drinkable",
-      "synonyms": [],
-      "labelEn": "drinkable",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/drinkable.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Drinkable\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "30932"
     },
     {
       "id": "tumbuhan-makanan-duku",
@@ -832,28 +760,6 @@
       "sourceRef": "seed-tumbuhan-makanan-durian"
     },
     {
-      "id": "tumbuhan-makanan-eat",
-      "label": "Eat",
-      "labelNorm": "eat",
-      "synonyms": [],
-      "labelEn": "makan",
-      "domains": [
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/eat.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Eat\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6456"
-    },
-    {
       "id": "tumbuhan-makanan-eat-2349",
       "label": "eat 2349",
       "labelNorm": "eat 2349",
@@ -870,31 +776,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "eat 2349",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tumbuhan-makanan-eat-2349"
-    },
-    {
-      "id": "tumbuhan-makanan-eat-28641",
-      "label": "Eat 28641",
-      "labelNorm": "eat 28641",
-      "synonyms": [],
-      "labelEn": "makan",
-      "domains": [
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/eat-28641.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Eat\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28641"
     },
     {
       "id": "tumbuhan-makanan-es-kelapa",
@@ -918,73 +802,6 @@
       "sourceRef": "seed-tumbuhan-makanan-es-kelapa"
     },
     {
-      "id": "tumbuhan-makanan-food-storehouse",
-      "label": "Food Storehouse",
-      "labelNorm": "food storehouse",
-      "synonyms": [],
-      "labelEn": "food storehouse",
-      "domains": [
-        "tumbuhan-makanan",
-        "rumah-tempat",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/food-storehouse.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Food Storehouse\" pada kategori Makanan dan Minuman, Benda di Rumah.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "15832"
-    },
-    {
-      "id": "tumbuhan-makanan-fry",
-      "label": "Fry",
-      "labelNorm": "fry",
-      "synonyms": [],
-      "labelEn": "fry",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/fry.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Fry\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39476"
-    },
-    {
-      "id": "tumbuhan-makanan-fry-vegetables",
-      "label": "Fry Vegetables",
-      "labelNorm": "fry vegetables",
-      "synonyms": [
-        "vegetables"
-      ],
-      "labelEn": "fry vegetables",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/fry-vegetables.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Fry Vegetables\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39477"
-    },
-    {
       "id": "tumbuhan-makanan-gado-gado",
       "label": "Gado-Gado",
       "labelNorm": "gado gado",
@@ -1006,47 +823,30 @@
       "sourceRef": "seed-tumbuhan-makanan-gado-gado"
     },
     {
-      "id": "tumbuhan-makanan-heat",
-      "label": "Heat",
-      "labelNorm": "heat",
-      "synonyms": [],
-      "labelEn": "heat",
-      "domains": [
-        "tumbuhan-makanan"
+      "id": "tumbuhan-makanan-food-storehouse",
+      "label": "Gudang Makanan",
+      "labelNorm": "gudang makanan",
+      "synonyms": [
+        "lumbung",
+        "rak makanan"
       ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/heat.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Heat\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8520"
-    },
-    {
-      "id": "tumbuhan-makanan-hungry",
-      "label": "Hungry",
-      "labelNorm": "hungry",
-      "synonyms": [],
-      "labelEn": "lapar",
+      "labelEn": "food storehouse",
       "domains": [
         "tumbuhan-makanan",
+        "rumah-tempat",
         "bina-diri"
       ],
       "groupId": "makanan-dan-minuman",
       "kind": "tumbuhan_makanan",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/hungry.webp",
+      "assetUrl": "/media/pictograms/food-storehouse.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hungry\" pada kategori Makanan dan Minuman.",
+      "altText": "Piktogram visual untuk konsep \"Gudang Makanan\" pada kategori Makanan dan Minuman, Benda di Rumah.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "4962"
+      "sourceRef": "15832"
     },
     {
       "id": "tumbuhan-makanan-hungry-31890",
@@ -1065,31 +865,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "hungry 31890",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tumbuhan-makanan-hungry-31890"
-    },
-    {
-      "id": "tumbuhan-makanan-hungry-35525",
-      "label": "Hungry 35525",
-      "labelNorm": "hungry 35525",
-      "synonyms": [],
-      "labelEn": "lapar",
-      "domains": [
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/hungry-35525.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hungry\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "35525"
     },
     {
       "id": "tumbuhan-makanan-ikan-bakar",
@@ -1138,7 +916,7 @@
       "label": "Ingin Makan",
       "labelNorm": "ingin makan",
       "synonyms": [],
-      "labelEn": "lapar",
+      "labelEn": "hungry",
       "domains": [
         "tumbuhan-makanan",
         "bina-diri"
@@ -1150,7 +928,7 @@
       "assetUrl": "/media/pictograms/hungry-31890.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Hungry\" pada kategori Makanan dan Minuman.",
+      "altText": "Piktogram visual untuk konsep \"Ingin Makan\" pada kategori Makanan dan Minuman.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31890"
@@ -1219,29 +997,6 @@
       "sourceRef": "seed-tumbuhan-makanan-jambu-biji"
     },
     {
-      "id": "tumbuhan-makanan-jeruk",
-      "label": "Jeruk",
-      "labelNorm": "jeruk",
-      "synonyms": [
-        "orange"
-      ],
-      "labelEn": "orange",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/jeruk.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Jeruk\" pada kategori Makanan dan Minuman, Tumbuhan.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "2888"
-    },
-    {
       "id": "tumbuhan-makanan-jeruk-manis",
       "label": "Jeruk Manis",
       "labelNorm": "jeruk manis",
@@ -1267,7 +1022,6 @@
       "label": "Jus",
       "labelNorm": "jus",
       "synonyms": [
-        "juice",
         "jus buah"
       ],
       "labelEn": "juice",
@@ -1434,12 +1188,34 @@
       "sourceRef": "seed-tumbuhan-makanan-kedelai"
     },
     {
+      "id": "tumbuhan-makanan-thirsty-32140",
+      "label": "Kehausan",
+      "labelNorm": "kehausan",
+      "synonyms": [
+        "merasa haus"
+      ],
+      "labelEn": "thirsty",
+      "domains": [
+        "tumbuhan-makanan",
+        "bina-diri"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/thirsty-32140.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kehausan\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32140"
+    },
+    {
       "id": "tumbuhan-makanan-keju",
       "label": "Keju",
       "labelNorm": "keju",
-      "synonyms": [
-        "cheese"
-      ],
+      "synonyms": [],
       "labelEn": "cheese",
       "domains": [
         "tumbuhan-makanan"
@@ -1623,27 +1399,6 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-tumbuhan-makanan-klepon"
-    },
-    {
-      "id": "tumbuhan-makanan-knead",
-      "label": "Knead",
-      "labelNorm": "knead",
-      "synonyms": [],
-      "labelEn": "knead",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/knead.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Knead\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "8015"
     },
     {
       "id": "tumbuhan-makanan-kol",
@@ -1857,18 +1612,44 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/makan.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/eat.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Makan\" pada kategori Makanan dan Minuman, Kehidupan Sehari-hari.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "6456"
     },
     {
+      "id": "tumbuhan-makanan-eat-28641",
+      "label": "Makan Malam",
+      "labelNorm": "makan malam",
+      "synonyms": [
+        "santap makanan"
+      ],
+      "labelEn": "eat meal",
+      "domains": [
+        "tumbuhan-makanan",
+        "bina-diri"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/eat-28641.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Makan Malam\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "28641"
+    },
+    {
       "id": "tumbuhan-makanan-makanan",
       "label": "Makanan",
       "labelNorm": "makanan",
       "synonyms": [],
-      "labelEn": "makan",
+      "labelEn": "meal",
       "domains": [
         "tumbuhan-makanan",
         "bina-diri"
@@ -1880,7 +1661,7 @@
       "assetUrl": "/media/pictograms/eat-2349.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Eat\" pada kategori Makanan dan Minuman.",
+      "altText": "Piktogram visual untuk konsep \"Makanan\" pada kategori Makanan dan Minuman.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2349"
@@ -1926,6 +1707,29 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-tumbuhan-makanan-manggis"
+    },
+    {
+      "id": "tumbuhan-makanan-sweet",
+      "label": "Manis",
+      "labelNorm": "manis",
+      "synonyms": [
+        "rasa manis"
+      ],
+      "labelEn": "sweet",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sweet.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Manis\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32440"
     },
     {
       "id": "tumbuhan-makanan-markisa",
@@ -1991,12 +1795,335 @@
       "sourceRef": "seed-tumbuhan-makanan-melon"
     },
     {
+      "id": "tumbuhan-makanan-roast",
+      "label": "Memanggang",
+      "labelNorm": "memanggang",
+      "synonyms": [
+        "panggang"
+      ],
+      "labelEn": "roast",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/roast.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/roast-35441.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Memanggang\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "10140"
+    },
+    {
+      "id": "tumbuhan-makanan-roast-11184",
+      "label": "Membakar Makanan",
+      "labelNorm": "membakar makanan",
+      "synonyms": [
+        "bakar di panggangan"
+      ],
+      "labelEn": "roast",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/roast-11184.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Membakar Makanan\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "11184"
+    },
+    {
+      "id": "tumbuhan-makanan-take-the-fork",
+      "label": "Memegang Garpu",
+      "labelNorm": "memegang garpu",
+      "synonyms": [
+        "ambil garpu"
+      ],
+      "labelEn": "take the fork",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/take-the-fork.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Memegang Garpu\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36629"
+    },
+    {
+      "id": "tumbuhan-makanan-take-the-knife-and-fork",
+      "label": "Memegang Pisau dan Garpu",
+      "labelNorm": "memegang pisau dan garpu",
+      "synonyms": [
+        "alat makan lengkap"
+      ],
+      "labelEn": "take knife and fork",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/take-the-knife-and-fork.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Memegang Pisau dan Garpu\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36628"
+    },
+    {
+      "id": "tumbuhan-makanan-stir",
+      "label": "Mengaduk",
+      "labelNorm": "mengaduk",
+      "synonyms": [],
+      "labelEn": "stir",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/stir.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengaduk\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5981"
+    },
+    {
+      "id": "tumbuhan-makanan-stir-25738",
+      "label": "Mengaduk Masakan",
+      "labelNorm": "mengaduk masakan",
+      "synonyms": [
+        "aduk makanan"
+      ],
+      "labelEn": "stir",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/stir-25738.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengaduk Masakan\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "25738"
+    },
+    {
+      "id": "tumbuhan-makanan-sieve",
+      "label": "Mengayak",
+      "labelNorm": "mengayak",
+      "synonyms": [
+        "saring tepung"
+      ],
+      "labelEn": "sieve",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/sieve.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengayak\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "38703"
+    },
+    {
+      "id": "tumbuhan-makanan-knead",
+      "label": "Menggilas Adonan",
+      "labelNorm": "menggilas adonan",
+      "synonyms": [
+        "menguleni adonan"
+      ],
+      "labelEn": "knead dough",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/knead.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menggilas Adonan\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "8015"
+    },
+    {
+      "id": "tumbuhan-makanan-fry",
+      "label": "Menggoreng",
+      "labelNorm": "menggoreng",
+      "synonyms": [
+        "goreng di wajan"
+      ],
+      "labelEn": "fry",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/fry.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menggoreng\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "39476"
+    },
+    {
+      "id": "tumbuhan-makanan-heat",
+      "label": "Menghangatkan Makanan",
+      "labelNorm": "menghangatkan makanan",
+      "synonyms": [
+        "panaskan makanan"
+      ],
+      "labelEn": "heat food",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/heat.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menghangatkan Makanan\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "8520"
+    },
+    {
+      "id": "tumbuhan-makanan-whisk",
+      "label": "Mengocok Makanan",
+      "labelNorm": "mengocok makanan",
+      "synonyms": [
+        "menghaluskan makanan"
+      ],
+      "labelEn": "whisk",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/whisk.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Mengocok Makanan\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5925"
+    },
+    {
+      "id": "tumbuhan-makanan-fry-vegetables",
+      "label": "Menumis Sayur",
+      "labelNorm": "menumis sayur",
+      "synonyms": [
+        "goreng sayur"
+      ],
+      "labelEn": "fry vegetables",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/fry-vegetables.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menumis Sayur\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "39477"
+    },
+    {
+      "id": "tumbuhan-makanan-prick-the-food",
+      "label": "Menusuk Makanan",
+      "labelNorm": "menusuk makanan",
+      "synonyms": [
+        "tusuk garpu"
+      ],
+      "labelEn": "prick food",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/prick-the-food.webp",
+      "altAssetIds": [],
+      "altUrls": [
+        "/media/pictograms/prick-the-food-36658.webp"
+      ],
+      "altText": "Piktogram visual untuk konsep \"Menusuk Makanan\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36654"
+    },
+    {
+      "id": "tumbuhan-makanan-boil",
+      "label": "Merebus",
+      "labelNorm": "merebus",
+      "synonyms": [
+        "rebus",
+        "masak air"
+      ],
+      "labelEn": "boil",
+      "domains": [
+        "tumbuhan-makanan"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/boil.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Merebus\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5485"
+    },
+    {
       "id": "tumbuhan-makanan-mie",
       "label": "Mie",
       "labelNorm": "mie",
-      "synonyms": [
-        "noodle"
-      ],
+      "synonyms": [],
       "labelEn": "noodle",
       "domains": [
         "tumbuhan-makanan"
@@ -2051,18 +2178,68 @@
       "assetId": null,
       "assetUrl": "/media/pictograms/minum.webp",
       "altAssetIds": [],
-      "altUrls": [],
+      "altUrls": [
+        "/media/pictograms/drink.webp"
+      ],
       "altText": "Piktogram visual untuk konsep \"Minum\" pada kategori Makanan dan Minuman, Kehidupan Sehari-hari.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "6061"
     },
     {
+      "id": "tumbuhan-makanan-drink-29716",
+      "label": "Minum Air",
+      "labelNorm": "minum air",
+      "synonyms": [
+        "teguk air"
+      ],
+      "labelEn": "drink water",
+      "domains": [
+        "tumbuhan-makanan",
+        "bina-diri"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/drink-29716.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Minum Air\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29716"
+    },
+    {
+      "id": "tumbuhan-makanan-drink-37528",
+      "label": "Minum Segar",
+      "labelNorm": "minum segar",
+      "synonyms": [
+        "minum di gelas"
+      ],
+      "labelEn": "drink",
+      "domains": [
+        "tumbuhan-makanan",
+        "bina-diri"
+      ],
+      "groupId": "makanan-dan-minuman",
+      "kind": "tumbuhan_makanan",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/drink-37528.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Minum Segar\" pada kategori Makanan dan Minuman.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37528"
+    },
+    {
       "id": "tumbuhan-makanan-minuman",
       "label": "Minuman",
       "labelNorm": "minuman",
       "synonyms": [],
-      "labelEn": "minum",
+      "labelEn": "drink",
       "domains": [
         "tumbuhan-makanan",
         "bina-diri"
@@ -2074,7 +2251,7 @@
       "assetUrl": "/media/pictograms/drink-2276.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Drink\" pada kategori Makanan dan Minuman.",
+      "altText": "Piktogram visual untuk konsep \"Minuman\" pada kategori Makanan dan Minuman.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2276"
@@ -2084,7 +2261,7 @@
       "label": "Minyak",
       "labelNorm": "minyak",
       "synonyms": [],
-      "labelEn": "minyak",
+      "labelEn": "cooking oil",
       "domains": [
         "tumbuhan-makanan",
         "rumah-tempat",
@@ -2149,7 +2326,6 @@
       "label": "Nasi",
       "labelNorm": "nasi",
       "synonyms": [
-        "rice",
         "makanan pokok"
       ],
       "labelEn": "rice",
@@ -2340,10 +2516,7 @@
       "id": "tumbuhan-makanan-permen",
       "label": "Permen",
       "labelNorm": "permen",
-      "synonyms": [
-        "candy",
-        "manis"
-      ],
+      "synonyms": [],
       "labelEn": "candy",
       "domains": [
         "tumbuhan-makanan"
@@ -2385,9 +2558,7 @@
       "id": "tumbuhan-makanan-pisang",
       "label": "Pisang",
       "labelNorm": "pisang",
-      "synonyms": [
-        "banana"
-      ],
+      "synonyms": [],
       "labelEn": "banana",
       "domains": [
         "tumbuhan-makanan"
@@ -2450,9 +2621,7 @@
       "id": "tumbuhan-makanan-pohon",
       "label": "Pohon",
       "labelNorm": "pohon",
-      "synonyms": [
-        "tree"
-      ],
+      "synonyms": [],
       "labelEn": "tree",
       "domains": [
         "tumbuhan-makanan",
@@ -2578,48 +2747,6 @@
       "sourceRef": "seed-tumbuhan-makanan-pohon-pisang"
     },
     {
-      "id": "tumbuhan-makanan-prick",
-      "label": "Prick",
-      "labelNorm": "prick",
-      "synonyms": [],
-      "labelEn": "prick the food",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/prick-the-food-36658.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Prick The Food\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36658"
-    },
-    {
-      "id": "tumbuhan-makanan-prick-the-food",
-      "label": "Prick The Food",
-      "labelNorm": "prick the food",
-      "synonyms": [],
-      "labelEn": "prick the food",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/prick-the-food.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Prick The Food\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36654"
-    },
-    {
       "id": "tumbuhan-makanan-prick-the-food-36658",
       "label": "prick the food 36658",
       "labelNorm": "prick the food 36658",
@@ -2636,7 +2763,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "prick the food 36658",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-tumbuhan-makanan-prick-the-food-36658"
     },
@@ -2709,75 +2836,10 @@
       "sourceRef": "seed-tumbuhan-makanan-rendang"
     },
     {
-      "id": "tumbuhan-makanan-roast",
-      "label": "Roast",
-      "labelNorm": "roast",
-      "synonyms": [],
-      "labelEn": "roast",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/roast.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Roast\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "10140"
-    },
-    {
-      "id": "tumbuhan-makanan-roast-11184",
-      "label": "Roast 11184",
-      "labelNorm": "roast 11184",
-      "synonyms": [],
-      "labelEn": "roast",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/roast-11184.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Roast\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "11184"
-    },
-    {
-      "id": "tumbuhan-makanan-roast-35441",
-      "label": "Roast 35441",
-      "labelNorm": "roast 35441",
-      "synonyms": [],
-      "labelEn": "roast",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/roast-35441.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Roast\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "35441"
-    },
-    {
       "id": "tumbuhan-makanan-roti",
       "label": "Roti",
       "labelNorm": "roti",
-      "synonyms": [
-        "bread"
-      ],
+      "synonyms": [],
       "labelEn": "bread",
       "domains": [
         "tumbuhan-makanan"
@@ -2840,9 +2902,7 @@
       "id": "tumbuhan-makanan-rumput",
       "label": "Rumput",
       "labelNorm": "rumput",
-      "synonyms": [
-        "grass"
-      ],
+      "synonyms": [],
       "labelEn": "grass",
       "domains": [
         "tumbuhan-makanan",
@@ -2902,30 +2962,6 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-tumbuhan-makanan-salak"
-    },
-    {
-      "id": "tumbuhan-makanan-salty",
-      "label": "Salty",
-      "labelNorm": "salty",
-      "synonyms": [
-        "asin",
-        "rasa"
-      ],
-      "labelEn": "asin",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/salty.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Salty\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32524"
     },
     {
       "id": "tumbuhan-makanan-sate-ayam",
@@ -2994,9 +3030,7 @@
       "id": "tumbuhan-makanan-sayur",
       "label": "Sayur",
       "labelNorm": "sayur",
-      "synonyms": [
-        "vegetable"
-      ],
+      "synonyms": [],
       "labelEn": "vegetable",
       "domains": [
         "tumbuhan-makanan",
@@ -3129,27 +3163,6 @@
       "sourceRef": "seed-tumbuhan-makanan-serai"
     },
     {
-      "id": "tumbuhan-makanan-sieve",
-      "label": "Sieve",
-      "labelNorm": "sieve",
-      "synonyms": [],
-      "labelEn": "sieve",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/sieve.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Sieve\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "38703"
-    },
-    {
       "id": "tumbuhan-makanan-singkong",
       "label": "Singkong",
       "labelNorm": "singkong",
@@ -3213,48 +3226,6 @@
       "sourceRef": "seed-tumbuhan-makanan-soto-ayam"
     },
     {
-      "id": "tumbuhan-makanan-stir",
-      "label": "Stir",
-      "labelNorm": "stir",
-      "synonyms": [],
-      "labelEn": "stir",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/stir.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Stir\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "5981"
-    },
-    {
-      "id": "tumbuhan-makanan-stir-25738",
-      "label": "Stir 25738",
-      "labelNorm": "stir 25738",
-      "synonyms": [],
-      "labelEn": "stir",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/stir-25738.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Stir\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "25738"
-    },
-    {
       "id": "tumbuhan-makanan-stroberi",
       "label": "Stroberi",
       "labelNorm": "stroberi",
@@ -3300,9 +3271,7 @@
       "id": "tumbuhan-makanan-sup",
       "label": "Sup",
       "labelNorm": "sup",
-      "synonyms": [
-        "soup"
-      ],
+      "synonyms": [],
       "labelEn": "soup",
       "domains": [
         "tumbuhan-makanan"
@@ -3345,7 +3314,6 @@
       "label": "Susu",
       "labelNorm": "susu",
       "synonyms": [
-        "milk",
         "minuman sehat"
       ],
       "labelEn": "milk",
@@ -3388,27 +3356,6 @@
       "sourceRef": "seed-tumbuhan-makanan-susu-cokelat"
     },
     {
-      "id": "tumbuhan-makanan-sweet",
-      "label": "Sweet",
-      "labelNorm": "sweet",
-      "synonyms": [],
-      "labelEn": "manis",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/sweet.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Sweet\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32440"
-    },
-    {
       "id": "tumbuhan-makanan-tahu",
       "label": "Tahu",
       "labelNorm": "tahu",
@@ -3430,56 +3377,10 @@
       "sourceRef": "seed-tumbuhan-makanan-tahu"
     },
     {
-      "id": "tumbuhan-makanan-take-the-fork",
-      "label": "Take The Fork",
-      "labelNorm": "take the fork",
-      "synonyms": [],
-      "labelEn": "take the fork",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/take-the-fork.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Take The Fork\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36629"
-    },
-    {
-      "id": "tumbuhan-makanan-take-the-knife-and-fork",
-      "label": "Take The Knife And Fork",
-      "labelNorm": "take the knife and fork",
-      "synonyms": [
-        "knife"
-      ],
-      "labelEn": "take the knife and fork",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/take-the-knife-and-fork.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Take The Knife And Fork\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36628"
-    },
-    {
       "id": "tumbuhan-makanan-teh",
       "label": "Teh",
       "labelNorm": "teh",
-      "synonyms": [
-        "tea"
-      ],
+      "synonyms": [],
       "labelEn": "tea",
       "domains": [
         "tumbuhan-makanan"
@@ -3521,9 +3422,7 @@
       "id": "tumbuhan-makanan-telur",
       "label": "Telur",
       "labelNorm": "telur",
-      "synonyms": [
-        "egg"
-      ],
+      "synonyms": [],
       "labelEn": "egg",
       "domains": [
         "tumbuhan-makanan"
@@ -3625,94 +3524,6 @@
       "sourceRef": "seed-tumbuhan-makanan-terong"
     },
     {
-      "id": "tumbuhan-makanan-thirsty",
-      "label": "Thirsty",
-      "labelNorm": "thirsty",
-      "synonyms": [],
-      "labelEn": "haus",
-      "domains": [
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/thirsty.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Thirsty\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4963"
-    },
-    {
-      "id": "tumbuhan-makanan-thirsty-32140",
-      "label": "Thirsty 32140",
-      "labelNorm": "thirsty 32140",
-      "synonyms": [],
-      "labelEn": "haus",
-      "domains": [
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/thirsty-32140.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Thirsty\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32140"
-    },
-    {
-      "id": "tumbuhan-makanan-thirsty-35523",
-      "label": "Thirsty 35523",
-      "labelNorm": "thirsty 35523",
-      "synonyms": [],
-      "labelEn": "haus",
-      "domains": [
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/thirsty-35523.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Thirsty\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "35523"
-    },
-    {
-      "id": "tumbuhan-makanan-thirsty-7273",
-      "label": "Thirsty 7273",
-      "labelNorm": "thirsty 7273",
-      "synonyms": [],
-      "labelEn": "haus",
-      "domains": [
-        "tumbuhan-makanan",
-        "bina-diri"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/thirsty-7273.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Thirsty\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7273"
-    },
-    {
       "id": "tumbuhan-makanan-timun",
       "label": "Timun",
       "labelNorm": "timun",
@@ -3774,27 +3585,6 @@
       "status": "needs_review",
       "source": "legacy",
       "sourceRef": "seed-tumbuhan-makanan-ubi"
-    },
-    {
-      "id": "tumbuhan-makanan-whisk",
-      "label": "Whisk",
-      "labelNorm": "whisk",
-      "synonyms": [],
-      "labelEn": "whisk",
-      "domains": [
-        "tumbuhan-makanan"
-      ],
-      "groupId": "makanan-dan-minuman",
-      "kind": "tumbuhan_makanan",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/whisk.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Whisk\" pada kategori Makanan dan Minuman.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "5925"
     },
     {
       "id": "tumbuhan-makanan-wortel",

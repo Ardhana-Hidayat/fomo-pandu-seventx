@@ -432,11 +432,18 @@ async function seedDatabaseInternal(): Promise<{
           ...(unit.publicationId ? { id: unit.publicationId } : {}),
           lessonId: lesson.id,
           classroomId: classroom.id,
-          shareCode: unit.shareCode || "DEMO1234",
+          shareCode: unit.shareCode || "100101",
           visible: true,
         })
         .returning();
       pub = inserted[0];
+    } else if (unit.shareCode && (!pub.shareCode || !/^\d{6}$/.test(pub.shareCode))) {
+      const updated = await db
+        .update(publications)
+        .set({ shareCode: unit.shareCode })
+        .where(eq(publications.id, pub.id))
+        .returning();
+      pub = updated[0] ?? pub;
     }
 
     if (!pub) {

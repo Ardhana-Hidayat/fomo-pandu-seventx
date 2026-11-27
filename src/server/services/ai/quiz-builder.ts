@@ -5,10 +5,12 @@ import {
   type ConceptIndex,
   type ConceptRecord,
 } from "@/shared/lib/grounding/visual-retrieval";
+import { nonEmptyUrl } from "@/shared/lib/quiz/visual-rule";
 import type {
   GeneratedCard,
   GeneratedQuestion,
   GeneratedQuestionOption,
+  GeneratedQuestionStep,
   LessonKind,
 } from "./types";
 
@@ -87,22 +89,140 @@ function getPolicySequence(
   }
 }
 
+function hasValidImageUrl(concept: ConceptRecord | undefined): boolean {
+  return Boolean(
+    concept &&
+      concept.status === "active" &&
+      nonEmptyUrl(concept.assetUrl) &&
+      concept.label.trim().length > 0
+  );
+}
+
+function cleanIndonesianLabel(label: string): string {
+  return label.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+function hasItemVisual(item: {
+  visual?: { asset_id?: string | null; url?: string } | null;
+  image?: { url?: string };
+  imageUrl?: string;
+}): boolean {
+  return Boolean(
+    nonEmptyUrl(item.imageUrl) ||
+      nonEmptyUrl(item.visual?.url) ||
+      nonEmptyUrl(item.image?.url) ||
+      (item.visual?.asset_id && item.visual.asset_id.trim().length > 0)
+  );
+}
+
+function stripOptionVisual(opt: GeneratedQuestionOption): GeneratedQuestionOption {
+  const clean: GeneratedQuestionOption = {
+    ...(opt.id ? { id: opt.id } : {}),
+    text: opt.text,
+    correct: opt.correct,
+    visual: null,
+  };
+  return clean;
+}
+
+function stripStepVisual(step: GeneratedQuestionStep): GeneratedQuestionStep {
+  return {
+    ...(step.id ? { id: step.id } : {}),
+    text: step.text,
+    visual: null,
+  };
+}
+
+/**
+ * Enforce mutual-exclusion between question prompt visuals and option/step visuals:
+ * - If prompt has an image -> strip all visual/image/imageUrl from options & steps.
+ * - If options/steps have images -> strip prompt_image/promptImageUrl/imageUrl from prompt.
+ */
+export function enforceQuestionVisualRule(
+  question: GeneratedQuestion
+): GeneratedQuestion {
+  const raw = question as GeneratedQuestion & {
+    promptImageUrl?: string;
+    imageUrl?: string;
+  };
+  const next: GeneratedQuestion & {
+    promptImageUrl?: string;
+    imageUrl?: string;
+  } = { ...raw };
+
+  const isImageOptionType =
+    next.type === "pilih_gambar" || next.variant === "pilih_gambar";
+  const isTrueFalse = next.type === "benar_salah";
+
+  const promptHasImage = Boolean(
+    nonEmptyUrl(next.promptImageUrl) ||
+      nonEmptyUrl(next.imageUrl) ||
+      nonEmptyUrl(next.prompt_image?.url) ||
+      (typeof next.prompt_image === "string" && nonEmptyUrl(next.prompt_image))
+  );
+
+  const optionsHaveImages = Boolean(
+    next.options?.some((o) =>
+      hasItemVisual(o as GeneratedQuestionOption & { imageUrl?: string })
+    )
+  );
+  const stepsHaveImages = Boolean(
+    next.steps?.some((s) =>
+      hasItemVisual(s as GeneratedQuestionStep & { imageUrl?: string })
+    )
+  );
+
+  if (isTrueFalse) {
+    if (next.options) {
+      next.options = next.options.map(stripOptionVisual);
+    }
+    if (next.steps) {
+      next.steps = next.steps.map(stripStepVisual);
+    }
+    return next;
+  }
+
+  if (
+    (isImageOptionType && optionsHaveImages) ||
+    (!promptHasImage && (optionsHaveImages || stepsHaveImages))
+  ) {
+    delete next.prompt_image;
+    delete next.promptImageUrl;
+    delete next.imageUrl;
+    return next;
+  }
+
+  if (promptHasImage) {
+    if (next.options) {
+      next.options = next.options.map(stripOptionVisual);
+    }
+    if (next.steps) {
+      next.steps = next.steps.map(stripStepVisual);
+    }
+    return next;
+  }
+
+  delete next.prompt_image;
+  delete next.promptImageUrl;
+  delete next.imageUrl;
+  return next;
+}
+
 function resolveCardConcept(
   card: GeneratedCard,
   index: ConceptIndex
 ): ConceptRecord | undefined {
   if (card.concept) {
     const byId = index.byId.get(card.concept);
-    if (byId && byId.status === "active" && (byId.assetUrl || byId.assetId)) {
+    if (hasValidImageUrl(byId)) {
       return byId;
     }
   }
   if (card.visual?.asset_id) {
     const byAsset = index.concepts.find(
       (c) =>
-        c.status === "active" &&
-        (c.assetId === card.visual?.asset_id || c.id === card.visual?.asset_id) &&
-        Boolean(c.assetUrl || c.assetId)
+        hasValidImageUrl(c) &&
+        (c.assetId === card.visual?.asset_id || c.id === card.visual?.asset_id)
     );
     if (byAsset) return byAsset;
   }
@@ -117,37 +237,44 @@ function buildImageQuestion(
   index: ConceptIndex,
   rng: () => number
 ): GeneratedQuestion | null {
+  if (!hasValidImageUrl(target)) {
+    return null;
+  }
+
   const neededDistractors = Math.max(1, optionCount - 1);
+  const activeImageConcepts = index.concepts.filter(hasValidImageUrl);
   const sameGroupCandidates = target.groupId
-    ? index.concepts.filter((c) => c.groupId === target.groupId)
+    ? activeImageConcepts.filter((c) => c.groupId === target.groupId)
     : [];
   let distractors = pickDistractors(target, sameGroupCandidates, neededDistractors);
 
   if (distractors.length < neededDistractors) {
-    distractors = pickDistractors(target, index.concepts, neededDistractors);
+    distractors = pickDistractors(target, activeImageConcepts, neededDistractors);
   }
 
+  distractors = distractors.filter(hasValidImageUrl);
   if (distractors.length < neededDistractors) {
     return null;
   }
 
+  const targetLabel = cleanIndonesianLabel(target.label);
   const rawOptions: GeneratedQuestionOption[] = [
     {
-      text: target.label.toLowerCase(),
+      text: targetLabel,
       correct: true,
       visual: {
         asset_id: target.assetId ?? target.id,
-        alt: target.altText || target.label,
-        url: target.assetUrl ?? undefined,
+        alt: (target.altText || target.label).trim(),
+        url: nonEmptyUrl(target.assetUrl)!,
       },
     },
     ...distractors.slice(0, neededDistractors).map((d) => ({
-      text: d.label.toLowerCase(),
+      text: cleanIndonesianLabel(d.label),
       correct: false,
       visual: {
         asset_id: d.assetId ?? d.id,
-        alt: d.altText || d.label,
-        url: d.assetUrl ?? undefined,
+        alt: (d.altText || d.label).trim(),
+        url: nonEmptyUrl(d.assetUrl)!,
       },
     })),
   ];
@@ -160,7 +287,7 @@ function buildImageQuestion(
   return {
     type: "match",
     variant: "pilih_gambar",
-    prompt: `Mana gambar yang menunjukkan "${target.label.toLowerCase()}"?`,
+    prompt: `Mana gambar yang menunjukkan "${targetLabel}"?`,
     linked_card: cardIndex + 1,
     options: shuffled,
   };
@@ -253,7 +380,7 @@ function buildOrderQuestion(
     steps: slice.map((c, i) => ({
       id: `step-${i + 1}`,
       text: c.text.replace(/\.$/, ""),
-      visual: c.visual ?? null,
+      visual: nonEmptyUrl(c.visual?.url) ? c.visual! : null,
     })),
   };
 }
@@ -382,7 +509,7 @@ export function buildDeterministicQuiz(
     }
 
     if (built) {
-      questions.push(built);
+      questions.push(enforceQuestionVisualRule(built));
     }
   }
 

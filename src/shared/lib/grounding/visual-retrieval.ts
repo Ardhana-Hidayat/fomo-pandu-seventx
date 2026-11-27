@@ -334,6 +334,86 @@ const STEM_EXCEPTIONS: Record<string, string> = {
  * Normalize Indonesian/English text for deterministic matching:
  * lowercase, strip diacritics, replace punctuation with spaces, collapse spaces.
  */
+const FUNCTION_STOPWORDS = new Set([
+  // Indonesian grammatical / function words
+  "yang", "dan", "di", "ke", "dari", "untuk", "pada", "dengan", "ini", "itu",
+  "atau", "ada", "adalah", "akan", "bisa", "dapat", "kami", "kita", "mereka",
+  "saya", "kamu", "dia", "dalam", "juga", "agar", "supaya", "oleh", "saat",
+  "ketika", "tentang", "secara", "yaitu", "seperti", "antara", "karena",
+  "lebih", "sangat", "sebagai", "setelah", "sebelum", "sudah", "belum",
+  "hanya", "semua", "merupakan", "tersebut", "bukan", "tidak", "mana",
+  "lalu", "kemudian", "serta", "hingga", "sampai", "pun", "lah", "kah",
+  "nya", "para", "sang", "si", "tiap", "setiap", "seluruh", "lain",
+  // English noise / function words that appear in legacy ARASAAC imports
+  "the", "a", "an", "of", "in", "on", "at", "to", "for", "by", "with",
+  "and", "or", "is", "are", "was", "were", "be", "been", "do", "does",
+  "did", "not", "no", "yes", "up", "down", "it", "its", "this", "that",
+  "one", "s", "put", "get", "set", "use", "now", "day",
+]);
+
+const GENERIC_CONCEPT_WORDS = new Set([
+  "bagian", "benda", "alat", "materi", "contoh", "kegiatan", "sehari",
+  "hari", "kehidupan", "umum", "cara", "hal", "bersih", "membuat",
+  "memiliki", "menjadi", "menggunakan", "memakai", "dipakai", "digunakan",
+  "terdapat", "berada", "ipa", "ips", "pkn", "matematika", "bahasa",
+  "indonesia", "sdlb", "smplb", "smalb",
+]);
+
+function containsWholePhrase(haystackNorm: string, phraseNorm: string): boolean {
+  if (!haystackNorm || !phraseNorm) return false;
+  return ` ${haystackNorm} `.includes(` ${phraseNorm} `);
+}
+
+function isNoisyNumericLabel(labelNorm: string): boolean {
+  return /\b\d{4,}\b/.test(labelNorm);
+}
+
+function getIndonesianSynonyms(concept: ConceptRecord): string[] {
+  const labelNorm = concept.labelNorm || normalize(concept.label);
+  const labelEnNorm = concept.labelEn ? normalize(concept.labelEn) : "";
+  return (concept.synonyms ?? [])
+    .map(normalize)
+    .filter((syn) => {
+      if (!syn) return false;
+      // Ignore pure English synonyms duplicated from labelEn when Indonesian label differs
+      if (labelEnNorm && syn === labelEnNorm && labelEnNorm !== labelNorm) {
+        return false;
+      }
+      return true;
+    });
+}
+
+function isMeaningfulToken(tok: string): boolean {
+  return (
+    tok.length >= 2 &&
+    !FUNCTION_STOPWORDS.has(tok) &&
+    !GENERIC_CONCEPT_WORDS.has(tok) &&
+    !/^\d{3,}$/.test(tok)
+  );
+}
+
+function meaningfulPhraseTokens(phraseNorm: string): string[] {
+  return rawTokens(phraseNorm).filter(isMeaningfulToken);
+}
+
+function matchesPhraseOrAllStems(
+  phraseNorm: string,
+  targetNorm: string,
+  targetStemSet: Set<string>
+): boolean {
+  if (!phraseNorm || !targetNorm) return false;
+  if (containsWholePhrase(targetNorm, phraseNorm)) {
+    return true;
+  }
+  const phraseTokens = meaningfulPhraseTokens(phraseNorm);
+  if (phraseTokens.length === 0) return false;
+  const phraseStems = Array.from(
+    new Set(phraseTokens.map(stem).filter((s) => s.length >= 2 && !FUNCTION_STOPWORDS.has(s)))
+  );
+  if (phraseStems.length === 0) return false;
+  return phraseStems.every((st) => targetStemSet.has(st));
+}
+
 export function normalize(input: string): string {
   return input
     .normalize("NFD")
@@ -525,7 +605,9 @@ export function search(
   if (!qNorm) return [];
 
   const qRaw = rawTokens(query);
-  const qStem = stemTokens(query);
+  const qMeaningfulRaw = qRaw.filter((t) => !FUNCTION_STOPWORDS.has(t));
+  const qEffectiveRaw = qMeaningfulRaw.length > 0 ? qMeaningfulRaw : qRaw;
+  const qStem = qEffectiveRaw.map(stem).filter(Boolean);
   const limit = options.limit ?? 20;
   const minScore = options.minScore ?? 10;
   const requireImage = options.requireImage ?? false;
@@ -538,7 +620,7 @@ export function search(
     candidateIds.add(c.id);
   }
 
-  for (const tok of qRaw) {
+  for (const tok of qEffectiveRaw) {
     for (const id of index.invertedRaw.get(tok) ?? []) {
       candidateIds.add(id);
     }
@@ -549,15 +631,24 @@ export function search(
     }
   }
 
-  // Fallback substring scan for prefix/partial queries if few candidates found
+  // Prefix/whole-phrase scan for short or partial queries (never match query containing a shorter unrelated label)
   if (candidateIds.size < 10 && qNorm.length >= 2) {
     for (const c of index.concepts) {
       if (c.status === "hidden") continue;
-      if (c.labelNorm.includes(qNorm) || qNorm.includes(c.labelNorm)) {
+      const cLabel = c.labelNorm || normalize(c.label);
+      if (
+        cLabel.startsWith(qNorm) ||
+        containsWholePhrase(cLabel, qNorm) ||
+        rawTokens(cLabel).some((t) => qNorm.length >= 3 && t.startsWith(qNorm))
+      ) {
         candidateIds.add(c.id);
         continue;
       }
-      if ((c.synonyms ?? []).some((s) => normalize(s).includes(qNorm))) {
+      if (
+        getIndonesianSynonyms(c).some(
+          (s) => s.startsWith(qNorm) || containsWholePhrase(s, qNorm)
+        )
+      ) {
         candidateIds.add(c.id);
       }
     }
@@ -576,57 +667,103 @@ export function search(
     const matchedOn: string[] = [];
 
     const labelNorm = concept.labelNorm || normalize(concept.label);
-    const synNorms = (concept.synonyms ?? []).map(normalize).filter(Boolean);
+    const synNorms = getIndonesianSynonyms(concept);
     const labelEnNorm = concept.labelEn ? normalize(concept.labelEn) : "";
+    const labelRawToks = rawTokens(labelNorm).filter((t) => !/^\d{4,}$/.test(t));
+    const meaningfulLabelToks = labelRawToks.filter(isMeaningfulToken);
 
-    if (labelNorm === qNorm) {
-      score += 100;
+    // Reject concepts whose entire label is pure stopwords/noise unless exact query matches
+    if (meaningfulLabelToks.length === 0 && labelNorm !== qNorm) continue;
+
+    const exactIdMatch = labelNorm === qNorm;
+    const exactSynMatch = !exactIdMatch && synNorms.includes(qNorm);
+
+    if (exactIdMatch) {
+      score += 120;
       matchedOn.push("exact_label");
-    } else if (synNorms.includes(qNorm)) {
+    } else if (exactSynMatch) {
       score += 85;
       matchedOn.push("exact_synonym");
     } else if (labelEnNorm && labelEnNorm === qNorm) {
-      score += 75;
+      // Keep English exact match well below Indonesian label/synonym matches
+      score += 45;
       matchedOn.push("exact_en");
     }
 
-    if (labelNorm.startsWith(qNorm) && labelNorm !== qNorm) {
+    if (labelNorm.startsWith(qNorm) && labelNorm !== qNorm && qNorm.length >= 2) {
       score += 45;
       matchedOn.push("prefix_label");
-    } else if (synNorms.some((s) => s.startsWith(qNorm) && s !== qNorm)) {
-      score += 35;
+    } else if (
+      synNorms.some((s) => s.startsWith(qNorm) && s !== qNorm && qNorm.length >= 2)
+    ) {
+      score += 30;
       matchedOn.push("prefix_synonym");
     }
 
-    const conceptRaw = new Set([
-      ...rawTokens(concept.label),
-      ...synNorms.flatMap(rawTokens),
-      ...rawTokens(labelEnNorm),
-    ]);
-    const conceptStem = new Set([
-      ...stemTokens(concept.label),
-      ...synNorms.flatMap(stemTokens),
-      ...stemTokens(labelEnNorm),
-    ]);
+    const idLabelRawSet = new Set(labelRawToks.filter((t) => !FUNCTION_STOPWORDS.has(t)));
+    const idLabelStemSet = new Set(
+      Array.from(idLabelRawSet).map(stem).filter(Boolean)
+    );
 
-    const rawMatches = qRaw.filter((t) => conceptRaw.has(t)).length;
-    if (rawMatches > 0) {
-      score += Math.round((rawMatches / qRaw.length) * 45);
+    const idSynRawSet = new Set(
+      synNorms.flatMap(rawTokens).filter(isMeaningfulToken)
+    );
+    const idSynStemSet = new Set(
+      Array.from(idSynRawSet).map(stem).filter(Boolean)
+    );
+
+    const labelRawMatches = qEffectiveRaw.filter((t) => idLabelRawSet.has(t)).length;
+    const synRawMatches = qEffectiveRaw.filter((t) => idSynRawSet.has(t)).length;
+    if (labelRawMatches > 0) {
+      score += Math.round((labelRawMatches / qEffectiveRaw.length) * 50);
       matchedOn.push("raw_tokens");
+    } else if (synRawMatches > 0) {
+      score += Math.round((synRawMatches / qEffectiveRaw.length) * 28);
+      matchedOn.push("syn_tokens");
     }
 
-    const stemMatches = qStem.filter((t) => conceptStem.has(t)).length;
-    if (stemMatches > 0) {
-      score += Math.round((stemMatches / qStem.length) * 35);
+    const labelStemMatches = qStem.filter((t) => idLabelStemSet.has(t)).length;
+    const synStemMatches = qStem.filter((t) => idSynStemSet.has(t)).length;
+    if (labelStemMatches > 0) {
+      score += Math.round((labelStemMatches / qStem.length) * 35);
       matchedOn.push("stem_tokens");
+    } else if (synStemMatches > 0) {
+      score += Math.round((synStemMatches / qStem.length) * 18);
+      matchedOn.push("syn_stem_tokens");
+    }
+
+    // Only allow English token overlap when there was zero Indonesian lexical match
+    if (
+      score === 0 &&
+      labelEnNorm &&
+      labelRawMatches === 0 &&
+      synRawMatches === 0 &&
+      labelStemMatches === 0 &&
+      synStemMatches === 0
+    ) {
+      const enRawSet = new Set(rawTokens(labelEnNorm).filter((t) => !FUNCTION_STOPWORDS.has(t)));
+      const enRawMatches = qEffectiveRaw.filter((t) => enRawSet.has(t)).length;
+      if (enRawMatches > 0) {
+        score += Math.round((enRawMatches / qEffectiveRaw.length) * 25);
+        matchedOn.push("en_tokens");
+      }
     }
 
     if (
       qNorm.length >= 3 &&
-      (labelNorm.includes(qNorm) || synNorms.some((s) => s.includes(qNorm)))
+      (containsWholePhrase(labelNorm, qNorm) ||
+        labelRawToks.some((t) => t.startsWith(qNorm)) ||
+        synNorms.some((s) => containsWholePhrase(s, qNorm)))
     ) {
-      score += 15;
-      matchedOn.push("substring");
+      score += 12;
+      matchedOn.push("phrase_match");
+    }
+
+    if (score <= 0) continue;
+
+    // Penalize noisy numeric-suffix ARASAAC duplicates (e.g. "Soap 36910")
+    if (isNoisyNumericLabel(labelNorm)) {
+      score -= 20;
     }
 
     if (
@@ -665,45 +802,99 @@ export function selectVocabulary(
   if (tokens.length === 0) return [];
 
   const scores = new Map<string, { concept: ConceptRecord; score: number }>();
+  const seenStemHits = new Set<string>();
 
   const bump = (concept: ConceptRecord, delta: number) => {
     if (concept.status !== "active") return;
     if (!concept.assetUrl && !concept.assetId) return;
+    const labelNorm = concept.labelNorm || normalize(concept.label);
+    const meaningfulLabel = meaningfulPhraseTokens(labelNorm);
+    if (meaningfulLabel.length === 0) return;
+
     const prev = scores.get(concept.id);
     const domainBonus =
       options.domains && options.domains.some((d) => concept.domains.includes(d))
-        ? 10
+        ? 15
         : 0;
+    const numericPenalty = isNoisyNumericLabel(labelNorm) ? -30 : 0;
     if (prev) {
       prev.score += delta;
     } else {
-      scores.set(concept.id, { concept, score: delta + domainBonus });
+      scores.set(concept.id, {
+        concept,
+        score: delta + domainBonus + numericPenalty,
+      });
     }
   };
 
-  // N-gram scan (3-gram, 2-gram, 1-gram) for exact label/synonym matches
+  // N-gram scan (3-gram, 2-gram, 1-gram) for exact Indonesian label/synonym matches
   for (let i = 0; i < tokens.length; i++) {
     for (const n of [3, 2, 1]) {
       if (i + n > tokens.length) continue;
-      const phrase = tokens.slice(i, i + n).join(" ");
+      const slice = tokens.slice(i, i + n);
+      if (n === 1 && !isMeaningfulToken(slice[0]!)) continue;
+      if (slice.every((t) => FUNCTION_STOPWORDS.has(t))) continue;
+
+      const phrase = slice.join(" ");
       const exact = index.byLabelNorm.get(phrase);
-      if (exact) bump(exact, 40 * n);
+      if (exact) bump(exact, 50 * n);
       for (const synConcept of index.bySynonymNorm.get(phrase) ?? []) {
-        bump(synConcept, 30 * n);
+        const synEn = synConcept.labelEn ? normalize(synConcept.labelEn) : "";
+        const synLabel = synConcept.labelNorm || normalize(synConcept.label);
+        if (synEn && phrase === synEn && synEn !== synLabel) continue;
+        bump(synConcept, 28 * n);
       }
     }
   }
 
-  // Stemmed single-token fallback
+  const textMeaningfulStems = new Set(
+    tokens.filter(isMeaningfulToken).map(stem).filter(Boolean)
+  );
+
+  // Stemmed single-token fallback (Indonesian label/synonyms only, requiring all stems of multi-word phrases)
   for (const tok of tokens) {
+    if (!isMeaningfulToken(tok)) continue;
     const st = stem(tok);
+    if (!st || FUNCTION_STOPWORDS.has(st) || GENERIC_CONCEPT_WORDS.has(st)) continue;
     for (const id of index.invertedStem.get(st) ?? []) {
+      const dedupKey = `${id}:${st}`;
+      if (seenStemHits.has(dedupKey)) continue;
       const c = index.byId.get(id);
-      if (c) bump(c, 12);
+      if (!c) continue;
+
+      const labelNorm = c.labelNorm || normalize(c.label);
+      const labelStems = Array.from(
+        new Set(meaningfulPhraseTokens(labelNorm).map(stem).filter(Boolean))
+      );
+      if (
+        labelStems.length > 0 &&
+        labelStems.includes(st) &&
+        labelStems.every((ls) => textMeaningfulStems.has(ls))
+      ) {
+        seenStemHits.add(dedupKey);
+        bump(c, 18);
+        continue;
+      }
+
+      const matchedSyn = getIndonesianSynonyms(c).some((syn) => {
+        const synStems = Array.from(
+          new Set(meaningfulPhraseTokens(syn).map(stem).filter(Boolean))
+        );
+        return (
+          synStems.length > 0 &&
+          synStems.includes(st) &&
+          synStems.every((ss) => textMeaningfulStems.has(ss))
+        );
+      });
+      if (matchedSyn) {
+        seenStemHits.add(dedupKey);
+        bump(c, 8);
+      }
     }
   }
 
   return Array.from(scores.values())
+    .filter((entry) => entry.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
     .map((entry) => entry.concept);
@@ -721,41 +912,106 @@ export function imageFit(
     return { fit: false, score: 0, reason: "concept_hidden" };
   }
 
-  const combinedText = [cardText, ...(options.keyTerms ?? [])].join(" ");
+  const cardNorm = normalize(cardText);
+  const keyTermNorms = (options.keyTerms ?? []).map(normalize).filter(Boolean);
+  const combinedText = [cardText, ...keyTermNorms].join(" ");
   const textNorm = normalize(combinedText);
   if (!textNorm) {
     return { fit: false, score: 0, reason: "empty_text" };
   }
 
-  const textRawSet = new Set(rawTokens(combinedText));
-  const textStemSet = new Set(stemTokens(combinedText));
-
   const labelNorm = concept.labelNorm || normalize(concept.label);
-  const synNorms = (concept.synonyms ?? []).map(normalize).filter(Boolean);
-
-  let score = 0;
-  if (textNorm.includes(labelNorm)) {
-    score += 100;
-  } else if (synNorms.some((s) => textNorm.includes(s))) {
-    score += 80;
+  const meaningfulLabelTokens = meaningfulPhraseTokens(labelNorm);
+  if (meaningfulLabelTokens.length === 0) {
+    return { fit: false, score: 0, reason: "no_lexical_grounding" };
   }
 
-  const conceptRaw = [
-    ...rawTokens(concept.label),
-    ...synNorms.flatMap(rawTokens),
-  ];
-  const conceptStem = [
-    ...stemTokens(concept.label),
-    ...synNorms.flatMap(stemTokens),
-  ];
+  const cardTokens = rawTokens(cardText);
+  const cardMeaningfulTokens = cardTokens.filter(isMeaningfulToken);
+  const cardStemSet = new Set(cardMeaningfulTokens.map(stem).filter(Boolean));
+  const primarySubjectNorm = cardMeaningfulTokens.slice(0, 2).join(" ");
+  const primarySubjectStems = new Set(
+    cardMeaningfulTokens.slice(0, 2).map(stem).filter(Boolean)
+  );
 
-  const rawOverlap = conceptRaw.filter((t) => textRawSet.has(t)).length;
-  const stemOverlap = conceptStem.filter((t) => textStemSet.has(t)).length;
+  const keyTermTokens = keyTermNorms.flatMap(rawTokens).filter(isMeaningfulToken);
+  const keyTermStemSet = new Set(keyTermTokens.map(stem).filter(Boolean));
+  const hasKeyTerms = keyTermTokens.length > 0 || keyTermNorms.length > 0;
 
-  score += rawOverlap * 30 + stemOverlap * 20;
+  const combinedStemSet = new Set([...cardStemSet, ...keyTermStemSet]);
+
+  const synNorms = getIndonesianSynonyms(concept).filter((syn) => {
+    const mTokens = meaningfulPhraseTokens(syn);
+    return mTokens.length > 0;
+  });
+
+  // 1. Check whole-phrase or all-stems match for the concept's Indonesian label
+  const labelMatchesKeyTerms =
+    keyTermNorms.some(
+      (kt) => kt === labelNorm || containsWholePhrase(kt, labelNorm)
+    ) ||
+    (hasKeyTerms &&
+      matchesPhraseOrAllStems(labelNorm, keyTermNorms.join(" "), keyTermStemSet));
+
+  const labelMatchesCard = matchesPhraseOrAllStems(labelNorm, cardNorm, cardStemSet);
+  const labelMatchesPrimarySubject =
+    containsWholePhrase(primarySubjectNorm, labelNorm) ||
+    (meaningfulLabelTokens.length === 1 &&
+      primarySubjectStems.has(stem(meaningfulLabelTokens[0]!)));
+
+  // 2. Check whole-phrase or all-stems match for meaningful Indonesian synonyms
+  const synMatchesKeyTerms = synNorms.some(
+    (s) =>
+      keyTermNorms.some((kt) => kt === s || containsWholePhrase(kt, s)) ||
+      (hasKeyTerms &&
+        matchesPhraseOrAllStems(s, keyTermNorms.join(" "), keyTermStemSet))
+  );
+  const synMatchesCard = synNorms.some((s) =>
+    matchesPhraseOrAllStems(s, cardNorm, cardStemSet)
+  );
+
+  // 3. Enforce primary concept / keyTerms alignment when keyTerms are provided
+  if (hasKeyTerms) {
+    const alignedWithKeyTermsOrSubject =
+      labelMatchesKeyTerms || synMatchesKeyTerms || labelMatchesPrimarySubject;
+    if (!alignedWithKeyTermsOrSubject) {
+      return { fit: false, score: 0, reason: "no_lexical_grounding" };
+    }
+  }
+
+  let score = 0;
+  if (labelMatchesKeyTerms) {
+    score += 100;
+  } else if (labelMatchesCard) {
+    score += 85;
+  } else if (synMatchesKeyTerms) {
+    score += 75;
+  } else if (synMatchesCard) {
+    score += 55;
+  }
+
+  // Token overlap bonus on meaningful Indonesian label stems (never raw ungrounded stopwords/labelEn)
+  const labelStems = Array.from(
+    new Set(meaningfulLabelTokens.map(stem).filter((s) => s.length >= 2))
+  );
+  const matchedLabelStems = labelStems.filter((st) => combinedStemSet.has(st)).length;
+  if (
+    score > 0 ||
+    (labelStems.length === 1 && matchedLabelStems === 1) ||
+    (labelStems.length >= 2 && matchedLabelStems === labelStems.length)
+  ) {
+    score += matchedLabelStems * 20;
+    if (labelMatchesPrimarySubject) {
+      score += 20;
+    }
+  }
+
+  if (isNoisyNumericLabel(labelNorm)) {
+    score -= 25;
+  }
 
   if (score < 20) {
-    return { fit: false, score, reason: "no_lexical_grounding" };
+    return { fit: false, score: Math.max(0, score), reason: "no_lexical_grounding" };
   }
 
   return { fit: true, score };

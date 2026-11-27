@@ -356,6 +356,7 @@ describe("Database Repositories & Data Layer (S0-03, S0-04, S0-07)", () => {
       expect(pubRes.data).toHaveLength(1);
       const shareCode = pubRes.data[0]?.shareCode;
       expect(shareCode).toBeDefined();
+      expect(shareCode).toMatch(/^\d{6}$/);
 
       if (pubRes.ok && pubRes.data[0]) {
         const forClass = await listPublicationsForClassroom(classRes.data.id);
@@ -368,13 +369,19 @@ describe("Database Repositories & Data Layer (S0-03, S0-04, S0-07)", () => {
         }
       }
 
-      // Cari publikasi lewat shareCode
+      // Cari publikasi lewat shareCode (hanya 6 angka yang valid)
       if (shareCode) {
-        const byCode = await getPublicationByShareCode(shareCode);
+        const byCode = await getPublicationByShareCode(` ${shareCode} `);
         expect(byCode.ok).toBe(true);
         if (byCode.ok) {
           expect(byCode.data.lesson.id).toBe(lesson.id);
         }
+      }
+
+      const invalidLetterCode = await getPublicationByShareCode("ABC123");
+      expect(invalidLetterCode.ok).toBe(false);
+      if (!invalidLetterCode.ok) {
+        expect(invalidLetterCode.error.code).toBe("NOT_FOUND");
       }
 
       // Ubah visibilitas publikasi
@@ -914,6 +921,7 @@ describe("Database Repositories & Data Layer (S0-03, S0-04, S0-07)", () => {
       if (!pubRes.ok) return;
       const shareCode = pubRes.data[0]?.shareCode;
       expect(shareCode).toBeTruthy();
+      expect(shareCode).toMatch(/^\d{6}$/);
 
       // 4. Simulasi refresh halaman: re-fetch materi & publikasi harus tetap ada
       const afterRefresh = await getLessonWithContent(teacher!.id, created.data.id);

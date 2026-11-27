@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { NextResponse } from "next/server";
 import { eq, ne } from "drizzle-orm";
 import { db } from "@/server/db/client";
@@ -13,8 +15,34 @@ import {
   type ConceptRecord,
 } from "@/shared/lib/grounding/visual-retrieval";
 
+function isPlaceholderStorageKey(storageKey: string | null | undefined, source?: string | null): boolean {
+  if (source === "system-placeholder") return true;
+  if (!storageKey) return false;
+  return /^placeholder-.*\.webp$/i.test(path.basename(storageKey.split("?")[0] || ""));
+}
+
 function resolveStorageUrl(storageKey: string): string {
-  return storageKey.startsWith("/") || storageKey.startsWith("http")
+  if (storageKey.startsWith("http")) {
+    return storageKey;
+  }
+  if (storageKey.startsWith("/media/custom/") || storageKey.startsWith("/media/pictograms/")) {
+    const localDiskPath = path.join(process.cwd(), "public", storageKey.replace(/^\/+/, ""));
+    if (fs.existsSync(localDiskPath)) {
+      return storageKey;
+    }
+    const supabaseUrl = (
+      process.env.NEXT_PUBLIC_SUPABASE_URL ||
+      process.env.SUPABASE_URL ||
+      (process.env.STORAGE_DRIVER === "supabase" || Boolean(process.env.VERCEL)
+        ? "https://vmailnuloaoonmqeguok.supabase.co"
+        : "")
+    ).replace(/\/+$/, "");
+    if (supabaseUrl) {
+      return `${supabaseUrl}/storage/v1/object/public/card-images/${encodeURIComponent(path.basename(storageKey))}`;
+    }
+    return storageKey;
+  }
+  return storageKey.startsWith("/")
     ? storageKey
     : storage.url(storageKey, "card-images");
 }
@@ -49,6 +77,7 @@ async function loadMergedActiveConcepts(): Promise<
         concept: visualConcepts,
         storageKey: assets.storageKey,
         assetAlt: assets.alt,
+        assetSource: assets.source,
       })
       .from(visualConcepts)
       .leftJoin(assets, eq(visualConcepts.assetId, assets.id))
@@ -61,29 +90,40 @@ async function loadMergedActiveConcepts(): Promise<
         continue;
       }
       const existing = byId.get(vc.id);
-      const url = row.storageKey
-        ? resolveStorageUrl(row.storageKey)
+      const validStorageKey =
+        row.storageKey && !isPlaceholderStorageKey(row.storageKey, row.assetSource)
+          ? row.storageKey
+          : null;
+      const url = validStorageKey
+        ? resolveStorageUrl(validStorageKey)
         : existing?.url ?? "";
       if (!url) continue;
 
-      const mergedConcept: ConceptRecord = {
-        id: vc.id,
-        label: vc.label,
-        labelNorm: vc.labelNorm,
-        synonyms: vc.synonyms ?? [],
-        labelEn: vc.labelEn,
-        domains: vc.domains ?? [],
-        groupId: vc.groupId,
-        kind: vc.kind,
-        popularity: vc.popularity,
-        assetId: vc.assetId,
-        assetUrl: url,
-        altAssetIds: vc.altAssetIds ?? [],
-        altText: vc.altText ?? row.assetAlt ?? vc.label,
-        status: vc.status,
-        source: vc.source,
-        sourceRef: vc.sourceRef,
-      };
+      const isCuratedOnDisk = Boolean(existing) && vc.source !== "upload" && !vc.uploadedBy;
+      const mergedConcept: ConceptRecord = isCuratedOnDisk
+        ? {
+            ...existing!.concept,
+            assetId: vc.assetId ?? existing!.concept.assetId,
+            assetUrl: url,
+          }
+        : {
+            id: vc.id,
+            label: vc.label,
+            labelNorm: vc.labelNorm,
+            synonyms: vc.synonyms ?? [],
+            labelEn: vc.labelEn,
+            domains: vc.domains ?? [],
+            groupId: vc.groupId,
+            kind: vc.kind,
+            popularity: vc.popularity,
+            assetId: vc.assetId,
+            assetUrl: url,
+            altAssetIds: vc.altAssetIds ?? [],
+            altText: vc.altText ?? row.assetAlt ?? vc.label,
+            status: vc.status,
+            source: vc.source,
+            sourceRef: vc.sourceRef,
+          };
       byId.set(vc.id, { concept: mergedConcept, url });
     }
   } catch (err) {

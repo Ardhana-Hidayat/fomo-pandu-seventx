@@ -1,7 +1,7 @@
 {
   "domain": "matematika",
   "version": "1.0.0",
-  "count": 344,
+  "count": 343,
   "concepts": [
     {
       "id": "matematika-0",
@@ -20,7 +20,7 @@
       "assetUrl": "/media/pictograms/nought-6972.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Nought\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"0\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "6972"
@@ -42,7 +42,7 @@
       "assetUrl": "/media/pictograms/one-4889.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"One\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"1\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "4889"
@@ -52,7 +52,7 @@
       "label": "10",
       "labelNorm": "10",
       "synonyms": [],
-      "labelEn": "10",
+      "labelEn": "ten",
       "domains": [
         "matematika",
         "sekolah"
@@ -87,7 +87,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "10 29254",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-10-29254"
     },
@@ -109,7 +109,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "10 35691",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-10-35691"
     },
@@ -373,53 +373,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "2 35679",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-2-35679"
-    },
-    {
-      "id": "matematika-2-4890",
-      "label": "2 4890",
-      "labelNorm": "2 4890",
-      "synonyms": [],
-      "labelEn": "2",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/2-4890.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"2\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4890"
-    },
-    {
-      "id": "matematika-2-7027",
-      "label": "2 7027",
-      "labelNorm": "2 7027",
-      "synonyms": [],
-      "labelEn": "2",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/2-7027.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"2\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7027"
     },
     {
       "id": "matematika-20",
@@ -681,53 +637,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "3 35681",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-3-35681"
-    },
-    {
-      "id": "matematika-3-4891",
-      "label": "3 4891",
-      "labelNorm": "3 4891",
-      "synonyms": [],
-      "labelEn": "3",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/3-4891.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"3\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4891"
-    },
-    {
-      "id": "matematika-3-7283",
-      "label": "3 7283",
-      "labelNorm": "3 7283",
-      "synonyms": [],
-      "labelEn": "3",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/3-7283.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"3\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7283"
     },
     {
       "id": "matematika-32",
@@ -945,53 +857,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "4 35665",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-4-35665"
-    },
-    {
-      "id": "matematika-4-4892",
-      "label": "4 4892",
-      "labelNorm": "4 4892",
-      "synonyms": [],
-      "labelEn": "4",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/4-4892.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"4\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4892"
-    },
-    {
-      "id": "matematika-4-7005",
-      "label": "4 7005",
-      "labelNorm": "4 7005",
-      "synonyms": [],
-      "labelEn": "4",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/4-7005.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"4\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7005"
     },
     {
       "id": "matematika-40",
@@ -1253,53 +1121,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "5 35631",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-5-35631"
-    },
-    {
-      "id": "matematika-5-4893",
-      "label": "5 4893",
-      "labelNorm": "5 4893",
-      "synonyms": [],
-      "labelEn": "5",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/5-4893.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"5\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4893"
-    },
-    {
-      "id": "matematika-5-6979",
-      "label": "5 6979",
-      "labelNorm": "5 6979",
-      "synonyms": [],
-      "labelEn": "5",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/5-6979.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"5\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6979"
     },
     {
       "id": "matematika-50",
@@ -1561,53 +1385,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "6 35683",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-6-35683"
-    },
-    {
-      "id": "matematika-6-4894",
-      "label": "6 4894",
-      "labelNorm": "6 4894",
-      "synonyms": [],
-      "labelEn": "6",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/6-4894.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"6\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4894"
-    },
-    {
-      "id": "matematika-6-7241",
-      "label": "6 7241",
-      "labelNorm": "6 7241",
-      "synonyms": [],
-      "labelEn": "6",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/6-7241.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"6\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7241"
     },
     {
       "id": "matematika-60",
@@ -1869,53 +1649,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "7 35685",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-7-35685"
-    },
-    {
-      "id": "matematika-7-4895",
-      "label": "7 4895",
-      "labelNorm": "7 4895",
-      "synonyms": [],
-      "labelEn": "7",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/7-4895.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"7\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4895"
-    },
-    {
-      "id": "matematika-7-7248",
-      "label": "7 7248",
-      "labelNorm": "7 7248",
-      "synonyms": [],
-      "labelEn": "7",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/7-7248.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"7\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7248"
     },
     {
       "id": "matematika-70",
@@ -2177,53 +1913,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "8 35687",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-8-35687"
-    },
-    {
-      "id": "matematika-8-4896",
-      "label": "8 4896",
-      "labelNorm": "8 4896",
-      "synonyms": [],
-      "labelEn": "8",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/8-4896.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"8\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4896"
-    },
-    {
-      "id": "matematika-8-7189",
-      "label": "8 7189",
-      "labelNorm": "8 7189",
-      "synonyms": [],
-      "labelEn": "8",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/8-7189.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"8\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7189"
     },
     {
       "id": "matematika-80",
@@ -2485,53 +2177,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "9 35689",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-9-35689"
-    },
-    {
-      "id": "matematika-9-4897",
-      "label": "9 4897",
-      "labelNorm": "9 4897",
-      "synonyms": [],
-      "labelEn": "9",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/9-4897.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"9\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4897"
-    },
-    {
-      "id": "matematika-9-7188",
-      "label": "9 7188",
-      "labelNorm": "9 7188",
-      "synonyms": [],
-      "labelEn": "9",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/9-7188.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"9\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7188"
     },
     {
       "id": "matematika-90",
@@ -2754,28 +2402,6 @@
       "sourceRef": "seed-matematika-99"
     },
     {
-      "id": "matematika-above",
-      "label": "Above",
-      "labelNorm": "above",
-      "synonyms": [],
-      "labelEn": "above",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/above.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Above\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "5451"
-    },
-    {
       "id": "matematika-alat-ukur-berat",
       "label": "Alat Ukur Berat",
       "labelNorm": "alat ukur berat",
@@ -2820,6 +2446,52 @@
       "sourceRef": "seed-matematika-alat-ukur-panjang"
     },
     {
+      "id": "matematika-nought",
+      "label": "Angka 0",
+      "labelNorm": "angka 0",
+      "synonyms": [
+        "angka nol"
+      ],
+      "labelEn": "zero",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/nought.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Angka 0\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "2626"
+    },
+    {
+      "id": "matematika-angka-satu",
+      "label": "Angka 1",
+      "labelNorm": "angka 1",
+      "synonyms": [],
+      "labelEn": "number one",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/one-7291.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Angka 1\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7291"
+    },
+    {
       "id": "matematika-angka-10",
       "label": "Angka 10",
       "labelNorm": "angka 10",
@@ -2838,7 +2510,7 @@
       "assetUrl": "/media/pictograms/10.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"10\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 10\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "7025"
@@ -2847,9 +2519,7 @@
       "id": "matematika-angka-100",
       "label": "Angka 100",
       "labelNorm": "angka 100",
-      "synonyms": [
-        "100"
-      ],
+      "synonyms": [],
       "labelEn": "100",
       "domains": [
         "matematika",
@@ -2862,7 +2532,7 @@
       "assetUrl": "/media/pictograms/100.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"100\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 100\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29256"
@@ -2871,9 +2541,7 @@
       "id": "matematika-angka-11",
       "label": "Angka 11",
       "labelNorm": "angka 11",
-      "synonyms": [
-        "11"
-      ],
+      "synonyms": [],
       "labelEn": "11",
       "domains": [
         "matematika",
@@ -2886,7 +2554,7 @@
       "assetUrl": "/media/pictograms/11.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"11\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 11\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29260"
@@ -2895,9 +2563,7 @@
       "id": "matematika-angka-12",
       "label": "Angka 12",
       "labelNorm": "angka 12",
-      "synonyms": [
-        "12"
-      ],
+      "synonyms": [],
       "labelEn": "12",
       "domains": [
         "matematika",
@@ -2910,7 +2576,7 @@
       "assetUrl": "/media/pictograms/12.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"12\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 12\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29262"
@@ -2919,9 +2585,7 @@
       "id": "matematika-angka-13",
       "label": "Angka 13",
       "labelNorm": "angka 13",
-      "synonyms": [
-        "13"
-      ],
+      "synonyms": [],
       "labelEn": "13",
       "domains": [
         "matematika",
@@ -2934,7 +2598,7 @@
       "assetUrl": "/media/pictograms/13.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"13\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 13\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29264"
@@ -2943,9 +2607,7 @@
       "id": "matematika-angka-14",
       "label": "Angka 14",
       "labelNorm": "angka 14",
-      "synonyms": [
-        "14"
-      ],
+      "synonyms": [],
       "labelEn": "14",
       "domains": [
         "matematika",
@@ -2958,7 +2620,7 @@
       "assetUrl": "/media/pictograms/14.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"14\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 14\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29266"
@@ -2967,9 +2629,7 @@
       "id": "matematika-angka-15",
       "label": "Angka 15",
       "labelNorm": "angka 15",
-      "synonyms": [
-        "15"
-      ],
+      "synonyms": [],
       "labelEn": "15",
       "domains": [
         "matematika",
@@ -2982,7 +2642,7 @@
       "assetUrl": "/media/pictograms/15.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"15\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 15\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29268"
@@ -2991,9 +2651,7 @@
       "id": "matematika-angka-16",
       "label": "Angka 16",
       "labelNorm": "angka 16",
-      "synonyms": [
-        "16"
-      ],
+      "synonyms": [],
       "labelEn": "16",
       "domains": [
         "matematika",
@@ -3006,7 +2664,7 @@
       "assetUrl": "/media/pictograms/16.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"16\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 16\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29270"
@@ -3015,9 +2673,7 @@
       "id": "matematika-angka-17",
       "label": "Angka 17",
       "labelNorm": "angka 17",
-      "synonyms": [
-        "17"
-      ],
+      "synonyms": [],
       "labelEn": "17",
       "domains": [
         "matematika",
@@ -3030,7 +2686,7 @@
       "assetUrl": "/media/pictograms/17.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"17\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 17\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29272"
@@ -3039,9 +2695,7 @@
       "id": "matematika-angka-18",
       "label": "Angka 18",
       "labelNorm": "angka 18",
-      "synonyms": [
-        "18"
-      ],
+      "synonyms": [],
       "labelEn": "18",
       "domains": [
         "matematika",
@@ -3054,7 +2708,7 @@
       "assetUrl": "/media/pictograms/18.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"18\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 18\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29274"
@@ -3063,9 +2717,7 @@
       "id": "matematika-angka-19",
       "label": "Angka 19",
       "labelNorm": "angka 19",
-      "synonyms": [
-        "19"
-      ],
+      "synonyms": [],
       "labelEn": "19",
       "domains": [
         "matematika",
@@ -3078,7 +2730,7 @@
       "assetUrl": "/media/pictograms/19.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"19\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 19\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29276"
@@ -3100,7 +2752,7 @@
       "assetUrl": "/media/pictograms/2.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"2\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 2\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2628"
@@ -3109,9 +2761,7 @@
       "id": "matematika-angka-20",
       "label": "Angka 20",
       "labelNorm": "angka 20",
-      "synonyms": [
-        "20"
-      ],
+      "synonyms": [],
       "labelEn": "20",
       "domains": [
         "matematika",
@@ -3124,7 +2774,7 @@
       "assetUrl": "/media/pictograms/20.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"20\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 20\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29550"
@@ -3133,9 +2783,7 @@
       "id": "matematika-angka-21",
       "label": "Angka 21",
       "labelNorm": "angka 21",
-      "synonyms": [
-        "21"
-      ],
+      "synonyms": [],
       "labelEn": "21",
       "domains": [
         "matematika",
@@ -3148,7 +2796,7 @@
       "assetUrl": "/media/pictograms/21.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"21\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 21\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29280"
@@ -3157,9 +2805,7 @@
       "id": "matematika-angka-22",
       "label": "Angka 22",
       "labelNorm": "angka 22",
-      "synonyms": [
-        "22"
-      ],
+      "synonyms": [],
       "labelEn": "22",
       "domains": [
         "matematika",
@@ -3172,7 +2818,7 @@
       "assetUrl": "/media/pictograms/22.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"22\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 22\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29282"
@@ -3181,9 +2827,7 @@
       "id": "matematika-angka-23",
       "label": "Angka 23",
       "labelNorm": "angka 23",
-      "synonyms": [
-        "23"
-      ],
+      "synonyms": [],
       "labelEn": "23",
       "domains": [
         "matematika",
@@ -3196,7 +2840,7 @@
       "assetUrl": "/media/pictograms/23.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"23\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 23\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29284"
@@ -3205,9 +2849,7 @@
       "id": "matematika-angka-24",
       "label": "Angka 24",
       "labelNorm": "angka 24",
-      "synonyms": [
-        "24"
-      ],
+      "synonyms": [],
       "labelEn": "24",
       "domains": [
         "matematika",
@@ -3220,7 +2862,7 @@
       "assetUrl": "/media/pictograms/24.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"24\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 24\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29286"
@@ -3229,9 +2871,7 @@
       "id": "matematika-angka-25",
       "label": "Angka 25",
       "labelNorm": "angka 25",
-      "synonyms": [
-        "25"
-      ],
+      "synonyms": [],
       "labelEn": "25",
       "domains": [
         "matematika",
@@ -3244,7 +2884,7 @@
       "assetUrl": "/media/pictograms/25.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"25\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 25\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29288"
@@ -3253,9 +2893,7 @@
       "id": "matematika-angka-26",
       "label": "Angka 26",
       "labelNorm": "angka 26",
-      "synonyms": [
-        "26"
-      ],
+      "synonyms": [],
       "labelEn": "26",
       "domains": [
         "matematika",
@@ -3268,7 +2906,7 @@
       "assetUrl": "/media/pictograms/26.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"26\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 26\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29290"
@@ -3277,9 +2915,7 @@
       "id": "matematika-angka-27",
       "label": "Angka 27",
       "labelNorm": "angka 27",
-      "synonyms": [
-        "27"
-      ],
+      "synonyms": [],
       "labelEn": "27",
       "domains": [
         "matematika",
@@ -3292,7 +2928,7 @@
       "assetUrl": "/media/pictograms/27.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"27\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 27\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29292"
@@ -3301,9 +2937,7 @@
       "id": "matematika-angka-28",
       "label": "Angka 28",
       "labelNorm": "angka 28",
-      "synonyms": [
-        "28"
-      ],
+      "synonyms": [],
       "labelEn": "28",
       "domains": [
         "matematika",
@@ -3316,7 +2950,7 @@
       "assetUrl": "/media/pictograms/28.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"28\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 28\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29294"
@@ -3325,9 +2959,7 @@
       "id": "matematika-angka-29",
       "label": "Angka 29",
       "labelNorm": "angka 29",
-      "synonyms": [
-        "29"
-      ],
+      "synonyms": [],
       "labelEn": "29",
       "domains": [
         "matematika",
@@ -3340,7 +2972,7 @@
       "assetUrl": "/media/pictograms/29.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"29\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 29\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29296"
@@ -3362,18 +2994,64 @@
       "assetUrl": "/media/pictograms/3.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"3\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 3\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2629"
     },
     {
+      "id": "matematika-thirty",
+      "label": "Angka 30",
+      "labelNorm": "angka 30",
+      "synonyms": [
+        "tiga puluh"
+      ],
+      "labelEn": "thirty",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/thirty.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Angka 30\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29298"
+    },
+    {
+      "id": "matematika-thirty-one",
+      "label": "Angka 31",
+      "labelNorm": "angka 31",
+      "synonyms": [
+        "tiga puluh satu"
+      ],
+      "labelEn": "thirty one",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/thirty-one.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Angka 31\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "29302"
+    },
+    {
       "id": "matematika-angka-32",
       "label": "Angka 32",
       "labelNorm": "angka 32",
-      "synonyms": [
-        "32"
-      ],
+      "synonyms": [],
       "labelEn": "32",
       "domains": [
         "matematika",
@@ -3386,7 +3064,7 @@
       "assetUrl": "/media/pictograms/32.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"32\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 32\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29304"
@@ -3395,9 +3073,7 @@
       "id": "matematika-angka-33",
       "label": "Angka 33",
       "labelNorm": "angka 33",
-      "synonyms": [
-        "33"
-      ],
+      "synonyms": [],
       "labelEn": "33",
       "domains": [
         "matematika",
@@ -3410,7 +3086,7 @@
       "assetUrl": "/media/pictograms/33.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"33\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 33\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29306"
@@ -3419,9 +3095,7 @@
       "id": "matematika-angka-34",
       "label": "Angka 34",
       "labelNorm": "angka 34",
-      "synonyms": [
-        "34"
-      ],
+      "synonyms": [],
       "labelEn": "34",
       "domains": [
         "matematika",
@@ -3434,7 +3108,7 @@
       "assetUrl": "/media/pictograms/34.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"34\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 34\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29308"
@@ -3443,9 +3117,7 @@
       "id": "matematika-angka-35",
       "label": "Angka 35",
       "labelNorm": "angka 35",
-      "synonyms": [
-        "35"
-      ],
+      "synonyms": [],
       "labelEn": "35",
       "domains": [
         "matematika",
@@ -3458,7 +3130,7 @@
       "assetUrl": "/media/pictograms/35.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"35\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 35\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29310"
@@ -3467,9 +3139,7 @@
       "id": "matematika-angka-36",
       "label": "Angka 36",
       "labelNorm": "angka 36",
-      "synonyms": [
-        "36"
-      ],
+      "synonyms": [],
       "labelEn": "36",
       "domains": [
         "matematika",
@@ -3482,7 +3152,7 @@
       "assetUrl": "/media/pictograms/36.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"36\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 36\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29312"
@@ -3491,9 +3161,7 @@
       "id": "matematika-angka-37",
       "label": "Angka 37",
       "labelNorm": "angka 37",
-      "synonyms": [
-        "37"
-      ],
+      "synonyms": [],
       "labelEn": "37",
       "domains": [
         "matematika",
@@ -3506,7 +3174,7 @@
       "assetUrl": "/media/pictograms/37.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"37\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 37\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29314"
@@ -3515,9 +3183,7 @@
       "id": "matematika-angka-38",
       "label": "Angka 38",
       "labelNorm": "angka 38",
-      "synonyms": [
-        "38"
-      ],
+      "synonyms": [],
       "labelEn": "38",
       "domains": [
         "matematika",
@@ -3530,7 +3196,7 @@
       "assetUrl": "/media/pictograms/38.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"38\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 38\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29316"
@@ -3539,9 +3205,7 @@
       "id": "matematika-angka-39",
       "label": "Angka 39",
       "labelNorm": "angka 39",
-      "synonyms": [
-        "39"
-      ],
+      "synonyms": [],
       "labelEn": "39",
       "domains": [
         "matematika",
@@ -3554,7 +3218,7 @@
       "assetUrl": "/media/pictograms/39.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"39\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 39\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29318"
@@ -3576,7 +3240,7 @@
       "assetUrl": "/media/pictograms/4.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"4\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 4\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2630"
@@ -3585,9 +3249,7 @@
       "id": "matematika-angka-40",
       "label": "Angka 40",
       "labelNorm": "angka 40",
-      "synonyms": [
-        "40"
-      ],
+      "synonyms": [],
       "labelEn": "40",
       "domains": [
         "matematika",
@@ -3600,7 +3262,7 @@
       "assetUrl": "/media/pictograms/40.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"40\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 40\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29320"
@@ -3609,9 +3271,7 @@
       "id": "matematika-angka-41",
       "label": "Angka 41",
       "labelNorm": "angka 41",
-      "synonyms": [
-        "41"
-      ],
+      "synonyms": [],
       "labelEn": "41",
       "domains": [
         "matematika",
@@ -3624,7 +3284,7 @@
       "assetUrl": "/media/pictograms/41.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"41\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 41\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29324"
@@ -3633,9 +3293,7 @@
       "id": "matematika-angka-42",
       "label": "Angka 42",
       "labelNorm": "angka 42",
-      "synonyms": [
-        "42"
-      ],
+      "synonyms": [],
       "labelEn": "42",
       "domains": [
         "matematika",
@@ -3648,7 +3306,7 @@
       "assetUrl": "/media/pictograms/42.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"42\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 42\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29326"
@@ -3657,9 +3315,7 @@
       "id": "matematika-angka-43",
       "label": "Angka 43",
       "labelNorm": "angka 43",
-      "synonyms": [
-        "43"
-      ],
+      "synonyms": [],
       "labelEn": "43",
       "domains": [
         "matematika",
@@ -3672,7 +3328,7 @@
       "assetUrl": "/media/pictograms/43.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"43\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 43\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29328"
@@ -3681,9 +3337,7 @@
       "id": "matematika-angka-44",
       "label": "Angka 44",
       "labelNorm": "angka 44",
-      "synonyms": [
-        "44"
-      ],
+      "synonyms": [],
       "labelEn": "44",
       "domains": [
         "matematika",
@@ -3696,7 +3350,7 @@
       "assetUrl": "/media/pictograms/44.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"44\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 44\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29330"
@@ -3705,9 +3359,7 @@
       "id": "matematika-angka-45",
       "label": "Angka 45",
       "labelNorm": "angka 45",
-      "synonyms": [
-        "45"
-      ],
+      "synonyms": [],
       "labelEn": "45",
       "domains": [
         "matematika",
@@ -3720,7 +3372,7 @@
       "assetUrl": "/media/pictograms/45.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"45\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 45\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29332"
@@ -3729,9 +3381,7 @@
       "id": "matematika-angka-46",
       "label": "Angka 46",
       "labelNorm": "angka 46",
-      "synonyms": [
-        "46"
-      ],
+      "synonyms": [],
       "labelEn": "46",
       "domains": [
         "matematika",
@@ -3744,7 +3394,7 @@
       "assetUrl": "/media/pictograms/46.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"46\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 46\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29334"
@@ -3753,9 +3403,7 @@
       "id": "matematika-angka-47",
       "label": "Angka 47",
       "labelNorm": "angka 47",
-      "synonyms": [
-        "47"
-      ],
+      "synonyms": [],
       "labelEn": "47",
       "domains": [
         "matematika",
@@ -3768,7 +3416,7 @@
       "assetUrl": "/media/pictograms/47.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"47\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 47\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29336"
@@ -3777,9 +3425,7 @@
       "id": "matematika-angka-48",
       "label": "Angka 48",
       "labelNorm": "angka 48",
-      "synonyms": [
-        "48"
-      ],
+      "synonyms": [],
       "labelEn": "48",
       "domains": [
         "matematika",
@@ -3792,7 +3438,7 @@
       "assetUrl": "/media/pictograms/48.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"48\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 48\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29338"
@@ -3801,9 +3447,7 @@
       "id": "matematika-angka-49",
       "label": "Angka 49",
       "labelNorm": "angka 49",
-      "synonyms": [
-        "49"
-      ],
+      "synonyms": [],
       "labelEn": "49",
       "domains": [
         "matematika",
@@ -3816,7 +3460,7 @@
       "assetUrl": "/media/pictograms/49.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"49\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 49\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29340"
@@ -3838,7 +3482,7 @@
       "assetUrl": "/media/pictograms/5.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"5\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 5\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2631"
@@ -3847,9 +3491,7 @@
       "id": "matematika-angka-50",
       "label": "Angka 50",
       "labelNorm": "angka 50",
-      "synonyms": [
-        "50"
-      ],
+      "synonyms": [],
       "labelEn": "50",
       "domains": [
         "matematika",
@@ -3862,7 +3504,7 @@
       "assetUrl": "/media/pictograms/50.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"50\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 50\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29342"
@@ -3871,9 +3513,7 @@
       "id": "matematika-angka-51",
       "label": "Angka 51",
       "labelNorm": "angka 51",
-      "synonyms": [
-        "51"
-      ],
+      "synonyms": [],
       "labelEn": "51",
       "domains": [
         "matematika",
@@ -3886,7 +3526,7 @@
       "assetUrl": "/media/pictograms/51.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"51\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 51\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29346"
@@ -3895,9 +3535,7 @@
       "id": "matematika-angka-52",
       "label": "Angka 52",
       "labelNorm": "angka 52",
-      "synonyms": [
-        "52"
-      ],
+      "synonyms": [],
       "labelEn": "52",
       "domains": [
         "matematika",
@@ -3910,7 +3548,7 @@
       "assetUrl": "/media/pictograms/52.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"52\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 52\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29348"
@@ -3919,9 +3557,7 @@
       "id": "matematika-angka-53",
       "label": "Angka 53",
       "labelNorm": "angka 53",
-      "synonyms": [
-        "53"
-      ],
+      "synonyms": [],
       "labelEn": "53",
       "domains": [
         "matematika",
@@ -3934,7 +3570,7 @@
       "assetUrl": "/media/pictograms/53.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"53\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 53\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29350"
@@ -3943,9 +3579,7 @@
       "id": "matematika-angka-54",
       "label": "Angka 54",
       "labelNorm": "angka 54",
-      "synonyms": [
-        "54"
-      ],
+      "synonyms": [],
       "labelEn": "54",
       "domains": [
         "matematika",
@@ -3958,7 +3592,7 @@
       "assetUrl": "/media/pictograms/54.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"54\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 54\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29352"
@@ -3967,9 +3601,7 @@
       "id": "matematika-angka-55",
       "label": "Angka 55",
       "labelNorm": "angka 55",
-      "synonyms": [
-        "55"
-      ],
+      "synonyms": [],
       "labelEn": "55",
       "domains": [
         "matematika",
@@ -3982,7 +3614,7 @@
       "assetUrl": "/media/pictograms/55.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"55\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 55\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29354"
@@ -3991,9 +3623,7 @@
       "id": "matematika-angka-56",
       "label": "Angka 56",
       "labelNorm": "angka 56",
-      "synonyms": [
-        "56"
-      ],
+      "synonyms": [],
       "labelEn": "56",
       "domains": [
         "matematika",
@@ -4006,7 +3636,7 @@
       "assetUrl": "/media/pictograms/56.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"56\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 56\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29356"
@@ -4015,9 +3645,7 @@
       "id": "matematika-angka-57",
       "label": "Angka 57",
       "labelNorm": "angka 57",
-      "synonyms": [
-        "57"
-      ],
+      "synonyms": [],
       "labelEn": "57",
       "domains": [
         "matematika",
@@ -4030,7 +3658,7 @@
       "assetUrl": "/media/pictograms/57.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"57\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 57\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29358"
@@ -4039,9 +3667,7 @@
       "id": "matematika-angka-58",
       "label": "Angka 58",
       "labelNorm": "angka 58",
-      "synonyms": [
-        "58"
-      ],
+      "synonyms": [],
       "labelEn": "58",
       "domains": [
         "matematika",
@@ -4054,7 +3680,7 @@
       "assetUrl": "/media/pictograms/58.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"58\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 58\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29360"
@@ -4063,9 +3689,7 @@
       "id": "matematika-angka-59",
       "label": "Angka 59",
       "labelNorm": "angka 59",
-      "synonyms": [
-        "59"
-      ],
+      "synonyms": [],
       "labelEn": "59",
       "domains": [
         "matematika",
@@ -4078,7 +3702,7 @@
       "assetUrl": "/media/pictograms/59.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"59\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 59\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29362"
@@ -4100,7 +3724,7 @@
       "assetUrl": "/media/pictograms/6.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"6\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 6\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2632"
@@ -4109,9 +3733,7 @@
       "id": "matematika-angka-60",
       "label": "Angka 60",
       "labelNorm": "angka 60",
-      "synonyms": [
-        "60"
-      ],
+      "synonyms": [],
       "labelEn": "60",
       "domains": [
         "matematika",
@@ -4124,7 +3746,7 @@
       "assetUrl": "/media/pictograms/60.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"60\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 60\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29364"
@@ -4133,9 +3755,7 @@
       "id": "matematika-angka-61",
       "label": "Angka 61",
       "labelNorm": "angka 61",
-      "synonyms": [
-        "61"
-      ],
+      "synonyms": [],
       "labelEn": "61",
       "domains": [
         "matematika",
@@ -4148,7 +3768,7 @@
       "assetUrl": "/media/pictograms/61.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"61\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 61\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29366"
@@ -4157,9 +3777,7 @@
       "id": "matematika-angka-62",
       "label": "Angka 62",
       "labelNorm": "angka 62",
-      "synonyms": [
-        "62"
-      ],
+      "synonyms": [],
       "labelEn": "62",
       "domains": [
         "matematika",
@@ -4172,7 +3790,7 @@
       "assetUrl": "/media/pictograms/62.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"62\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 62\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29368"
@@ -4181,9 +3799,7 @@
       "id": "matematika-angka-63",
       "label": "Angka 63",
       "labelNorm": "angka 63",
-      "synonyms": [
-        "63"
-      ],
+      "synonyms": [],
       "labelEn": "63",
       "domains": [
         "matematika",
@@ -4196,7 +3812,7 @@
       "assetUrl": "/media/pictograms/63.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"63\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 63\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29370"
@@ -4205,9 +3821,7 @@
       "id": "matematika-angka-64",
       "label": "Angka 64",
       "labelNorm": "angka 64",
-      "synonyms": [
-        "64"
-      ],
+      "synonyms": [],
       "labelEn": "64",
       "domains": [
         "matematika",
@@ -4220,7 +3834,7 @@
       "assetUrl": "/media/pictograms/64.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"64\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 64\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29372"
@@ -4229,9 +3843,7 @@
       "id": "matematika-angka-65",
       "label": "Angka 65",
       "labelNorm": "angka 65",
-      "synonyms": [
-        "65"
-      ],
+      "synonyms": [],
       "labelEn": "65",
       "domains": [
         "matematika",
@@ -4244,7 +3856,7 @@
       "assetUrl": "/media/pictograms/65.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"65\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 65\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29374"
@@ -4253,9 +3865,7 @@
       "id": "matematika-angka-66",
       "label": "Angka 66",
       "labelNorm": "angka 66",
-      "synonyms": [
-        "66"
-      ],
+      "synonyms": [],
       "labelEn": "66",
       "domains": [
         "matematika",
@@ -4268,7 +3878,7 @@
       "assetUrl": "/media/pictograms/66.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"66\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 66\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29376"
@@ -4277,9 +3887,7 @@
       "id": "matematika-angka-67",
       "label": "Angka 67",
       "labelNorm": "angka 67",
-      "synonyms": [
-        "67"
-      ],
+      "synonyms": [],
       "labelEn": "67",
       "domains": [
         "matematika",
@@ -4292,7 +3900,7 @@
       "assetUrl": "/media/pictograms/67.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"67\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 67\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29378"
@@ -4301,9 +3909,7 @@
       "id": "matematika-angka-68",
       "label": "Angka 68",
       "labelNorm": "angka 68",
-      "synonyms": [
-        "68"
-      ],
+      "synonyms": [],
       "labelEn": "68",
       "domains": [
         "matematika",
@@ -4316,7 +3922,7 @@
       "assetUrl": "/media/pictograms/68.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"68\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 68\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29380"
@@ -4325,9 +3931,7 @@
       "id": "matematika-angka-69",
       "label": "Angka 69",
       "labelNorm": "angka 69",
-      "synonyms": [
-        "69"
-      ],
+      "synonyms": [],
       "labelEn": "69",
       "domains": [
         "matematika",
@@ -4340,7 +3944,7 @@
       "assetUrl": "/media/pictograms/69.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"69\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 69\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29382"
@@ -4362,7 +3966,7 @@
       "assetUrl": "/media/pictograms/7.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"7\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 7\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2633"
@@ -4371,9 +3975,7 @@
       "id": "matematika-angka-70",
       "label": "Angka 70",
       "labelNorm": "angka 70",
-      "synonyms": [
-        "70"
-      ],
+      "synonyms": [],
       "labelEn": "70",
       "domains": [
         "matematika",
@@ -4386,7 +3988,7 @@
       "assetUrl": "/media/pictograms/70.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"70\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 70\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29388"
@@ -4395,9 +3997,7 @@
       "id": "matematika-angka-71",
       "label": "Angka 71",
       "labelNorm": "angka 71",
-      "synonyms": [
-        "71"
-      ],
+      "synonyms": [],
       "labelEn": "71",
       "domains": [
         "matematika",
@@ -4410,7 +4010,7 @@
       "assetUrl": "/media/pictograms/71.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"71\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 71\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29390"
@@ -4419,9 +4019,7 @@
       "id": "matematika-angka-72",
       "label": "Angka 72",
       "labelNorm": "angka 72",
-      "synonyms": [
-        "72"
-      ],
+      "synonyms": [],
       "labelEn": "72",
       "domains": [
         "matematika",
@@ -4434,7 +4032,7 @@
       "assetUrl": "/media/pictograms/72.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"72\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 72\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29392"
@@ -4443,9 +4041,7 @@
       "id": "matematika-angka-73",
       "label": "Angka 73",
       "labelNorm": "angka 73",
-      "synonyms": [
-        "73"
-      ],
+      "synonyms": [],
       "labelEn": "73",
       "domains": [
         "matematika",
@@ -4458,7 +4054,7 @@
       "assetUrl": "/media/pictograms/73.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"73\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 73\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29394"
@@ -4467,9 +4063,7 @@
       "id": "matematika-angka-74",
       "label": "Angka 74",
       "labelNorm": "angka 74",
-      "synonyms": [
-        "74"
-      ],
+      "synonyms": [],
       "labelEn": "74",
       "domains": [
         "matematika",
@@ -4482,7 +4076,7 @@
       "assetUrl": "/media/pictograms/74.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"74\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 74\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29396"
@@ -4491,9 +4085,7 @@
       "id": "matematika-angka-75",
       "label": "Angka 75",
       "labelNorm": "angka 75",
-      "synonyms": [
-        "75"
-      ],
+      "synonyms": [],
       "labelEn": "75",
       "domains": [
         "matematika",
@@ -4506,7 +4098,7 @@
       "assetUrl": "/media/pictograms/75.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"75\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 75\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29398"
@@ -4515,9 +4107,7 @@
       "id": "matematika-angka-76",
       "label": "Angka 76",
       "labelNorm": "angka 76",
-      "synonyms": [
-        "76"
-      ],
+      "synonyms": [],
       "labelEn": "76",
       "domains": [
         "matematika",
@@ -4530,7 +4120,7 @@
       "assetUrl": "/media/pictograms/76.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"76\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 76\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29400"
@@ -4539,9 +4129,7 @@
       "id": "matematika-angka-77",
       "label": "Angka 77",
       "labelNorm": "angka 77",
-      "synonyms": [
-        "77"
-      ],
+      "synonyms": [],
       "labelEn": "77",
       "domains": [
         "matematika",
@@ -4554,7 +4142,7 @@
       "assetUrl": "/media/pictograms/77.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"77\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 77\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29402"
@@ -4563,9 +4151,7 @@
       "id": "matematika-angka-78",
       "label": "Angka 78",
       "labelNorm": "angka 78",
-      "synonyms": [
-        "78"
-      ],
+      "synonyms": [],
       "labelEn": "78",
       "domains": [
         "matematika",
@@ -4578,7 +4164,7 @@
       "assetUrl": "/media/pictograms/78.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"78\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 78\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29404"
@@ -4587,9 +4173,7 @@
       "id": "matematika-angka-79",
       "label": "Angka 79",
       "labelNorm": "angka 79",
-      "synonyms": [
-        "79"
-      ],
+      "synonyms": [],
       "labelEn": "79",
       "domains": [
         "matematika",
@@ -4602,7 +4186,7 @@
       "assetUrl": "/media/pictograms/79.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"79\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 79\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29406"
@@ -4624,7 +4208,7 @@
       "assetUrl": "/media/pictograms/8.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"8\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 8\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2634"
@@ -4633,9 +4217,7 @@
       "id": "matematika-angka-80",
       "label": "Angka 80",
       "labelNorm": "angka 80",
-      "synonyms": [
-        "80"
-      ],
+      "synonyms": [],
       "labelEn": "80",
       "domains": [
         "matematika",
@@ -4648,7 +4230,7 @@
       "assetUrl": "/media/pictograms/80.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"80\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 80\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29410"
@@ -4657,9 +4239,7 @@
       "id": "matematika-angka-81",
       "label": "Angka 81",
       "labelNorm": "angka 81",
-      "synonyms": [
-        "81"
-      ],
+      "synonyms": [],
       "labelEn": "81",
       "domains": [
         "matematika",
@@ -4672,7 +4252,7 @@
       "assetUrl": "/media/pictograms/81.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"81\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 81\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29412"
@@ -4681,9 +4261,7 @@
       "id": "matematika-angka-82",
       "label": "Angka 82",
       "labelNorm": "angka 82",
-      "synonyms": [
-        "82"
-      ],
+      "synonyms": [],
       "labelEn": "82",
       "domains": [
         "matematika",
@@ -4696,7 +4274,7 @@
       "assetUrl": "/media/pictograms/82.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"82\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 82\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29414"
@@ -4705,9 +4283,7 @@
       "id": "matematika-angka-83",
       "label": "Angka 83",
       "labelNorm": "angka 83",
-      "synonyms": [
-        "83"
-      ],
+      "synonyms": [],
       "labelEn": "83",
       "domains": [
         "matematika",
@@ -4720,7 +4296,7 @@
       "assetUrl": "/media/pictograms/83.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"83\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 83\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29416"
@@ -4729,9 +4305,7 @@
       "id": "matematika-angka-84",
       "label": "Angka 84",
       "labelNorm": "angka 84",
-      "synonyms": [
-        "84"
-      ],
+      "synonyms": [],
       "labelEn": "84",
       "domains": [
         "matematika",
@@ -4744,7 +4318,7 @@
       "assetUrl": "/media/pictograms/84.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"84\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 84\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29418"
@@ -4753,9 +4327,7 @@
       "id": "matematika-angka-85",
       "label": "Angka 85",
       "labelNorm": "angka 85",
-      "synonyms": [
-        "85"
-      ],
+      "synonyms": [],
       "labelEn": "85",
       "domains": [
         "matematika",
@@ -4768,7 +4340,7 @@
       "assetUrl": "/media/pictograms/85.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"85\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 85\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29420"
@@ -4777,9 +4349,7 @@
       "id": "matematika-angka-86",
       "label": "Angka 86",
       "labelNorm": "angka 86",
-      "synonyms": [
-        "86"
-      ],
+      "synonyms": [],
       "labelEn": "86",
       "domains": [
         "matematika",
@@ -4792,7 +4362,7 @@
       "assetUrl": "/media/pictograms/86.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"86\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 86\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29422"
@@ -4801,9 +4371,7 @@
       "id": "matematika-angka-87",
       "label": "Angka 87",
       "labelNorm": "angka 87",
-      "synonyms": [
-        "87"
-      ],
+      "synonyms": [],
       "labelEn": "87",
       "domains": [
         "matematika",
@@ -4816,7 +4384,7 @@
       "assetUrl": "/media/pictograms/87.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"87\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 87\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29424"
@@ -4825,9 +4393,7 @@
       "id": "matematika-angka-88",
       "label": "Angka 88",
       "labelNorm": "angka 88",
-      "synonyms": [
-        "88"
-      ],
+      "synonyms": [],
       "labelEn": "88",
       "domains": [
         "matematika",
@@ -4840,7 +4406,7 @@
       "assetUrl": "/media/pictograms/88.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"88\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 88\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29426"
@@ -4849,9 +4415,7 @@
       "id": "matematika-angka-89",
       "label": "Angka 89",
       "labelNorm": "angka 89",
-      "synonyms": [
-        "89"
-      ],
+      "synonyms": [],
       "labelEn": "89",
       "domains": [
         "matematika",
@@ -4864,7 +4428,7 @@
       "assetUrl": "/media/pictograms/89.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"89\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 89\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29428"
@@ -4886,7 +4450,7 @@
       "assetUrl": "/media/pictograms/9.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"9\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 9\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "2635"
@@ -4895,9 +4459,7 @@
       "id": "matematika-angka-90",
       "label": "Angka 90",
       "labelNorm": "angka 90",
-      "synonyms": [
-        "90"
-      ],
+      "synonyms": [],
       "labelEn": "90",
       "domains": [
         "matematika",
@@ -4910,7 +4472,7 @@
       "assetUrl": "/media/pictograms/90.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"90\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 90\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29430"
@@ -4919,9 +4481,7 @@
       "id": "matematika-angka-91",
       "label": "Angka 91",
       "labelNorm": "angka 91",
-      "synonyms": [
-        "91"
-      ],
+      "synonyms": [],
       "labelEn": "91",
       "domains": [
         "matematika",
@@ -4934,7 +4494,7 @@
       "assetUrl": "/media/pictograms/91.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"91\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 91\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29434"
@@ -4943,9 +4503,7 @@
       "id": "matematika-angka-92",
       "label": "Angka 92",
       "labelNorm": "angka 92",
-      "synonyms": [
-        "92"
-      ],
+      "synonyms": [],
       "labelEn": "92",
       "domains": [
         "matematika",
@@ -4958,7 +4516,7 @@
       "assetUrl": "/media/pictograms/92.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"92\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 92\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29436"
@@ -4967,9 +4525,7 @@
       "id": "matematika-angka-93",
       "label": "Angka 93",
       "labelNorm": "angka 93",
-      "synonyms": [
-        "93"
-      ],
+      "synonyms": [],
       "labelEn": "93",
       "domains": [
         "matematika",
@@ -4982,7 +4538,7 @@
       "assetUrl": "/media/pictograms/93.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"93\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 93\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29438"
@@ -4991,9 +4547,7 @@
       "id": "matematika-angka-94",
       "label": "Angka 94",
       "labelNorm": "angka 94",
-      "synonyms": [
-        "94"
-      ],
+      "synonyms": [],
       "labelEn": "94",
       "domains": [
         "matematika",
@@ -5006,7 +4560,7 @@
       "assetUrl": "/media/pictograms/94.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"94\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 94\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29440"
@@ -5015,9 +4569,7 @@
       "id": "matematika-angka-95",
       "label": "Angka 95",
       "labelNorm": "angka 95",
-      "synonyms": [
-        "95"
-      ],
+      "synonyms": [],
       "labelEn": "95",
       "domains": [
         "matematika",
@@ -5030,7 +4582,7 @@
       "assetUrl": "/media/pictograms/95.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"95\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 95\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29442"
@@ -5039,9 +4591,7 @@
       "id": "matematika-angka-96",
       "label": "Angka 96",
       "labelNorm": "angka 96",
-      "synonyms": [
-        "96"
-      ],
+      "synonyms": [],
       "labelEn": "96",
       "domains": [
         "matematika",
@@ -5054,7 +4604,7 @@
       "assetUrl": "/media/pictograms/96.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"96\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 96\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29444"
@@ -5063,9 +4613,7 @@
       "id": "matematika-angka-97",
       "label": "Angka 97",
       "labelNorm": "angka 97",
-      "synonyms": [
-        "97"
-      ],
+      "synonyms": [],
       "labelEn": "97",
       "domains": [
         "matematika",
@@ -5078,7 +4626,7 @@
       "assetUrl": "/media/pictograms/97.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"97\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 97\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29446"
@@ -5087,9 +4635,7 @@
       "id": "matematika-angka-98",
       "label": "Angka 98",
       "labelNorm": "angka 98",
-      "synonyms": [
-        "98"
-      ],
+      "synonyms": [],
       "labelEn": "98",
       "domains": [
         "matematika",
@@ -5102,7 +4648,7 @@
       "assetUrl": "/media/pictograms/98.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"98\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 98\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29448"
@@ -5111,9 +4657,7 @@
       "id": "matematika-angka-99",
       "label": "Angka 99",
       "labelNorm": "angka 99",
-      "synonyms": [
-        "99"
-      ],
+      "synonyms": [],
       "labelEn": "99",
       "domains": [
         "matematika",
@@ -5126,17 +4670,17 @@
       "assetUrl": "/media/pictograms/99.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"99\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka 99\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "29450"
     },
     {
-      "id": "matematika-angka-satu",
+      "id": "matematika-one",
       "label": "Angka Satu",
       "labelNorm": "angka satu",
       "synonyms": [],
-      "labelEn": "satu",
+      "labelEn": "one",
       "domains": [
         "matematika",
         "sekolah"
@@ -5145,42 +4689,20 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/one-7291.webp",
+      "assetUrl": "/media/pictograms/one.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"One\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Angka Satu\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "7291"
-    },
-    {
-      "id": "matematika-around",
-      "label": "Around",
-      "labelNorm": "around",
-      "synonyms": [],
-      "labelEn": "around",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/around.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Around\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "5376"
+      "sourceRef": "2627"
     },
     {
       "id": "matematika-bagi",
       "label": "Bagi",
       "labelNorm": "bagi",
       "synonyms": [],
-      "labelEn": "bagi",
+      "labelEn": "divide",
       "domains": [
         "matematika",
         "sekolah"
@@ -5192,10 +4714,34 @@
       "assetUrl": "/media/pictograms/divide-27070.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Divide\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Bagi\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "27070"
+    },
+    {
+      "id": "matematika-below",
+      "label": "Bagian Bawah",
+      "labelNorm": "bagian bawah",
+      "synonyms": [
+        "posisi bawah"
+      ],
+      "labelEn": "below",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/below.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bagian Bawah\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5355"
     },
     {
       "id": "matematika-bangun-datar-segi-lima",
@@ -5265,7 +4811,7 @@
       "label": "Banyak",
       "labelNorm": "banyak",
       "synonyms": [],
-      "labelEn": "banyak",
+      "labelEn": "many",
       "domains": [
         "matematika",
         "sekolah"
@@ -5277,17 +4823,19 @@
       "assetUrl": "/media/pictograms/many-40006.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Many\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Banyak\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "40006"
     },
     {
-      "id": "matematika-behind",
-      "label": "Behind",
-      "labelNorm": "behind",
-      "synonyms": [],
-      "labelEn": "behind",
+      "id": "matematika-how-many",
+      "label": "Berapa Banyak",
+      "labelNorm": "berapa banyak",
+      "synonyms": [
+        "jumlah berapa"
+      ],
+      "labelEn": "how many",
       "domains": [
         "matematika",
         "sekolah"
@@ -5296,20 +4844,22 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/behind.webp",
+      "assetUrl": "/media/pictograms/how-many.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Behind\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Berapa Banyak\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "5443"
+      "sourceRef": "24731"
     },
     {
-      "id": "matematika-below",
-      "label": "Below",
-      "labelNorm": "below",
-      "synonyms": [],
-      "labelEn": "below",
+      "id": "matematika-count",
+      "label": "Berhitung",
+      "labelNorm": "berhitung",
+      "synonyms": [
+        "membilang"
+      ],
+      "labelEn": "count",
       "domains": [
         "matematika",
         "sekolah"
@@ -5318,20 +4868,22 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/below.webp",
+      "assetUrl": "/media/pictograms/count.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Below\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Berhitung\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "5355"
+      "sourceRef": "2714"
     },
     {
-      "id": "matematika-between",
-      "label": "Between",
-      "labelNorm": "between",
-      "synonyms": [],
-      "labelEn": "between",
+      "id": "matematika-ukuran",
+      "label": "Berukuran Pendek",
+      "labelNorm": "berukuran pendek",
+      "synonyms": [
+        "lebih pendek"
+      ],
+      "labelEn": "short",
       "domains": [
         "matematika",
         "sekolah"
@@ -5340,20 +4892,22 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/between.webp",
+      "assetUrl": "/media/pictograms/short-39777.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Between\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Berukuran Pendek\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "7765"
+      "sourceRef": "39777"
     },
     {
-      "id": "matematika-bilangan",
-      "label": "Bilangan",
-      "labelNorm": "bilangan",
-      "synonyms": [],
-      "labelEn": "10",
+      "id": "matematika-2-7027",
+      "label": "Bilangan 2",
+      "labelNorm": "bilangan 2",
+      "synonyms": [
+        "nomor dua"
+      ],
+      "labelEn": "two",
       "domains": [
         "matematika",
         "sekolah"
@@ -5362,13 +4916,181 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/10-29254.webp",
+      "assetUrl": "/media/pictograms/2-7027.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"10\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Bilangan 2\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "29254"
+      "sourceRef": "7027"
+    },
+    {
+      "id": "matematika-3-7283",
+      "label": "Bilangan 3",
+      "labelNorm": "bilangan 3",
+      "synonyms": [
+        "nomor tiga"
+      ],
+      "labelEn": "three",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/3-7283.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bilangan 3\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7283"
+    },
+    {
+      "id": "matematika-4-7005",
+      "label": "Bilangan 4",
+      "labelNorm": "bilangan 4",
+      "synonyms": [
+        "nomor empat"
+      ],
+      "labelEn": "four",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/4-7005.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bilangan 4\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7005"
+    },
+    {
+      "id": "matematika-5-6979",
+      "label": "Bilangan 5",
+      "labelNorm": "bilangan 5",
+      "synonyms": [
+        "nomor lima"
+      ],
+      "labelEn": "five",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/5-6979.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bilangan 5\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "6979"
+    },
+    {
+      "id": "matematika-6-7241",
+      "label": "Bilangan 6",
+      "labelNorm": "bilangan 6",
+      "synonyms": [
+        "nomor enam"
+      ],
+      "labelEn": "six",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/6-7241.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bilangan 6\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7241"
+    },
+    {
+      "id": "matematika-7-7248",
+      "label": "Bilangan 7",
+      "labelNorm": "bilangan 7",
+      "synonyms": [
+        "nomor tujuh"
+      ],
+      "labelEn": "seven",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/7-7248.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bilangan 7\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7248"
+    },
+    {
+      "id": "matematika-8-7189",
+      "label": "Bilangan 8",
+      "labelNorm": "bilangan 8",
+      "synonyms": [
+        "nomor delapan"
+      ],
+      "labelEn": "eight",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/8-7189.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bilangan 8\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7189"
+    },
+    {
+      "id": "matematika-9-7188",
+      "label": "Bilangan 9",
+      "labelNorm": "bilangan 9",
+      "synonyms": [
+        "nomor sembilan"
+      ],
+      "labelEn": "nine",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/9-7188.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Bilangan 9\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7188"
     },
     {
       "id": "matematika-bilangan-ganjil",
@@ -5413,15 +5135,11 @@
       "sourceRef": "seed-matematika-bilangan-genap"
     },
     {
-      "id": "matematika-calculate",
-      "label": "Calculate",
-      "labelNorm": "calculate",
-      "synonyms": [
-        "hitung",
-        "menghitung",
-        "kalkulasi"
-      ],
-      "labelEn": "hitung",
+      "id": "matematika-8-4896",
+      "label": "Delapan",
+      "labelNorm": "delapan",
+      "synonyms": [],
+      "labelEn": "eight",
       "domains": [
         "matematika",
         "sekolah"
@@ -5430,22 +5148,22 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/calculate.webp",
+      "assetUrl": "/media/pictograms/8-4896.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Calculate\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Delapan\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "8518"
+      "sourceRef": "4896"
     },
     {
-      "id": "matematika-count",
-      "label": "Count",
-      "labelNorm": "count",
+      "id": "matematika-between",
+      "label": "Di Antara",
+      "labelNorm": "di antara",
       "synonyms": [
-        "angka"
+        "di tengah-tengah"
       ],
-      "labelEn": "hitung",
+      "labelEn": "between",
       "domains": [
         "matematika",
         "sekolah"
@@ -5454,22 +5172,22 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/count.webp",
+      "assetUrl": "/media/pictograms/between.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Count\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Di Antara\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "2714"
+      "sourceRef": "7765"
     },
     {
-      "id": "matematika-divide",
-      "label": "Divide",
-      "labelNorm": "divide",
+      "id": "matematika-above",
+      "label": "Di Atas",
+      "labelNorm": "di atas",
       "synonyms": [
-        "membagi"
+        "sebelah atas"
       ],
-      "labelEn": "bagi",
+      "labelEn": "above",
       "domains": [
         "matematika",
         "sekolah"
@@ -5478,13 +5196,109 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/divide.webp",
+      "assetUrl": "/media/pictograms/above.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Divide\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Di Atas\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "27069"
+      "sourceRef": "5451"
+    },
+    {
+      "id": "matematika-behind",
+      "label": "Di Belakang",
+      "labelNorm": "di belakang",
+      "synonyms": [
+        "sebelah belakang"
+      ],
+      "labelEn": "behind",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/behind.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Di Belakang\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5443"
+    },
+    {
+      "id": "matematika-inside",
+      "label": "Di Dalam",
+      "labelNorm": "di dalam",
+      "synonyms": [
+        "dalam kotak"
+      ],
+      "labelEn": "inside",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/inside.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Di Dalam\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5439"
+    },
+    {
+      "id": "matematika-in-front",
+      "label": "Di Depan",
+      "labelNorm": "di depan",
+      "synonyms": [
+        "sebelah depan"
+      ],
+      "labelEn": "in front",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/in-front.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Di Depan\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5438"
+    },
+    {
+      "id": "matematika-outside",
+      "label": "Di Luar",
+      "labelNorm": "di luar",
+      "synonyms": [
+        "luar kotak"
+      ],
+      "labelEn": "outside",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/outside.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Di Luar\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "5475"
     },
     {
       "id": "matematika-divide-27070",
@@ -5504,16 +5318,16 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "divide 27070",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-divide-27070"
     },
     {
-      "id": "matematika-empty",
-      "label": "Empty",
-      "labelNorm": "empty",
+      "id": "matematika-2-4890",
+      "label": "Dua",
+      "labelNorm": "dua",
       "synonyms": [],
-      "labelEn": "kosong",
+      "labelEn": "two",
       "domains": [
         "matematika",
         "sekolah"
@@ -5522,13 +5336,35 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/empty.webp",
+      "assetUrl": "/media/pictograms/2-4890.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Empty\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Dua\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "26527"
+      "sourceRef": "4890"
+    },
+    {
+      "id": "matematika-4-4892",
+      "label": "Empat",
+      "labelNorm": "empat",
+      "synonyms": [],
+      "labelEn": "four",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/4-4892.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Empat\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4892"
     },
     {
       "id": "matematika-empty-4767",
@@ -5548,42 +5384,16 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "empty 4767",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-empty-4767"
     },
     {
-      "id": "matematika-equal",
-      "label": "Equal",
-      "labelNorm": "equal",
-      "synonyms": [
-        "sama",
-        "sama dengan",
-        "setara"
-      ],
-      "labelEn": "sama",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/equal.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Equal\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4667"
-    },
-    {
-      "id": "matematika-far",
-      "label": "Far",
-      "labelNorm": "far",
+      "id": "matematika-6-4894",
+      "label": "Enam",
+      "labelNorm": "enam",
       "synonyms": [],
-      "labelEn": "far",
+      "labelEn": "six",
       "domains": [
         "matematika",
         "sekolah"
@@ -5592,82 +5402,13 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/far.webp",
+      "assetUrl": "/media/pictograms/6-4894.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Far\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Enam\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "30385"
-    },
-    {
-      "id": "matematika-far-36759",
-      "label": "Far 36759",
-      "labelNorm": "far 36759",
-      "synonyms": [],
-      "labelEn": "far",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/far-36759.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Far\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "36759"
-    },
-    {
-      "id": "matematika-fat",
-      "label": "Fat",
-      "labelNorm": "fat",
-      "synonyms": [
-        "gemuk",
-        "tebal"
-      ],
-      "labelEn": "gemuk",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/fat.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Fat\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "25133"
-    },
-    {
-      "id": "matematika-few",
-      "label": "Few",
-      "labelNorm": "few",
-      "synonyms": [],
-      "labelEn": "sedikit",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/few.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Few\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7209"
+      "sourceRef": "4894"
     },
     {
       "id": "matematika-few-40005",
@@ -5687,7 +5428,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "few 40005",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-few-40005"
     },
@@ -5709,32 +5450,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "few 5546",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-few-5546"
-    },
-    {
-      "id": "matematika-first",
-      "label": "First",
-      "labelNorm": "first",
-      "synonyms": [],
-      "labelEn": "pertama",
-      "domains": [
-        "matematika",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/first.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"First\" pada kategori Matematika, Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32129"
     },
     {
       "id": "matematika-first-27990",
@@ -5755,7 +5473,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "first 27990",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-first-27990"
     },
@@ -5778,7 +5496,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "first 27992",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-first-27992"
     },
@@ -5801,54 +5519,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "first 27993",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-first-27993"
-    },
-    {
-      "id": "matematika-first-37753",
-      "label": "First 37753",
-      "labelNorm": "first 37753",
-      "synonyms": [],
-      "labelEn": "pertama",
-      "domains": [
-        "matematika",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/first-37753.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"First\" pada kategori Matematika, Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37753"
-    },
-    {
-      "id": "matematika-full",
-      "label": "Full",
-      "labelNorm": "full",
-      "synonyms": [],
-      "labelEn": "penuh",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/full.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Full\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "26176"
     },
     {
       "id": "matematika-full-31190",
@@ -5868,41 +5541,18 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "full 31190",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-full-31190"
     },
     {
-      "id": "matematika-full-4688",
-      "label": "Full 4688",
-      "labelNorm": "full 4688",
-      "synonyms": [],
-      "labelEn": "penuh",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/full-4688.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Full\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4688"
-    },
-    {
-      "id": "matematika-how-many",
-      "label": "How Many",
-      "labelNorm": "how many",
+      "id": "matematika-fat",
+      "label": "Gemuk",
+      "labelNorm": "gemuk",
       "synonyms": [
-        "how",
-        "jumlah banyak"
+        "berisi"
       ],
-      "labelEn": "how many",
+      "labelEn": "fat",
       "domains": [
         "matematika",
         "sekolah"
@@ -5911,44 +5561,20 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/how-many.webp",
+      "assetUrl": "/media/pictograms/fat.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"How Many\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Gemuk\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "24731"
+      "sourceRef": "25133"
     },
     {
-      "id": "matematika-in-front",
-      "label": "In Front",
-      "labelNorm": "in front",
-      "synonyms": [
-        "front"
-      ],
-      "labelEn": "in front",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/in-front.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"In Front\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "5438"
-    },
-    {
-      "id": "matematika-inside",
-      "label": "Inside",
-      "labelNorm": "inside",
+      "id": "matematika-full",
+      "label": "Isi Penuh",
+      "labelNorm": "isi penuh",
       "synonyms": [],
-      "labelEn": "inside",
+      "labelEn": "full",
       "domains": [
         "matematika",
         "sekolah"
@@ -5957,23 +5583,44 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/inside.webp",
+      "assetUrl": "/media/pictograms/full.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Inside\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Isi Penuh\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "5439"
+      "sourceRef": "26176"
+    },
+    {
+      "id": "matematika-narrow",
+      "label": "Jalan Sempit",
+      "labelNorm": "jalan sempit",
+      "synonyms": [
+        "lorong sempit"
+      ],
+      "labelEn": "narrow",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/narrow.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Jalan Sempit\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4643"
     },
     {
       "id": "matematika-jam",
       "label": "Jam",
       "labelNorm": "jam",
       "synonyms": [
-        "clock",
-        "watch",
-        "jam dinding",
-        "waktu"
+        "jam dinding"
       ],
       "labelEn": "clock",
       "domains": [
@@ -5996,11 +5643,133 @@
       "sourceRef": "5561"
     },
     {
+      "id": "matematika-far-36759",
+      "label": "Jarak Jauh",
+      "labelNorm": "jarak jauh",
+      "synonyms": [
+        "letak jauh"
+      ],
+      "labelEn": "far",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/far-36759.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Jarak Jauh\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "36759"
+    },
+    {
+      "id": "matematika-far",
+      "label": "Jauh",
+      "labelNorm": "jauh",
+      "synonyms": [],
+      "labelEn": "far",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/far.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Jauh\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "30385"
+    },
+    {
+      "id": "matematika-second",
+      "label": "Juara Kedua",
+      "labelNorm": "juara kedua",
+      "synonyms": [
+        "podium dua"
+      ],
+      "labelEn": "second",
+      "domains": [
+        "matematika",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/second.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Juara Kedua\" pada kategori Matematika, Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "28315"
+    },
+    {
+      "id": "matematika-third",
+      "label": "Juara Ketiga",
+      "labelNorm": "juara ketiga",
+      "synonyms": [
+        "podium tiga"
+      ],
+      "labelEn": "third",
+      "domains": [
+        "matematika",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/third.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Juara Ketiga\" pada kategori Matematika, Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "28327"
+    },
+    {
+      "id": "matematika-first",
+      "label": "Juara Pertama",
+      "labelNorm": "juara pertama",
+      "synonyms": [
+        "juara satu",
+        "podium satu"
+      ],
+      "labelEn": "first",
+      "domains": [
+        "matematika",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/first.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Juara Pertama\" pada kategori Matematika, Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32129"
+    },
+    {
       "id": "matematika-jumlah-sedikit",
       "label": "Jumlah Sedikit",
       "labelNorm": "jumlah sedikit",
       "synonyms": [],
-      "labelEn": "sedikit",
+      "labelEn": "few",
       "domains": [
         "matematika",
         "sekolah"
@@ -6012,7 +5781,7 @@
       "assetUrl": "/media/pictograms/few-5546.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Few\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Jumlah Sedikit\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "5546"
@@ -6022,7 +5791,7 @@
       "label": "Kedua",
       "labelNorm": "kedua",
       "synonyms": [],
-      "labelEn": "kedua",
+      "labelEn": "second",
       "domains": [
         "matematika",
         "sekolah",
@@ -6035,7 +5804,7 @@
       "assetUrl": "/media/pictograms/second-28319.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Second\" pada kategori Matematika, Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Kedua\" pada kategori Matematika, Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "28319"
@@ -6045,7 +5814,7 @@
       "label": "Kesatu",
       "labelNorm": "kesatu",
       "synonyms": [],
-      "labelEn": "pertama",
+      "labelEn": "first",
       "domains": [
         "matematika",
         "sekolah",
@@ -6058,7 +5827,7 @@
       "assetUrl": "/media/pictograms/first-27992.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"First\" pada kategori Matematika, Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Kesatu\" pada kategori Matematika, Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "27992"
@@ -6068,7 +5837,7 @@
       "label": "Ketiga",
       "labelNorm": "ketiga",
       "synonyms": [],
-      "labelEn": "ketiga",
+      "labelEn": "third",
       "domains": [
         "matematika",
         "sekolah",
@@ -6081,17 +5850,42 @@
       "assetUrl": "/media/pictograms/third-28329.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Third\" pada kategori Matematika, Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Ketiga\" pada kategori Matematika, Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "28329"
+    },
+    {
+      "id": "matematika-left",
+      "label": "Kiri",
+      "labelNorm": "kiri",
+      "synonyms": [
+        "arah kiri",
+        "sebelah kiri"
+      ],
+      "labelEn": "left",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/left.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Kiri\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "9203"
     },
     {
       "id": "matematika-kosong",
       "label": "Kosong",
       "labelNorm": "kosong",
       "synonyms": [],
-      "labelEn": "kosong",
+      "labelEn": "empty",
       "domains": [
         "matematika",
         "sekolah"
@@ -6103,7 +5897,7 @@
       "assetUrl": "/media/pictograms/empty-4767.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Empty\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Kosong\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "4767"
@@ -6113,8 +5907,6 @@
       "label": "Kotak",
       "labelNorm": "kotak",
       "synonyms": [
-        "square",
-        "box",
         "persegi",
         "bujur sangkar"
       ],
@@ -6183,7 +5975,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "kubus geometri",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-kubus-geometri"
     },
@@ -6192,7 +5984,7 @@
       "label": "Kurus",
       "labelNorm": "kurus",
       "synonyms": [],
-      "labelEn": "kurus",
+      "labelEn": "slim",
       "domains": [
         "matematika",
         "sekolah"
@@ -6204,35 +5996,10 @@
       "assetUrl": "/media/pictograms/slim-38589.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Slim\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Kurus\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "38589"
-    },
-    {
-      "id": "matematika-last",
-      "label": "Last",
-      "labelNorm": "last",
-      "synonyms": [
-        "akhir"
-      ],
-      "labelEn": "terakhir",
-      "domains": [
-        "matematika",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/last.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Last\" pada kategori Matematika, Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "32069"
     },
     {
       "id": "matematika-last-37751",
@@ -6253,7 +6020,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "last 37751",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-last-37751"
     },
@@ -6262,7 +6029,7 @@
       "label": "Lebar",
       "labelNorm": "lebar",
       "synonyms": [],
-      "labelEn": "lebar",
+      "labelEn": "wide",
       "domains": [
         "matematika",
         "sekolah"
@@ -6274,17 +6041,19 @@
       "assetUrl": "/media/pictograms/wide-8022.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wide\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Lebar\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "8022"
     },
     {
-      "id": "matematika-left",
-      "label": "Left",
-      "labelNorm": "left",
-      "synonyms": [],
-      "labelEn": "left",
+      "id": "matematika-more",
+      "label": "Lebih Banyak",
+      "labelNorm": "lebih banyak",
+      "synonyms": [
+        "lebih dari"
+      ],
+      "labelEn": "more",
       "domains": [
         "matematika",
         "sekolah"
@@ -6293,22 +6062,46 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/left.webp",
+      "assetUrl": "/media/pictograms/more.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Left\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Lebih Banyak\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "9203"
+      "sourceRef": "5508"
+    },
+    {
+      "id": "matematika-few",
+      "label": "Lebih Kurang",
+      "labelNorm": "lebih kurang",
+      "synonyms": [
+        "jumlah kecil"
+      ],
+      "labelEn": "few",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/few.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Lebih Kurang\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7209"
     },
     {
       "id": "matematika-less",
-      "label": "Less",
-      "labelNorm": "less",
+      "label": "Lebih Sedikit",
+      "labelNorm": "lebih sedikit",
       "synonyms": [
-        "lebih sedikit"
+        "kurang dari"
       ],
-      "labelEn": "lebih sedikit",
+      "labelEn": "less",
       "domains": [
         "matematika",
         "sekolah"
@@ -6320,18 +6113,38 @@
       "assetUrl": "/media/pictograms/less.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Less\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Lebih Sedikit\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "5512"
     },
     {
+      "id": "matematika-5-4893",
+      "label": "Lima",
+      "labelNorm": "lima",
+      "synonyms": [],
+      "labelEn": "five",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/5-4893.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Lima\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4893"
+    },
+    {
       "id": "matematika-lingkaran",
       "label": "Lingkaran",
       "labelNorm": "lingkaran",
-      "synonyms": [
-        "circle"
-      ],
+      "synonyms": [],
       "labelEn": "circle",
       "domains": [
         "matematika",
@@ -6351,13 +6164,13 @@
       "sourceRef": "4603"
     },
     {
-      "id": "matematika-long",
-      "label": "Long",
-      "labelNorm": "long",
+      "id": "matematika-wide",
+      "label": "Luas",
+      "labelNorm": "luas",
       "synonyms": [
-        "panjang"
+        "bidang lebar"
       ],
-      "labelEn": "panjang",
+      "labelEn": "wide",
       "domains": [
         "matematika",
         "sekolah"
@@ -6366,35 +6179,13 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/long.webp",
+      "assetUrl": "/media/pictograms/wide.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Long\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Luas\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "26162"
-    },
-    {
-      "id": "matematika-many",
-      "label": "Many",
-      "labelNorm": "many",
-      "synonyms": [],
-      "labelEn": "banyak",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/many.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Many\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "7168"
+      "sourceRef": "4559"
     },
     {
       "id": "matematika-many-40006",
@@ -6414,18 +6205,18 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "many 40006",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-many-40006"
     },
     {
-      "id": "matematika-more",
-      "label": "More",
-      "labelNorm": "more",
+      "id": "matematika-divide",
+      "label": "Membagi",
+      "labelNorm": "membagi",
       "synonyms": [
-        "lebih banyak"
+        "bagi sama rata"
       ],
-      "labelEn": "lebih banyak",
+      "labelEn": "divide",
       "domains": [
         "matematika",
         "sekolah"
@@ -6434,20 +6225,22 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/more.webp",
+      "assetUrl": "/media/pictograms/divide.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"More\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Membagi\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "5508"
+      "sourceRef": "27069"
     },
     {
-      "id": "matematika-narrow",
-      "label": "Narrow",
-      "labelNorm": "narrow",
-      "synonyms": [],
-      "labelEn": "sempit",
+      "id": "matematika-around",
+      "label": "Mengelilingi",
+      "labelNorm": "mengelilingi",
+      "synonyms": [
+        "di sekitar"
+      ],
+      "labelEn": "around",
       "domains": [
         "matematika",
         "sekolah"
@@ -6456,13 +6249,38 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/narrow.webp",
+      "assetUrl": "/media/pictograms/around.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Narrow\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Mengelilingi\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "4643"
+      "sourceRef": "5376"
+    },
+    {
+      "id": "matematika-calculate",
+      "label": "Menghitung",
+      "labelNorm": "menghitung",
+      "synonyms": [
+        "hitung",
+        "kalkulasi"
+      ],
+      "labelEn": "calculate",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/calculate.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Menghitung\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "8518"
     },
     {
       "id": "matematika-narrow-8116",
@@ -6482,7 +6300,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "narrow 8116",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-narrow-8116"
     },
@@ -6533,7 +6351,7 @@
       "label": "Nol",
       "labelNorm": "nol",
       "synonyms": [],
-      "labelEn": "nol",
+      "labelEn": "zero",
       "domains": [
         "matematika",
         "sekolah"
@@ -6545,32 +6363,10 @@
       "assetUrl": "/media/pictograms/nought-35693.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Nought\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Nol\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "35693"
-    },
-    {
-      "id": "matematika-nought",
-      "label": "Nought",
-      "labelNorm": "nought",
-      "synonyms": [],
-      "labelEn": "nol",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/nought.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Nought\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "2626"
     },
     {
       "id": "matematika-nought-35693",
@@ -6590,7 +6386,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "nought 35693",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-nought-35693"
     },
@@ -6612,31 +6408,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "nought 6972",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-nought-6972"
-    },
-    {
-      "id": "matematika-one",
-      "label": "One",
-      "labelNorm": "one",
-      "synonyms": [],
-      "labelEn": "satu",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/one.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"One\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "2627"
     },
     {
       "id": "matematika-one-35677",
@@ -6656,7 +6430,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "one 35677",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-one-35677"
     },
@@ -6678,7 +6452,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "one 4889",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-one-4889"
     },
@@ -6700,16 +6474,18 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "one 7291",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-one-7291"
     },
     {
-      "id": "matematika-outside",
-      "label": "Outside",
-      "labelNorm": "outside",
-      "synonyms": [],
-      "labelEn": "outside",
+      "id": "matematika-short",
+      "label": "Orang Pendek",
+      "labelNorm": "orang pendek",
+      "synonyms": [
+        "tinggi pendek"
+      ],
+      "labelEn": "short",
       "domains": [
         "matematika",
         "sekolah"
@@ -6718,13 +6494,86 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/outside.webp",
+      "assetUrl": "/media/pictograms/short.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Outside\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Orang Pendek\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "5475"
+      "sourceRef": "25839"
+    },
+    {
+      "id": "matematika-tall",
+      "label": "Orang Tinggi",
+      "labelNorm": "orang tinggi",
+      "synonyms": [
+        "berbadan tinggi"
+      ],
+      "labelEn": "tall",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/tall.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Orang Tinggi\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "25782"
+    },
+    {
+      "id": "matematika-last",
+      "label": "Paling Akhir",
+      "labelNorm": "paling akhir",
+      "synonyms": [
+        "akhir barisan"
+      ],
+      "labelEn": "last",
+      "domains": [
+        "matematika",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/last.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Paling Akhir\" pada kategori Matematika, Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "32069"
+    },
+    {
+      "id": "matematika-long",
+      "label": "Panjang",
+      "labelNorm": "panjang",
+      "synonyms": [
+        "berukuran panjang"
+      ],
+      "labelEn": "long",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/long.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Panjang\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "26162"
     },
     {
       "id": "matematika-pecahan-seperempat",
@@ -6744,7 +6593,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "pecahan seperempat",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-pecahan-seperempat"
     },
@@ -6795,7 +6644,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "pecahan setengah",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-pecahan-setengah"
     },
@@ -6808,8 +6657,7 @@
         "satu per dua",
         "1/2",
         "separuh",
-        "bagian dari keseluruhan",
-        "berhitung"
+        "bagian dari keseluruhan"
       ],
       "labelEn": "fraction",
       "domains": [
@@ -6861,7 +6709,7 @@
       "label": "Pendek",
       "labelNorm": "pendek",
       "synonyms": [],
-      "labelEn": "pendek",
+      "labelEn": "short",
       "domains": [
         "matematika",
         "sekolah"
@@ -6873,7 +6721,7 @@
       "assetUrl": "/media/pictograms/short-26002.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Short\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Pendek\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "26002"
@@ -6935,7 +6783,7 @@
       "label": "Penuh",
       "labelNorm": "penuh",
       "synonyms": [],
-      "labelEn": "penuh",
+      "labelEn": "full",
       "domains": [
         "matematika",
         "sekolah"
@@ -6947,10 +6795,85 @@
       "assetUrl": "/media/pictograms/full-31190.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Full\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Penuh\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "31190"
+    },
+    {
+      "id": "matematika-second-28320",
+      "label": "Peringkat Kedua",
+      "labelNorm": "peringkat kedua",
+      "synonyms": [
+        "urutan kedua"
+      ],
+      "labelEn": "second",
+      "domains": [
+        "matematika",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/second-28320.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Peringkat Kedua\" pada kategori Matematika, Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "28320"
+    },
+    {
+      "id": "matematika-third-28330",
+      "label": "Peringkat Ketiga",
+      "labelNorm": "peringkat ketiga",
+      "synonyms": [
+        "urutan ketiga"
+      ],
+      "labelEn": "third",
+      "domains": [
+        "matematika",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/third-28330.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Peringkat Ketiga\" pada kategori Matematika, Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "28330"
+    },
+    {
+      "id": "matematika-first-37753",
+      "label": "Peringkat Pertama",
+      "labelNorm": "peringkat pertama",
+      "synonyms": [
+        "nomor satu juara"
+      ],
+      "labelEn": "first",
+      "domains": [
+        "matematika",
+        "sekolah",
+        "bahasa"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/first-37753.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Peringkat Pertama\" pada kategori Matematika, Bahasa Indonesia.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37753"
     },
     {
       "id": "matematika-perkalian",
@@ -7009,7 +6932,7 @@
       "label": "Pertama",
       "labelNorm": "pertama",
       "synonyms": [],
-      "labelEn": "pertama",
+      "labelEn": "first",
       "domains": [
         "matematika",
         "sekolah",
@@ -7022,17 +6945,114 @@
       "assetUrl": "/media/pictograms/first-27990.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"First\" pada kategori Matematika, Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Pertama\" pada kategori Matematika, Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "27990"
+    },
+    {
+      "id": "matematika-straight",
+      "label": "Rambut Lurus",
+      "labelNorm": "rambut lurus",
+      "synonyms": [
+        "lurus"
+      ],
+      "labelEn": "straight hair",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/straight.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Rambut Lurus\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "25195"
+    },
+    {
+      "id": "matematika-slim",
+      "label": "Ramping",
+      "labelNorm": "ramping",
+      "synonyms": [
+        "langsing"
+      ],
+      "labelEn": "slim",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/slim.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Ramping\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "25048"
+    },
+    {
+      "id": "matematika-equal",
+      "label": "Sama Dengan",
+      "labelNorm": "sama dengan",
+      "synonyms": [
+        "sama",
+        "setara"
+      ],
+      "labelEn": "equal",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/equal.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sama Dengan\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4667"
+    },
+    {
+      "id": "matematika-many",
+      "label": "Sangat Banyak",
+      "labelNorm": "sangat banyak",
+      "synonyms": [
+        "melimpah"
+      ],
+      "labelEn": "many",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/many.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sangat Banyak\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "7168"
     },
     {
       "id": "matematika-satu",
       "label": "Satu",
       "labelNorm": "satu",
       "synonyms": [],
-      "labelEn": "satu",
+      "labelEn": "one",
       "domains": [
         "matematika",
         "sekolah"
@@ -7044,33 +7064,10 @@
       "assetUrl": "/media/pictograms/one-35677.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"One\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Satu\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "35677"
-    },
-    {
-      "id": "matematika-second",
-      "label": "Second",
-      "labelNorm": "second",
-      "synonyms": [],
-      "labelEn": "kedua",
-      "domains": [
-        "matematika",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/second.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Second\" pada kategori Matematika, Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28315"
     },
     {
       "id": "matematika-second-28319",
@@ -7091,39 +7088,16 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "second 28319",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-second-28319"
-    },
-    {
-      "id": "matematika-second-28320",
-      "label": "Second 28320",
-      "labelNorm": "second 28320",
-      "synonyms": [],
-      "labelEn": "kedua",
-      "domains": [
-        "matematika",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/second-28320.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Second\" pada kategori Matematika, Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28320"
     },
     {
       "id": "matematika-sedikit",
       "label": "Sedikit",
       "labelNorm": "sedikit",
       "synonyms": [],
-      "labelEn": "sedikit",
+      "labelEn": "few",
       "domains": [
         "matematika",
         "sekolah"
@@ -7135,7 +7109,7 @@
       "assetUrl": "/media/pictograms/few-40005.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Few\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Sedikit\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "40005"
@@ -7144,9 +7118,7 @@
       "id": "matematika-segitiga",
       "label": "Segitiga",
       "labelNorm": "segitiga",
-      "synonyms": [
-        "triangle"
-      ],
+      "synonyms": [],
       "labelEn": "triangle",
       "domains": [
         "matematika",
@@ -7166,11 +7138,33 @@
       "sourceRef": "4763"
     },
     {
+      "id": "matematika-9-4897",
+      "label": "Sembilan",
+      "labelNorm": "sembilan",
+      "synonyms": [],
+      "labelEn": "nine",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/9-4897.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Sembilan\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4897"
+    },
+    {
       "id": "matematika-sempit",
       "label": "Sempit",
       "labelNorm": "sempit",
       "synonyms": [],
-      "labelEn": "sempit",
+      "labelEn": "narrow",
       "domains": [
         "matematika",
         "sekolah"
@@ -7182,17 +7176,19 @@
       "assetUrl": "/media/pictograms/narrow-8116.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Narrow\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Sempit\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "8116"
     },
     {
-      "id": "matematika-short",
-      "label": "Short",
-      "labelNorm": "short",
-      "synonyms": [],
-      "labelEn": "pendek",
+      "id": "matematika-bilangan",
+      "label": "Sepuluh",
+      "labelNorm": "sepuluh",
+      "synonyms": [
+        "bilangan sepuluh"
+      ],
+      "labelEn": "ten",
       "domains": [
         "matematika",
         "sekolah"
@@ -7201,13 +7197,13 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/short.webp",
+      "assetUrl": "/media/pictograms/10-29254.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Short\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Sepuluh\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "25839"
+      "sourceRef": "29254"
     },
     {
       "id": "matematika-short-26002",
@@ -7227,7 +7223,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "short 26002",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-short-26002"
     },
@@ -7249,33 +7245,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "short 39777",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-short-39777"
-    },
-    {
-      "id": "matematika-slim",
-      "label": "Slim",
-      "labelNorm": "slim",
-      "synonyms": [
-        "ramping"
-      ],
-      "labelEn": "kurus",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/slim.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Slim\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "25048"
     },
     {
       "id": "matematika-slim-38589",
@@ -7295,53 +7267,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "slim 38589",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-slim-38589"
-    },
-    {
-      "id": "matematika-straight",
-      "label": "Straight",
-      "labelNorm": "straight",
-      "synonyms": [],
-      "labelEn": "straight",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/straight.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Straight\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "25195"
-    },
-    {
-      "id": "matematika-tall",
-      "label": "Tall",
-      "labelNorm": "tall",
-      "synonyms": [],
-      "labelEn": "tinggi",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/tall.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Tall\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "25782"
     },
     {
       "id": "matematika-tall-39778",
@@ -7361,9 +7289,33 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "tall 39778",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-tall-39778"
+    },
+    {
+      "id": "matematika-thick",
+      "label": "Tebal",
+      "labelNorm": "tebal",
+      "synonyms": [
+        "garis tebal"
+      ],
+      "labelEn": "thick",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/thick.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Tebal\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37063"
     },
     {
       "id": "matematika-tenang",
@@ -7390,33 +7342,10 @@
       "sourceRef": "31310"
     },
     {
-      "id": "matematika-tengok",
-      "label": "Tengok",
-      "labelNorm": "tengok",
-      "synonyms": [],
-      "labelEn": "tengok",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/tengok.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Tengok\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "6564"
-    },
-    {
       "id": "matematika-tentara",
       "label": "Tentara",
       "labelNorm": "tentara",
       "synonyms": [
-        "soldier",
         "tni"
       ],
       "labelEn": "soldier",
@@ -7441,7 +7370,7 @@
       "label": "Terakhir",
       "labelNorm": "terakhir",
       "synonyms": [],
-      "labelEn": "terakhir",
+      "labelEn": "last",
       "domains": [
         "matematika",
         "sekolah",
@@ -7454,41 +7383,19 @@
       "assetUrl": "/media/pictograms/last-37751.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Last\" pada kategori Matematika, Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Terakhir\" pada kategori Matematika, Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "37751"
     },
     {
-      "id": "matematika-thick",
-      "label": "Thick",
-      "labelNorm": "thick",
-      "synonyms": [],
-      "labelEn": "tebal",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/thick.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Thick\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "37063"
-    },
-    {
-      "id": "matematika-thin",
-      "label": "Thin",
-      "labelNorm": "thin",
+      "id": "matematika-full-4688",
+      "label": "Terisi Penuh",
+      "labelNorm": "terisi penuh",
       "synonyms": [
-        "tipis"
+        "penuh sekali"
       ],
-      "labelEn": "tipis",
+      "labelEn": "full",
       "domains": [
         "matematika",
         "sekolah"
@@ -7497,36 +7404,13 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/thin.webp",
+      "assetUrl": "/media/pictograms/full-4688.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Thin\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Terisi Penuh\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "37064"
-    },
-    {
-      "id": "matematika-third",
-      "label": "Third",
-      "labelNorm": "third",
-      "synonyms": [],
-      "labelEn": "ketiga",
-      "domains": [
-        "matematika",
-        "sekolah",
-        "bahasa"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/third.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Third\" pada kategori Matematika, Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28327"
+      "sourceRef": "4688"
     },
     {
       "id": "matematika-third-28329",
@@ -7547,39 +7431,19 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "third 28329",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-third-28329"
     },
     {
-      "id": "matematika-third-28330",
-      "label": "Third 28330",
-      "labelNorm": "third 28330",
-      "synonyms": [],
-      "labelEn": "ketiga",
-      "domains": [
-        "matematika",
-        "sekolah",
-        "bahasa"
+      "id": "matematika-uneven",
+      "label": "Tidak Sama",
+      "labelNorm": "tidak sama",
+      "synonyms": [
+        "berbeda",
+        "tidak setara"
       ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/third-28330.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Third\" pada kategori Matematika, Bahasa Indonesia.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28330"
-    },
-    {
-      "id": "matematika-thirty",
-      "label": "Thirty",
-      "labelNorm": "thirty",
-      "synonyms": [],
-      "labelEn": "thirty",
+      "labelEn": "uneven",
       "domains": [
         "matematika",
         "sekolah"
@@ -7588,20 +7452,20 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/thirty.webp",
+      "assetUrl": "/media/pictograms/uneven.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Thirty\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Tidak Sama\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "29298"
+      "sourceRef": "4628"
     },
     {
-      "id": "matematika-thirty-one",
-      "label": "Thirty One",
-      "labelNorm": "thirty one",
+      "id": "matematika-3-4891",
+      "label": "Tiga",
+      "labelNorm": "tiga",
       "synonyms": [],
-      "labelEn": "thirty one",
+      "labelEn": "three",
       "domains": [
         "matematika",
         "sekolah"
@@ -7610,25 +7474,23 @@
       "kind": "matematika",
       "popularity": 70,
       "assetId": null,
-      "assetUrl": "/media/pictograms/thirty-one.webp",
+      "assetUrl": "/media/pictograms/3-4891.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Thirty One\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Tiga\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
-      "sourceRef": "29302"
+      "sourceRef": "4891"
     },
     {
       "id": "matematika-timbangan",
       "label": "Timbangan",
       "labelNorm": "timbangan",
       "synonyms": [
-        "timbang",
         "menimbang",
         "berat",
         "neraca",
-        "massa",
-        "weigh"
+        "massa"
       ],
       "labelEn": "timbang",
       "domains": [
@@ -7650,35 +7512,11 @@
       "sourceRef": "4717"
     },
     {
-      "id": "matematika-time",
-      "label": "Time",
-      "labelNorm": "time",
-      "synonyms": [],
-      "labelEn": "waktu",
-      "domains": [
-        "matematika",
-        "sekolah",
-        "bina-diri",
-        "keterampilan-hidup"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/time.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Time\" pada kategori Matematika, Kehidupan Sehari-hari.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "28599"
-    },
-    {
       "id": "matematika-tinggi",
       "label": "Tinggi",
       "labelNorm": "tinggi",
       "synonyms": [],
-      "labelEn": "tinggi",
+      "labelEn": "tall",
       "domains": [
         "matematika",
         "sekolah"
@@ -7690,18 +7528,62 @@
       "assetUrl": "/media/pictograms/tall-39778.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Tall\" pada kategori Matematika.",
+      "altText": "Piktogram visual untuk konsep \"Tinggi\" pada kategori Matematika.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "39778"
     },
     {
+      "id": "matematika-thin",
+      "label": "Tipis",
+      "labelNorm": "tipis",
+      "synonyms": [
+        "garis tipis"
+      ],
+      "labelEn": "thin",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/thin.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Tipis\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "37064"
+    },
+    {
+      "id": "matematika-7-4895",
+      "label": "Tujuh",
+      "labelNorm": "tujuh",
+      "synonyms": [],
+      "labelEn": "seven",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/7-4895.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Tujuh\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "4895"
+    },
+    {
       "id": "matematika-uang",
       "label": "Uang",
       "labelNorm": "uang",
-      "synonyms": [
-        "money"
-      ],
+      "synonyms": [],
       "labelEn": "money",
       "domains": [
         "matematika",
@@ -7728,10 +7610,8 @@
       "label": "Uang Rupiah",
       "labelNorm": "uang rupiah",
       "synonyms": [
-        "rupiah",
         "uang kertas",
         "uang koin",
-        "belanja",
         "nilai uang",
         "mata uang indonesia"
       ],
@@ -7758,58 +7638,13 @@
       "sourceRef": "custom:uang-rupiah"
     },
     {
-      "id": "matematika-ukuran",
-      "label": "Ukuran",
-      "labelNorm": "ukuran",
-      "synonyms": [],
-      "labelEn": "pendek",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/short-39777.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Short\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "39777"
-    },
-    {
-      "id": "matematika-uneven",
-      "label": "Uneven",
-      "labelNorm": "uneven",
-      "synonyms": [
-        "tidak sama",
-        "berbeda"
-      ],
-      "labelEn": "tidak sama",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/uneven.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Uneven\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4628"
-    },
-    {
       "id": "matematika-urutan",
-      "label": "Urutan",
-      "labelNorm": "urutan",
-      "synonyms": [],
-      "labelEn": "pertama",
+      "label": "Urutan Pertama",
+      "labelNorm": "urutan pertama",
+      "synonyms": [
+        "nomor satu"
+      ],
+      "labelEn": "first",
       "domains": [
         "matematika",
         "sekolah",
@@ -7822,10 +7657,60 @@
       "assetUrl": "/media/pictograms/first-27993.webp",
       "altAssetIds": [],
       "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"First\" pada kategori Matematika, Bahasa Indonesia.",
+      "altText": "Piktogram visual untuk konsep \"Urutan Pertama\" pada kategori Matematika, Bahasa Indonesia.",
       "status": "active",
       "source": "arasaac",
       "sourceRef": "27993"
+    },
+    {
+      "id": "matematika-empty",
+      "label": "Wadah Kosong",
+      "labelNorm": "wadah kosong",
+      "synonyms": [
+        "hampa"
+      ],
+      "labelEn": "empty",
+      "domains": [
+        "matematika",
+        "sekolah"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/empty.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Wadah Kosong\" pada kategori Matematika.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "26527"
+    },
+    {
+      "id": "matematika-time",
+      "label": "Waktu",
+      "labelNorm": "waktu",
+      "synonyms": [
+        "jam waktu"
+      ],
+      "labelEn": "time",
+      "domains": [
+        "matematika",
+        "sekolah",
+        "bina-diri",
+        "keterampilan-hidup"
+      ],
+      "groupId": "matematika",
+      "kind": "matematika",
+      "popularity": 70,
+      "assetId": null,
+      "assetUrl": "/media/pictograms/time.webp",
+      "altAssetIds": [],
+      "altUrls": [],
+      "altText": "Piktogram visual untuk konsep \"Waktu\" pada kategori Matematika, Kehidupan Sehari-hari.",
+      "status": "active",
+      "source": "arasaac",
+      "sourceRef": "28599"
     },
     {
       "id": "matematika-weigh",
@@ -7847,33 +7732,9 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "weigh",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-weigh"
-    },
-    {
-      "id": "matematika-wide",
-      "label": "Wide",
-      "labelNorm": "wide",
-      "synonyms": [
-        "luas"
-      ],
-      "labelEn": "lebar",
-      "domains": [
-        "matematika",
-        "sekolah"
-      ],
-      "groupId": "matematika",
-      "kind": "matematika",
-      "popularity": 70,
-      "assetId": null,
-      "assetUrl": "/media/pictograms/wide.webp",
-      "altAssetIds": [],
-      "altUrls": [],
-      "altText": "Piktogram visual untuk konsep \"Wide\" pada kategori Matematika.",
-      "status": "active",
-      "source": "arasaac",
-      "sourceRef": "4559"
     },
     {
       "id": "matematika-wide-8022",
@@ -7893,7 +7754,7 @@
       "altAssetIds": [],
       "altUrls": [],
       "altText": "wide 8022",
-      "status": "needs_review",
+      "status": "hidden",
       "source": "legacy",
       "sourceRef": "seed-matematika-wide-8022"
     }

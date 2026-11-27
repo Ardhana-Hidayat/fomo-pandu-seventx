@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button, Card, Icon, StatusMessage, DisplayPreferencesTrigger } from "@/shared/ui";
 import { SignCard } from "@/features/player";
+import { resolveRenderableQuizVisuals } from "@/shared/lib/quiz/visual-rule";
 import type { QuizQuestion } from "@/server/db/schema";
 import { submitQuizAnswerAction, finishQuizSessionAction } from "../actions";
 
@@ -11,12 +12,6 @@ interface QuizOption {
   text: string;
   imageUrl?: string;
   correct: boolean;
-}
-
-interface QuizStep {
-  id: string;
-  text: string;
-  imageUrl?: string;
 }
 
 interface QuizRunnerProps {
@@ -50,6 +45,7 @@ export function QuizRunner({
     Record<number, string[]>
   >({});
   const [selectedStepId, setSelectedStepId] = useState<string | null>(null);
+  const [failedImageKeys, setFailedImageKeys] = useState<Record<string, true>>({});
 
   const currentQ = questions[currentIndex];
   const totalQuestions = questions.length;
@@ -66,72 +62,24 @@ export function QuizRunner({
     imageUrl?: string;
   } | undefined;
 
-  const promptImageUrl = payload?.promptImageUrl ?? payload?.imageUrl;
+  const {
+    promptImageUrl,
+    options,
+    steps,
+  } = currentQ
+    ? resolveRenderableQuizVisuals(
+        currentQ.type,
+        payload as Record<string, unknown> | undefined
+      )
+    : { promptImageUrl: undefined, options: [], steps: [] };
 
-  const rawOptions = payload?.options;
-  const options: QuizOption[] = (Array.isArray(rawOptions) ? rawOptions : []).map(
-    (rawOpt: unknown, idx: number) => {
-      if (typeof rawOpt === "string") {
-        const isCorrect =
-          payload?.answer !== undefined
-            ? String(payload.answer).trim().toLowerCase() === rawOpt.trim().toLowerCase()
-            : idx === 0;
-        return {
-          id: `opt-${idx}`,
-          text: rawOpt,
-          correct: isCorrect,
-        };
-      }
-      const opt = rawOpt as {
-        id?: string;
-        text?: string;
-        label?: string;
-        imageUrl?: string;
-        image?: { url?: string };
-        visual?: { url?: string | null } | null;
-        correct?: boolean;
-      };
-      const text = opt.text ?? opt.label ?? `Pilihan ${idx + 1}`;
-      const id = opt.id ?? `opt-${idx}`;
-      const imageUrl =
-        opt.imageUrl ?? opt.image?.url ?? opt.visual?.url ?? undefined;
-      const isCorrect =
-        typeof opt.correct === "boolean"
-          ? opt.correct
-          : payload?.answer !== undefined
-            ? String(payload.answer).trim().toLowerCase() === text.trim().toLowerCase() ||
-              String(payload.answer).trim().toLowerCase() === id.toLowerCase()
-            : idx === 0;
-
-      return {
-        id,
-        text,
-        imageUrl,
-        correct: isCorrect,
-      };
-    }
-  );
-
-  const rawSteps = payload?.steps;
-  const steps: QuizStep[] = (Array.isArray(rawSteps) ? rawSteps : []).map(
-    (rawSt: unknown, sIdx: number) => {
-      if (typeof rawSt === "string") {
-        return { id: `step-${sIdx}`, text: rawSt };
-      }
-      const st = rawSt as {
-        id?: string;
-        text?: string;
-        imageUrl?: string;
-        image?: { url?: string };
-        visual?: { url?: string | null } | null;
-      };
-      return {
-        id: st.id ?? `step-${sIdx}`,
-        text: st.text ?? `Langkah ${sIdx + 1}`,
-        imageUrl: st.imageUrl ?? st.image?.url ?? st.visual?.url ?? undefined,
-      };
-    }
-  );
+  const promptImageKey = promptImageUrl
+    ? `${currentIndex}:prompt:${promptImageUrl}`
+    : null;
+  const visiblePromptImageUrl =
+    promptImageUrl && promptImageKey && !failedImageKeys[promptImageKey]
+      ? promptImageUrl
+      : undefined;
 
   if (totalQuestions === 0) {
     return (
@@ -260,6 +208,7 @@ export function QuizRunner({
     setIsFinished(false);
     setShowHint(false);
     setShowPromptSign(false);
+    setFailedImageKeys({});
   }
 
   function speakPrompt() {
@@ -404,12 +353,18 @@ export function QuizRunner({
 
           {/* Pertanyaan & Gambar Soal + Tombol Bantu (Isyarat / Petunjuk) */}
           <div className="flex flex-col items-center gap-3 text-center">
-            {promptImageUrl && (
+            {visiblePromptImageUrl && promptImageKey && (
               <div className="flex h-32 w-32 sm:h-40 sm:w-40 items-center justify-center overflow-hidden rounded-2xl border-2 border-[var(--border)] bg-[var(--surface-2)] p-2 shadow-xs">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={promptImageUrl}
+                  src={visiblePromptImageUrl}
                   alt={currentQ.prompt}
+                  onError={() =>
+                    setFailedImageKeys((prev) => ({
+                      ...prev,
+                      [promptImageKey]: true,
+                    }))
+                  }
                   className="h-full w-full object-contain"
                 />
               </div>
@@ -491,20 +446,37 @@ export function QuizRunner({
                     "bg-[var(--ulang-bg)] border-[var(--ulang-edge)] text-[var(--ulang-ink)]";
                 }
 
+                const optImageKey = opt.imageUrl
+                  ? `${currentIndex}:opt:${opt.id}:${opt.imageUrl}`
+                  : null;
+                const showOptImage = Boolean(
+                  opt.imageUrl && optImageKey && !failedImageKeys[optImageKey]
+                );
+
                 return (
                   <button
                     key={opt.id}
                     type="button"
                     aria-pressed={isSelected}
                     onClick={() => handleSelectOption(opt)}
-                    className={`flex min-h-[140px] sm:min-h-[164px] w-full flex-col items-center justify-center gap-2.5 rounded-[var(--r-kartu)] border-2 px-3 py-4 text-center text-base sm:text-lg font-bold cursor-pointer select-none transition-all duration-[120ms] active:scale-[0.98] ${optStyle}`}
+                    className={`flex ${
+                      showOptImage
+                        ? "min-h-[140px] sm:min-h-[164px]"
+                        : "min-h-[64px] sm:min-h-[76px]"
+                    } w-full flex-col items-center justify-center gap-2.5 rounded-[var(--r-kartu)] border-2 px-3 py-4 text-center text-base sm:text-lg font-bold cursor-pointer select-none transition-all duration-[120ms] active:scale-[0.98] ${optStyle}`}
                   >
-                    {opt.imageUrl && (
+                    {showOptImage && opt.imageUrl && optImageKey && (
                       <div className="flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center overflow-hidden rounded-xl bg-[var(--surface-2)] p-1.5">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={opt.imageUrl}
                           alt={opt.text}
+                          onError={() =>
+                            setFailedImageKeys((prev) => ({
+                              ...prev,
+                              [optImageKey]: true,
+                            }))
+                          }
                           className="h-full w-full object-contain"
                         />
                       </div>

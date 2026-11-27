@@ -38,6 +38,28 @@ function resolvePublicPath(webPath: string): string {
   return path.join(process.cwd(), "public", relative);
 }
 
+function resolveCatalogMedia(webPath: string): { filePath: string; available: boolean } {
+  if (fs.existsSync(resolvePublicPath(webPath))) {
+    return { filePath: webPath, available: true };
+  }
+  const useSupabaseFallback =
+    process.env.STORAGE_DRIVER === "supabase" || Boolean(process.env.VERCEL);
+  if (useSupabaseFallback) {
+    const supabaseUrl = (
+      process.env.NEXT_PUBLIC_SUPABASE_URL ||
+      process.env.SUPABASE_URL ||
+      "https://vmailnuloaoonmqeguok.supabase.co"
+    ).replace(/\/+$/, "");
+    if (supabaseUrl) {
+      return {
+        filePath: `${supabaseUrl}/storage/v1/object/public/card-images/${encodeURIComponent(path.basename(webPath))}`,
+        available: true,
+      };
+    }
+  }
+  return { filePath: webPath, available: false };
+}
+
 function buildCatalog(): AssetRecord[] {
   const records: AssetRecord[] = [];
   const manifestPath = path.join(process.cwd(), "public", "media", "pictograms", "manifest.json");
@@ -46,8 +68,7 @@ function buildCatalog(): AssetRecord[] {
     const manifest: ManifestFile = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
     for (const [slug, item] of Object.entries(manifest.items)) {
       const filename = `${slug}.webp`;
-      const filePath = `/media/pictograms/${filename}`;
-      const available = fs.existsSync(resolvePublicPath(filePath));
+      const resolved = resolveCatalogMedia(`/media/pictograms/${filename}`);
       const categories = classifySlug(slug);
       const enriched = enrichKeywords(slug, categories);
 
@@ -66,8 +87,8 @@ function buildCatalog(): AssetRecord[] {
         attribution:
           manifest.attribution ||
           "Piktogram: ARASAAC (arasaac.org), Pemerintah Aragon, penulis Sergio Palao.",
-        file_path: filePath,
-        available,
+        file_path: resolved.filePath,
+        available: resolved.available,
         arasaac_id: item.id,
         canonical_key: getCanonicalKey(slug),
       });
@@ -75,8 +96,7 @@ function buildCatalog(): AssetRecord[] {
   }
 
   for (const custom of CUSTOM_SDLB_ASSETS) {
-    const filePath = `/media/custom/${custom.filename}`;
-    const available = fs.existsSync(resolvePublicPath(filePath));
+    const resolved = resolveCatalogMedia(`/media/custom/${custom.filename}`);
     records.push({
       asset_id: `custom:${custom.slug}`,
       filename: custom.filename,
@@ -90,8 +110,8 @@ function buildCatalog(): AssetRecord[] {
       source: "panduin-custom",
       license: "CC0 / PanduIn",
       attribution: "Ilustrasi edukasi kustom oleh PanduIn (CC0).",
-      file_path: filePath,
-      available,
+      file_path: resolved.filePath,
+      available: resolved.available,
       canonical_key: custom.slug,
     });
   }

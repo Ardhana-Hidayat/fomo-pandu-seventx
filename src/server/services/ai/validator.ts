@@ -25,12 +25,16 @@ const PLACEHOLDER_OPTION_RE =
 const PLACEHOLDER_STEP_RE = /^(?:langkah\s*\d+|step\s*\d+|tahap\s*\d+)$/i;
 const HYGIENE_ONLY_ASSET_WORDS: Record<string, string[]> = {
   sabun: ["sabun"],
+  soap: ["sabun"],
   "cuci-tangan": ["cuci tangan", "mencuci tangan"],
   "gosok-tangan": ["gosok tangan", "menggosok tangan"],
   bilas: ["bilas", "membilas"],
   handuk: ["handuk"],
+  keran: ["keran"],
   "pasta-gigi": ["pasta gigi"],
   "sikat-gigi": ["sikat gigi", "menyikat gigi"],
+  mandi: ["mandi"],
+  sampo: ["sampo"],
   "arasaac-34846": ["sabun", "cuci tangan", "mencuci tangan", "mandi", "kebersihan"],
   "arasaac-8975": ["cuci tangan", "mencuci tangan"],
   "arasaac-2443": ["gosok tangan", "menggosok tangan"],
@@ -38,8 +42,19 @@ const HYGIENE_ONLY_ASSET_WORDS: Record<string, string[]> = {
   "arasaac-2593": ["handuk"],
   "arasaac-2694": ["sikat gigi", "menyikat gigi"],
 };
+const HYGIENE_CONCEPT_TERMS: Array<{ pattern: RegExp; requiredWords: string[] }> = [
+  { pattern: /\b(sabun|soap)\b/i, requiredWords: ["sabun"] },
+  { pattern: /\bcuci[\s-]+tangan\b/i, requiredWords: ["cuci tangan", "mencuci tangan"] },
+  { pattern: /\bgosok[\s-]+tangan\b/i, requiredWords: ["gosok tangan", "menggosok tangan"] },
+  { pattern: /\b(bilas|membilas)\b/i, requiredWords: ["bilas", "membilas"] },
+  { pattern: /\bhanduk\b/i, requiredWords: ["handuk"] },
+  { pattern: /\bkeran\b/i, requiredWords: ["keran"] },
+  { pattern: /\bsikat[\s-]+gigi\b/i, requiredWords: ["sikat gigi", "menyikat gigi"] },
+  { pattern: /\bpasta[\s-]+gigi\b/i, requiredWords: ["pasta gigi"] },
+  { pattern: /\b(toilet|wc|flush)\b/i, requiredWords: ["toilet", "wc", "kamar mandi"] },
+];
 const HYGIENE_TOPIC_RE =
-  /\b(kebersihan|cuci\s+tangan|mencuci\s+tangan|mandi|sabun|sikat\s+gigi|menyikat\s+gigi|pasta\s+gigi|gosok\s+tangan)\b/i;
+  /\b(kebersihan|cuci\s+tangan|mencuci\s+tangan|mandi|sabun|sikat\s+gigi|menyikat\s+gigi|pasta\s+gigi|gosok\s+tangan|keran|handuk)\b/i;
 const FALLBACK_CONCRETE_WORDS = [
   "payung",
   "sepatu",
@@ -100,18 +115,39 @@ function isLessonAboutHygiene(lesson: GeneratedLesson): boolean {
 function isHygieneAssetAllowed(
   assetId: string,
   isHygieneLesson: boolean,
-  contextTexts: string[]
+  contextTexts: string[],
+  concept?: ConceptRecord
 ): boolean {
   const slug = normalizeAssetSlug(assetId);
-  const requiredWords = HYGIENE_ONLY_ASSET_WORDS[slug];
-  if (!requiredWords) return true;
-  if (isHygieneLesson) return true;
-
   const combined = normalizeSentenceKey(contextTexts.join(" "));
-  return requiredWords.some((word) => {
-    const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    return new RegExp(`\\b${escaped}\\b`, "i").test(combined);
-  });
+
+  const requiredWords = HYGIENE_ONLY_ASSET_WORDS[slug];
+  if (requiredWords) {
+    if (isHygieneLesson) return true;
+    return requiredWords.some((word) => {
+      const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return new RegExp(`\\b${escaped}\\b`, "i").test(combined);
+    });
+  }
+
+  const labelAndId = `${assetId} ${concept?.id ?? ""} ${concept?.label ?? ""}`;
+  for (const rule of HYGIENE_CONCEPT_TERMS) {
+    if (rule.pattern.test(labelAndId)) {
+      if (isHygieneLesson) return true;
+      return rule.requiredWords.some((word) => {
+        const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        return new RegExp(`\\b${escaped}\\b`, "i").test(combined);
+      });
+    }
+  }
+
+  if (concept?.groupId === "kebersihan" && !isHygieneLesson) {
+    const labelNorm = concept.labelNorm || concept.label.toLowerCase();
+    const escaped = labelNorm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return Boolean(escaped) && new RegExp(`\\b${escaped}\\b`, "i").test(combined);
+  }
+
+  return true;
 }
 
 function findConceptInIndex(
@@ -120,9 +156,25 @@ function findConceptInIndex(
 ): ConceptRecord | undefined {
   const direct = index.byId.get(idOrAssetId);
   if (direct) return direct;
-  return index.concepts.find(
+
+  const byAssetId = index.concepts.find(
     (c) => c.assetId === idOrAssetId || c.id === idOrAssetId
   );
+  if (byAssetId) return byAssetId;
+
+  if (idOrAssetId.startsWith("picto:") || idOrAssetId.startsWith("custom:")) {
+    const slug = normalizeAssetSlug(idOrAssetId);
+    const expectedPath = idOrAssetId.startsWith("custom:")
+      ? `/media/custom/${slug}.webp`
+      : `/media/pictograms/${slug}.webp`;
+    return index.concepts.find(
+      (c) =>
+        c.assetUrl === expectedPath ||
+        (c.assetUrl ? c.assetUrl.endsWith(`/${slug}.webp`) : false)
+    );
+  }
+
+  return undefined;
 }
 
 function getCardSuggestions(
@@ -134,17 +186,21 @@ function getCardSuggestions(
 ): CardSuggestion[] {
   if (!query.trim()) return [];
   const hits = search(query, index, {
-    limit: 6,
-    minScore: 15,
+    limit: 8,
+    minScore: 35,
     requireImage: true,
     preferDomains,
   });
   const suggestions: CardSuggestion[] = [];
   for (const hit of hits) {
+    if (hit.concept.status !== "active") continue;
     const url = hit.concept.assetUrl;
     if (!url) continue;
+    if (/\b\d{4,}\b/.test(hit.concept.labelNorm || hit.concept.label)) continue;
     const assetId = hit.concept.assetId ?? hit.concept.id;
-    if (!isHygieneAssetAllowed(assetId, isHygieneLesson, contextTexts)) continue;
+    if (!isHygieneAssetAllowed(assetId, isHygieneLesson, contextTexts, hit.concept)) {
+      continue;
+    }
     suggestions.push({
       id: hit.concept.id,
       label: hit.concept.label,
@@ -164,17 +220,31 @@ function resolveOptionOrStepVisual(
     return { visual: null };
   }
 
+  const concept = findConceptInIndex(visual.asset_id, index);
   if (
     !isHygieneAssetAllowed(
       visual.asset_id,
       hygieneGuard.isHygieneLesson,
-      hygieneGuard.contextTexts
+      hygieneGuard.contextTexts,
+      concept
     )
   ) {
     return { visual: null, strippedId: visual.asset_id };
   }
 
-  const concept = findConceptInIndex(visual.asset_id, index);
+  if (visual.asset_id.startsWith("picto:") || visual.asset_id.startsWith("custom:")) {
+    const asset = getAssetById(visual.asset_id);
+    if (asset && asset.available && (!concept || concept.status === "active")) {
+      return {
+        visual: {
+          asset_id: asset.asset_id,
+          alt: visual.alt?.trim() || asset.display_name,
+          url: asset.file_path,
+        },
+      };
+    }
+  }
+
   if (concept && concept.status === "active" && (concept.assetUrl || concept.assetId)) {
     return {
       visual: {
@@ -256,18 +326,19 @@ export function sanitizeAndValidateLesson(
     let resolvedConceptId: string | null = card.concept ?? null;
     let imageStatus: "cocok" | "dipilih_guru" | "tanpa_gambar" = "tanpa_gambar";
 
-    // Path 1: Closed-vocabulary concept ID
+    // Path 1: Closed-vocabulary concept ID (also accepts picto:/custom: mapped to ConceptRecord)
     if (card.concept) {
+      const matchedConcept = findConceptInIndex(card.concept, index);
       const check = checkCard(
         {
           text: card.text,
           keyTerms: cleanTerms,
           quote: card.quote,
-          conceptId: card.concept,
+          conceptId: matchedConcept?.id ?? card.concept,
         },
         index
       );
-      const concept = check.concept;
+      const concept = check.concept ?? matchedConcept;
       const assetId = concept?.assetId ?? concept?.id;
       const hasImage = Boolean(concept?.assetUrl || concept?.assetId);
       const fitOk =
@@ -276,10 +347,12 @@ export function sanitizeAndValidateLesson(
         hasImage &&
         imageFit(card.text, concept, { keyTerms: cleanTerms }).fit &&
         (!assetId ||
-          isHygieneAssetAllowed(assetId, isHygieneLesson, [
-            card.text,
-            ...cleanTerms,
-          ]));
+          isHygieneAssetAllowed(
+            assetId,
+            isHygieneLesson,
+            [card.text, ...cleanTerms],
+            concept
+          ));
 
       if (fitOk && concept) {
         resolvedVisual = {
@@ -294,37 +367,62 @@ export function sanitizeAndValidateLesson(
         resolvedConceptId = null;
       }
     } else if (card.visual?.asset_id) {
-      // Path 2: Legacy/explicit visual ref
+      // Path 2: Legacy/explicit visual ref — ALWAYS verify imageFit and hygiene guard
       const rawId = card.visual.asset_id;
+      const concept = findConceptInIndex(rawId, index);
       if (
-        !isHygieneAssetAllowed(rawId, isHygieneLesson, [
-          card.text,
-          ...cleanTerms,
-        ])
+        !isHygieneAssetAllowed(
+          rawId,
+          isHygieneLesson,
+          [card.text, ...cleanTerms],
+          concept
+        )
       ) {
         strippedAssetIds.push(rawId);
-      } else {
-        const concept = findConceptInIndex(rawId, index);
-        if (concept) {
-          const fit = imageFit(card.text, concept, { keyTerms: cleanTerms });
-          if (
-            concept.status === "active" &&
-            (concept.assetUrl || concept.assetId) &&
-            fit.fit
-          ) {
-            resolvedVisual = {
-              asset_id: concept.assetId ?? concept.id,
-              alt: card.visual.alt?.trim() || concept.altText || concept.label,
-              url: concept.assetUrl ?? card.visual.url,
-            };
-            resolvedConceptId = concept.id;
-            imageStatus = "cocok";
-          } else {
-            strippedAssetIds.push(rawId);
-          }
+      } else if (concept) {
+        const fit = imageFit(card.text, concept, { keyTerms: cleanTerms });
+        if (
+          concept.status === "active" &&
+          (concept.assetUrl || concept.assetId) &&
+          fit.fit
+        ) {
+          const legacyAsset =
+            rawId.startsWith("picto:") || rawId.startsWith("custom:")
+              ? getAssetById(rawId)
+              : undefined;
+          resolvedVisual = {
+            asset_id: legacyAsset?.available
+              ? legacyAsset.asset_id
+              : (concept.assetId ?? concept.id),
+            alt: card.visual.alt?.trim() || concept.altText || concept.label,
+            url: legacyAsset?.available
+              ? legacyAsset.file_path
+              : (concept.assetUrl ?? card.visual.url),
+          };
+          resolvedConceptId = concept.id;
+          imageStatus = "cocok";
         } else {
-          const asset = getAssetById(rawId);
-          if (asset && asset.available) {
+          strippedAssetIds.push(rawId);
+          resolvedConceptId = null;
+        }
+      } else {
+        const asset = getAssetById(rawId);
+        if (asset && asset.available) {
+          const syntheticConcept: ConceptRecord = {
+            id: asset.asset_id,
+            label: asset.display_name,
+            labelNorm: asset.display_name.toLowerCase(),
+            synonyms: asset.keywords_id,
+            labelEn: asset.keywords_en[0] ?? null,
+            domains: [],
+            assetId: asset.asset_id,
+            assetUrl: asset.file_path,
+            status: "active",
+          };
+          const fit = imageFit(card.text, syntheticConcept, {
+            keyTerms: cleanTerms,
+          });
+          if (fit.fit) {
             resolvedVisual = {
               asset_id: asset.asset_id,
               alt: card.visual.alt?.trim() || asset.display_name,
@@ -333,7 +431,11 @@ export function sanitizeAndValidateLesson(
             imageStatus = "cocok";
           } else {
             strippedAssetIds.push(rawId);
+            resolvedConceptId = null;
           }
+        } else {
+          strippedAssetIds.push(rawId);
+          resolvedConceptId = null;
         }
       }
     }
@@ -593,6 +695,52 @@ export function sanitizeAndValidateLesson(
       Math.max(0, sanitizeOptions.questionCount)
     );
   }
+
+  // Enforce mutual-exclusion visual rule:
+  // If question prompt has an image -> strip visuals/images from options & steps (text-only options).
+  // If options/steps have any visual/image -> strip prompt_image (text-only prompt).
+  sanitizedQuestions = sanitizedQuestions.map((q) => {
+    const hasPromptImage = Boolean(q.prompt_image?.url?.trim());
+    const hasOptionImage = Boolean(
+      q.options?.some(
+        (o) => Boolean(o.visual?.url || o.visual?.asset_id || o.image?.url)
+      )
+    );
+    const hasStepImage = Boolean(
+      q.steps?.some((s) => {
+        const stepImg = "image" in s ? s.image : undefined;
+        return Boolean(s.visual?.url || s.visual?.asset_id || stepImg?.url);
+      })
+    );
+
+    if (hasPromptImage) {
+      return {
+        ...q,
+        options: q.options?.map((o) => ({
+          ...o,
+          visual: null,
+          image: o.image ? { ...o.image, url: undefined } : undefined,
+        })),
+        steps: q.steps?.map((s) => {
+          const stepImg = "image" in s ? s.image : undefined;
+          return {
+            ...s,
+            visual: null,
+            image: stepImg ? { ...stepImg, url: undefined } : undefined,
+          };
+        }),
+      };
+    }
+
+    if (hasOptionImage || hasStepImage) {
+      return {
+        ...q,
+        prompt_image: undefined,
+      };
+    }
+
+    return q;
+  });
 
   return {
     lesson: {

@@ -39,7 +39,7 @@ export default async function LessonResultsPage({
 
   return (
     <div className="flex flex-col gap-6 w-full">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 print:hidden">
         <div>
           <div className="flex items-center gap-2">
             <Link
@@ -68,6 +68,8 @@ export default async function LessonResultsPage({
       <LessonResultsClient
         initialRows={rows}
         hasQuestions={lesson.questions.length > 0}
+        lessonTitle={lesson.title}
+        lessonTopic={lesson.topic}
       />
     </div>
   );

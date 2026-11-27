@@ -306,12 +306,14 @@ export function TVPlayer({ lesson, questions, backHref, quizHref }: TVPlayerProp
     };
   }, [currentCard, handleNext, handlePrev, handleToggleAudio, isPlaying, mode]);
 
+  const safeExitHref = /^\/tv\/[^/]+\/?$/.test(backHref) ? "/" : backHref || "/";
+
   if (mode === "quiz" && quizQuestions.length > 0) {
     return (
       <TVQuiz
         lessonTitle={lesson.title}
         questions={quizQuestions}
-        backHref={backHref}
+        backHref={safeExitHref}
         onBackToMaterial={() => setMode("cards")}
       />
     );
@@ -324,10 +326,10 @@ export function TVPlayer({ lesson, questions, backHref, quizHref }: TVPlayerProp
           <Button
             variant="secondary"
             size="normal"
-            href={backHref}
+            href={safeExitHref}
             icon={<Icon name="CaretLeft" size={20} />}
           >
-            Keluar TV
+            {safeExitHref === "/" ? "Kembali ke Beranda" : "Keluar TV"}
           </Button>
           <span className="text-lg sm:text-xl font-bold text-[var(--muted)] truncate">
             {lesson.title}

@@ -20,6 +20,8 @@ export interface LessonResultRow {
 interface LessonResultsClientProps {
   initialRows: LessonResultRow[];
   hasQuestions: boolean;
+  lessonTitle: string;
+  lessonTopic?: string | null;
 }
 
 function formatDateTime(iso: string | null): string {
@@ -40,6 +42,8 @@ function formatDateTime(iso: string | null): string {
 export function LessonResultsClient({
   initialRows,
   hasQuestions,
+  lessonTitle,
+  lessonTopic,
 }: LessonResultsClientProps) {
   const router = useRouter();
   const [rows, setRows] = useState<LessonResultRow[]>(initialRows);
@@ -129,21 +133,90 @@ export function LessonResultsClient({
     router.refresh();
   };
 
+  const completedRows = rows.filter((r) => r.totalAttempts > 0);
+  const avgPct =
+    completedRows.length > 0
+      ? Math.round(
+          completedRows.reduce(
+            (sum, r) => sum + (r.correctAttempts / r.totalAttempts) * 100,
+            0
+          ) / completedRows.length
+        )
+      : 0;
+  const passedCount = completedRows.filter(
+    (r) => Math.round((r.correctAttempts / r.totalAttempts) * 100) >= 60
+  ).length;
+  const needsGuidanceCount = completedRows.length - passedCount;
+
+  const handlePrint = () => {
+    if (typeof window !== "undefined") {
+      window.print();
+    }
+  };
+
   return (
-    <Card as="section" className="flex flex-col gap-4">
+    <Card as="section" className="flex flex-col gap-4 print:border-0 print:shadow-none print:p-0">
+      <div className="hidden print:block print-header border-b-2 border-black pb-3 mb-2">
+        <p className="text-xs font-bold uppercase tracking-wider text-neutral-600">
+          PanduIn &bull; Rekap Analisis Hasil Belajar Siswa
+        </p>
+        <h2 className="text-xl font-extrabold text-black mt-1">
+          {lessonTitle}
+        </h2>
+        {lessonTopic ? (
+          <p className="text-sm text-neutral-700 mt-0.5">Topik: {lessonTopic}</p>
+        ) : null}
+        <p className="text-xs text-neutral-600 mt-1">
+          Dicetak pada: {formatDateTime(new Date().toISOString())}
+        </p>
+      </div>
+
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-bold text-[var(--ink)]">
           Daftar Percobaan Siswa ({rows.length})
         </h2>
-        <Button
-          variant="secondary"
-          size="compact"
-          onClick={() => router.refresh()}
-          icon={<Icon name="ArrowsClockwise" size={16} />}
-        >
-          Muat Ulang
-        </Button>
+        <div className="flex flex-wrap items-center gap-2 print:hidden" data-print-hide="true">
+          <Button
+            variant="secondary"
+            size="compact"
+            onClick={() => router.refresh()}
+            icon={<Icon name="ArrowsClockwise" size={16} />}
+          >
+            Muat Ulang
+          </Button>
+          <Button
+            variant="primary"
+            size="compact"
+            onClick={handlePrint}
+            icon={<Icon name="FileText" size={16} />}
+          >
+            Cetak Hasil
+          </Button>
+        </div>
       </div>
+
+      {rows.length > 0 && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-3">
+            <p className="text-xs font-semibold text-[var(--muted)]">Total Percobaan</p>
+            <p className="text-xl font-extrabold text-[var(--ink)] mt-0.5">{rows.length}</p>
+          </div>
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-3">
+            <p className="text-xs font-semibold text-[var(--muted)]">Rata-rata Skor</p>
+            <p className="text-xl font-extrabold text-[var(--ink)] mt-0.5">
+              {completedRows.length > 0 ? `${avgPct}%` : "-"}
+            </p>
+          </div>
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-3">
+            <p className="text-xs font-semibold text-[var(--muted)]">Tuntas (&ge;60%)</p>
+            <p className="text-xl font-extrabold text-[var(--benar-ink)] mt-0.5">{passedCount}</p>
+          </div>
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-3">
+            <p className="text-xs font-semibold text-[var(--muted)]">Perlu Bimbingan</p>
+            <p className="text-xl font-extrabold text-[var(--salah-ink)] mt-0.5">{needsGuidanceCount}</p>
+          </div>
+        </div>
+      )}
 
       {statusMsg && <StatusMessage type={statusMsg.type}>{statusMsg.text}</StatusMessage>}
 
@@ -173,7 +246,7 @@ export function LessonResultsClient({
                 <th scope="col" className="p-3 font-bold text-sm text-[var(--ink)]">
                   Status
                 </th>
-                <th scope="col" className="p-3 font-bold text-sm text-[var(--ink)] text-right">
+                <th scope="col" className="p-3 font-bold text-sm text-[var(--ink)] text-right print:hidden" data-print-hide="true">
                   Kelola
                 </th>
               </tr>
@@ -252,7 +325,7 @@ export function LessonResultsClient({
                         </span>
                       )}
                     </td>
-                    <td className="p-3 text-right">
+                    <td className="p-3 text-right print:hidden" data-print-hide="true">
                       <div className="inline-flex items-center gap-2 justify-end">
                         {isEditing ? (
                           <>

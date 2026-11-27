@@ -97,6 +97,8 @@ export function TVQuiz({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [handleNext, handlePrev, total]);
 
+  const safeExitHref = /^\/tv\/[^/]+\/?$/.test(backHref) ? "/" : backHref || "/";
+
   if (isCompleted) {
     const correctCount = Object.values(feedbackByQ).filter((f) => f.ok).length;
     return (
@@ -105,10 +107,10 @@ export function TVQuiz({
           <Button
             variant="secondary"
             size="normal"
-            href={backHref}
+            href={safeExitHref}
             icon={<Icon name="CaretLeft" size={20} />}
           >
-            Keluar TV
+            {safeExitHref === "/" ? "Kembali ke Beranda" : "Keluar TV"}
           </Button>
           <span className="text-lg sm:text-xl font-bold text-[var(--muted)] truncate">
             {lessonTitle}
@@ -160,6 +162,14 @@ export function TVQuiz({
                   Ulangi Materi
                 </Button>
               ) : null}
+              <Button
+                variant="secondary"
+                size="large"
+                href={safeExitHref}
+                icon={<Icon name="CaretLeft" size={22} />}
+              >
+                {safeExitHref === "/" ? "Kembali ke Beranda" : "Keluar TV"}
+              </Button>
             </div>
           </Card>
         </main>

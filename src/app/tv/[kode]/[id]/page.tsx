@@ -31,7 +31,7 @@ export default async function TVLessonPage({
       <TVPlayer
         lesson={lesson}
         questions={lesson.questions}
-        backHref={`/tv/${kode}`}
+        backHref="/"
         quizHref={
           lesson.questions.length > 0
             ? `/tv/${kode}/${lesson.id}/kuis`

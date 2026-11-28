@@ -302,7 +302,37 @@ describe("key-manager (ordering, cooldown, classification, limits)", () => {
     });
 
     expect(res.value).toBe("recovered");
-    expect(seenModels).toEqual(["gemini-2.5-flash", "gemini-3.8-flash"]);
+    expect(seenModels).toEqual(["gemini-2.5-flash", "gemini-3.5-flash-lite"]);
+  });
+
+  it("retries overloaded 503 once on primary model before falling back to gemini-3.5-flash-lite", async () => {
+    const km = new KeyManager({
+      now: () => 1_000_000,
+      sleep: async () => {},
+      random: () => 0,
+    });
+
+    const seenModels: string[] = [];
+    const res = await km.execute({
+      systemKeysOverride: ["AIzaSysKey1234"],
+      primaryModel: "gemini-3.8-flash",
+      run: async ({ model, attempt }) => {
+        seenModels.push(model);
+        if (attempt <= 2) {
+          throw Object.assign(new Error("This model is currently experiencing high demand"), {
+            status: 503,
+          });
+        }
+        return "recovered-after-503";
+      },
+    });
+
+    expect(res.value).toBe("recovered-after-503");
+    expect(seenModels).toEqual([
+      "gemini-3.8-flash",
+      "gemini-3.8-flash",
+      "gemini-3.5-flash-lite",
+    ]);
   });
 
   it("verifies a single key via fake client without exposing raw key", async () => {

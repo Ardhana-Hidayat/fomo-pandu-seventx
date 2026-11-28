@@ -3,7 +3,11 @@ import crypto from "node:crypto";
 import { GoogleGenAI, Type, type Schema } from "@google/genai";
 import { env } from "../../config/env";
 import { getConceptIndex } from "../catalog";
-import { defaultKeyManager, resolveCandidateKeys } from "./key-manager";
+import {
+  AllGeminiKeysFailedError,
+  defaultKeyManager,
+  resolveCandidateKeys,
+} from "./key-manager";
 import {
   generatedLessonSchema,
   lessonV2Schema,
@@ -447,10 +451,16 @@ export async function generateWithGemini(
       durationMs: Date.now() - startedAt,
     });
 
+    const isQuotaFailure =
+      err instanceof AllGeminiKeysFailedError &&
+      (err.lastCategory === "quota" || err.quotaFingerprints.length > 0);
+
     return {
       lesson: validatedFallback.lesson,
       generatedBy: "fallback",
-      badge: "Dibuat dari cadangan ekstraktif (seluruh kuota API Gemini sedang penuh)",
+      badge: isQuotaFailure
+        ? "Dibuat dari cadangan ekstraktif (seluruh kuota API Gemini sedang penuh)"
+        : "Dibuat dari cadangan ekstraktif (layanan AI Gemini sedang sibuk sementara)",
       sourceText: extractedText || options.text,
       isScannedNotice,
       visualGaps: validatedFallback.visualGaps,

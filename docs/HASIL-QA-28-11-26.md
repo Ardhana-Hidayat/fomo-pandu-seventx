@@ -56,5 +56,16 @@ Login: akun sudah masuk di Chrome user; password yang dikirim via chat TIDAK ter
 - M10 Rekap: **Pass dengan catatan** — baris QA-Siswa muncul, waktu WIB benar. Skor rekap "3/4 (75%)" (basis percobaan) vs layar siswa "2 dari 3" (basis first-try): dua definisi skor tanpa label pembeda (Medium — kejelasan).
 - M11–14 Live: **Pass** — tanpa timer; double-tap tidak menggandakan; feedback benar "Tepat! Jawabanmu benar.", salah "Coba lagi. Pilihanmu belum tepat, ayo coba lagi."
 
+## Addendum Retest — Setelah Perbaikan Tim (28 Nov 12:18–12:28 WIB, repo HEAD 521678a)
+Klaim kode di laporan penyelesaian tim terverifikasi semua (auto-publish dihapus, model default gemini-3.8-flash, demo guard, label rekap, typo, script e2e dihapus, README selaras). Hasil live:
+- M4 Gerbang draf: **PASS** — dialog Bagikan menyatakan status Draf + tombol "Setujui & Terbitkan Materi"; menutup dialog tanpa klik → tetap Draf, tanpa kode. Terbit eksplisit bekerja (kode 582581, URL /m/582581).
+- M2 Gemini: **MASIH GAGAL** — banner "Mode Cadangan… kuota API Gemini sedang penuh" muncul lagi. Dengan teks sumber terstruktur 6 langkah, fallback menghasilkan 6 kartu/3 soal, tetapi mesin tetap bukan Gemini. Perlu cek log Vercel /api/ai/generate-lesson untuk error asli (404/429/key).
+- TEMUAN BARU (dampak fallback): soal Q3 tipe "Susun urutan" hasil generate fallback memiliki **0 opsi/langkah** (editor: PILIHAN JAWABAN 0/4); di sisi siswa tidak ada opsi dan tombol "Lihat Hasil" nonaktif → kuis tidak bisa diselesaikan sebagaimana ter-generate. Tester menambahkan opsi manual di editor untuk menuntaskan alur (materi uji lalu dihapus).
+- M1 Logout→Back: **PASS** — setelah Keluar, Back menampilkan halaman login lagi, bukan dashboard (header no-store di proxy bekerja).
+- /api/health live: **PASS** — hanya {app, status, timestamp}.
+- M6 TV multi-kartu: **PASS** — ArrowRight 1→2 dari 6, ArrowLeft kembali (materi 6 kartu).
+- M10 Label rekap: **PASS** — kolom "Ketepatan Percobaan (benar / total percobaan)". Angka rekap sesi retest (9/17) tercemar percobaan berulang tester saat mendiagnosis Q3 kosong — bukan representasi siswa normal.
+- Cleanup: materi QA-RETEST dihapus; dashboard kembali 1/1/4/100%.
+
 ## Yang Masih Blocked (butuh akses)
 Login Google guru (atau kode kelas aktif dari guru) untuk: IDOR live antar dua akun guru, double-click Generate, alur draft→terbit E2E, TTS/rekaman lintas perangkat, mode TV 16:9, pratinjau cetak A4, rekap live, dan Lighthouse mobile.

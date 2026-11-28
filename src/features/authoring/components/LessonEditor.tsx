@@ -80,6 +80,7 @@ function normalizeQuestionType(rawType: string): CanonicalQuestionType {
       return "choice_sign";
     case "benar_salah":
       return "benar_salah";
+    case "order":
     case "urutan":
     case "arrange_steps":
       return "arrange_steps";

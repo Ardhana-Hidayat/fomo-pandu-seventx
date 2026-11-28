@@ -313,11 +313,13 @@ export async function POST(request: Request) {
                 answer: q.answer,
               };
 
+              const normalizedType = q.type === "order" ? "arrange_steps" : q.type;
+
               return {
                 position: i + 1,
-                type: q.type,
+                type: normalizedType,
                 prompt: q.prompt,
-                payload: sanitizeQuizPayloadVisualRule(q.type, rawPayload),
+                payload: sanitizeQuizPayloadVisualRule(normalizedType, rawPayload),
                 linkedCardId: undefined,
               };
             });

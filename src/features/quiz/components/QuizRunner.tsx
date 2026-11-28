@@ -276,7 +276,10 @@ export function QuizRunner({
   }
 
   const isSignMatch = currentQ.type === "cocokkan_isyarat" || currentQ.type === "choice_sign";
-  const isOrder = currentQ.type === "urutan" || currentQ.type === "arrange_steps";
+  const isOrder =
+    currentQ.type === "order" ||
+    currentQ.type === "urutan" ||
+    currentQ.type === "arrange_steps";
   const isTrueFalse = currentQ.type === "benar_salah";
   const signTargetWord =
     payload?.signWord ??

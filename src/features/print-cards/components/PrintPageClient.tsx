@@ -74,6 +74,7 @@ function getQuestionTypeLabel(type: string): string {
   switch (type) {
     case "benar_salah":
       return "Benar / Salah";
+    case "order":
     case "urutan":
     case "arrange_steps":
       return "Urutkan Langkah";
@@ -584,7 +585,9 @@ export function PrintPageClient({
 
                   const isTrueFalse = q.type === "benar_salah";
                   const isOrder =
-                    q.type === "urutan" || q.type === "arrange_steps";
+                    q.type === "order" ||
+                    q.type === "urutan" ||
+                    q.type === "arrange_steps";
                   const isSignMatch =
                     q.type === "cocokkan_isyarat" || q.type === "choice_sign";
                   const isMatching =

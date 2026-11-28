@@ -327,10 +327,10 @@ export function resolveCandidateKeys(
 }
 
 function getFallbackModel(primaryModel: string): string | null {
-  if (primaryModel !== "gemini-3.8-flash") {
-    return "gemini-3.8-flash";
+  if (primaryModel !== "gemini-3.5-flash-lite") {
+    return "gemini-3.5-flash-lite";
   }
-  return "gemini-2.5-flash";
+  return null;
 }
 
 export interface KeyManagerOptions {
@@ -507,6 +507,25 @@ export class KeyManager {
               invalidTeacherFingerprints.push(keyEntry.fingerprint);
             }
             break; // Move to next key
+          }
+
+          // On 503 overloaded, retry the primary model once with jitter before falling back
+          if (
+            classified.modelFallbackReason === "overloaded" &&
+            !transientRetriedForKey
+          ) {
+            transientRetriedForKey = true;
+            if (attemptCount < maxAttempts) {
+              const jitterMs = Math.round(
+                TRANSIENT_RETRY_MIN_MS +
+                  this.random() * (TRANSIENT_RETRY_MAX_MS - TRANSIENT_RETRY_MIN_MS)
+              );
+              const left = totalBudgetMs - (this.now() - startedAt);
+              if (left > jitterMs) {
+                await this.sleep(jitterMs);
+                continue;
+              }
+            }
           }
 
           // Model fallback only on explicit model_not_found / overloaded

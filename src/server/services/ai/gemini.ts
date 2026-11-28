@@ -220,11 +220,11 @@ export async function generateWithGemini(
       options,
       extractedText
         ? {
-            text: extractedText,
-            totalPages: 1,
-            isScanned: Boolean(isScannedNotice),
-            preview: extractedText.slice(0, 300),
-          }
+          text: extractedText,
+          totalPages: 1,
+          isScanned: Boolean(isScannedNotice),
+          preview: extractedText.slice(0, 300),
+        }
         : undefined
     );
 
@@ -232,7 +232,7 @@ export async function generateWithGemini(
   if (plan.isScannedOrEmpty && options.sourceType === "pdf") {
     throw new Error(
       plan.errorMessage ||
-        "PDF terlihat seperti hasil pindai atau tidak memiliki teks yang dapat dibaca."
+      "PDF terlihat seperti hasil pindai atau tidak memiliki teks yang dapat dibaca."
     );
   }
 

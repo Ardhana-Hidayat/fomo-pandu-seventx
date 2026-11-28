@@ -112,7 +112,7 @@ export function QuizRunner({
               href={exitHref}
               className="w-full"
             >
-              Kembali ke Beranda
+              {exitHref === "/" ? "Kembali ke Beranda" : "Kembali ke Materi"}
             </Button>
           </Card>
         </main>
@@ -266,7 +266,7 @@ export function QuizRunner({
                 icon={<Icon name="CaretLeft" size={20} />}
                 className="w-full"
               >
-                Kembali ke Beranda
+                {exitHref === "/" ? "Kembali ke Beranda" : "Kembali ke Materi"}
               </Button>
             </div>
           </Card>

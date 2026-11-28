@@ -418,9 +418,7 @@ export function LessonEditor({ lesson, shares }: LessonEditorProps) {
   const primaryShareCode =
     primaryShare?.shareCode ?? lesson.publications?.[0]?.shareCode;
   const isPublished = lesson.status === "published" || Boolean(localShare);
-  const tvHref = primaryShare
-    ? `/tv/${primaryShare.classroomJoinCode}/${lesson.id}`
-    : `/guru/materi/${lesson.id}/presentasi`;
+  const tvHref = `/guru/materi/${lesson.id}/presentasi`;
 
   function handlePlayAudioPreview(idx: number, card: (typeof cards)[number]) {
     if (playingCardIdx === idx) {

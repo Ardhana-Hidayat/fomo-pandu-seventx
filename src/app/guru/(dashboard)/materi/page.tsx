@@ -54,13 +54,10 @@ export default async function LessonLibraryPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {lessons.map((l) => {
             const lessonShares = sharesByLesson[l.id] ?? [];
-            const primaryShare = lessonShares[0];
             const editHref = `/guru/materi/${l.id}/edit`;
             const cetakHref = `/guru/materi/${l.id}/cetak`;
             const hasilHref = `/guru/materi/${l.id}/hasil`;
-            const tvHref = primaryShare
-              ? `/tv/${primaryShare.classroomJoinCode}/${l.id}`
-              : `/guru/materi/${l.id}/presentasi`;
+            const tvHref = `/guru/materi/${l.id}/presentasi`;
 
             return (
               <Card

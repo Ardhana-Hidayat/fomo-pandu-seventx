@@ -22,7 +22,7 @@ export default async function TeacherPresentationPage({
       <TVPlayer
         lesson={lesson}
         questions={lesson.questions}
-        backHref={`/guru/materi/${lesson.id}/edit`}
+        backHref="/guru/materi"
       />
     </div>
   );

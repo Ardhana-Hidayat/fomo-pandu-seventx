@@ -35,7 +35,7 @@ export default async function StudentQuizPage({
     <QuizRunner
       lessonTitle={lesson.title}
       questions={lesson.questions}
-      backHref="/"
+      backHref={`/kelas/${kode}/materi/${lesson.id}`}
       studentId={studentSession.student.id}
       lessonId={lesson.id}
       classroomId={classroom.id}

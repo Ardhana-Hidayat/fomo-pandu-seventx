@@ -8,10 +8,14 @@ export const instant = false;
 
 export default async function TVQuizPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ kode: string; id: string }>;
+  searchParams: Promise<{ from?: string }>;
 }) {
   const { kode, id } = await params;
+  const { from } = await searchParams;
+  const backHref = from === "guru" ? "/guru/materi" : `/tv/${kode}/${id}`;
   const classroomRes = await getClassroomByJoinCode(kode);
   if (!classroomRes.ok) notFound();
 
@@ -31,8 +35,8 @@ export default async function TVQuizPage({
       <TVQuiz
         lessonTitle={lesson.title}
         questions={lesson.questions}
-        backHref={`/tv/${kode}/${lesson.id}`}
-        materialHref={`/tv/${kode}/${lesson.id}`}
+        backHref={backHref}
+        materialHref={`/tv/${kode}/${lesson.id}${from === "guru" ? "?from=guru" : ""}`}
       />
     </div>
   );

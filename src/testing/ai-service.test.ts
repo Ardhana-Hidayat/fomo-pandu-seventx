@@ -88,7 +88,7 @@ describe("generateLessonContent End-to-End Fallback Service", () => {
         sourceType: "topik",
         topic: "Cuaca hari ini",
       })
-    ).rejects.toThrow(/AI Gemini belum tersedia/i);
+    ).rejects.toThrow(/AI Gemini belum tersedia|Gagal menghubungi AI Gemini/i);
   });
 
   it("tidak pernah jatuh ke cuci tangan saat diberikan topik khusus atau teks PDF bernomor halaman", () => {

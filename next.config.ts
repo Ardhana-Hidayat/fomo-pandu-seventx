@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: false,
   poweredByHeader: false,
+  outputFileTracingIncludes: {
+    "/**": ["./data/catalog/**/*"],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
   },

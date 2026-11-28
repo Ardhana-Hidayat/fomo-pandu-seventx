@@ -21,12 +21,12 @@ export function getSeedsFilePath(): string {
  * Load all domain catalog JSON files from data/catalog/*.json.
  */
 export function loadCatalogFromDisk(catalogDir = getCatalogDir()): ConceptRecord[] {
-  if (!fs.existsSync(catalogDir)) {
+  if (!fs.existsSync(/* turbopackIgnore: true */ catalogDir)) {
     return [];
   }
 
   const files = fs
-    .readdirSync(catalogDir)
+    .readdirSync(/* turbopackIgnore: true */ catalogDir)
     .filter((f) => f.endsWith(".json"))
     .sort();
 
@@ -59,8 +59,8 @@ export function loadCatalogFromDisk(catalogDir = getCatalogDir()): ConceptRecord
   };
 
   for (const file of files) {
-    const fullPath = path.join(catalogDir, file);
-    const raw = fs.readFileSync(fullPath, "utf8");
+    const fullPath = path.join(/* turbopackIgnore: true */ catalogDir, file);
+    const raw = fs.readFileSync(/* turbopackIgnore: true */ fullPath, "utf8");
     const parsed = JSON.parse(raw) as DomainCatalogFile | ConceptRecord[];
     const items = Array.isArray(parsed) ? parsed : parsed.concepts ?? [];
 

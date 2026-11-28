@@ -203,7 +203,7 @@ describe("PrintPageClient Component", () => {
       screen.getAllByText(/Gunting mengikuti garis putus-putus/i).length
     ).toBeGreaterThanOrEqual(1);
     expect(
-      screen.getByRole("button", { name: /Cetak Sekarang \(A4 Potrait\)/i })
+      screen.getByRole("button", { name: /Cetak Sekarang \(A4 Portrait\)/i })
     ).toBeDefined();
   });
 
@@ -255,7 +255,7 @@ describe("PrintPageClient Component", () => {
     expect(screen.getByText("Api")).toBeDefined();
   });
 
-  it("memanggil window.print saat tombol Cetak Sekarang (A4 Potrait) diklik", () => {
+  it("memanggil window.print saat tombol Cetak Sekarang (A4 Portrait) diklik", () => {
     const printSpy = vi.spyOn(window, "print").mockImplementation(() => {});
 
     render(
@@ -267,7 +267,7 @@ describe("PrintPageClient Component", () => {
     );
 
     fireEvent.click(
-      screen.getByRole("button", { name: /Cetak Sekarang \(A4 Potrait\)/i })
+      screen.getByRole("button", { name: /Cetak Sekarang \(A4 Portrait\)/i })
     );
     expect(printSpy).toHaveBeenCalledTimes(1);
 

@@ -378,7 +378,7 @@ body {
   display: none;
 }
 
-/* Aturan cetak global agar Cetak Kartu & Lembar Kuis mencetak halaman A4 Potrait penuh tanpa chrome dashboard */
+/* Aturan cetak global agar Cetak Kartu & Lembar Kuis mencetak halaman A4 Portrait penuh tanpa chrome dashboard */
 @media print {
   @page {
     size: A4 portrait;

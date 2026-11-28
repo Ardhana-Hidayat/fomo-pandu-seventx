@@ -36,7 +36,7 @@ const schema = z
       .min(32)
       .default("dev-session-secret-at-least-32-characters-long-example-seventx"),
     GEMINI_API_KEY: z.string().min(1).optional(),
-    GEMINI_MODEL: z.string().min(1).default("gemini-2.5-flash"),
+    GEMINI_MODEL: z.string().min(1).default("gemini-3.8-flash"),
     TTS_PROVIDER: z.enum(["gemini", "none"]).default("none"),
     GENERATE_LIMIT_PER_HOUR: z.coerce.number().int().positive().default(5),
     ALLOW_DRAFT_SIGNS: z.enum(["true", "false"]).default("false").transform((v) => v === "true"),

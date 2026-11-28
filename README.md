@@ -7,7 +7,7 @@
 [![Database](https://img.shields.io/badge/Database-PGlite%20%2F%20PostgreSQL-336791)](https://orm.drizzle.team)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-Platform web pendidikan inklusif adaptif yang dirancang khusus untuk siswa berkebutuhan khusus (tunarungu-wicara, tunanetra, *low vision*, dan tunagrahita) serta guru di Sekolah Luar Biasa (**SLBN Manisrejo Kota Madiun**). Dikembangkan oleh **Tim Fomo** untuk kompetisi nasional **SEVENT X (Kategori Website)**.
+Platform web pendidikan inklusif adaptif yang dirancang khusus untuk siswa berkebutuhan khusus (tunarungu-wicara, tunanetra, *low vision*, dan tunagrahita) serta guru di Sekolah Luar Biasa (**SLBN Manisrejo Kota Madiun**). Dikembangkan oleh **Tim Fomo** untuk kompetisi nasional **SEVENT X (Kategori Software Development)**.
 
 ---
 
@@ -30,7 +30,7 @@ Setiap kartu peraga pembelajaran dapat disajikan melalui 4 saluran yang dapat di
 ### 3. Jembatan Komunikasi Cepat (*Quick Instructions*) (`/guru/instruksi-cepat`)
 - Mengubah instruksi verbal atau ketikan guru menjadi 1–4 langkah visual konkret dengan ejaan isyarat dan piktogram untuk diproyeksikan langsung di layar Smart TV kelas.
 
-### 4. Mesin Rekomendasi Pedagogis Transparan (`/guru/kelas/[id]/hasil/[sid]`)
+### 4. Rekap Hasil Belajar & Rekomendasi Pedagogis (`/guru/materi/[id]/hasil`)
 - Mengevaluasi pola belajar siswa berdasarkan aturan pedagogis teruji (R1–R4, R7):
   - **R1 (Pengulangan Konsep)**: Deteksi kesulitan berulang pada kartu tertentu untuk pendampingan benda konkret.
   - **R2 (Ketergantungan Petunjuk / Akselerasi)**: Rekomendasi penyesuaian jumlah opsi pilihan (2, 3, atau 4).

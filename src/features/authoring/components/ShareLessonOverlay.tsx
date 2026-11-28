@@ -41,7 +41,6 @@ export function ShareLessonOverlay({
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
-  const autoPublishAttemptedRef = useRef(false);
   const inFlightPublishRef = useRef(false);
   const onPublishedRef = useRef(onPublished);
 
@@ -90,7 +89,6 @@ export function ShareLessonOverlay({
 
   useEffect(() => {
     if (!isOpen) {
-      autoPublishAttemptedRef.current = false;
       return;
     }
 
@@ -112,14 +110,6 @@ export function ShareLessonOverlay({
       previousFocusRef.current?.focus();
     };
   }, [isOpen, handleClose]);
-
-  useEffect(() => {
-    if (!isOpen || activeShare || isPublishing || autoPublishAttemptedRef.current) {
-      return;
-    }
-    autoPublishAttemptedRef.current = true;
-    void handlePublishNow();
-  }, [isOpen, activeShare, isPublishing, handlePublishNow]);
 
   async function handleCopy(value: string, type: "url" | "code") {
     try {
@@ -275,8 +265,8 @@ export function ShareLessonOverlay({
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/60 p-5 flex flex-col items-center text-center gap-3">
               <p className="text-sm font-medium text-[var(--ink-2)]">
                 {isPublishing
-                  ? "Menyiapkan Kode QR, tautan URL, dan Kode Materi..."
-                  : "Buat tautan langsung, Kode QR, dan Kode Materi agar siswa dapat segera belajar."}
+                  ? "Menyetujui materi dan menyiapkan Kode QR, tautan URL, serta Kode Materi..."
+                  : "Materi masih berstatus Draf. Tekan tombol di bawah untuk menyetujui, menerbitkan ke siswa, dan membuat Kode QR."}
               </p>
               <Button
                 type="button"
@@ -287,7 +277,7 @@ export function ShareLessonOverlay({
                 icon={<Icon name="QrCode" size={18} />}
                 className="w-full sm:w-auto"
               >
-                {isPublishing ? "Menyiapkan..." : "Buat Link & QR Bagikan"}
+                {isPublishing ? "Menerbitkan..." : "Setujui & Terbitkan Materi"}
               </Button>
             </div>
           </div>

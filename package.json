@@ -10,7 +10,6 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test",
     "deps": "depcruise src --config dependency-cruiser.cjs",
     "unused": "knip",
     "audit": "npm audit --omit=dev --audit-level=high",

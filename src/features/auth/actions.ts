@@ -18,8 +18,12 @@ import { classrooms, publications, students } from "@/server/db/schema";
 import { eq, and, isNull, sql, desc } from "drizzle-orm";
 import type { Result } from "@/shared/lib/result";
 import { ok, err, makeAppError } from "@/shared/lib/result";
+import { env } from "@/server/config/env";
 
 export async function signInDemoAction(): Promise<void> {
+  if (env.AUTH_MODE !== "demo") {
+    redirect("/guru/masuk?error=demo_disabled");
+  }
   await signInDemoTeacher();
   const token = getDemoTeacherToken();
   const cookieStore = await cookies();

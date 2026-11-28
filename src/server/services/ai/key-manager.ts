@@ -327,10 +327,10 @@ export function resolveCandidateKeys(
 }
 
 function getFallbackModel(primaryModel: string): string | null {
-  if (primaryModel !== "gemini-2.5-flash") {
-    return "gemini-2.5-flash";
+  if (primaryModel !== "gemini-3.8-flash") {
+    return "gemini-3.8-flash";
   }
-  return "gemini-2.0-flash";
+  return "gemini-2.5-flash";
 }
 
 export interface KeyManagerOptions {

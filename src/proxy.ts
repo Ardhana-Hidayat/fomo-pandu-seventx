@@ -15,14 +15,24 @@ export function proxy(request: NextRequest) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = "/guru/masuk";
     loginUrl.search = "";
-    return NextResponse.redirect(loginUrl);
+    const redirectRes = NextResponse.redirect(loginUrl);
+    redirectRes.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
+    redirectRes.headers.set("Pragma", "no-cache");
+    return redirectRes;
   }
 
-  return NextResponse.next({
+  const response = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   });
+
+  if (isGuruRoute) {
+    response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
+    response.headers.set("Pragma", "no-cache");
+  }
+
+  return response;
 }
 
 export const config = {

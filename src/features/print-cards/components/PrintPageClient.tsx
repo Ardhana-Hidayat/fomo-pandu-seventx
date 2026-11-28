@@ -247,7 +247,7 @@ export function PrintPageClient({
               Cetak Lembar Belajar &amp; Kuis: {lesson.title}
             </h1>
             <p className="mt-1 text-sm text-[var(--ink-2)]">
-              Format <strong>A4 Potrait</strong> &bull;{" "}
+              Format <strong>A4 Portrait</strong> &bull;{" "}
               <strong>{lesson.cards.length}</strong> kartu materi &bull;{" "}
               <strong>{quizQuestions.length}</strong> soal kuis.
             </p>
@@ -307,7 +307,7 @@ export function PrintPageClient({
               icon={<Icon name="FilePdf" size={20} />}
               className="w-full sm:w-auto"
             >
-              Cetak Sekarang (A4 Potrait)
+              Cetak Sekarang (A4 Portrait)
             </Button>
           </div>
         </div>
@@ -340,7 +340,7 @@ export function PrintPageClient({
           </p>
         </Card>
       ) : (
-        /* Lembar Pratinjau & Cetak A4 Potrait */
+        /* Lembar Pratinjau & Cetak A4 Portrait */
         <div className="print-sheet mx-auto w-full max-w-[210mm] rounded-2xl border border-[var(--border)] bg-white p-5 sm:p-8 text-black shadow-xs flex flex-col gap-5 print:gap-4">
           {/* Header Utama Lembar Cetak: Brand PanduIn + Judul Materi + Metadata */}
           <header className="print-header flex flex-col gap-3 border-b-2 border-slate-800 pb-3">

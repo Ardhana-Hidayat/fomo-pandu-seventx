@@ -238,7 +238,10 @@ export function LessonResultsClient({
                   Nama Siswa
                 </th>
                 <th scope="col" className="p-3 font-bold text-sm text-[var(--ink)]">
-                  Skor Kuis
+                  Ketepatan Percobaan
+                  <span className="block text-[11px] font-normal text-[var(--muted)]">
+                    (benar / total percobaan)
+                  </span>
                 </th>
                 <th scope="col" className="p-3 font-bold text-sm text-[var(--ink)]">
                   Waktu Selesai

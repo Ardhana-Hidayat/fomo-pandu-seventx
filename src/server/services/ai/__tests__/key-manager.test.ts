@@ -302,7 +302,7 @@ describe("key-manager (ordering, cooldown, classification, limits)", () => {
     });
 
     expect(res.value).toBe("recovered");
-    expect(seenModels).toEqual(["gemini-2.5-flash", "gemini-2.0-flash"]);
+    expect(seenModels).toEqual(["gemini-2.5-flash", "gemini-3.8-flash"]);
   });
 
   it("verifies a single key via fake client without exposing raw key", async () => {
